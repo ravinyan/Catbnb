@@ -39,3 +39,11 @@ div.scrollmenu a {
 div.scrollmenu a:hover {
     background-color: #777;
 }
+
+#header {
+    background-color: #f1f1f1;
+    color: black;
+    top: 0;
+    width: 100%;
+    transition: 1s;
+}

@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+//  header scaling
+window.onscroll = function() { headerScaling() };
 
-// Write your JavaScript code.
+function headerScaling() 
+{
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50)
+    {
+        document.getElementById("header").style.height = "100px";
+    }
+    else 
+    {
+        document.getElementById("header").style.height = "200px";
+    }
+}
+
