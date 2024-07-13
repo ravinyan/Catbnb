@@ -17,11 +17,7 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
-
+/* scroll menu */
 div.scrollmenu {
     background-color: #333;
     overflow: auto;
@@ -40,10 +36,35 @@ div.scrollmenu a:hover {
     background-color: #777;
 }
 
-#header {
-    background-color: #f1f1f1;
-    color: black;
-    top: 0;
+/* header */
+
+div.top_header {
+    padding-inline-start: 40px;
+    padding-inline-end: 40px;
     width: 100%;
-    transition: 1s;
+    height: 150px;
+    transition: 0.2s;
+}
+
+div.button_group {
+    display: inline-block;
+    margin-top: -5px;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+}
+
+nav.nav_bar_location {
+    float: right;
+    overflow: hidden;
+    position: relative !important;
+}
+
+div.stays_menu_buttons {
+    position: absolute;
+    display: inline-block;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 20px;
+    transition: 0.2s;
 }

@@ -10,26 +10,37 @@
 </head>
 <body>
     @* here will make fully top nav bar i guess *@
-    <header id="header" class="border-bottom mb-3 sticky-top bg-white">
-        <div class="d-inline-block box-shadow" style="padding-inline-start: 40px; padding-inline-end: 40px; width: 100%;">
+    <header class="border-bottom mb-3 sticky-top bg-white">
+        <div id="TopHeader" class="d-inline-block box-shadow top_header">
             <div style="display: inline-block; margin-top: 8px;">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
             </div>
-            <div class="btn-group" role="search" style="display: inline-block; margin-top: -5px; padding-inline-start: 20px; padding-inline-end: 20px;">
-                <button type="button" class="button rounded-pill">Where</button>
-                <button type="button" class="button rounded-pill">Date</button>
-                <button type="button" class="button rounded-pill">Who</button>
-                <button type="button" class="button rounded-circle">
+            <div id="StaysMenuButtons" class="stays_menu_buttons">
+                <button class="btn button" onclick="displayStaysMenu()">Stays</button> 
+                <button class="btn button" onclick="displayExperiencesMenu()">Experiences</button>
+            </div>
+            <div id="StaysMenuFormStays" class="btn-group button_group stays_menu_buttons" role="search" style="top: 100px">
+                <button type="button" class="btn button rounded-pill">Where</button>
+                <button type="button" class="btn button rounded-pill" style="width: 188px">Date</button>
+                <button type="button" class="btn button rounded-pill">Who</button>
+                <button type="button" class="btn button rounded-circle">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
                 </button>
             </div>
-            <div class="d-inline-block align-content-center">
-                <button>Stays</button>
-                <button>Experiences</button>
-            </div> 
-            <nav class="navbar navbar-expand navbar-light" style="float: right;overflow: hidden; position: relative !important">
+            <div id="StaysMenuFormExperiences" class="btn-group button_group stays_menu_buttons" role="search" style="top: 100px; display: none;">
+                <button type="button" class="btn button rounded-pill">Where</button>
+                <button type="button" class="btn button rounded-pill">Check in</button>
+                <button type="button" class="btn button rounded-pill">Check out</button>
+                <button type="button" class="btn button rounded-pill">Who</button>
+                <button type="button" class="btn button rounded-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="navbar navbar-expand navbar-light nav_bar_location">
                     <a class="navbar-brand" style="font-size: 14px" asp-area="" asp-controller="Home" asp-action="Index">Aribnb your home</a>
                     <button class="button rounded-circle border-0">
                         <img src="/img/world-icon.png" style="width: 25px" />
@@ -102,7 +113,7 @@
             <a href="#houseboats">Lake</a>
         </div>
     </header>
-    <div class="container">
+    <div style="padding-inline-start: 30px; padding-top: 25px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
