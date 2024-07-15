@@ -23,26 +23,27 @@ div.scrollmenu {
     display: flex;
     align-items: center;
     background-color: white;
-    width: 90%;
+    width: auto;
+    max-width: 90%;
     overflow: hidden;
     white-space: nowrap;
     scroll-behavior: smooth;
     grid-column-gap: 5px;
 }
 
-div.scrollmenu a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-}
+    div.scrollmenu a {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+    }
 
-div.scrollmenu a:hover {
-    font-weight: bold;
-}
+        div.scrollmenu a:hover {
+            font-weight: bold;
+        }
 
-/* header */
+/* headers */
 
 header.header {
     padding-inline-start: 40px;
@@ -52,6 +53,34 @@ header.header {
     top: 0;
 }
 
+/* navs */
+
+nav.nav_bar_location {
+    float: right;
+    overflow: hidden;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+
+/* buttons */
+
+.btn:focus, .a:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+button.filter {
+    margin-inline-start: 15px;
+    min-width: 100px;
+    min-height: 50px;
+    border-radius: 15px;
+}
+
+
+/* divs */
+
 div.logo {
     display: inline-block;
     margin-top: 8px;
@@ -59,22 +88,21 @@ div.logo {
 
 div.top_header {
     width: 100%;
+    display: flex;
+    align-items: center;
     display: inline-block;
     transition: 0.2s;
-    padding-bottom: 80px;
+    height: 150px;
+    margin-top: 8px;
 }
 
 div.button_group {
     display: inline-block;
     margin-top: -5px;
-    padding-inline-start: 20px;
-    padding-inline-end: 20px;
 }
 
-nav.nav_bar_location {
-    float: right;
-    overflow: hidden;
-    position: relative !important;
+div.nav_bar_shadow :hover {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24),0 2px 2px 0 rgba(0,0,0,0.19);
 }
 
 div.stays_menu_buttons {
@@ -88,12 +116,19 @@ div.stays_menu_buttons {
     transition: 0.2s;
 }
 
-div.stays_menu_buttons :hover {
+    div.stays_menu_buttons :hover {
+        background-color: #cacaca;
+    }
+
+div.filter :hover {
     background-color: #cacaca;
 }
 
-button.filter {
-    margin-inline-start: 20px;
-    margin-block-end: 10px;
-    border-radius: 50px;
+div.scroll_bar {
+    position: sticky;
+    top: 69px;
+    padding-block-start: 10px;
+    padding-block-end: 10px;
+    padding-inline-start: 30px;
+    padding-inline-end: 30px;
 }
