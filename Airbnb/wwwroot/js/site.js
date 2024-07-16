@@ -1,36 +1,42 @@
 ﻿
+history.scrollRestoration = 'manual';
+
 //  header scaling
 window.onscroll = function() { headerScaling() };
-
 
 function headerScaling() 
 {
     if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1)
     {
         //  if scrolled down
-        document.getElementById("TopHeader").style.height = "60px";
+        document.getElementById("TopHeader").style.height = "59px";
 
         document.getElementById("StaysMenuFormStays").style.top = "35px";
         document.getElementById("StaysMenuFormExperiences").style.top = "35px";
 
         document.getElementById("StaysMenuButtons").style.top = "-50px";
 
-        document.getElementById("ScrollDiv").style.top = "69px";
+        document.getElementById("ScrollDiv").style.top = "60px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
     }
     else 
     {
         //  if on top of page
-        document.getElementById("TopHeader").style.height = "150px";
+        document.getElementById("TopHeader").style.height = "149px";
 
         document.getElementById("StaysMenuFormStays").style.top = "100px";
         document.getElementById("StaysMenuFormExperiences").style.top = "100px";
 
-        document.getElementById("StaysMenuButtons").style.top = "20px";
+        document.getElementById("StaysMenuButtons").style.top = "28px";
 
         document.getElementById("ScrollDiv").style.top = "150px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
     }
+}
+
+function test()
+{
+    console.log("FREE PIZZA");
 }
 
 function displayStaysMenu()

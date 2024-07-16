@@ -51,6 +51,8 @@ header.header {
     background-color: white;
     position: sticky;
     top: 0;
+    width: 100%;
+    background-color: white;
 }
 
 /* navs */
@@ -61,6 +63,7 @@ nav.nav_bar_location {
     position: absolute;
     right: 10px;
     top: 0px;
+    display: inline-block;
 }
 
 /* buttons */
@@ -70,7 +73,6 @@ nav.nav_bar_location {
     box-shadow: none !important;
 }
 
-
 button.filter {
     margin-inline-start: 15px;
     min-width: 100px;
@@ -78,9 +80,7 @@ button.filter {
     border-radius: 15px;
 }
 
-
 /* divs */
-
 div.logo {
     display: inline-block;
     margin-top: 8px;
@@ -90,9 +90,10 @@ div.top_header {
     width: 100%;
     display: flex;
     align-items: center;
-    display: inline-block;
+    position: fixed;
     transition: 0.2s;
     height: 150px;
+    width: 100%;
     margin-top: 8px;
 }
 
@@ -107,28 +108,26 @@ div.nav_bar_shadow :hover {
 
 div.stays_menu_buttons {
     border-radius: 50px;
-    position: absolute;
+    position: relative;
     display: inline-block;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    top: 20px;
+    top: 28px;
     transition: 0.2s;
 }
 
-    div.stays_menu_buttons :hover {
-        background-color: #cacaca;
-    }
-
-div.filter :hover {
+.shadowe :hover {
     background-color: #cacaca;
 }
 
 div.scroll_bar {
     position: sticky;
-    top: 69px;
+    top: 150px;
     padding-block-start: 10px;
     padding-block-end: 10px;
     padding-inline-start: 30px;
     padding-inline-end: 30px;
+    transition: 0.2s;
+    background-color: white;
 }
