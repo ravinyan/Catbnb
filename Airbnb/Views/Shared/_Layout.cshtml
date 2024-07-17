@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="border-bottom mb-3 header bg-white" style="position:fixed">
-        <div id="TopHeader" style="transition: 0.2s;height: 149px;">
+        <div id="TopHeader" style="transition: 0.2s;height: 149px">
             @* scuffed airbnb logo *@
             <div class="logo">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
@@ -19,9 +19,9 @@
             <div id="StaysMenuWhenScrolledDown" class="d-inline-block" >
             </div>
             @* stays/experiences buttons *@
-            <div id="StaysMenuButtons" class="stays_menu_buttons" style="position:fixed">
-                <button type="button" class="btn button" onclick="displayStaysMenu()">Stays</button> 
-                <button type="button" class="btn button" onclick="displayExperiencesMenu()">Experiences</button>
+            <div id="StaysMenuButtons" class="stays_menu_buttons shadowe" style="position:fixed">
+                <button id="StaysMenuButton" type="button" class="btn button">Stays</button> 
+                <button id="ExperiencesMenuButton" type="button" class="btn button">Experiences</button>
             </div>
             @* nav bar (airbnb your home / world icon / login button) *@
             <nav class="navbar navbar-expand navbar-light nav_bar_location align-items-center d-flex" style="position:fixed">
@@ -29,7 +29,7 @@
                     <a class="navbar-brand" style="font-size: 14px; min-height: 50px;min-width:150px; display: flex; justify-content: center; align-items: center; border-radius: 40px;" asp-area="" asp-controller="Home" asp-action="Index">Airbnb your home</a>
                 </div>
                 <div class="shadowe">
-                    <button type="button" onclick="test()" class="btn button" style="min-height: 50px; min-width:50px; left: -15px; position: relative;display: flex; justify-content: center; align-items: center; border-radius: 40px;">
+                    <button id="WorldIcon" type="button" class="btn button" data-bs-toggle="modal" data-bs-target="#ModalSettings" style="min-height: 50px; min-width:50px; left: -15px; position: relative;display: flex; justify-content: center; align-items: center; border-radius: 40px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
                             <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z" />
                         </svg>
@@ -49,7 +49,7 @@
             </nav>
         </div>
         @* stays/experiences menu *@
-        <div id="StaysMenuFormStays" class="btn-group border button_group stays_menu_buttons shadowe" role="search" style="top: 100px; position: fixed">
+        <div id="StaysMenuForm" class="btn-group border button_group stays_menu_buttons shadowe" role="search" style="top: 100px; position: fixed">
                 <button type="button" class="btn button rounded-pill">Where</button>
                 <button type="button" class="btn button rounded-pill" style="width: 188px">Date</button>
                 <button type="button" class="btn button rounded-pill">Who</button>
@@ -59,7 +59,7 @@
                     </svg>
                 </button>
             </div>
-        <div id="StaysMenuFormExperiences" class="btn-group border button_group stays_menu_buttons shadowe" role="search" style="top: 100px; position:fixed; display: none;">
+        <div id="ExperiencesMenuForm" class="btn-group border button_group stays_menu_buttons shadowe" role="search" style="top: 100px; position:fixed; display: none;">
                 <button type="button" class="btn button rounded-pill">Where</button>
                 <button type="button" class="btn button rounded-pill">Check in</button>
                 <button type="button" class="btn button rounded-pill">Check out</button>
@@ -82,6 +82,16 @@
            &copy; footar ------------------------------------------- language setting / country currency (universal currency name?)
         </div>
     </footer>
+
+    @* MODAL *@
+    <div id="ModalSettings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content" style="border-radius:10px;">
+                <partial name="Modal" />
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

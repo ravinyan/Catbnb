@@ -11,8 +11,8 @@ function headerScaling()
         //  if scrolled down
         document.getElementById("TopHeader").style.height = "59px";
 
-        document.getElementById("StaysMenuFormStays").style.top = "35px";
-        document.getElementById("StaysMenuFormExperiences").style.top = "35px";
+        document.getElementById("StaysMenuForm").style.top = "35px";
+        document.getElementById("ExperiencesMenuForm").style.top = "35px";
 
         document.getElementById("StaysMenuButtons").style.top = "-50px";
 
@@ -24,8 +24,8 @@ function headerScaling()
         //  if on top of page
         document.getElementById("TopHeader").style.height = "149px";
 
-        document.getElementById("StaysMenuFormStays").style.top = "100px";
-        document.getElementById("StaysMenuFormExperiences").style.top = "100px";
+        document.getElementById("StaysMenuForm").style.top = "100px";
+        document.getElementById("ExperiencesMenuForm").style.top = "100px";
 
         document.getElementById("StaysMenuButtons").style.top = "28px";
 
@@ -34,25 +34,8 @@ function headerScaling()
     }
 }
 
-function test()
-{
-    console.log("FREE PIZZA");
-}
-
-function displayStaysMenu()
-{
-    document.getElementById("StaysMenuFormStays").style.display = "block";
-    document.getElementById("StaysMenuFormExperiences").style.display = "none";
-}
-
-function displayExperiencesMenu()
-{
-    document.getElementById("StaysMenuFormExperiences").style.display = "block";
-    document.getElementById("StaysMenuFormStays").style.display = "none";
-}
-
-
-//  scroll menu
+/* ------------------------------- BUTTONS ------------------------------- */
+//  SCROLL MENU
 const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
 const scrollMenu = document.getElementById("ScrollMenu");
@@ -64,7 +47,6 @@ scrollMenu.scrollLeft == 0;
 buttonLeft.onclick = function()
 {
     scrollMenu.scrollLeft -= 650;
-
     buttonRight.style.display = "block";  
     
     if (scrollMenu.scrollLeft <= 650)
@@ -77,7 +59,6 @@ buttonLeft.onclick = function()
 buttonRight.onclick = function()
 {
     scrollMenu.scrollLeft += 650;
-
     buttonLeft.style.display = "block";
 
     if (scrollMenu.scrollLeft >= 4300 )
@@ -86,3 +67,39 @@ buttonRight.onclick = function()
     }
 }
 
+//  DISPLAYING FORMS FOR STAYS/EXPERIENCES
+const staysMenuButton = document.getElementById("StaysMenuButton");
+const experiencesMenuButton = document.getElementById("ExperiencesMenuButton");
+const staysMenuForm = document.getElementById("StaysMenuForm");
+const experiencesMenuForm = document.getElementById("ExperiencesMenuForm");
+
+staysMenuButton.onclick = function()
+{
+    staysMenuForm.style.display = "block";
+    experiencesMenuForm.style.display = "none";
+}
+
+experiencesMenuButton.onclick = function()
+{
+    experiencesMenuForm.style.display = "block";
+    staysMenuForm.style.display = "none";
+}
+
+// LANGUAGES AND REGIONS / CURRENCIES
+const languagesButton = document.getElementById("ModalLanguageAndRegionButton");
+const currenciesButton = document.getElementById("ModalCurrenciesButton");
+
+const languages = document.getElementById("LanguageAndRegion");
+const currencies = document.getElementById("Currencies");
+
+languagesButton.onclick = function()
+{
+    languages.style.display = "block";
+    currencies.style.display = "none";
+}
+
+currenciesButton.onclick = function()
+{
+    currencies.style.display = "block";
+    languages.style.display = "none";
+}
