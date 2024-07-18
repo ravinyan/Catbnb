@@ -13,11 +13,113 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    /* 
+        FROM THIS POINT ONWARD I HATE SCROLLBARS
+        100 answers from internet useless and my 1 random thought i didnt want to try worked
+        lesson to learn - listen to myself, stupid
+        html - scrollbar-gutter: auto
+        header - width: 100vw;
+        might need to do body width 100vw later so just in case writing this too
+    */
+    scrollbar-gutter: auto;
 }
 
-/* scroll menu */
+
+/* -------------------------------------- REMOVING SHADOWS -------------------------------------- */
+/* focus on deez nuts */
+.btn:focus, .a:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* -------------------------------------- SHADOWS -------------------------------------- */
+div.nav_bar_shadow :hover {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24),0 2px 2px 0 rgba(0,0,0,0.19);
+}
+
+/* shadow for buttons/href/anything that would want shadow on hover lol */
+.shadowe :hover {
+    background-color: #cacaca;
+}
+
+/* -------------------------------------- HEADER CLASSES -------------------------------------- */
+header.header {
+    background-color: white;
+    position: sticky;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: white;
+}
+
+div.header_div {
+    align-items: center;
+    display: flex;
+    padding-inline-start: 40px;
+    padding-inline-end: 40px;
+    height: 80px
+}
+
+div.logo {
+    position: relative;
+    width:100%;
+}
+
+div.top_buttons {
+    padding-inline-start: 24px;
+    padding-inline-end: 24px;
+    min-width: 348px;
+    text-align: center;
+    position: relative;
+    transition: 0.2s;
+}
+
+nav.header_navbar {
+    display: flex !important;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end !important;
+    height: 80px;
+    width: 100%;
+}
+    a.href_button {
+        font-size: 14px;
+        min-height: 50px;
+        min-width: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 40px;
+    }
+
+    button.globe_button {
+        min-height: 50px;
+        min-width: 50px;
+        left: -15px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 40px;
+    }
+
+/* -------------------------------------- FORM CLASSES -------------------------------------- */
+div.stays_menu_buttons {
+    border-radius: 50px;
+    position: relative;
+    display: inline-block;
+    /*    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
+    top: 28px;
+    top: 100px;
+    position: fixed;
+    transition: 0.2s;
+}
+
+/* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scrollmenu {
     display: inline-block;
     display: flex;
@@ -43,84 +145,6 @@ div.scrollmenu {
             font-weight: bold;
         }
 
-/* headers */
-
-header.header {
-    padding-inline-start: 40px;
-    padding-inline-end: 40px;
-    background-color: white;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: white;
-}
-
-/* navs */
-
-nav.nav_bar_location {
-    float: right;
-    overflow: hidden;
-    position: absolute;
-    right: 10px;
-    top: 0px;
-    display: inline-block;
-}
-
-/* buttons */
-
-.btn:focus, .a:focus, .btn:active {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-button.filter {
-    margin-inline-start: 15px;
-    min-width: 100px;
-    min-height: 50px;
-    border-radius: 15px;
-}
-
-/* divs */
-div.logo {
-    display: inline-block;
-    margin-top: 8px;
-}
-
-div.top_header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    transition: 0.2s;
-    height: 150px;
-    width: 100%;
-    margin-top: 8px;
-}
-
-div.button_group {
-    display: inline-block;
-    margin-top: -5px;
-}
-
-div.nav_bar_shadow :hover {
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24),0 2px 2px 0 rgba(0,0,0,0.19);
-}
-
-div.stays_menu_buttons {
-    border-radius: 50px;
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    top: 28px;
-    transition: 0.2s;
-}
-
-.shadowe :hover {
-    background-color: #cacaca;
-}
-
 div.scroll_bar {
     position: sticky;
     top: 150px;
@@ -130,4 +154,13 @@ div.scroll_bar {
     padding-inline-end: 30px;
     transition: 0.2s;
     background-color: white;
+    align-items: center;
+    display: flex;
+}
+
+button.filter {
+    margin-inline-start: 15px;
+    min-width: 100px;
+    min-height: 50px;
+    border-radius: 15px;
 }

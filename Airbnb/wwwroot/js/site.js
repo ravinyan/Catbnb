@@ -6,17 +6,22 @@ window.onscroll = function() { headerScaling() };
 
 function headerScaling() 
 {
+    var butt = document.getElementById("StaysMenuButtons").innerHTML;
+    var form = document.getElementById("StaysMenuForm").innerHTML;
+
     if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1)
     {
         //  if scrolled down
-        document.getElementById("TopHeader").style.height = "59px";
+        document.getElementById("TopHeader").style.height = "80px";
+
 
         document.getElementById("StaysMenuForm").style.top = "35px";
         document.getElementById("ExperiencesMenuForm").style.top = "35px";
 
         document.getElementById("StaysMenuButtons").style.top = "-50px";
 
-        document.getElementById("ScrollDiv").style.top = "60px";
+
+        document.getElementById("ScrollDiv").style.top = "81px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
     }
     else 
@@ -24,10 +29,12 @@ function headerScaling()
         //  if on top of page
         document.getElementById("TopHeader").style.height = "149px";
 
+
         document.getElementById("StaysMenuForm").style.top = "100px";
         document.getElementById("ExperiencesMenuForm").style.top = "100px";
 
-        document.getElementById("StaysMenuButtons").style.top = "28px";
+        document.getElementById("StaysMenuButtons").style.top = "0px";
+
 
         document.getElementById("ScrollDiv").style.top = "150px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
