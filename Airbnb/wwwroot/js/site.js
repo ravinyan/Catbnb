@@ -53,10 +53,10 @@ scrollMenu.scrollLeft == 0;
 /* left button */
 buttonLeft.onclick = function()
 {
-    scrollMenu.scrollLeft -= 650;
-    buttonRight.style.display = "block";  
-    
-    if (scrollMenu.scrollLeft <= 650)
+    scrollMenu.scrollLeft -= window.innerWidth - 420;
+    buttonRight.style.display = "block"; 
+
+    if (scrollMenu.scrollLeft <= window.innerWidth)
     {
         buttonLeft.style.display = "none";
     }
@@ -65,10 +65,10 @@ buttonLeft.onclick = function()
 /* right button */
 buttonRight.onclick = function()
 {
-    scrollMenu.scrollLeft += 650;
+    scrollMenu.scrollLeft += window.innerWidth - 420;
     buttonLeft.style.display = "block";
 
-    if (scrollMenu.scrollLeft >= 4300 )
+    if (scrollMenu.scrollLeft >= scrollMenu.scrollWidth - window.innerWidth)
     {
         buttonRight.style.display = "none";
     }

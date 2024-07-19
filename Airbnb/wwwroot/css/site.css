@@ -24,6 +24,7 @@ html {
         might need to do body width 100vw later so just in case writing this too
     */
     scrollbar-gutter: auto;
+    overflow-x: hidden;
 }
 
 
@@ -110,13 +111,26 @@ div.stays_menu_buttons {
     border-radius: 50px;
     position: relative;
     display: inline-block;
-    /*    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);*/
     top: 28px;
     top: 100px;
     position: fixed;
     transition: 0.2s;
+}
+
+div.form_div_text {
+    font-weight: bold;
+    background: none !important;
+    text-align: left;
+    padding-inline-start: 2px;
+}
+
+div.form_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    height: 66px;
+    min-width: 650px;
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
@@ -126,18 +140,16 @@ div.scrollmenu {
     align-items: center;
     background-color: white;
     width: auto;
-    max-width: 90%;
     overflow: hidden;
     white-space: nowrap;
     scroll-behavior: smooth;
-    grid-column-gap: 5px;
+    grid-column-gap: 15px;
 }
 
     div.scrollmenu a {
         display: inline-block;
         color: black;
         text-align: center;
-        padding: 14px;
         text-decoration: none;
     }
 
@@ -148,18 +160,16 @@ div.scrollmenu {
 div.scroll_bar {
     position: sticky;
     top: 150px;
-    padding-block-start: 10px;
-    padding-block-end: 10px;
-    padding-inline-start: 30px;
-    padding-inline-end: 30px;
+    min-height: 80px;
     transition: 0.2s;
     background-color: white;
     align-items: center;
     display: flex;
+    grid-column-gap: 30px;
 }
 
 button.filter {
-    margin-inline-start: 15px;
+
     min-width: 100px;
     min-height: 50px;
     border-radius: 15px;
