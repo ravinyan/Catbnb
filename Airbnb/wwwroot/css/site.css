@@ -45,6 +45,10 @@ div.nav_bar_shadow :hover {
     background-color: #cacaca;
 }
 
+.shadow_search_button :hover {
+    background-color: #c8003d !important;
+}
+
 /* -------------------------------------- HEADER CLASSES -------------------------------------- */
 header.header {
     background-color: white;
@@ -68,15 +72,6 @@ div.logo {
     width:100%;
 }
 
-div.top_buttons {
-    padding-inline-start: 24px;
-    padding-inline-end: 24px;
-    min-width: 348px;
-    text-align: center;
-    position: relative;
-    transition: 0.2s;
-}
-
 nav.header_navbar {
     display: flex !important;
     position: relative;
@@ -93,6 +88,7 @@ nav.header_navbar {
         justify-content: center;
         align-items: center;
         border-radius: 40px;
+        font-weight: bold;
     }
 
     button.globe_button {
@@ -126,11 +122,31 @@ div.form_div_text {
 
 div.form_menu {
     display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 50px;
     height: 66px;
     min-width: 650px;
+}
+
+div.form_position {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+div.top_buttons {
+    padding-inline-start: 24px;
+    padding-inline-end: 24px;
+    min-width: 348px;
+    text-align: center;
+    position: relative;
+    transition: 0.2s;
+    justify-content: center;
+    display:flex;
+}
+
+input.no-bg_no-outline {
+    background: none !important;
+    outline: none !important;
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
