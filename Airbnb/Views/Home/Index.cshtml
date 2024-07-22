@@ -97,74 +97,90 @@
 <p>frick</p>
 <p>testing</p>
 
-<div style="display: flex; justify-content: center; position: relative">
-    <form>
-        <div>
+<div>
+    <form class="form">
+        <div style="width: 850px">
             @* buttons *@
-            <div style="display: flex; align-items: center; justify-content: center">
+            <div class="align_buttons">
                 <button>stei</button>
                 <button>exp</button>
             </div>
             @* form *@
-            <div class="border rounded-pill shadow-sm" style="max-width: 850px; max-height: 66px; display: flex;">
-                <div style=" display: flex; width: 100%">
+            <div class="border shadow-sm form_border d-inline-flex">
+                <div style="display: flex; width: 100%">
                     @* WHERE *@
                     <div style="width: 33.33%">
-                        <label style="width: 100%;">
-                            <div style="padding: 9px 22px; font-size: 14px;">
-                                <div style="font-weight: bold">
+                        <label class="shadowe" style="width: 100%;">
+                            <div class="label_box">
+                                <div class="fw-bold">
                                     Where
                                 </div>
-                                <input class="border-0" style="width: 100%; padding: 0 0 0 0; outline: none" placeholder="Search destinations" />
+                                <input class="border-0 input" placeholder="Search destinations" />
                             </div>
                         </label>
                     </div>
                     @* Check in/ Check out OR Date *@
                     <div style="width: 33.33%; display: flex">
                         <div style="width: 50%">
-                            <label style="width: 100%; ">
-                                <div style="padding: 9px 22px; font-size: 14px; width: 100%">
-                                    <div style="font-weight: bold">
+                            <label class="shadowe" style="width: 100%; ">
+                                <div class="label_box">
+                                    <div class="fw-bold text-nowrap">
                                         Check in
                                     </div>
-                                    <input class="border-0" style="width: 100%; padding: 0 0 0 0; outline: none; text-overflow: ellipsis" type="search" placeholder="Add dates" />
+                                    <input class="border-0 input" type="search" placeholder="Add dates" />
                                 </div>
                             </label>
                         </div>
                         <div style="width: 50%">
-                            <label style="width: 100%">
-                                <div style="padding: 9px 22px; font-size: 14px">
-                                    <div style="font-weight: bold; white-space:nowrap">
+                            <label class="shadowe" style="width: 100%">
+                                <div class="label_box">
+                                    <div class="fw-bold text-nowrap">
                                         Check out
                                     </div>
-                                    <input class="border-0" style="width: 100%; padding: 0 0 0 0; outline: none; text-overflow: ellipsis" placeholder="Add dates" />
+                                    <input class="border-0 input" type="search" placeholder="Add dates" />
                                 </div>
                             </label>
                         </div>
                     </div>
                     @* WHO *@
-                    <div style="width: 33.33%; display: flex; align-items: center">
-                        <label style="position:absolute">
-                            <div style="padding: 9px 22px; font-size: 14px">
-                                <div style="font-weight: bold;">
-                                    Who
+                    <div class="shadowe d-inline-flex" style="width: 33.33%">
+                
+                            <div class="d-inline-flex" style="background:none">
+                                <div style="width: 100%; background:none; z-index: 1">
+                                    <label style="background:none">
+                                        <div class="label_box">
+                                            <div class="fw-bold">
+                                                Who
+                                            </div>
+                                            <input class="border-0 input" placeholder="Add guests" />
+                                        </div>
+                                    </label>
                                 </div>
-                                <input class="border-0" style="width: 100%; padding: 0 0 0 0; outline: none" placeholder="Add guests" />
+                                <div class="search_button_box search_button_box_shadow">
+                                    <button type="button" class="search_button" style="z-index: 2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </label>
-                        <div style="width: 100%; align-content: center; text-align: right">
-                            <button type="button" style="width: 48px; height: 48px; position: relative; background-color: #ff385c; border: none; color: white; border-radius: 26px; margin-inline-end: 8px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search" viewBox="0 1 16 16" style="background:none !important; stroke-width: 2; stroke:currentColor; overflow: visible;">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>
-                            </button>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

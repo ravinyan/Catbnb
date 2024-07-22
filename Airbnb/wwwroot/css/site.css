@@ -149,6 +149,72 @@ input.no-bg_no-outline {
     outline: none !important;
 }
 
+
+
+
+
+div.align_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+div.form_border {
+    min-width: 650px;
+    border-radius: 50px;
+    min-height: 66px;
+}
+
+div.label_box {
+    padding: 11px 22px;
+    font-size: 14px;
+    border-radius: 50px;
+}
+
+input.input {
+    width: 100%;
+    padding: 0 0 0 0;
+    outline: none;
+    text-overflow: ellipsis;
+    background: none !important;
+}
+
+div.search_button_box {
+    width: 50px;
+    align-content: center;
+    text-align: right;
+}
+
+div.search_button_box :hover {
+    background-color: black !important;
+}
+
+button.search_button {
+    width: 48.5px;
+    height: 48.5px;
+    position: relative;
+    background-color: #ff385c;
+    border: none;
+    color: white;
+    border-radius: 24px;
+    margin-inline-end: 8px;
+    right: 6px;
+}
+
+svg.search_icon {
+    background: none !important;
+    stroke-width: 2;
+    stroke: currentColor;
+    overflow: visible;
+}
+
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scrollmenu {
     display: inline-block;
