@@ -10,43 +10,16 @@
 </head>
 <body>
     <header class="border-bottom mb-3 header">
-        <div id="TopHeader" style="transition: 0.2s; height: 149px">
+        <div id="TopHeader" style="transition: 0.2s; height: 161px">
             <div class="header_div">
                 @* scuffed airbnb logo *@
                 <div class="logo">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
                 </div>
                 @* stays/experiences form *@
-                <div>
-                    <form>
-                        @* stays/experiences buttons *@
-                        <div id="" class="shadowe top_buttons">
-                            <button id="" type="button" class="btn button">Stays</button>
-                            <button id="" type="button" class="btn button">Experiences</button>
-                        </div>
-                        @* stays/ experiences menu*@
-                        <div id="StaysMenuForm" class="btn-group border stays_menu_buttons shadowe" role="search">
-                            <button type="button" class="btn button rounded-pill">Where</button>
-                            <button type="button" class="btn button rounded-pill">Check in</button>
-                            <button type="button" class="btn button rounded-pill">Check out</button>
-                            <button type="button" class="btn button rounded-pill">Who</button>
-                            <button type="button" class="btn button rounded-circle" style="background-color: red;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div id="ExperiencesMenuForm" class="btn-group border stays_menu_buttons shadowe" role="search" style="display: none;">
-                            <button type="button" class="btn button rounded-pill">Where</button>
-                            <button type="button" class="btn button rounded-pill" style="width: 188px">Date</button>
-                            <button type="button" class="btn button rounded-pill">Who</button>
-                            <button type="button" class="btn button rounded-circle" style="background-color: red">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
+                <div id="StaysMenuButtons" class="d-inline-flex shadowe">
+                    <button id="StaysMenuButton" type="button" class="btn button" style="border-radius: 50px; text-shadow: 0px 0px 1px black">Stays</button>
+                    <button id="ExperiencesMenuButton" type="button" class="btn button" style="border-radius:50px">Experiences</button>
                 </div>
                 @* nav bar (airbnb your home / world icon / login button) *@
                 <nav class="navbar navbar-expand navbar-light header_navbar">
@@ -73,11 +46,138 @@
                     </div>
                 </nav>
             </div>
+            @* FORMS *@
+            <div id="StaysMenuForm">
+                <form class="form">
+                    <div class="justify-content-center d-flex" style="width: 850px">
+                        @* form *@
+                        <div class="border shadow-sm form_border d-inline-flex">
+                            <div class="d-flex w-100">
+                                @* WHERE *@
+                                <div style="width: 33.33%">
+                                    <label class="shadowe w-100">
+                                        <div class="label_box">
+                                            <div class="fw-bold">
+                                                Where
+                                            </div>
+                                            <input class="border-0 input" placeholder="Search destinations" />
+                                        </div>
+                                    </label>
+                                </div>
+                                @* Check in/ Check out OR Date *@
+                                <div style="width: 33.33%; display: flex">
+                                    <div style="width: 50%">
+                                        <label class="shadowe w-100">
+                                            <div class="label_box">
+                                                <div class="fw-bold text-nowrap">
+                                                    Check in
+                                                </div>
+                                                <input class="border-0 input" type="search" placeholder="Add dates" />
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div style="width: 50%">
+                                        <label class="shadowe w-100">
+                                            <div class="label_box">
+                                                <div class="fw-bold text-nowrap">
+                                                    Check out
+                                                </div>
+                                                <input class="border-0 input" type="search" placeholder="Add dates" />
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                @* WHO *@
+                                <div style="width: 33.33%" class="d-inline-flex">
+                                    <div class="shadowe d-flex w-100">
+                                        <div class="who_container">
+                                            <label style="background:none">
+                                                <div class="label_box">
+                                                    <div class="fw-bold">
+                                                        Who
+                                                    </div>
+                                                    <input class="border-0 input" type="search" placeholder="Add guests" />
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="search_button_box" style="background: none">
+                                            <button id="SearchButtonShadow" type="button" class="search_button" style="z-index: 727">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="ExperiencesMenuForm" style="display: none">
+                <form class="form">
+                    <div class="justify-content-center d-flex" style="width: 850px">
+                        @* form *@
+                        <div class="border shadow-sm form_border d-inline-flex">
+                            <div class="d-flex w-100">
+                                @* WHERE *@
+                                <div style="width: 33.33%">
+                                    <label class="shadowe w-100">
+                                        <div class="label_box">
+                                            <div class="fw-bold">
+                                                Where
+                                            </div>
+                                            <input class="border-0 input" placeholder="Search destinations" />
+                                        </div>
+                                    </label>
+                                </div>
+                                @* Date *@
+                                <div style="width: 33.33%; display: flex">
+                                    <div class="w-100">
+                                        <label class="shadowe w-100">
+                                            <div class="label_box">
+                                                <div class="fw-bold text-nowrap">
+                                                    Add dates
+                                                </div>
+                                                <input class="border-0 input" type="search" placeholder="Add dates" />
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                @* WHO *@
+                                <div style="width: 33.33%" class="d-inline-flex">
+                                    <div class="shadowe d-flex w-100">
+                                        <div class="who_container">
+                                            <label style="background:none">
+                                                <div class="label_box">
+                                                    <div class="fw-bold">
+                                                        Who
+                                                    </div>
+                                                    <input class="border-0 input" type="search" placeholder="Add guests" />
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="search_button_box" style="background: none">
+                                            <button id="SearchButtonShadow" type="button" class="search_button" style="z-index: 727">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </header>
 
-    <div style="padding-inline-start: 40px; padding-inline-end: 40px;">
-        <main role="main" class="">
+    <div>
+        <main role="main">
             @RenderBody()
         </main>
     </div>

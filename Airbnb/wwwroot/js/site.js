@@ -15,7 +15,7 @@ function headerScaling()
         document.getElementById("TopHeader").style.height = "80px";
 
 
-        document.getElementById("StaysMenuForm").style.top = "35px";
+        document.getElementById("StaysMenuForm").style.top = "-35px";
         document.getElementById("ExperiencesMenuForm").style.top = "35px";
 
         document.getElementById("StaysMenuButtons").style.top = "-50px";
@@ -27,16 +27,16 @@ function headerScaling()
     else 
     {
         //  if on top of page
-        document.getElementById("TopHeader").style.height = "149px";
+        document.getElementById("TopHeader").style.height = "161px";
 
 
-        document.getElementById("StaysMenuForm").style.top = "100px";
+        document.getElementById("StaysMenuForm").style.top = "0px";
         document.getElementById("ExperiencesMenuForm").style.top = "100px";
 
         document.getElementById("StaysMenuButtons").style.top = "0px";
 
 
-        document.getElementById("ScrollDiv").style.top = "150px";
+        document.getElementById("ScrollDiv").style.top = "162px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
     }
 }
@@ -84,12 +84,16 @@ staysMenuButton.onclick = function()
 {
     staysMenuForm.style.display = "block";
     experiencesMenuForm.style.display = "none";
+    staysMenuButton.style.textShadow = "0px 0px 1px black";
+    experiencesMenuButton.style.textShadow = "";
 }
 
 experiencesMenuButton.onclick = function()
 {
     experiencesMenuForm.style.display = "block";
     staysMenuForm.style.display = "none";
+    experiencesMenuButton.style.textShadow = "0px 0px 1px black";
+    staysMenuButton.style.textShadow = "";
 }
 
 // LANGUAGES AND REGIONS / CURRENCIES
