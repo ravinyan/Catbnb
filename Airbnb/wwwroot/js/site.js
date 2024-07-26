@@ -114,3 +114,97 @@ currenciesButton.onclick = function()
     currencies.style.display = "block";
     languages.style.display = "none";
 }
+
+//tesitnsad
+
+const whereButton = document.getElementById("WhereButton");
+const whereDropdown = document.getElementById("WhereDropdown");
+
+const checkinButton = document.getElementById("CheckinButton");
+const checkinDropdown = document.getElementById("CheckinDropdown");
+
+const checkoutButton = document.getElementById("CheckoutButton");
+const checkoutDropdown = document.getElementById("CheckoutDropdown");
+
+const whoButton = document.getElementById("WhoButton");
+const whoDropdown = document.getElementById("WhoDropdown");
+
+const whereButtonExperiences = document.getElementById("WhereButtonExperiences");
+const whereDropdownExperiences = document.getElementById("WhereDropdownExperiences");
+
+const datesButton = document.getElementById("DatesButton");
+const datesDropdown =  document.getElementById("DatesDropdown");
+
+const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
+const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
+
+whereButton.onclick = function()
+{
+    whereDropdown.style.display = "block";
+
+    checkinDropdown.style.display = "none";
+    checkoutDropdown.style.display = "none";
+    whoDropdown.style.display = "none";
+}
+
+checkinButton.onclick = function()
+{
+    checkinDropdown.style.display = "block";
+
+    whereDropdown.style.display = "none";
+    checkoutDropdown.style.display = "none";
+    whoDropdown.style.display = "none";
+}
+
+checkoutButton.onclick = function()
+{
+    checkoutDropdown.style.display = "block";
+
+    whereDropdown.style.display = "none";
+    checkinDropdown.style.display = "none";
+    whoDropdown.style.display = "none";
+}
+
+whoButton.onclick = function()
+{
+    whoDropdown.style.display = "block";
+
+    whereDropdown.style.display = "none";
+    checkinDropdown.style.display = "none";
+    checkoutDropdown.style.display = "none";
+}
+
+whereButtonExperiences.onclick = function()
+{
+    whoDropdown.style.display = "block";
+
+    whereDropdown.style.display = "none";
+    checkinDropdown.style.display = "none";
+    checkoutDropdown.style.display = "none";
+}
+
+whereButtonExperiences.onclick = function()
+{
+    whereDropdownExperiences.style.display = "block";
+
+    datesDropdown.style.display = "none";
+    whoDropdownExperiences.style.display = "none";
+}
+
+datesButton.onclick = function()
+{
+    datesDropdown.style.display = "block";
+
+    whereDropdownExperiences.style.display = "none";
+    whoDropdownExperiences.style.display = "none";
+}
+
+whoButtonExperiences.onclick = function()
+{
+    whoDropdownExperiences.style.display = "block";
+
+    whereDropdownExperiences.style.display = "none";
+    datesDropdown.style.display = "none";
+}
+
+

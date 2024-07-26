@@ -165,6 +165,20 @@ svg.search_icon {
     overflow: visible;
 }
 
+div.modal_window {
+    display: none;
+    width: 425px;
+    height: 350px;
+    background: black;
+    position: absolute;
+    z-index: 1;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    overscroll-behavior: contain;
+    border-radius: 29px;
+    top: 150px;
+}
+
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
     position: sticky;
@@ -178,6 +192,7 @@ div.scroll_bar {
     width: 100%;
     padding-inline-start: 40px;
     padding-inline-end: 40px;
+    z-index: -1;
 }
 
 div.scrollmenu {

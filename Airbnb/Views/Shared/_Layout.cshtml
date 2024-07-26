@@ -56,35 +56,61 @@
                                 @* WHERE *@
                                 <div style="width: 33.33%">
                                     <label class="shadowe w-100">
-                                        <div class="label_box">
+                                        <div id="WhereButton" class="label_box">
                                             <div class="fw-bold">
                                                 Where
                                             </div>
                                             <input class="border-0 input" placeholder="Search destinations" />
                                         </div>
                                     </label>
+                                    <div id="WhereDropdown" class="modal_window">
+                                        <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                            <div style="color: white">
+                                                <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                @* Check in/ Check out OR Date *@
-                                <div style="width: 33.33%; display: flex">
-                                    <div style="width: 50%">
+                                @* Check in/ Check out *@
+                                <div style="width: 33.33%; display: flex; align-items: center; justify-content:center; justify-items: center; align-content: center">
+                                    <div style="width: 50%;">
                                         <label class="shadowe w-100">
-                                            <div class="label_box">
+                                            <div id="CheckinButton" class="label_box">
                                                 <div class="fw-bold text-nowrap">
                                                     Check in
                                                 </div>
                                                 <input class="border-0 input" type="search" placeholder="Add dates" />
                                             </div>
                                         </label>
+                                        <div style="display: flex;">
+                                            <div id="CheckinDropdown" class="modal_window" style="width: 850px">
+                                                <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                                    <div style="color: white">
+                                                        <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div style="width: 50%">
                                         <label class="shadowe w-100">
-                                            <div class="label_box">
+                                            <div id="CheckoutButton" class="label_box">
                                                 <div class="fw-bold text-nowrap">
                                                     Check out
                                                 </div>
                                                 <input class="border-0 input" type="search" placeholder="Add dates" />
                                             </div>
                                         </label>
+                                        <div style="display: flex; ">
+                                            <div id="CheckoutDropdown" class="modal_window" >
+                                                <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                                    <div style="color: white">
+                                                        <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 @* WHO *@
@@ -92,11 +118,11 @@
                                     <div class="shadowe d-flex w-100">
                                         <div class="who_container">
                                             <label style="background:none">
-                                                <div class="label_box">
-                                                    <div class="fw-bold">
+                                                <div id="WhoButton" class="label_box">
+                                                    <div  class="fw-bold">
                                                         Who
                                                     </div>
-                                                    <input class="border-0 input" type="search" placeholder="Add guests" />
+                                                    <input  class="border-0 input" type="search" placeholder="Add guests" />
                                                 </div>
                                             </label>
                                         </div>
@@ -108,7 +134,13 @@
                                             </button>
                                         </div>
                                     </div>
-
+                                    <div id="WhoDropdown" class="modal_window">
+                                        <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                            <div style="color: white">
+                                                <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                            </div>
+                                        </div>
+                                    </div>    
                                 </div>
                             </div>
                         </div>
@@ -124,25 +156,39 @@
                                 @* WHERE *@
                                 <div style="width: 33.33%">
                                     <label class="shadowe w-100">
-                                        <div class="label_box">
+                                        <div id="WhereButtonExperiences" class="label_box">
                                             <div class="fw-bold">
                                                 Where
                                             </div>
                                             <input class="border-0 input" placeholder="Search destinations" />
                                         </div>
                                     </label>
+                                    <div id="WhereDropdownExperiences" class="modal_window">
+                                        <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                            <div style="color: white">
+                                                <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 @* Date *@
                                 <div style="width: 33.33%; display: flex">
                                     <div class="w-100">
                                         <label class="shadowe w-100">
-                                            <div class="label_box">
+                                            <div id="DatesButton" class="label_box">
                                                 <div class="fw-bold text-nowrap">
                                                     Add dates
                                                 </div>
                                                 <input class="border-0 input" type="search" placeholder="Add dates" />
                                             </div>
                                         </label>
+                                        <div id="DatesDropdown" class="modal_window">
+                                            <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                                <div style="color: white">
+                                                    <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 @* WHO *@
@@ -150,7 +196,7 @@
                                     <div class="shadowe d-flex w-100">
                                         <div class="who_container">
                                             <label style="background:none">
-                                                <div class="label_box">
+                                                <div id="WhoButtonExperiences" class="label_box">
                                                     <div class="fw-bold">
                                                         Who
                                                     </div>
@@ -166,7 +212,13 @@
                                             </button>
                                         </div>
                                     </div>
-
+                                    <div id="WhoDropdownExperiences" class="modal_window">
+                                        <div style="padding-inline-start: 20px; padding-inline-end: 20px">
+                                            <div style="color: white">
+                                                <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
