@@ -14,13 +14,11 @@ function headerScaling()
         //  if scrolled down
         document.getElementById("TopHeader").style.height = "80px";
 
-
-        document.getElementById("StaysMenuForm").style.top = "-35px";
-        document.getElementById("ExperiencesMenuForm").style.top = "35px";
-
-        document.getElementById("StaysMenuButtons").style.top = "-50px";
+        document.getElementById("MiniForm").style.display = "block";
+        document.getElementById("StaysMenuButtons").style.display = "none";
 
 
+        
         document.getElementById("ScrollDiv").style.top = "81px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
     }
@@ -29,12 +27,8 @@ function headerScaling()
         //  if on top of page
         document.getElementById("TopHeader").style.height = "161px";
 
-
-        document.getElementById("StaysMenuForm").style.top = "0px";
-        document.getElementById("ExperiencesMenuForm").style.top = "100px";
-
-        document.getElementById("StaysMenuButtons").style.top = "0px";
-
+        document.getElementById("MiniForm").style.display = "none";
+        document.getElementById("StaysMenuButtons").style.display = "block";
 
         document.getElementById("ScrollDiv").style.top = "162px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
@@ -207,4 +201,18 @@ whoButtonExperiences.onclick = function()
     datesDropdown.style.display = "none";
 }
 
+const tm = document.getElementById("testmodal");
+const tb = document.getElementById("testbutton");
 
+tb.onclick = function()
+{
+    tm.style.display = "block";
+}
+
+window.onclick = function(event)
+{
+    if (event.target == tm)
+    {
+        tm.style.display = "none"
+    }
+}

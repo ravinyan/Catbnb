@@ -14,37 +14,51 @@
             <div class="header_div">
                 @* scuffed airbnb logo *@
                 <div class="logo">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
+                    <a class="text-decoration-none" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
                 </div>
                 @* stays/experiences form *@
-                <div id="StaysMenuButtons" class="d-inline-flex shadowe">
-                    <button id="StaysMenuButton" type="button" class="btn button" style="border-radius: 50px; text-shadow: 0px 0px 1px black">Stays</button>
-                    <button id="ExperiencesMenuButton" type="button" class="btn button" style="border-radius:50px">Experiences</button>
+                <div>
+                    <div id="MiniForm" class="border" style="min-width: 340px; border-radius: 50px; display: none; transition: 2.2s; flex: 0 1 auto">
+                        <div class="d-flex align-items-center " style="width: 100%;">
+                            @* why i cant type at all AAAAAAAAAAA *@
+                            <button type="button" class="btn button">anywgerer</button>
+                            <button type="button" class="btn button"> anyweek</button>
+                            <button type="button" class="btn button"> addguesgt</button>
+                        </div>
+                    </div>
+                    <div id="StaysMenuButtons" style="transition: 2.2s; padding-inline-start: 20px; padding-inline-end: 20px; text-align: center; min-width: 300px">
+                        <div class="d-inline-flex shadowe">
+                            <button id="StaysMenuButton" type="button" class="btn button" style="border-radius: 50px; text-shadow: 0px 0px 1px black">Stays</button>
+                            <button id="ExperiencesMenuButton" type="button" class="btn button" style="border-radius:50px">Experiences</button>
+                        </div>
+                    </div>
                 </div>
                 @* nav bar (airbnb your home / world icon / login button) *@
-                <nav class="navbar navbar-expand navbar-light header_navbar">
-                    <div class="shadowe">
-                        <a class="navbar-brand href_button" asp-area="" asp-controller="Home" asp-action="Index">Airbnb your home</a>
-                    </div>
-                    <div class="shadowe">
-                        <button id="GlobeIcon" type="button" class="btn button globe_button" data-bs-toggle="modal" data-bs-target="#ModalSettings">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
-                                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="nav_bar_shadow">
-                        <button id="LoginButton" type="button" class="btn btn button rounded-pill border align-content-center" style="min-width:87px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
-                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                            </svg>
-                        </button>
-                    </div>
-                </nav>
+                <div style=" " class="">
+                    <nav class="navbar navbar-light header_navbar">
+                        <div class="shadowe">
+                            <a class="text-decoration-none href_button" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Airbnb your home</a>
+                        </div>
+                        <div class="shadowe">
+                            <button id="GlobeIcon" type="button" class="btn button globe_button" data-bs-toggle="modal" data-bs-target="#ModalSettings">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+                                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="nav_bar_shadow">
+                            <button id="LoginButton" type="button" class="btn btn button rounded-pill border align-content-center" style="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                </svg>
+                            </button>
+                        </div>
+                    </nav>
+                </div>
             </div>
             @* FORMS *@
             <div id="StaysMenuForm">
