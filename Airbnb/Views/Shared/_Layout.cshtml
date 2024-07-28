@@ -9,21 +9,27 @@
     <link rel="stylesheet" href="~/Airbnb.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="border-bottom mb-3 header">
-        <div id="TopHeader" style="transition: 0.2s; height: 161px">
+    <header id="heder" class="border-bottom mb-3 header" style="transition: 0.2s; position: relative">
+        <div id="TopHeader" style="transition: 0.2s; height: 161px;">
             <div class="header_div">
                 @* scuffed airbnb logo *@
-                <div class="logo">
+                <div class="logo stretch">
                     <a class="text-decoration-none" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
                 </div>
                 @* stays/experiences form *@
                 <div>
-                    <div id="MiniForm" class="border" style="min-width: 340px; border-radius: 50px; display: none; transition: 2.2s; flex: 0 1 auto">
-                        <div class="d-flex align-items-center " style="width: 100%;">
-                            @* why i cant type at all AAAAAAAAAAA *@
-                            <button type="button" class="btn button">anywgerer</button>
-                            <button type="button" class="btn button"> anyweek</button>
-                            <button type="button" class="btn button"> addguesgt</button>
+                    <div id="MiniForm" class="border shadow-sm" style="max-width: 350px; height: 48px; border-radius: 50px; display: none; transition: 2.2s; flex: 0 1 auto">
+                        <div class="d-flex align-items-center justify-items-center" style="width: 100%; height: 100%">
+                            <button id="MiniAnywhereButton" type="button" class="btn button" style="border-radius: 50px; height: 100%">Anywhere</button>
+                            <button id="MiniAnyWeekButton" type="button" class="btn button" style="border-radius: 50px; height: 100%">Any week</button>
+                            <div class="d-inline-flex align-items-center" style="border-radius: 50px; height: 100%">
+                                <button id="MiniAddGuestsButton" type="button" class="btn button" style="background: none; z-index: 1">Add guests</button>
+                                <div style="background-color: #ff385c; border-radius: 24px; width: 32px; height: 32px; color: white; z-index: 20; ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="StaysMenuButtons" style="transition: 2.2s; padding-inline-start: 20px; padding-inline-end: 20px; text-align: center; min-width: 300px">
@@ -34,7 +40,7 @@
                     </div>
                 </div>
                 @* nav bar (airbnb your home / world icon / login button) *@
-                <div style=" " class="">
+                <div class="stretch">
                     <nav class="navbar navbar-light header_navbar">
                         <div class="shadowe">
                             <a class="text-decoration-none href_button" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Airbnb your home</a>
@@ -47,8 +53,8 @@
                             </button>
                         </div>
                         <div class="nav_bar_shadow">
-                            <button id="LoginButton" type="button" class="btn btn button rounded-pill border align-content-center" style="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
+                            <button id="LoginButton" type="button" class="btn btn button rounded-pill border align-items-center d-inline-flex" style="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="4 0 16 16" style="outline: none; box-shadow:none">
                                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
                                 </svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="outline: none; box-shadow:none">
@@ -128,7 +134,7 @@
                                     </div>
                                 </div>
                                 @* WHO *@
-                                <div style="width: 33.33%" class="d-inline-flex">
+                                <div style="width: 33.6%" class="d-inline-flex">
                                     <div class="shadowe d-flex w-100">
                                         <div class="who_container">
                                             <label style="background:none">

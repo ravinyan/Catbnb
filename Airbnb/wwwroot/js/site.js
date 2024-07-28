@@ -109,7 +109,7 @@ currenciesButton.onclick = function()
     languages.style.display = "none";
 }
 
-//tesitnsad
+// box on click but scuffed and will fix soonTM
 
 const whereButton = document.getElementById("WhereButton");
 const whereDropdown = document.getElementById("WhereDropdown");
@@ -215,4 +215,25 @@ window.onclick = function(event)
     {
         tm.style.display = "none"
     }
+}
+
+// MINI FORM BUTTONS
+
+const anywhereButton = document.getElementById("MiniAnywhereButton");
+const anyWeekButton = document.getElementById("MiniAnyWeekButton");
+const addGuestsButton = document.getElementById("MiniAddGuestsButton");
+
+anywhereButton.onclick = function()
+{
+     document.getElementById("TopHeader").style.height = "161px";
+}
+
+anyWeekButton.onclick = function()
+{
+     document.getElementById("TopHeader").style.height = "161px";
+}
+addGuestsButton.onclick = function()
+{
+     document.getElementById("TopHeader").style.height = "80px";
+     console.log("capybara")
 }

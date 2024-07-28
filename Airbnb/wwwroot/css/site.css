@@ -40,8 +40,8 @@ div.nav_bar_shadow :hover {
 /* -------------------------------------- HEADER CLASSES -------------------------------------- */
 header.header {
     background-color: white;
-    position: sticky;
-    position: fixed;
+    position: relative;
+    
     top: 0;
     width: 100vw;
     background-color: white;
@@ -52,10 +52,8 @@ div.header_div {
     display: flex;
     padding-inline-start: 40px;
     padding-inline-end: 40px;
-    height: 80px
+    height: 80px;
 }
-
-
 
 div.logo {
     position: relative;
@@ -66,21 +64,13 @@ div.logo {
 }
 
 @media (min-width: 900px) {
-    div.logo {
-        position: relative;
-        height: 100%;
+    div.stretch {
         flex: 1 0 auto;
     }
 }
 
-@media (min-width: 900px) {
-    div.test {
-        flex: 1 0 auto;
-    }
-}
-
-div.test {
-    flex: 1 0 140px;
+div.stretch {
+    flex: 1 0 0px;
 }
 
 nav.header_navbar {
@@ -150,6 +140,7 @@ div.who_container {
     border-radius: 50px;
     margin-inline-end: -50px;
     z-index: 1;
+    
 }
 
 div.search_button_box {
