@@ -40,11 +40,8 @@ div.nav_bar_shadow :hover {
 /* -------------------------------------- HEADER CLASSES -------------------------------------- */
 header.header {
     background-color: white;
-    position: relative;
-    
-    top: 0;
+    position: static;
     width: 100vw;
-    background-color: white;
 }
 
 div.header_div {
@@ -189,7 +186,6 @@ svg.search_icon {
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
     position: sticky;
-    top: 162px;
     min-height: 80px;
     transition: 0.2s;
     background-color: white;
@@ -211,6 +207,7 @@ div.scrollmenu {
     white-space: nowrap;
     scroll-behavior: smooth;
     grid-column-gap: 15px;
+    position: relative;
 }
 
     div.scrollmenu a {

@@ -9,7 +9,7 @@ function headerScaling()
     var butt = document.getElementById("StaysMenuButtons").innerHTML;
     var form = document.getElementById("StaysMenuForm").innerHTML;
 
-    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1)
+    if (document.documentElement.scrollTop > 1 || document.body.scrollTop > 1)
     {
         //  if scrolled down
         document.getElementById("TopHeader").style.height = "80px";
@@ -18,8 +18,12 @@ function headerScaling()
         document.getElementById("StaysMenuButtons").style.display = "none";
 
 
-        
-        document.getElementById("ScrollDiv").style.top = "81px";
+
+        document.getElementById("StaysMenuForm").style.display = "none";
+        document.getElementById("ExperiencesMenuForm").style.display = "none";
+
+
+        document.getElementById("ScrollDiv").style.top = "0px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
     }
     else 
@@ -29,6 +33,19 @@ function headerScaling()
 
         document.getElementById("MiniForm").style.display = "none";
         document.getElementById("StaysMenuButtons").style.display = "block";
+
+
+
+        document.getElementById("StaysMenuForm").style.display = "block";
+
+        if (staysMenuButton.style.textShadow == "0px 0px 1px black")
+        {
+            document.getElementById("StaysMenuForm").style.display = "block";
+        }
+        else if (experiencesMenuButton.style.textShadow == "0px 0px 1px black")
+        {
+            document.getElementById("ExperiencesMenuForm").style.display = "block";
+        } 
 
         document.getElementById("ScrollDiv").style.top = "162px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
@@ -225,15 +242,16 @@ const addGuestsButton = document.getElementById("MiniAddGuestsButton");
 
 anywhereButton.onclick = function()
 {
-     document.getElementById("TopHeader").style.height = "161px";
+     document.getElementById("heder").style.height = "161px";
 }
 
 anyWeekButton.onclick = function()
 {
-     document.getElementById("TopHeader").style.height = "161px";
+     document.getElementById("heder").style.height = "161px";
 }
 addGuestsButton.onclick = function()
 {
-     document.getElementById("TopHeader").style.height = "80px";
+     
+     document.getElementById("heder").style.height = "161px";
      console.log("capybara")
 }
