@@ -50,6 +50,9 @@ function headerScaling()
         document.getElementById("ScrollDiv").style.top = "162px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
     }
+
+    document.getElementById("heder").style.height = "";
+    document.getElementById("GreyBackground").style.display = "none";
 }
 
 /* ------------------------------- BUTTONS ------------------------------- */
@@ -149,6 +152,20 @@ const datesDropdown =  document.getElementById("DatesDropdown");
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
+window.onclick = function() 
+{
+    if (whereDropdown.style.display == "block")
+    {
+
+            whereDropdown.style.display = "none"
+
+    }
+    else
+    {
+        console.log("pizza")
+    }
+}
+
 whereButton.onclick = function()
 {
     whereDropdown.style.display = "block";
@@ -187,15 +204,6 @@ whoButton.onclick = function()
 
 whereButtonExperiences.onclick = function()
 {
-    whoDropdown.style.display = "block";
-
-    whereDropdown.style.display = "none";
-    checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
-}
-
-whereButtonExperiences.onclick = function()
-{
     whereDropdownExperiences.style.display = "block";
 
     datesDropdown.style.display = "none";
@@ -218,40 +226,67 @@ whoButtonExperiences.onclick = function()
     datesDropdown.style.display = "none";
 }
 
-const tm = document.getElementById("testmodal");
-const tb = document.getElementById("testbutton");
-
-tb.onclick = function()
-{
-    tm.style.display = "block";
-}
-
-window.onclick = function(event)
-{
-    if (event.target == tm)
-    {
-        tm.style.display = "none"
-    }
-}
-
-// MINI FORM BUTTONS
-
+// MINI FORM BUTTONS (opening the big form thingy big header transition idk how its called just opens shit and closes shit)
 const anywhereButton = document.getElementById("MiniAnywhereButton");
 const anyWeekButton = document.getElementById("MiniAnyWeekButton");
 const addGuestsButton = document.getElementById("MiniAddGuestsButton");
 
+window.onclick = function()
+{
+    if (document.getElementById("GreyBackground").style.display == "block")
+    {
+        document.getElementById("GreyBackground").onclick = function() 
+        {
+            document.getElementById("GreyBackground").style.display = "none";
+
+            document.getElementById("heder").style.height = "";
+            
+            document.getElementById("MiniForm").style.display = "block";
+            document.getElementById("StaysMenuButtons").style.display = "none";
+            document.getElementById("StaysMenuForm").style.display = "none";   
+        };
+    }
+}
+
 anywhereButton.onclick = function()
 {
+     document.getElementById("heder").style.position = "absolute";
+     document.getElementById("heder").style.top = "0px";
+     document.getElementById("heder").style.zIndex = "1";
      document.getElementById("heder").style.height = "161px";
+   
+     document.getElementById("MiniForm").style.display = "none";
+     document.getElementById("StaysMenuButtons").style.display = "block";
+     document.getElementById("StaysMenuForm").style.display = "block";
+
+     document.getElementById("GreyBackground").style.display = "block";
 }
 
 anyWeekButton.onclick = function()
 {
+     document.getElementById("heder").style.position = "absolute";
+     document.getElementById("heder").style.top = "0px";
+     document.getElementById("heder").style.zIndex = "1";
      document.getElementById("heder").style.height = "161px";
+
+     document.getElementById("MiniForm").style.display = "none";
+     document.getElementById("StaysMenuButtons").style.display = "block";
+     document.getElementById("StaysMenuForm").style.display = "block";
+
+     document.getElementById("GreyBackground").style.display = "block";
 }
 addGuestsButton.onclick = function()
 {
-     
+     document.getElementById("heder").style.position = "absolute";
+     document.getElementById("heder").style.top = "0px";
+     document.getElementById("heder").style.zIndex = "1";
      document.getElementById("heder").style.height = "161px";
+   
+     document.getElementById("MiniForm").style.display = "none";
+     document.getElementById("StaysMenuButtons").style.display = "block";
+     document.getElementById("StaysMenuForm").style.display = "block";
+
+     document.getElementById("GreyBackground").style.display = "block";
      console.log("capybara")
 }
+
