@@ -171,16 +171,15 @@ svg.search_icon {
 
 .modal_window {
     display: none;
-    width: 425px;
-    height: 350px;
+    max-width: 50%;
     background: black;
     position: absolute;
-    z-index: 898989;
+    z-index: 100;
     overflow-y: scroll;
     word-wrap: break-word;
     overscroll-behavior: contain;
     border-radius: 29px;
-    top: 150px;
+    top: 100%;
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
