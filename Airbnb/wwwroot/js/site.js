@@ -53,6 +53,8 @@ function headerScaling()
 
     document.getElementById("heder").style.height = "";
     document.getElementById("GreyBackground").style.display = "none";
+
+    whereDropdown.style.display = "none";
 }
 
 /* ------------------------------- BUTTONS ------------------------------- */
@@ -152,54 +154,56 @@ const datesDropdown =  document.getElementById("DatesDropdown");
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
-window.onclick = function() 
+var banana;
+
+
+if (banana == true)
 {
-    if (whereDropdown.style.display == "block")
+    document.body.addEventListener("click", function() 
     {
-
-            whereDropdown.style.display = "none"
-
-    }
-    else
-    {
-        console.log("pizza")
-    }
+        console.log("ASDOYHBUA")
+        whereDropdown.style.display = "none";
+        banana = false;
+    })
 }
 
 whereButton.onclick = function()
 {
     whereDropdown.style.display = "block";
 
-    checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
+   
+
+    banana = true;
+    //checkinDropdown.style.display = "none";
+    //checkoutDropdown.style.display = "none";
+    //whoDropdown.style.display = "none";
 }
 
 checkinButton.onclick = function()
 {
     checkinDropdown.style.display = "block";
 
-    whereDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
+    //whereDropdown.style.display = "none";
+    //checkoutDropdown.style.display = "none";
+    //whoDropdown.style.display = "none";
 }
 
 checkoutButton.onclick = function()
 {
     checkoutDropdown.style.display = "block";
 
-    whereDropdown.style.display = "none";
-    checkinDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
+    //whereDropdown.style.display = "none";
+    //checkinDropdown.style.display = "none";
+    //whoDropdown.style.display = "none";
 }
 
 whoButton.onclick = function()
 {
     whoDropdown.style.display = "block";
 
-    whereDropdown.style.display = "none";
-    checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
+    //whereDropdown.style.display = "none";
+    //checkinDropdown.style.display = "none";
+    //checkoutDropdown.style.display = "none";
 }
 
 whereButtonExperiences.onclick = function()

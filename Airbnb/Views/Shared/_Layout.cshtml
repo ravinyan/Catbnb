@@ -80,7 +80,7 @@
                 @* FORMS *@
                 <div id="StaysMenuForm">
                     <form class="form">
-                        <div class="justify-content-center d-flex" style="width: 850px">
+                        <div class="justify-content-center d-flex position-relative" style="width: 850px">
                             @* form *@
                             <div class="border shadow-sm form_border d-inline-flex">
                                 <div class="d-flex w-100">
@@ -95,10 +95,56 @@
                                             </div>
                                         </label>
                                         @* popup modal thingy *@
-                                        <div id="WhereDropdown" class="modal_window">
-                                            <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                <div style="color: white">
-                                                    <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                        <div id="WhereDropdown" class="shadow popup_window" style="left: 0px">
+                                            <div class="popup_window_header">Search by region</div>
+                                            <div class="popup_window_grid shadowe">
+                                                <div class="region_box" >
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box"  src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        I'm flexible
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Southeast Asia
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Spain
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Middle East
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Italy
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        United states
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,16 +160,7 @@
                                                     <input class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
-                                            @* popup modal thingy *@
-                                            <div style="display: flex;">
-                                                <div id="CheckinDropdown" class="modal_window" style="">
-                                                    <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                        <div style="color: white">
-                                                            <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         <div style="width: 50%">
                                             <label class="shadowe w-100">
@@ -134,16 +171,7 @@
                                                     <input class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
-                                            @* popup modal thingy *@
-                                            <div style="display: flex; ">
-                                                <div id="CheckoutDropdown" class="modal_window">
-                                                    <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                        <div style="color: white">
-                                                            <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
@@ -166,61 +194,6 @@
                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                     </svg>
                                                 </button>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                                @* popup modal thingy *@
-                                <div id="WhoDropdown" style="display:none; background: black; position: absolute; z-index: 100; overscroll-behavior: contain; top: 100%; width: 50%; border-radius: 29px; overflow-y: scroll; overflow-x: hidden">
-                                    <div style="padding-inline-start: 20px; padding-inline-end: 20px; display: flex">
-                                        <div style="padding: 8px; min-width:auto">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                I'm flexible
-                                            </div>
-                                        </div>
-                                        <div style="padding: 8px">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                Southeast Asia
-                                            </div>
-                                        </div>
-                                        <div style="padding: 8px">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                Spain
-                                            </div>
-                                        </div>
-                                        <div style="padding: 8px">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                Middle East
-                                            </div>
-                                        </div>
-                                        <div style="padding: 8px">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                Italy
-                                            </div>
-                                        </div>
-                                        <div style="padding: 8px">
-                                            <button class="p-0 border-0">
-                                                <img src="~/img/red-square-lol.png" />
-                                            </button>
-                                            <div>
-                                                United states
                                             </div>
                                         </div>
                                     </div>
