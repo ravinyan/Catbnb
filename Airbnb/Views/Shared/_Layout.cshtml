@@ -95,9 +95,9 @@
                                             </div>
                                         </label>
                                         @* popup modal thingy *@
-                                        <div id="WhereDropdown" class="shadow popup_window" style="left: 0px">
-                                            <div class="popup_window_header">Search by region</div>
-                                            <div class="popup_window_grid shadowe">
+                                        <div id="WhereDropdown" class="shadow dropdown_window" style="left: 0px; min-width: 50%;">
+                                            <div class="dropdown_window_header">Search by region</div>
+                                            <div class="dropdown_window_grid shadowe">
                                                 <div class="region_box" >
                                                     <button class="p-0 border-0 w-100" style="background: none">
                                                         <img class="image_box"  src="~/img/red-square.png" />
@@ -160,7 +160,11 @@
                                                     <input class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
-                                            
+                                            @* popup modal thingy *@
+                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
+                                                <div class="dropdown_window_header">Search by region</div>
+
+                                            </div>
                                         </div>
                                         <div style="width: 50%">
                                             <label class="shadowe w-100">
@@ -171,8 +175,11 @@
                                                     <input class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
-                                            
+                                            @* popup modal thingy *@
+                                            <div id="CheckoutDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
+                                                <div class="dropdown_window_header">Search by region</div>
 
+                                            </div>
                                         </div>
                                     </div>
                                     @* WHO *@
@@ -194,6 +201,103 @@
                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                     </svg>
                                                 </button>
+                                            </div>
+                                        </div>
+                                        @* popup modal thingy *@
+                                        <div id="WhoDropdown" class="shadow dropdown_window" style="right: 0px; min-width: 50%;">
+                                            <div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Adults
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Ages 13 or above
+                                                        </div>
+                                                    </section>
+                                                    <div class="a" style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseAdultCount" type="button" class="guest_button" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="AdultsCount" class="border-0"> 0 </div>
+                                                        <button id="IncreaseAdultCount" type="button" class="guest_button" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                        Children
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Ages 2 - 12
+                                                        </div>
+                                                    </section>
+                                                    <div class="a" style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseChildCount" type="button" class="guest_button" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="ChildrenCount" class="border-0"> 0 </div>
+                                                        <button id="IncreaseChildCount" type="button" class="guest_button" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Infants
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Under 2
+                                                        </div>
+                                                    </section>
+                                                    <div class="a" style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseInfantCount" type="button" class="guest_button" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="InfantsCount" class="border-0"> 0 </div>
+                                                        <button id="IncreaseInfantCount" type="button" class="guest_button" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Pets
+                                                        </div>
+                                                        <button type="button" class="border-0" style="background: none; padding: 0px; text-decoration: underline; font-size: 14px; padding-block-start: 4px">
+                                                            Bringing a service animal?
+                                                        </button>
+                                                    </section>
+                                                    <div class="a" style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreasePetCount" type="button" class="guest_button" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="PetsCount" class="border-0"> 0 </div>
+                                                        <button id="IncreasePetCount" type="button" class="guest_button" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
