@@ -340,21 +340,69 @@ addGuestsButton.onclick = function()
 }
 
 // FORM DROPDOWN THINGY BUTTONS
-const adultsCount = document.getElementById("AdultsCount");
+var adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
 
-const childrenCount = document.getElementById("ChildrenCount");
+var childrenCount = document.getElementById("ChildrenCount");
 const decrementChildCountButton = document.getElementById("DecreaseChildCount");
 const incrementChildCountButton = document.getElementById("IncreaseChildCount");
 
-const infantsCount = document.getElementById("InfantsCount");
+var infantsCount = document.getElementById("InfantsCount");
 const decrementInfantCountButton = document.getElementById("DecreaseInfantCount");
 const incrementInfantCountButton = document.getElementById("IncreaseInfantCount");
 
-const petsCount = document.getElementById("PetsCount");
+var petsCount = document.getElementById("PetsCount");
 const decrementPetCountButton = document.getElementById("DecreasePetCount");
 const incrementPetCountButton = document.getElementById("IncreasePetCount");
+
+
+incrementAdultCountButton.onmouseover = function()
+{
+    incrementAdultCountButton.style.border = "1px solid black";
+}
+
+incrementAdultCountButton.onmouseout = function()
+{
+    incrementAdultCountButton.style.border = "1px solid grey";
+}
+
+decrementAdultCountButton.onmouseover = function()
+{
+    if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText > 1)
+    {
+        decrementAdultCountButton.style.border = "1px solid black";
+    }
+    else if ((childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0) && adultsCount.innerText > 0)
+    {
+        decrementAdultCountButton.style.border = "1px solid black";
+    }
+    else if ((childrenCount.innerText <= 1 || infantsCount.innerText <= 1 || petsCount.innerText <= 1) && adultsCount.innerText >= 1)
+    {
+        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
+    }  
+}
+
+decrementAdultCountButton.onmouseout = function()
+{
+    if (adultsCount.innerText == 0)
+    {
+        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
+    }
+    else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText <= 1)
+    {
+        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
+    }
+    else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText > 1) 
+    {
+        decrementAdultCountButton.style.border = "1px solid grey";
+    }
+    else if ((childrenCount.innerText <= 1 && infantsCount.innerText <= 1 && petsCount.innerText <= 1) && adultsCount.innerText >= 1) 
+    {
+        decrementAdultCountButton.style.border = "1px solid grey";
+    }
+   
+}
 
 function changeNumber(entity, increment, decrement)
 {
@@ -363,12 +411,44 @@ function changeNumber(entity, increment, decrement)
         if (increment.style.cursor == "pointer")
         {
             entity.innerText ++;
-
             decrement.style.cursor = "pointer"; 
+            decrement.style.border = "1px solid grey";
+            decrement.style.color = "grey";
+            
+            //  why converting string to numbers is so dumb... this language is dumb... WHERE ARE MY INTEGERS GOD DAMMIT
+            var hoomans = +adultsCount.innerText + +childrenCount.innerText;
 
-            if (entity.innerText == 16)
+            if ((childrenCount.innerText == 1 || infantsCount.innerText == 1 || petsCount.innerText == 1) && adultsCount.innerText <= 1)
             {
-                increment.style.cursor = "not-allowed";
+                adultsCount.innerText = 1;
+                decrementAdultCountButton.style.cursor = "not-allowed";
+                decrementAdultCountButton.style.border = "1px solid #dcdcdc";
+                decrementAdultCountButton.style.color = "#dcdcdc";
+            }
+
+            if (hoomans == 16)
+            {
+                incrementAdultCountButton.style.cursor = "not-allowed";
+                incrementAdultCountButton.style.border = "1px solid #dcdcdc";
+                incrementAdultCountButton.style.color = "#dcdcdc";
+
+                incrementChildCountButton.style.cursor = "not-allowed";
+                incrementChildCountButton.style.border = "1px solid #dcdcdc";
+                incrementChildCountButton.style.color = "#dcdcdc";
+            }
+
+            if (infantsCount.innerText == 5)
+            {
+                incrementInfantCountButton.style.cursor = "not-allowed";
+                incrementInfantCountButton.style.border = "1px solid #dcdcdc";
+                incrementInfantCountButton.style.color = "#dcdcdc";
+            }
+
+            if (petsCount.innerText == 5)
+            {
+                incrementPetCountButton.style.cursor = "not-allowed";
+                incrementPetCountButton.style.border = "1px solid #dcdcdc";
+                incrementPetCountButton.style.color = "#dcdcdc";
             }
         }
     }
@@ -380,10 +460,40 @@ function changeNumber(entity, increment, decrement)
             entity.innerText --;
 
             increment.style.cursor = "pointer";
+            increment.style.border = "1px solid grey";
+            increment.style.color = "grey";
+
+            var hoomans = +adultsCount.innerText + +childrenCount.innerText;
+
+            if (childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0 && adultsCount.innerText <= 1)
+            {
+                decrementAdultCountButton.style.cursor = "pointer";
+                decrementAdultCountButton.style.border = "1px solid grey";
+                decrementAdultCountButton.style.color = "grey";
+            }
+            else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText == 1)
+            {
+                decrementAdultCountButton.style.cursor = "not-allowed";
+                decrementAdultCountButton.style.border = "1px solid #dcdcdc";
+                decrementAdultCountButton.style.color = "#dcdcdc";
+            }
+
+            if (hoomans < 16)
+            {
+                incrementAdultCountButton.style.cursor = "pointer";
+                incrementAdultCountButton.style.border = "1px solid grey";
+                incrementAdultCountButton.style.color = "grey";
+
+                incrementChildCountButton.style.cursor = "pointer";
+                incrementChildCountButton.style.border = "1px solid grey";
+                incrementChildCountButton.style.color = "grey";
+            }
 
             if (entity.innerText == 0)
             {
                 decrement.style.cursor = "not-allowed";
+                decrement.style.border = "1px solid #dcdcdc";
+                decrement.style.color = "#dcdcdc";
             }
         }     
     } 
@@ -393,8 +503,4 @@ changeNumber(adultsCount, incrementAdultCountButton, decrementAdultCountButton);
 changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton);
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
-
-
-
-
 

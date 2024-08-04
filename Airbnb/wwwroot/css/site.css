@@ -223,7 +223,19 @@ div.guest_box {
     justify-content: space-between;
 }
 
-button.guest_button {
+button.guest_button_decrease {
+    display: flex;
+    align-items: center;
+    border-radius: 80px;
+    width: 30px;
+    height: 30px;
+    border-color: lightgray;
+    border: 1px solid #dcdcdc;
+    color: #dcdcdc;
+    background-color: white;
+}
+
+button.guest_button_increase {
     display: flex;
     align-items: center;
     border-radius: 80px;
@@ -232,11 +244,8 @@ button.guest_button {
     border-color: lightgray;
     border: 1px solid grey;
     background-color: white;
+    color: grey;
 }
-
-    div.a :hover {
-        border: 1px solid black;
-    }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
