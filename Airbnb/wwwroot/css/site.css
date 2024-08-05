@@ -175,7 +175,7 @@ div.dropdown_window {
     display: none;
     background: white;
     position: absolute;
-    z-index: 100;
+    z-index: 1;
     overscroll-behavior: contain;
     top: 100%;
     max-height: calc(100vh - 170px);

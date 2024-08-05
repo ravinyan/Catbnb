@@ -339,7 +339,7 @@ addGuestsButton.onclick = function()
      console.log("CA PY BA RA capybara capybara capybara capybara")
 }
 
-// FORM DROPDOWN THINGY BUTTONS
+// FORM DROPDOWN WINDOW THINGY BUTTONS
 var adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
@@ -356,15 +356,47 @@ var petsCount = document.getElementById("PetsCount");
 const decrementPetCountButton = document.getElementById("DecreasePetCount");
 const incrementPetCountButton = document.getElementById("IncreasePetCount");
 
-
-incrementAdultCountButton.onmouseover = function()
+function onHoverFormButtons(increment, decrement)
 {
-    incrementAdultCountButton.style.border = "1px solid black";
-}
+    increment.onmouseover = function()
+    {
+        increment.style.border = "1px solid black";
 
-incrementAdultCountButton.onmouseout = function()
-{
-    incrementAdultCountButton.style.border = "1px solid grey";
+        if (increment.style.cursor == "not-allowed")
+        {
+            increment.style.border = "1px solid #dcdcdc";
+        }
+    }
+
+    increment.onmouseout = function()
+    {
+        increment.style.border = "1px solid grey";
+    
+        if (increment.style.cursor == "not-allowed")
+        {
+            increment.style.border = "1px solid #dcdcdc";
+        }
+    }
+
+    decrement.onmouseover = function()
+    {
+        decrement.style.border = "1px solid black";
+
+        if (decrement.style.cursor == "not-allowed")
+        {
+            decrement.style.border = "1px solid #dcdcdc";
+        }
+    }
+
+    decrement.onmouseout = function()
+    {
+        decrement.style.border = "1px solid grey";
+
+        if (decrement.style.cursor == "not-allowed")
+        {
+            decrement.style.border = "1px solid #dcdcdc";
+        }
+    }
 }
 
 decrementAdultCountButton.onmouseover = function()
@@ -401,8 +433,12 @@ decrementAdultCountButton.onmouseout = function()
     {
         decrementAdultCountButton.style.border = "1px solid grey";
     }
-   
 }
+
+onHoverFormButtons(incrementAdultCountButton, -1);
+onHoverFormButtons(incrementChildCountButton, decrementChildCountButton);
+onHoverFormButtons(incrementInfantCountButton, decrementInfantCountButton);
+onHoverFormButtons(incrementPetCountButton, decrementPetCountButton);
 
 function changeNumber(entity, increment, decrement)
 {
@@ -465,10 +501,22 @@ function changeNumber(entity, increment, decrement)
 
             var hoomans = +adultsCount.innerText + +childrenCount.innerText;
 
+            if (childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0)
+            {
+                if (decrementAdultCountButton.style.border == "1px solid black")
+                {
+                    decrementAdultCountButton.style.border = "1px solid black";
+                }
+                else
+                {
+                    decrementAdultCountButton.style.border = "1px solid grey";
+                }   
+            }
+
+
             if (childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0 && adultsCount.innerText <= 1)
             {
                 decrementAdultCountButton.style.cursor = "pointer";
-                decrementAdultCountButton.style.border = "1px solid grey";
                 decrementAdultCountButton.style.color = "grey";
             }
             else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText == 1)
