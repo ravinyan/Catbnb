@@ -23,7 +23,7 @@ function headerScaling()
         document.getElementById("ExperiencesMenuForm").style.display = "none";
 
 
-        document.getElementById("ScrollDiv").style.top = "0px";
+        document.getElementById("ScrollDiv").style.top = "80px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
     }
     else 
@@ -75,7 +75,7 @@ scrollMenu.scrollLeft == 0;
 /* left button */
 buttonLeft.onclick = function()
 {
-    scrollMenu.scrollLeft -= window.innerWidth - 420;
+    scrollMenu.scrollLeft -= window.innerWidth - 320;
     buttonRight.style.display = "block"; 
 
     if (scrollMenu.scrollLeft <= window.innerWidth)
@@ -87,7 +87,7 @@ buttonLeft.onclick = function()
 /* right button */
 buttonRight.onclick = function()
 {
-    scrollMenu.scrollLeft += window.innerWidth - 420;
+    scrollMenu.scrollLeft += window.innerWidth - 320;
     buttonLeft.style.display = "block";
 
     if (scrollMenu.scrollLeft >= scrollMenu.scrollWidth - window.innerWidth)
@@ -339,7 +339,7 @@ addGuestsButton.onclick = function()
      console.log("CA PY BA RA capybara capybara capybara capybara")
 }
 
-// FORM DROPDOWN WINDOW THINGY BUTTONS
+// FORM DROPDOWN WINDOW THINGY BUTTONS i dont know how to make it better this is so bad oh my god
 var adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
@@ -371,7 +371,7 @@ function onHoverFormButtons(increment, decrement)
     increment.onmouseout = function()
     {
         increment.style.border = "1px solid grey";
-    
+  
         if (increment.style.cursor == "not-allowed")
         {
             increment.style.border = "1px solid #dcdcdc";
@@ -447,6 +447,7 @@ function changeNumber(entity, increment, decrement)
         if (increment.style.cursor == "pointer")
         {
             entity.innerText ++;
+
             decrement.style.cursor = "pointer"; 
             decrement.style.border = "1px solid grey";
             decrement.style.color = "grey";
