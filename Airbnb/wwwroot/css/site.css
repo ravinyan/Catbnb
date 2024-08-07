@@ -228,12 +228,12 @@ button.guest_button_decrease {
     border-radius: 80px;
     width: 30px;
     height: 30px;
-    border-color: lightgray;
-    border: 1px solid #dcdcdc;
-    color: #dcdcdc;
-    background-color: white;
+    border: 1px solid black;
     padding: 0px;
     justify-content: center;
+    border-color: #dcdcdc;
+    background-color: white;
+    color: #dcdcdc;
 }
 
 button.guest_button_increase {
@@ -241,14 +241,23 @@ button.guest_button_increase {
     align-items: center;
     border-radius: 80px;
     width: 30px;
-    height: 30px;
-    border-color: lightgray;
-    border: 1px solid grey;
-    background-color: white;
-    color: grey;
+    height: 30px;  
+    border: 1px solid black;
     padding: 0px;
     justify-content: center;
 }
+
+button.guest_button_color {
+    border-color: #8f8f8f;
+    background-color: white;
+    color: #8f8f8f;
+}
+
+    button.guest_button_color:hover {
+        border-color: black;
+        background-color: white;
+        color: black;
+    }    
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {

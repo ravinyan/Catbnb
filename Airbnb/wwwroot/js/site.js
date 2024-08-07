@@ -18,7 +18,6 @@ function headerScaling()
         document.getElementById("StaysMenuButtons").style.display = "none";
 
 
-
         document.getElementById("StaysMenuForm").style.display = "none";
         document.getElementById("ExperiencesMenuForm").style.display = "none";
 
@@ -33,7 +32,6 @@ function headerScaling()
 
         document.getElementById("MiniForm").style.display = "none";
         document.getElementById("StaysMenuButtons").style.display = "block";
-
 
 
         document.getElementById("StaysMenuForm").style.display = "block";
@@ -324,6 +322,7 @@ anyWeekButton.onclick = function()
 
      document.getElementById("GreyBackground").style.display = "block";
 }
+
 addGuestsButton.onclick = function()
 {
      document.getElementById("heder").style.position = "absolute";
@@ -356,89 +355,19 @@ var petsCount = document.getElementById("PetsCount");
 const decrementPetCountButton = document.getElementById("DecreasePetCount");
 const incrementPetCountButton = document.getElementById("IncreasePetCount");
 
-function onHoverFormButtons(increment, decrement)
+function changeButtonIncrease(entity)
 {
-    increment.onmouseover = function()
-    {
-        increment.style.border = "1px solid black";
-
-        if (increment.style.cursor == "not-allowed")
-        {
-            increment.style.border = "1px solid #dcdcdc";
-        }
-    }
-
-    increment.onmouseout = function()
-    {
-        increment.style.border = "1px solid grey";
-  
-        if (increment.style.cursor == "not-allowed")
-        {
-            increment.style.border = "1px solid #dcdcdc";
-        }
-    }
-
-    decrement.onmouseover = function()
-    {
-        decrement.style.border = "1px solid black";
-
-        if (decrement.style.cursor == "not-allowed")
-        {
-            decrement.style.border = "1px solid #dcdcdc";
-        }
-    }
-
-    decrement.onmouseout = function()
-    {
-        decrement.style.border = "1px solid grey";
-
-        if (decrement.style.cursor == "not-allowed")
-        {
-            decrement.style.border = "1px solid #dcdcdc";
-        }
-    }
+    entity.classList.add("guest_button_decrease");
+    entity.classList.remove("guest_button_color");
+    entity.classList.remove("guest_button_increase"); 
 }
 
-decrementAdultCountButton.onmouseover = function()
+function changeButtonDecrease(entity)
 {
-    if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText > 1)
-    {
-        decrementAdultCountButton.style.border = "1px solid black";
-    }
-    else if ((childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0) && adultsCount.innerText > 0)
-    {
-        decrementAdultCountButton.style.border = "1px solid black";
-    }
-    else if ((childrenCount.innerText <= 1 || infantsCount.innerText <= 1 || petsCount.innerText <= 1) && adultsCount.innerText >= 1)
-    {
-        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
-    }  
+    entity.classList.remove("guest_button_increase");
+    entity.classList.add("guest_button_color");
+    entity.classList.add("guest_button_decrease");
 }
-
-decrementAdultCountButton.onmouseout = function()
-{
-    if (adultsCount.innerText == 0)
-    {
-        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
-    }
-    else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText <= 1)
-    {
-        decrementAdultCountButton.style.border = "1px solid #dcdcdc";
-    }
-    else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText > 1) 
-    {
-        decrementAdultCountButton.style.border = "1px solid grey";
-    }
-    else if ((childrenCount.innerText <= 1 && infantsCount.innerText <= 1 && petsCount.innerText <= 1) && adultsCount.innerText >= 1) 
-    {
-        decrementAdultCountButton.style.border = "1px solid grey";
-    }
-}
-
-onHoverFormButtons(incrementAdultCountButton, -1);
-onHoverFormButtons(incrementChildCountButton, decrementChildCountButton);
-onHoverFormButtons(incrementInfantCountButton, decrementInfantCountButton);
-onHoverFormButtons(incrementPetCountButton, decrementPetCountButton);
 
 function changeNumber(entity, increment, decrement)
 {
@@ -448,44 +377,46 @@ function changeNumber(entity, increment, decrement)
         {
             entity.innerText ++;
 
-            decrement.style.cursor = "pointer"; 
-            decrement.style.border = "1px solid grey";
-            decrement.style.color = "grey";
-            
-            //  why converting string to numbers is so dumb... this language is dumb... WHERE ARE MY INTEGERS GOD DAMMIT
-            var hoomans = +adultsCount.innerText + +childrenCount.innerText;
-
-            if ((childrenCount.innerText == 1 || infantsCount.innerText == 1 || petsCount.innerText == 1) && adultsCount.innerText <= 1)
+            if ((childrenCount.innerText > 0 || infantsCount.innerText > 0 || petsCount.innerText > 0) && adultsCount.innerText <= 1)
             {
-                adultsCount.innerText = 1;
-                decrementAdultCountButton.style.cursor = "not-allowed";
-                decrementAdultCountButton.style.border = "1px solid #dcdcdc";
-                decrementAdultCountButton.style.color = "#dcdcdc";
+                if (adultsCount.innerText == 0)
+                {
+                    adultsCount.innerText ++;
+                }
+                else
+                {
+                    decrementAdultCountButton.style.cursor = "not-allowed";
+
+                    changeButtonIncrease(decrementAdultCountButton);
+                } 
             }
 
-            if (hoomans == 16)
+            decrement.style.cursor = "pointer";
+
+            var decr = decrement.classList;
+            decr.add("guest_button_color");
+
+            if ((+adultsCount.innerText + +childrenCount.innerText) == 16)
             {
                 incrementAdultCountButton.style.cursor = "not-allowed";
-                incrementAdultCountButton.style.border = "1px solid #dcdcdc";
-                incrementAdultCountButton.style.color = "#dcdcdc";
+                incrementChildCountButton.style.cursor = "not-allowed"; 
 
-                incrementChildCountButton.style.cursor = "not-allowed";
-                incrementChildCountButton.style.border = "1px solid #dcdcdc";
-                incrementChildCountButton.style.color = "#dcdcdc";
+                changeButtonIncrease(incrementAdultCountButton);
+                changeButtonIncrease(incrementChildCountButton);
             }
 
             if (infantsCount.innerText == 5)
             {
                 incrementInfantCountButton.style.cursor = "not-allowed";
-                incrementInfantCountButton.style.border = "1px solid #dcdcdc";
-                incrementInfantCountButton.style.color = "#dcdcdc";
+
+                changeButtonIncrease(incrementInfantCountButton);
             }
 
             if (petsCount.innerText == 5)
             {
                 incrementPetCountButton.style.cursor = "not-allowed";
-                incrementPetCountButton.style.border = "1px solid #dcdcdc";
-                incrementPetCountButton.style.color = "#dcdcdc";
+
+                changeButtonIncrease(incrementPetCountButton);
             }
         }
     }
@@ -496,53 +427,52 @@ function changeNumber(entity, increment, decrement)
         {
             entity.innerText --;
 
-            increment.style.cursor = "pointer";
-            increment.style.border = "1px solid grey";
-            increment.style.color = "grey";
-
-            var hoomans = +adultsCount.innerText + +childrenCount.innerText;
-
-            if (childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0)
-            {
-                if (decrementAdultCountButton.style.border == "1px solid black")
-                {
-                    decrementAdultCountButton.style.border = "1px solid black";
-                }
-                else
-                {
-                    decrementAdultCountButton.style.border = "1px solid grey";
-                }   
-            }
-
-
-            if (childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0 && adultsCount.innerText <= 1)
+            if ((childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0) && adultsCount.innerText >= 1)
             {
                 decrementAdultCountButton.style.cursor = "pointer";
-                decrementAdultCountButton.style.color = "grey";
+
+                changeButtonDecrease(decrementAdultCountButton);
             }
-            else if ((childrenCount.innerText >= 1 || infantsCount.innerText >= 1 || petsCount.innerText >= 1) && adultsCount.innerText == 1)
+
+            if ((childrenCount.innerText > 0 || infantsCount.innerText > 0 || petsCount.innerText > 0) && adultsCount.innerText == 1)
             {
                 decrementAdultCountButton.style.cursor = "not-allowed";
-                decrementAdultCountButton.style.border = "1px solid #dcdcdc";
-                decrementAdultCountButton.style.color = "#dcdcdc";
+
+                changeButtonIncrease(decrementAdultCountButton);
             }
 
-            if (hoomans < 16)
+            var decr = decrement.classList;
+            if (entity.innerText == 0)
+            {
+                decr.remove("guest_button_color");
+            }  
+
+            if ((+adultsCount.innerText + +childrenCount.innerText) < 16)
             {
                 incrementAdultCountButton.style.cursor = "pointer";
-                incrementAdultCountButton.style.border = "1px solid grey";
-                incrementAdultCountButton.style.color = "grey";
-
                 incrementChildCountButton.style.cursor = "pointer";
-                incrementChildCountButton.style.border = "1px solid grey";
-                incrementChildCountButton.style.color = "grey";
+
+                changeButtonDecrease(incrementAdultCountButton);
+                changeButtonDecrease(incrementChildCountButton);
+            }
+
+            if (infantsCount.innerText < 5)
+            {
+                incrementInfantCountButton.style.cursor = "pointer";
+
+                changeButtonDecrease(incrementInfantCountButton);
+            }
+
+            if (petsCount.innerText < 5)
+            {
+                incrementPetCountButton.style.cursor = "pointer";
+
+                changeButtonDecrease(incrementPetCountButton);
             }
 
             if (entity.innerText == 0)
             {
                 decrement.style.cursor = "not-allowed";
-                decrement.style.border = "1px solid #dcdcdc";
-                decrement.style.color = "#dcdcdc";
             }
         }     
     } 
