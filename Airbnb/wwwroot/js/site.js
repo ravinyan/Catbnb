@@ -178,12 +178,15 @@ onClickOutside(whereDropdown, whereButton, function()
 
 onClickOutside(checkinDropdown, checkinButton, function()
 {
-    checkinDropdown.style.display = "none";
+    if (checkinDropdown.style.display == "block")
+    {
+        console.log("ASFI")
+    }
 })
 
-onClickOutside(checkoutDropdown, checkoutButton, function()
+onClickOutside(checkinDropdown, checkoutButton, function()
 {
-    checkoutDropdown.style.display = "none";
+    checkinDropdown.style.display = "none"
 })
 
 onClickOutside(whoDropdown, whoButton, function()
@@ -212,38 +215,26 @@ whereButton.onclick = function(e)
     whereDropdown.style.display = "block";
 
     checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
 }
 
 checkinButton.onclick = function(e)
 {
     e.preventDefault();
+    checkinDropdown.style.display = "none";
     checkinDropdown.style.display = "block";
-
-    whereDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
 }
 
 checkoutButton.onclick = function(e)
 {
     e.preventDefault();
-    checkoutDropdown.style.display = "block";
-
-    whereDropdown.style.display = "none";
     checkinDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
+    checkinDropdown.style.display = "block";
 }
 
 whoButton.onclick = function(e)
 {
     e.preventDefault();
     whoDropdown.style.display = "block";
-
-    whereDropdown.style.display = "none";
-    checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
 }
 
 whereButtonExperiences.onclick = function(e)
@@ -338,7 +329,7 @@ addGuestsButton.onclick = function()
      console.log("CA PY BA RA capybara capybara capybara capybara")
 }
 
-// FORM DROPDOWN WINDOW THINGY BUTTONS i dont know how to make it better this is so bad oh my god
+// FORM DROPDOWN WINDOW THINGY BUTTONS i made it better i forgot to change this oopsie
 var adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
@@ -354,6 +345,32 @@ const incrementInfantCountButton = document.getElementById("IncreaseInfantCount"
 var petsCount = document.getElementById("PetsCount");
 const decrementPetCountButton = document.getElementById("DecreasePetCount");
 const incrementPetCountButton = document.getElementById("IncreasePetCount");
+
+const formGuestsInput = document.getElementById("GuestsInput");
+
+function changeGuestsValue()
+{
+    let guestCount  = +adultsCount.innerText + +childrenCount.innerText > 1 
+                    ? `${+adultsCount.innerText + +childrenCount.innerText} guests`
+                    : +adultsCount.innerText + +childrenCount.innerText != 0 
+                    ? `${+adultsCount.innerText + +childrenCount.innerText} guest`
+                    : "";
+
+    let infantCount = infantsCount.innerText > 1
+                    ? `, ${infantsCount.innerText} infants` 
+                    : infantsCount.innerText != 0
+                    ? `, ${infantsCount.innerText} infant`
+                    : "";
+
+
+    let petCount    = petsCount.innerText > 1  
+                    ? `, ${petsCount.innerText} pets` 
+                    : petsCount.innerText != 0  
+                    ? `, ${petsCount.innerText} pet`
+                    : "";
+
+    formGuestsInput.value = `${guestCount}${infantCount}${petCount}`;
+}
 
 function changeButtonIncrease(entity)
 {
@@ -390,6 +407,8 @@ function changeNumber(entity, increment, decrement)
                     changeButtonIncrease(decrementAdultCountButton);
                 } 
             }
+
+            changeGuestsValue();
 
             decrement.style.cursor = "pointer";
 
@@ -441,6 +460,8 @@ function changeNumber(entity, increment, decrement)
                 changeButtonIncrease(decrementAdultCountButton);
             }
 
+            changeGuestsValue();
+
             var decr = decrement.classList;
             if (entity.innerText == 0)
             {
@@ -475,7 +496,7 @@ function changeNumber(entity, increment, decrement)
                 decrement.style.cursor = "not-allowed";
             }
         }     
-    } 
+    }
 }
 
 changeNumber(adultsCount, incrementAdultCountButton, decrementAdultCountButton);

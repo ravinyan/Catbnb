@@ -178,23 +178,24 @@
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            <div id="CheckoutDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
+                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
                                                 <div class="dropdown_window_header">Search by region</div>
 
                                             </div>
                                         </div>
+                                        
                                     </div>
                                     @* WHO *@
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     <div style="width: 33.6%" class="d-inline-flex">
                                         <div class="shadowe d-flex w-100">
                                             <div class="who_container">
-                                                <label style="background:none">
+                                                <label style="background:none; width: 80%">
                                                     <div id="WhoButton" class="label_box">
                                                         <div class="fw-bold">
                                                             Who
                                                         </div>
-                                                        <input class="border-0 input" type="search" placeholder="Add guests" />
+                                                        <input id="GuestsInput" class="border-0 input"  type="search" placeholder="Add guests" value="" spellcheck="false" readonly />
                                                     </div>
                                                 </label>
                                             </div>
