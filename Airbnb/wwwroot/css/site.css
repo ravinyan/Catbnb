@@ -135,8 +135,7 @@ div.who_container {
     height: 100%;
     border-radius: 50px;
     margin-inline-end: -50px;
-    z-index: 1;
-    
+    z-index: 1;  
 }
 
 div.search_button_box {

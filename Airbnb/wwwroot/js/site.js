@@ -157,6 +157,8 @@ const datesDropdown =  document.getElementById("DatesDropdown");
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
+var form = document.querySelector(".form_border");
+
 function onClickOutside(dropdown, button, cb) 
 {
     document.addEventListener('click', event => 
@@ -171,27 +173,58 @@ function onClickOutside(dropdown, button, cb)
     });
 };
 
+function onClickOutsideDates(dropdown, button, button2, cb) 
+{
+    document.addEventListener('click', event => 
+    {
+        if (!dropdown.contains(event.target) && !button.contains(event.target) && !button2.contains(event.target)) 
+        {
+            if (dropdown.style.display == "block")
+            {
+                cb();
+            }
+        }
+    });
+};
+
+function onClickButtonFocus(button)
+{
+    form.style.backgroundColor = "#dedede";
+    button.style.backgroundColor = "white";
+    button.style.boxShadow = "0 .125rem .25rem rgba(0,0,0,.075)";
+}
+
+function onClickButtonUnfocus(button)
+{
+    form.style.backgroundColor = "";
+    button.style.backgroundColor = "";
+    button.style.boxShadow = "";
+}
+
 onClickOutside(whereDropdown, whereButton, function()
 {
     whereDropdown.style.display = "none";
+
+    onClickButtonUnfocus(whereButton);
 })
 
-onClickOutside(checkinDropdown, checkinButton, function()
+onClickOutsideDates(checkinDropdown, checkinButton, checkoutButton, function()
 {
-    if (checkinDropdown.style.display == "block")
-    {
-        console.log("ASFI")
-    }
+    checkinDropdown.style.display = "none";
+
 })
 
-onClickOutside(checkinDropdown, checkoutButton, function()
+onClickOutsideDates(checkinDropdown, checkoutButton, checkinButton, function()
 {
-    checkinDropdown.style.display = "none"
+    checkinDropdown.style.display = "none";
+
 })
 
 onClickOutside(whoDropdown, whoButton, function()
 {
     whoDropdown.style.display = "none";
+
+    onClickButtonUnfocus(whoButton);
 })
 
 onClickOutside(whereDropdownExperiences, whereButtonExperiences, function()
@@ -209,59 +242,58 @@ onClickOutside(whoDropdownExperiences, whoButtonExperiences, function()
     whoDropdownExperiences.style.display = "none";
 })
 
+
+
+
 whereButton.onclick = function(e)
 {
     e.preventDefault();
     whereDropdown.style.display = "block";
 
-    checkinDropdown.style.display = "none";
+    onClickButtonFocus(whereButton);
 }
 
 checkinButton.onclick = function(e)
 {
     e.preventDefault();
-    checkinDropdown.style.display = "none";
     checkinDropdown.style.display = "block";
+    
+
 }
 
 checkoutButton.onclick = function(e)
 {
     e.preventDefault();
-    checkinDropdown.style.display = "none";
     checkinDropdown.style.display = "block";
+
+
 }
 
 whoButton.onclick = function(e)
 {
     e.preventDefault();
     whoDropdown.style.display = "block";
+    
+    onClickButtonFocus(whoButton);
+
 }
 
 whereButtonExperiences.onclick = function(e)
 {
     e.preventDefault();
     whereDropdownExperiences.style.display = "block";
-
-    datesDropdown.style.display = "none";
-    whoDropdownExperiences.style.display = "none";
 }
 
 datesButton.onclick = function(e)
 {
     e.preventDefault();
     datesDropdown.style.display = "block";
-
-    whereDropdownExperiences.style.display = "none";
-    whoDropdownExperiences.style.display = "none";
 }
 
 whoButtonExperiences.onclick = function(e)
 {
     e.preventDefault();
     whoDropdownExperiences.style.display = "block";
-
-    whereDropdownExperiences.style.display = "none";
-    datesDropdown.style.display = "none";
 }
 
 // MINI FORM BUTTONS (opening the big form thingy big header transition idk how its called just opens shit and closes shit)
@@ -503,4 +535,38 @@ changeNumber(adultsCount, incrementAdultCountButton, decrementAdultCountButton);
 changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton);
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
+
+const banana = document.getElementById("a");
+const BANANAAAA = document.getElementById("b");
+
+banana.onclick = function()
+{
+    banana.style.backgroundColor = "black";
+}
+
+BANANAAAA.onclick = function()
+{
+    BANANAAAA.style.backgroundColor = "black";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

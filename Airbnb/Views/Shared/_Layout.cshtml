@@ -88,10 +88,10 @@
                                     <div style="width: 33.33%">
                                         <label class="shadowe w-100">
                                             <div id="WhereButton" class="label_box">
-                                                <div class="fw-bold">
+                                                <div class="fw-bold" style="background: none">
                                                     Where
                                                 </div>
-                                                <input class="border-0 input" placeholder="Search destinations" />
+                                                <input class="border-0 input" placeholder="Search destinations" value="" spellcheck="false"/>
                                             </div>
                                         </label>
                                         @* popup modal thingy *@
@@ -152,47 +152,40 @@
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     @* Check in/ Check out *@
                                     <div style="width: 33.33%; display: flex;">
-                                        <div style="width: 50%">
+                                        <div id="Checkout" style="width: 50%">
                                             <label class="shadowe w-100">
                                                 <div id="CheckinButton" class="label_box">
-                                                    <div class="fw-bold text-nowrap">
+                                                    <div class="fw-bold text-nowrap" style="background: none">
                                                         Check in
                                                     </div>
-                                                    <input class="border-0 input" type="search" placeholder="Add dates" />
+                                                    <input class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
-                                                <div class="dropdown_window_header">Search by region</div>
-
-                                            </div>
+                                            
                                         </div>
                                         <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                         <div style="width: 50%">
                                             <label class="shadowe w-100">
                                                 <div id="CheckoutButton" class="label_box">
-                                                    <div class="fw-bold text-nowrap">
+                                                    <div class="fw-bold text-nowrap" style="background: none">
                                                         Check out
                                                     </div>
-                                                    <input class="border-0 input" type="search" placeholder="Add dates" />
+                                                    <input class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
-                                                <div class="dropdown_window_header">Search by region</div>
-
-                                            </div>
-                                        </div>
-                                        
+                                            
+                                        </div>    
                                     </div>
                                     @* WHO *@
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     <div style="width: 33.6%" class="d-inline-flex">
-                                        <div class="shadowe d-flex w-100">
-                                            <div class="who_container">
+                                        <div class="shadowe d-flex w-100" >
+                                            <div id="WhoButton" class="who_container">
                                                 <label style="background:none; width: 80%">
-                                                    <div id="WhoButton" class="label_box">
-                                                        <div class="fw-bold">
+                                                    <div class="label_box" style="background: none">
+                                                        <div class="fw-bold" style="background: none">
                                                             Who
                                                         </div>
                                                         <input id="GuestsInput" class="border-0 input"  type="search" placeholder="Add guests" value="" spellcheck="false" readonly />
@@ -200,7 +193,7 @@
                                                 </label>
                                             </div>
                                             <div class="search_button_box" style="background: none">
-                                                <button id="SearchButtonShadow" type="button" class="search_button" style="z-index: 727">
+                                                <button id="SearchButton" type="button" class="search_button" style="z-index: 727">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                     </svg>
@@ -370,7 +363,7 @@
                                                 </label>
                                             </div>
                                             <div class="search_button_box" style="background: none">
-                                                <button id="SearchButtonShadow" type="button" class="search_button" style="z-index: 727">
+                                                <button id="SearchButton" type="button" class="search_button" style="z-index: 727">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                     </svg>
@@ -483,6 +476,18 @@
 
         @* grey bagraunde *@
         <div id="GreyBackground" style="left: 0px; right: 0px; top: 161px; bottom: 0px; height: 100vh; display: none; position: fixed; z-index: auto; background-color: gray; opacity: 0.2">
+        </div>
+
+
+        @*TESTING STUFF THIS SHIT MAKES MY HEAD HURTS I WANT TO EAT THIS CODE IM GOING INSANE*@
+        <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
+            <div class="dropdown_window_header">Search by region</div>
+            <button class="btn button btn-outline-danger" id="b">
+                banana
+            </button>
+            <button class="btn button btn-outline-danger" id="a">
+                BANANAAAAAAAAAAA
+            </button>
         </div>
     </div> 
 
