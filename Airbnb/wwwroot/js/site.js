@@ -53,11 +53,11 @@ function headerScaling()
     document.getElementById("GreyBackground").style.display = "none";
 
     whereDropdown.style.display = "none";
-    checkinDropdown.style.display = "none";
-    checkoutDropdown.style.display = "none";
+    datesDropdown.style.display = "none";
+    //checkoutDropdown.style.display = "none";
     whoDropdown.style.display = "none";
     whereDropdownExperiences.style.display = "none";
-    datesDropdown.style.display = "none";
+    datesDropdownExperiences.style.display = "none";
     whoDropdownExperiences.style.display = "none";
 }
 
@@ -140,10 +140,10 @@ const whereButton = document.getElementById("WhereButton");
 const whereDropdown = document.getElementById("WhereDropdown");
 
 const checkinButton = document.getElementById("CheckinButton");
-const checkinDropdown = document.getElementById("CheckinDropdown");
+const datesDropdown = document.getElementById("CheckinDropdown");
 
 const checkoutButton = document.getElementById("CheckoutButton");
-const checkoutDropdown = document.getElementById("CheckoutDropdown");
+/*const checkoutDropdown = document.getElementById("CheckoutDropdown");*/
 
 const whoButton = document.getElementById("WhoButton");
 const whoDropdown = document.getElementById("WhoDropdown");
@@ -151,41 +151,70 @@ const whoDropdown = document.getElementById("WhoDropdown");
 const whereButtonExperiences = document.getElementById("WhereButtonExperiences");
 const whereDropdownExperiences = document.getElementById("WhereDropdownExperiences");
 
-const datesButton = document.getElementById("DatesButton");
-const datesDropdown =  document.getElementById("DatesDropdown");
+const datesButtonExperiences = document.getElementById("DatesButton");
+const datesDropdownExperiences =  document.getElementById("DatesDropdown");
 
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
-var form = document.querySelector(".form_border");
+var form = document.querySelector(".form_container");
+var whoContainer = document.querySelector(".who_container");
 
-function onClickOutside(dropdown, button, cb) 
+document.addEventListener('click', event => 
 {
-    document.addEventListener('click', event => 
+    if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target)) 
     {
-        if (!dropdown.contains(event.target) && !button.contains(event.target)) 
+        if (whereDropdown.style.display == "block")
         {
-            if (dropdown.style.display == "block")
-            {
-                cb();
-            }
-        }
-    });
-};
+           if (!form.contains(event.target))
+           {
+               form.style.backgroundColor = "";
+           }
+           whereDropdown.style.display = "none";
 
-function onClickOutsideDates(dropdown, button, button2, cb) 
-{
-    document.addEventListener('click', event => 
-    {
-        if (!dropdown.contains(event.target) && !button.contains(event.target) && !button2.contains(event.target)) 
-        {
-            if (dropdown.style.display == "block")
-            {
-                cb();
-            }
+           onClickButtonUnfocus(whereButton);
         }
-    });
-};
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target)) 
+    {
+        if (whoDropdown.style.display == "block")
+        {
+           // i hate css
+           if (!form.contains(event.target))
+           {
+               form.style.backgroundColor = "";
+           }
+           whoDropdown.style.display = "none";
+
+           onClickButtonUnfocus(whoButton);
+        }
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!datesDropdown.contains(event.target) && (!checkinButton.contains(event.target) && !checkoutButton.contains(event.target)))
+    {
+        if (datesDropdown.style.display == "block")
+        {
+            if (!form.contains(event.target))
+            {
+                form.style.backgroundColor = "";
+            }
+
+            //if (checkinButton.)
+
+            datesDropdown.style.display = "none"; 
+
+            onClickButtonUnfocus(checkinButton);
+            onClickButtonUnfocus(checkoutButton);
+        }
+    }
+});
 
 function onClickButtonFocus(button)
 {
@@ -196,105 +225,33 @@ function onClickButtonFocus(button)
 
 function onClickButtonUnfocus(button)
 {
-    form.style.backgroundColor = "";
     button.style.backgroundColor = "";
     button.style.boxShadow = "";
 }
 
-onClickOutside(whereDropdown, whereButton, function()
+function openWindow(button, dropdown)
 {
-    whereDropdown.style.display = "none";
+    button.onclick = function(e)
+    {
+        e.preventDefault();
 
-    onClickButtonUnfocus(whereButton);
-})
+        dropdown.style.display = "block"
 
-onClickOutsideDates(checkinDropdown, checkinButton, checkoutButton, function()
-{
-    checkinDropdown.style.display = "none";
-
-})
-
-onClickOutsideDates(checkinDropdown, checkoutButton, checkinButton, function()
-{
-    checkinDropdown.style.display = "none";
-
-})
-
-onClickOutside(whoDropdown, whoButton, function()
-{
-    whoDropdown.style.display = "none";
-
-    onClickButtonUnfocus(whoButton);
-})
-
-onClickOutside(whereDropdownExperiences, whereButtonExperiences, function()
-{
-    whereDropdownExperiences.style.display = "none";
-})
-
-onClickOutside(datesDropdown, datesButton, function()
-{
-    datesDropdown.style.display = "none";
-})
-
-onClickOutside(whoDropdownExperiences, whoButtonExperiences, function()
-{
-    whoDropdownExperiences.style.display = "none";
-})
-
-
-
-
-whereButton.onclick = function(e)
-{
-    e.preventDefault();
-    whereDropdown.style.display = "block";
-
-    onClickButtonFocus(whereButton);
+        form.style.backgroundColor = "#dedede";
+        button.style.backgroundColor = "white";
+        button.style.boxShadow = "0 .125rem .25rem rgba(0,0,0,.075)";
+    }
 }
 
-checkinButton.onclick = function(e)
-{
-    e.preventDefault();
-    checkinDropdown.style.display = "block";
-    
+openWindow(whereButton, whereDropdown);
+openWindow(checkinButton, datesDropdown);
+openWindow(checkoutButton, datesDropdown);
+openWindow(whoButton, whoDropdown);
 
-}
+openWindow(whereButtonExperiences, whereDropdownExperiences);
+openWindow(datesButtonExperiences, datesDropdownExperiences);
+openWindow(whoButtonExperiences, whoDropdownExperiences);
 
-checkoutButton.onclick = function(e)
-{
-    e.preventDefault();
-    checkinDropdown.style.display = "block";
-
-
-}
-
-whoButton.onclick = function(e)
-{
-    e.preventDefault();
-    whoDropdown.style.display = "block";
-    
-    onClickButtonFocus(whoButton);
-
-}
-
-whereButtonExperiences.onclick = function(e)
-{
-    e.preventDefault();
-    whereDropdownExperiences.style.display = "block";
-}
-
-datesButton.onclick = function(e)
-{
-    e.preventDefault();
-    datesDropdown.style.display = "block";
-}
-
-whoButtonExperiences.onclick = function(e)
-{
-    e.preventDefault();
-    whoDropdownExperiences.style.display = "block";
-}
 
 // MINI FORM BUTTONS (opening the big form thingy big header transition idk how its called just opens shit and closes shit)
 const anywhereButton = document.getElementById("MiniAnywhereButton");
@@ -549,12 +506,15 @@ BANANAAAA.onclick = function()
     BANANAAAA.style.backgroundColor = "black";
 }
 
+// SEARCH BUTTON testing or whatever it wont do anything really for next few days
 
+const searchButton = document.getElementById("SearchButton");
 
-
-
-
-
+searchButton.onclick = function()
+{
+    location.reload();
+    console.log("stop searching")
+}
 
 
 

@@ -111,9 +111,15 @@ form.form {
 div.form_border {
     min-width: 650px;
     border-radius: 50px;
-    min-height: 66px;
+    height: 100%;
     width: 100%;
     display: inline-flex;
+}
+
+div.form_container {
+    display: flex;
+    width: 100%;
+    border-radius: 50px;
 }
 
 div.label_box {
@@ -138,8 +144,12 @@ div.who_container {
     z-index: 1;  
 }
 
+    div.who_container:hover {
+        background-color: #e8e8e8;
+    }
+
 div.search_button_box {
-    width: 50px;
+    width: 1px;
     align-content: center;
     text-align: right;
 }
