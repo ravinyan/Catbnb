@@ -7,7 +7,7 @@ window.onscroll = function() { headerScaling() };
 function headerScaling() 
 {
     var butt = document.getElementById("StaysMenuButtons").innerHTML;
-    var form = document.getElementById("StaysMenuForm").innerHTML;
+    var butter = document.getElementById("StaysMenuForm").innerHTML;
 
     if (document.documentElement.scrollTop > 1 || document.body.scrollTop > 1)
     {
@@ -24,6 +24,25 @@ function headerScaling()
 
         document.getElementById("ScrollDiv").style.top = "80px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
+
+        
+        document.getElementById("heder").style.height = "";
+        document.getElementById("GreyBackground").style.display = "none";
+
+        //  resetting css for stuff
+        whereDropdown.style.display = "none";
+        datesDropdown.style.display = "none";
+        whoDropdown.style.display = "none";
+        whereDropdownExperiences.style.display = "none";
+        datesDropdownExperiences.style.display = "none";
+        whoDropdownExperiences.style.display = "none";
+
+        form.style.backgroundColor = ""
+
+        onClickButtonUnfocus(whereButton);
+        onClickButtonUnfocus(checkinButton);
+        onClickButtonUnfocus(checkoutButton);
+        onClickButtonUnfocus(whoButton);
     }
     else 
     {
@@ -48,17 +67,6 @@ function headerScaling()
         document.getElementById("ScrollDiv").style.top = "162px";
         document.getElementById("ScrollDiv").style.boxShadow = "none";
     }
-
-    document.getElementById("heder").style.height = "";
-    document.getElementById("GreyBackground").style.display = "none";
-
-    whereDropdown.style.display = "none";
-    datesDropdown.style.display = "none";
-    //checkoutDropdown.style.display = "none";
-    whoDropdown.style.display = "none";
-    whereDropdownExperiences.style.display = "none";
-    datesDropdownExperiences.style.display = "none";
-    whoDropdownExperiences.style.display = "none";
 }
 
 /* ------------------------------- BUTTONS ------------------------------- */
@@ -157,8 +165,9 @@ const datesDropdownExperiences =  document.getElementById("DatesDropdown");
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
-var form = document.querySelector(".form_container");
-var whoContainer = document.querySelector(".who_container");
+const form = document.querySelector(".form_container");
+
+console.log(datesDropdown.outerHTML)
 
 document.addEventListener('click', event => 
 {
@@ -179,25 +188,7 @@ document.addEventListener('click', event =>
 
 document.addEventListener('click', event => 
 {
-    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target)) 
-    {
-        if (whoDropdown.style.display == "block")
-        {
-           // i hate css
-           if (!form.contains(event.target))
-           {
-               form.style.backgroundColor = "";
-           }
-           whoDropdown.style.display = "none";
-
-           onClickButtonUnfocus(whoButton);
-        }
-    }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!datesDropdown.contains(event.target) && (!checkinButton.contains(event.target) && !checkoutButton.contains(event.target)))
+    if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target))
     {
         if (datesDropdown.style.display == "block")
         {
@@ -206,12 +197,42 @@ document.addEventListener('click', event =>
                 form.style.backgroundColor = "";
             }
 
-            //if (checkinButton.)
-
-            datesDropdown.style.display = "none"; 
+            datesDropdown.style.display = "none";
 
             onClickButtonUnfocus(checkinButton);
-            onClickButtonUnfocus(checkoutButton);
+        }
+    }
+});
+
+//document.addEventListener('click', event => 
+//{
+//    if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target))
+//    {
+//        if (datesDropdown.style.display == "block")
+//        {
+//            if (!form.contains(event.target))
+//            {
+//                form.style.backgroundColor = "";
+//            }
+
+//            onClickButtonUnfocus(checkoutButton);
+//        }
+//    }
+//});
+
+document.addEventListener('click', event => 
+{
+    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target)) 
+    {
+        if (whoDropdown.style.display == "block")
+        {
+           if (!form.contains(event.target))
+           {
+               form.style.backgroundColor = "";
+           }
+           whoDropdown.style.display = "none";
+
+           onClickButtonUnfocus(whoButton);
         }
     }
 });

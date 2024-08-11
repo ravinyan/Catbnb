@@ -85,8 +85,8 @@
                             <div class="border shadow-sm form_border d-inline-flex">
                                 <div class="form_container">
                                     @* WHERE *@
-                                    <div style="width: 33.33%">
-                                        <label class="shadowe w-100">
+                                    <div style="width: 33.33%; border-radius: 50px">
+                                        <label class="shadowe w-100" style="border-radius: 50px;">
                                             <div id="WhereButton" class="label_box">
                                                 <div class="fw-bold" style="background: none">
                                                     Where
@@ -151,8 +151,8 @@
                                     </div>
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     @* Check in/ Check out *@
-                                    <div style="width: 33.33%; display: flex;">
-                                        <div id="Checkout" style="width: 50%">
+                                    <div style="width: 33.33%; display: flex; background: none">
+                                        <div style="width: 50%">
                                             <label class="shadowe w-100">
                                                 <div id="CheckinButton" class="label_box">
                                                     <div class="fw-bold text-nowrap" style="background: none">
@@ -162,7 +162,15 @@
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            
+                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="width: 100%; left: 0px">
+                                                <div class="dropdown_window_header">Search by region</div>
+                                                <button class="btn button btn-outline-danger" id="b">
+                                                    banana
+                                                </button>
+                                                <button class="btn button btn-outline-danger" id="a">
+                                                    BANANAAAAAAAAAAA
+                                                </button>
+                                            </div>
                                         </div>
                                         <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                         <div style="width: 50%">
@@ -180,10 +188,10 @@
                                     </div>
                                     @* WHO *@
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
-                                    <div style="width: 33.6%" class="d-inline-flex">
-                                        <div class=" d-flex w-100">
+                                    <div style="width: 33.3%; border-radius: 50px">
+                                        <div class=" d-flex w-100" style="border-radius: 50px">
                                             <div id="WhoButton" class="who_container">
-                                                <label style="background:none; width: 80%">
+                                                <label style="background:none; width: 100%; border-radius: 50px;">
                                                     <div class="label_box" style="background: none">
                                                         <div class="fw-bold" style="background: none">
                                                             Who
@@ -201,7 +209,7 @@
                                             </div>
                                         </div>
                                         @* popup modal thingy *@
-                                        <div id="WhoDropdown" class="shadow dropdown_window" style="right: 0px; min-width: 50%;">
+                                        <div id="WhoDropdown" class="shadow dropdown_window test" style="right: 0px; min-width: 50%;">
                                             <div>
                                                 <div class="guest_box">
                                                     <section>
@@ -480,15 +488,7 @@
 
 
         @*TESTING STUFF THIS SHIT MAKES MY HEAD HURTS I WANT TO EAT THIS CODE IM GOING INSANE*@
-        <div id="CheckinDropdown" class="shadow dropdown_window" style="min-width: 100%; left: 0px">
-            <div class="dropdown_window_header">Search by region</div>
-            <button class="btn button btn-outline-danger" id="b">
-                banana
-            </button>
-            <button class="btn button btn-outline-danger" id="a">
-                BANANAAAAAAAAAAA
-            </button>
-        </div>
+        
     </div> 
 
     <div>

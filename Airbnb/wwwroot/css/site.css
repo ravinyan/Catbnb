@@ -47,7 +47,7 @@ div.header_div {
     align-items: center;
     display: flex;
     padding-inline-start: 40px;
-    padding-inline-end: 40px;
+    padding-inline-end: 58px;
     height: 80px;
 }
 
@@ -104,7 +104,7 @@ form.form {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-inline-end: 50px;
+    padding-inline-end: 68px;
     padding-inline-start: 50px;
 }
 
@@ -279,7 +279,7 @@ div.scroll_bar {
     grid-column-gap: 30px;
     width: 100vw;
     padding-inline-start: 40px;
-    padding-inline-end: 40px;
+    padding-inline-end: 58px;
     top: 162px;
 }
 
