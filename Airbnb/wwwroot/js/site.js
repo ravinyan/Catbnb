@@ -148,10 +148,8 @@ const whereButton = document.getElementById("WhereButton");
 const whereDropdown = document.getElementById("WhereDropdown");
 
 const checkinButton = document.getElementById("CheckinButton");
-const datesDropdown = document.getElementById("CheckinDropdown");
-
 const checkoutButton = document.getElementById("CheckoutButton");
-/*const checkoutDropdown = document.getElementById("CheckoutDropdown");*/
+const datesDropdown = document.getElementById("CheckinDropdown");
 
 const whoButton = document.getElementById("WhoButton");
 const whoDropdown = document.getElementById("WhoDropdown");
@@ -165,77 +163,7 @@ const datesDropdownExperiences =  document.getElementById("DatesDropdown");
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
-const form = document.querySelector(".form_container");
-
-console.log(datesDropdown.outerHTML)
-
-document.addEventListener('click', event => 
-{
-    if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target)) 
-    {
-        if (whereDropdown.style.display == "block")
-        {
-           if (!form.contains(event.target))
-           {
-               form.style.backgroundColor = "";
-           }
-           whereDropdown.style.display = "none";
-
-           onClickButtonUnfocus(whereButton);
-        }
-    }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target))
-    {
-        if (datesDropdown.style.display == "block")
-        {
-            if (!form.contains(event.target))
-            {
-                form.style.backgroundColor = "";
-            }
-
-            datesDropdown.style.display = "none";
-
-            onClickButtonUnfocus(checkinButton);
-        }
-    }
-});
-
-//document.addEventListener('click', event => 
-//{
-//    if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target))
-//    {
-//        if (datesDropdown.style.display == "block")
-//        {
-//            if (!form.contains(event.target))
-//            {
-//                form.style.backgroundColor = "";
-//            }
-
-//            onClickButtonUnfocus(checkoutButton);
-//        }
-//    }
-//});
-
-document.addEventListener('click', event => 
-{
-    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target)) 
-    {
-        if (whoDropdown.style.display == "block")
-        {
-           if (!form.contains(event.target))
-           {
-               form.style.backgroundColor = "";
-           }
-           whoDropdown.style.display = "none";
-
-           onClickButtonUnfocus(whoButton);
-        }
-    }
-});
+const form = document.querySelector(".form_container")
 
 function onClickButtonFocus(button)
 {
@@ -249,6 +177,82 @@ function onClickButtonUnfocus(button)
     button.style.backgroundColor = "";
     button.style.boxShadow = "";
 }
+
+document.addEventListener('click', event => 
+{
+    if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target) && whereDropdown.style.display == "block") 
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        whereDropdown.style.display = "none";
+        onClickButtonUnfocus(whereButton);
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) &&
+         datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white")
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+        
+        if (!checkoutButton.contains(event.target))
+        {
+            datesDropdown.style.display = "none";
+        }
+        
+        onClickButtonUnfocus(checkinButton);
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target) && 
+         datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+        
+        if (!checkinButton.contains(event.target))
+        {
+            datesDropdown.style.display = "none";
+        }
+
+        onClickButtonUnfocus(checkoutButton);
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target) && whoDropdown.style.display == "block") 
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        whoDropdown.style.display = "none";
+        onClickButtonUnfocus(whoButton);
+    }
+});
+
+//  its just to reset form background color when there is no focus on any button and bg color is still grey
+document.addEventListener('click', event =>
+{
+    if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white" && checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" 
+    && !form.contains(event.target))
+    {
+        form.style.backgroundColor = "";
+    }
+})
 
 function openWindow(button, dropdown)
 {
@@ -340,19 +344,19 @@ addGuestsButton.onclick = function()
 }
 
 // FORM DROPDOWN WINDOW THINGY BUTTONS i made it better i forgot to change this oopsie
-var adultsCount = document.getElementById("AdultsCount");
+const adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
 
-var childrenCount = document.getElementById("ChildrenCount");
+const childrenCount = document.getElementById("ChildrenCount");
 const decrementChildCountButton = document.getElementById("DecreaseChildCount");
 const incrementChildCountButton = document.getElementById("IncreaseChildCount");
 
-var infantsCount = document.getElementById("InfantsCount");
+const infantsCount = document.getElementById("InfantsCount");
 const decrementInfantCountButton = document.getElementById("DecreaseInfantCount");
 const incrementInfantCountButton = document.getElementById("IncreaseInfantCount");
 
-var petsCount = document.getElementById("PetsCount");
+const petsCount = document.getElementById("PetsCount");
 const decrementPetCountButton = document.getElementById("DecreasePetCount");
 const incrementPetCountButton = document.getElementById("IncreasePetCount");
 
@@ -514,18 +518,130 @@ changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
+//  testing for calendar stuff aaaaaaaaaaa
+//  using button background color to manipulate inputs
+
+const checkinFormInput = document.getElementById("CheckinInput");
+const checkoutFormInput = document.getElementById("CheckoutInput");
+
 const banana = document.getElementById("a");
 const BANANAAAA = document.getElementById("b");
 
-banana.onclick = function()
+/*
+    Leap Years are any year that can be exactly divided by 4 (such as 2020, 2024, 2028, etc)
+ 	except if it can be exactly divided by 100, then it isn't (such as 2100, 2200, etc)
+ 	except if it can be exactly divided by 400, then it is (such as 2000, 2400)
+
+    need days/months/years
+*/
+
+var date = new Date();
+
+var day = date.getDate();   // 1-31 days and then
+var month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
+var year = date.getFullYear();
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+console.log(day)
+console.log(month + 1)
+console.log(year)
+
+const datesButton = document.getElementById("DatesButton");
+const monthsButton = document.getElementById("MonthsButton");
+const flexibleButton = document.getElementById("FlexibleButton");
+
+datesButton.onclick = function()
 {
-    banana.style.backgroundColor = "black";
+    datesButton.style.backgroundColor = "white";
+
+    monthsButton.style.backgroundColor = "";
+    flexibleButton.style.backgroundColor = "";
 }
 
-BANANAAAA.onclick = function()
+monthsButton.onclick = function()
 {
-    BANANAAAA.style.backgroundColor = "black";
+    monthsButton.style.backgroundColor = "white";
+
+    datesButton.style.backgroundColor = "";
+    flexibleButton.style.backgroundColor = "";
 }
+
+flexibleButton.onclick = function()
+{
+    flexibleButton.style.backgroundColor = "white";
+
+    datesButton.style.backgroundColor = "";
+    monthsButton.style.backgroundColor = "";
+}
+
+
+
+
+//banana.onclick = function()
+//{
+//    if (checkinButton.style.backgroundColor == "white" )
+//    {
+//        banana.style.backgroundColor = "black";
+//        console.log(">>>>>>>>>>>>");
+
+//        //  this looks unironically like password someone would use lol
+//        checkinFormInput.value = "banana111";
+
+//        if (checkoutFormInput.value == "")
+//        {
+//            onClickButtonUnfocus(checkinButton);
+//            onClickButtonFocus(checkoutButton);
+//        }
+//    }
+//    else if (checkoutButton.style.backgroundColor == "white")
+//    {
+//        banana.style.backgroundColor = "blue";
+//        console.log("<<<<<<<<<<<<");
+
+//        //  this too lol
+//        checkoutFormInput.value = "banana222";
+
+//        if (checkinFormInput.value == "")
+//        {
+//            onClickButtonUnfocus(checkinButton);
+//            onClickButtonFocus(checkoutButton);
+//        }
+//    }
+//}
+
+//BANANAAAA.onclick = function()
+//{
+//    if (checkinButton.style.backgroundColor == "white")
+//    {
+//        BANANAAAA.style.backgroundColor = "black";
+//        console.log(">>>>>>>>>>>>");
+
+//        //  this looks unironically like password someone would use lol
+//        checkinFormInput.value = "banana111";
+
+//        if (checkoutFormInput.value == "")
+//        {
+//            onClickButtonUnfocus(checkinButton);
+//            onClickButtonFocus(checkoutButton);
+//        }
+//    }
+//    else if (checkoutButton.style.backgroundColor == "white")
+//    {
+//        BANANAAAA.style.backgroundColor = "blue";
+//        console.log("<<<<<<<<<<<<");
+
+//        //  this too lol
+//        checkoutFormInput.value = "banana222";
+
+//        if (checkinFormInput.value == "")
+//        {
+//            onClickButtonUnfocus(checkinButton);
+//            onClickButtonFocus(checkoutButton);
+//        }
+//    }
+    
+//}
 
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
 

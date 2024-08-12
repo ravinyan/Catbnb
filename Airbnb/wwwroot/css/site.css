@@ -266,7 +266,12 @@ button.guest_button_color {
         border-color: black;
         background-color: white;
         color: black;
-    }    
+    }
+
+td.box {
+    height: 40px;
+    text-align: center;
+}
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
