@@ -524,8 +524,9 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
 
-const banana = document.getElementById("a");
-const BANANAAAA = document.getElementById("b");
+const leftCalendar = document.getElementById("LeftCalendarTable");
+const rightCalendar = document.getElementById("RightCalendarTable");
+
 
 /*
     Leap Years are any year that can be exactly divided by 4 (such as 2020, 2024, 2028, etc)
@@ -546,6 +547,42 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 console.log(day)
 console.log(month + 1)
 console.log(year)
+
+var x = 0;
+
+for (i = 0; i < 5; i++)
+{
+    var tr = document.createElement("tr");
+    for (j = 0; j < 7; j++)
+    {
+        x += 1;
+        var td = document.createElement("td");
+        var div = document.createElement("div");
+        td.appendChild(div);
+        div.innerText = x;
+        div.className = "box";
+        tr.appendChild(td);
+    }
+    leftCalendar.appendChild(tr);
+}
+
+x = 0;
+
+for (i = 0; i < 5; i++)
+{
+    var tr = document.createElement("tr");
+    for (j = 0; j < 7; j++)
+    {
+        x += 1;
+        var td = document.createElement("td");
+        var div = document.createElement("div");
+        td.appendChild(div);
+        div.innerText = x;
+        div.className = "box";
+        tr.appendChild(td);
+    }
+    rightCalendar.appendChild(tr);
+}
 
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");

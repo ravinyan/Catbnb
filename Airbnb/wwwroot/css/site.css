@@ -268,10 +268,30 @@ button.guest_button_color {
         color: black;
     }
 
-td.box {
-    height: 40px;
+li.box {
+    height: 50px;
+    width: 50px;
     text-align: center;
+    padding: 0px;
 }
+
+div.box {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid white;
+    margin: 1px;
+}
+
+    div.box:hover {
+        background-color: white;
+        border-color: red;
+    }
+
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
