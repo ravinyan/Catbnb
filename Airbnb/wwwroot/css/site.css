@@ -268,6 +268,22 @@ button.guest_button_color {
         color: black;
     }
 
+div.month_name {
+    text-align: center;
+    padding: 10px 0px;
+    font-weight: bold;
+}
+
+ul.days_list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    padding: 0px;
+    justify-content: space-between;
+    margin: 0px;
+}
+
 li.box {
     height: 50px;
     width: 50px;
@@ -275,9 +291,24 @@ li.box {
     padding: 0px;
 }
 
+td.box {
+    padding: 0px;
+}
+
 div.box {
-    height: 50px;
-    width: 50px;
+    height: 49px;
+    width: 49px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid white;
+    margin: 1px;
+}
+div.blank_box {
+    height: 49px;
+    width: 49px;
     border-radius: 50px;
     display: flex;
     justify-content: center;
@@ -289,7 +320,7 @@ div.box {
 
     div.box:hover {
         background-color: white;
-        border-color: red;
+        border-color: black;
     }
 
 

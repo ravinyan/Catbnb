@@ -518,15 +518,9 @@ changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
-//  testing for calendar stuff aaaaaaaaaaa
-//  using button background color to manipulate inputs
-
+//  CALENDAR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
-
-const leftCalendar = document.getElementById("LeftCalendarTable");
-const rightCalendar = document.getElementById("RightCalendarTable");
-
 
 /*
     Leap Years are any year that can be exactly divided by 4 (such as 2020, 2024, 2028, etc)
@@ -535,6 +529,10 @@ const rightCalendar = document.getElementById("RightCalendarTable");
 
     need days/months/years
 */
+const calendar = document.getElementById("Calendar");
+const calendar2 = document.getElementById("Calendar2");
+const calendarDates = document.getElementById("CalendarDates");
+const daysOfWeek = document.querySelector("days_list");
 
 var date = new Date();
 
@@ -542,47 +540,150 @@ var day = date.getDate();   // 1-31 days and then
 var month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
 var year = date.getFullYear();
 
+//  im using english as my main language for at least 5 years coz its better than my polish... 
+//  ...but names of months in english... this scares me... never can remember stuff in the middle
+//  in fact i dont even remember names of months in polish fully!                 TODAY
+//              styczen      luty      marzec   kwiecien  maj  czerwiec lipiec  sierpien   wrzesien   pazdziernik  listopad    grudzien
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-console.log(day)
-console.log(month + 1)
-console.log(year)
+var startOfCurrentMonth = new Date(year, month, 1).getDay();
+var endOfCurrentMonth = new Date(year, month, 0).getDate();
+var startOfNextMonth = new Date(year, month, endOfCurrentMonth).getDay();
+var endOfNextMonth = new Date(year, month + 2, 0).getDate();
 
-var x = 0;
 
-for (i = 0; i < 5; i++)
+
+
+
+
+function createCalendarMonth()
 {
-    var tr = document.createElement("tr");
-    for (j = 0; j < 7; j++)
+    var x = 0;
+    var check = true;
+    var calendarRows = Math.ceil(endOfCurrentMonth / 7);
+
+    const monthNameDiv = document.createElement("div");
+    monthNameDiv.className = "month_name";
+    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    calendar.insertBefore(monthNameDiv, calendar.children[0]);
+
+    const table = document.createElement("table");
+    const tbody = document.createElement("tbody");
+
+    for (i = 0; i < calendarRows; i++)
     {
-        x += 1;
-        var td = document.createElement("td");
-        var div = document.createElement("div");
-        td.appendChild(div);
-        div.innerText = x;
-        div.className = "box";
-        tr.appendChild(td);
+        var tr = document.createElement("tr");
+        for (j = 0; j < 7; j++)
+        {
+            while (j + 1 < startOfCurrentMonth && check == true)
+            {
+                var td = document.createElement("td");
+                td.className = "box";
+
+                var div = document.createElement("div");
+                div.innerText = "";
+                div.className = "blank_box";
+                
+                td.appendChild(div);
+                tr.appendChild(td);
+    
+                j++;
+            }
+    
+            check = false;
+            x += 1;
+    
+            var td = document.createElement("td");
+            var div = document.createElement("div");
+
+            td.className = "box";
+            td.appendChild(div);
+
+            if (x > endOfCurrentMonth)
+            {
+                break;
+            }
+            else
+            {
+                div.innerText = x;
+            }
+    
+            div.className = "box";
+            tr.appendChild(td);
+        }
+    
+        tbody.appendChild(tr);
+        table.appendChild(tbody);
     }
-    leftCalendar.appendChild(tr);
+
+    calendar.appendChild(table);
 }
 
-x = 0;
-
-for (i = 0; i < 5; i++)
+function createCalendarMonth2()
 {
-    var tr = document.createElement("tr");
-    for (j = 0; j < 7; j++)
+    var x = 0;
+    var check = true;
+    var calendarRows = Math.ceil(endOfNextMonth / 7);
+
+    const monthNameDiv = document.createElement("div");
+    monthNameDiv.className = "month_name";
+    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
+
+    const table = document.createElement("table");
+    const tbody = document.createElement("tbody");
+
+    for (i = 0; i < calendarRows + 1; i++)
     {
-        x += 1;
-        var td = document.createElement("td");
-        var div = document.createElement("div");
-        td.appendChild(div);
-        div.innerText = x;
-        div.className = "box";
-        tr.appendChild(td);
+        var tr = document.createElement("tr");
+        for (j = 0; j < 7; j++)
+        {
+            while (j < startOfNextMonth && check == true)
+            {
+                var td = document.createElement("td");
+                td.className = "box";
+
+                var div = document.createElement("div");
+                div.innerText = "";
+                div.className = "blank_box";
+
+                td.appendChild(div);
+                tr.appendChild(td);
+    
+                j++;
+            }
+    
+            check = false;
+            x += 1;
+    
+            var td = document.createElement("td");
+            var div = document.createElement("div");
+
+            td.className = "box";
+            td.appendChild(div);
+
+            if (x > endOfNextMonth)
+            {
+                break;
+            }
+            else
+            {
+                div.innerText = x;
+            }
+    
+            div.className = "box";
+            tr.appendChild(td);
+        }
+    
+        tbody.appendChild(tr);
+        table.appendChild(tbody);
     }
-    rightCalendar.appendChild(tr);
+
+    calendar2.appendChild(table);
 }
+
+createCalendarMonth();
+createCalendarMonth2();
 
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");
@@ -612,74 +713,6 @@ flexibleButton.onclick = function()
     monthsButton.style.backgroundColor = "";
 }
 
-
-
-
-//banana.onclick = function()
-//{
-//    if (checkinButton.style.backgroundColor == "white" )
-//    {
-//        banana.style.backgroundColor = "black";
-//        console.log(">>>>>>>>>>>>");
-
-//        //  this looks unironically like password someone would use lol
-//        checkinFormInput.value = "banana111";
-
-//        if (checkoutFormInput.value == "")
-//        {
-//            onClickButtonUnfocus(checkinButton);
-//            onClickButtonFocus(checkoutButton);
-//        }
-//    }
-//    else if (checkoutButton.style.backgroundColor == "white")
-//    {
-//        banana.style.backgroundColor = "blue";
-//        console.log("<<<<<<<<<<<<");
-
-//        //  this too lol
-//        checkoutFormInput.value = "banana222";
-
-//        if (checkinFormInput.value == "")
-//        {
-//            onClickButtonUnfocus(checkinButton);
-//            onClickButtonFocus(checkoutButton);
-//        }
-//    }
-//}
-
-//BANANAAAA.onclick = function()
-//{
-//    if (checkinButton.style.backgroundColor == "white")
-//    {
-//        BANANAAAA.style.backgroundColor = "black";
-//        console.log(">>>>>>>>>>>>");
-
-//        //  this looks unironically like password someone would use lol
-//        checkinFormInput.value = "banana111";
-
-//        if (checkoutFormInput.value == "")
-//        {
-//            onClickButtonUnfocus(checkinButton);
-//            onClickButtonFocus(checkoutButton);
-//        }
-//    }
-//    else if (checkoutButton.style.backgroundColor == "white")
-//    {
-//        BANANAAAA.style.backgroundColor = "blue";
-//        console.log("<<<<<<<<<<<<");
-
-//        //  this too lol
-//        checkoutFormInput.value = "banana222";
-
-//        if (checkinFormInput.value == "")
-//        {
-//            onClickButtonUnfocus(checkinButton);
-//            onClickButtonFocus(checkoutButton);
-//        }
-//    }
-    
-//}
-
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
 
 const searchButton = document.getElementById("SearchButton");
@@ -704,3 +737,4 @@ searchButton.onclick = function()
 
 
 
+//  WYSI pepeAgony
