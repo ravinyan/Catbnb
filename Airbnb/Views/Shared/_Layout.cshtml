@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="LOGO">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,7 +15,7 @@
                 <div class="header_div">
                     @* scuffed airbnb logo *@
                     <div class="logo stretch">
-                        <a class="text-decoration-none" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index">Airbnb</a>
+                        <a class="text-decoration-none" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index"> <img id="Logo" src="/img/Joel.gif" width="100px" height="50px" /> </a>
                     </div>
                     @* buttons + mini form *@
                     <div style="display: flex; justify-content: center; align-items:center ; transition: 0.2s; padding-inline-start: 20px; padding-inline-end: 20px; text-align: center; min-width: 372px; min-height: 50px">
@@ -182,14 +182,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
                                                 @* WHERE DO I PUT THE DAYS OF THE WEEK AAAAAAAAAAAAA *@
                                                 <div class="shadowe" style="width: 100%; height: 0px">
                                                     <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0">
-                                                        a
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 3 16 16">
+                                                            <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753" />
+                                                        </svg>
                                                     </button>
                                                     <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0">
-                                                        a
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 3 16 16">
+                                                            <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
+                                                        </svg>
                                                     </button>
                                                 </div>
                                                 <div style="display: flex; width: 100%">

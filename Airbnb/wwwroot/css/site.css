@@ -272,6 +272,7 @@ div.month_name {
     text-align: center;
     padding: 10px 0px;
     font-weight: bold;
+    user-select: none;
 }
 
 ul.days_list {
@@ -282,6 +283,7 @@ ul.days_list {
     padding: 0px;
     justify-content: space-between;
     margin: 0px;
+    user-select: none;
 }
 
 li.box {
@@ -305,7 +307,23 @@ div.box {
     flex-direction: column;
     border: 1px solid white;
     margin: 1px;
+    user-select: none;
 }
+
+div.box_past {
+    height: 49px;
+    width: 49px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid white;
+    margin: 1px;
+    color: #dcdcdc;
+    user-select: none;
+}
+
 div.blank_box {
     height: 49px;
     width: 49px;

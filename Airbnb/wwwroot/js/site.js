@@ -1,6 +1,22 @@
 ﻿
 history.scrollRestoration = 'manual';
 
+//  just for fun
+var logo = document.getElementById("LOGO");
+var logo_question_mark = document.getElementById("Logo");
+
+logo.onclick = function()
+{
+    if (logo_question_mark.src == "https://localhost:7027/img/Joel.gif")
+    {
+        logo_question_mark.src = "/img/Adam.gif";
+    }
+    else
+    {
+        logo_question_mark.src = "/img/Joel.gif";
+    }
+}
+
 //  header scaling
 window.onscroll = function() { headerScaling() };
 
@@ -533,9 +549,10 @@ const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 const calendarDates = document.getElementById("CalendarDates");
 const daysOfWeek = document.querySelector("days_list");
+const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
+const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
 var date = new Date();
-
 var day = date.getDate();   // 1-31 days and then
 var month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
 var year = date.getFullYear();
@@ -546,21 +563,63 @@ var year = date.getFullYear();
 //              styczen      luty      marzec   kwiecien  maj  czerwiec lipiec  sierpien   wrzesien   pazdziernik  listopad    grudzien
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-var startOfCurrentMonth = new Date(year, month, 1).getDay();
-var endOfCurrentMonth = new Date(year, month, 0).getDate();
-var startOfNextMonth = new Date(year, month, endOfCurrentMonth).getDay();
-var endOfNextMonth = new Date(year, month + 2, 0).getDate();
+var startOfCurrentMonth = new Date(year, month, 0).getDay();
+var endOfCurrentMonth = new Date(year, month, 1).getDate();
+
+var startOfNextMonth = new Date(year, month + 1, 0).getDay();
+var endOfNextMonth = new Date(year, month + 1, 0).getDate();
+
+console.log(startOfCurrentMonth)
+console.log(endOfCurrentMonth)
+console.log(startOfNextMonth)
+console.log(endOfNextMonth)
+
+//  have previous month to move current month to previous with smooth transition
+//  have current month than will have greyed out days
+//  have second month next to current one
+//  have third month on screen loaded but hidded for also transistion
+//  here test values to test stuff coz my brain small
+
+function generateMonths(startCurrentMonth, endCurrentMonth, startNextMonth, endNextMonth)
+{
+    if (month >= 12)
+    {
+        month = 0;
+        year += 1;
+    }
+
+    var x = 0;
+    var check = true;
+    const caledarRows = 6;
+
+    //const monthNameDiv = document.createElement("div");
+    //monthNameDiv.innerHTML =  months[month] + ` ${year}`;
+
+    /*console.log(monthNameDiv.innerHTML = months[month] + ` ${year}`)*/
+}
 
 
 
-
+for (i = 0; i <20; i++)
+{
+    //generateMonths(startOfCurrentMonth, endOfCurrentMonth, startOfNextMonth, endOfNextMonth);   
+}
 
 
 function createCalendarMonth()
 {
     var x = 0;
     var check = true;
-    var calendarRows = Math.ceil(endOfCurrentMonth / 7);
+    var calendarRows = 0;
+
+    if ((startOfNextMonth == 6 && endOfNextMonth >= 30) || (startOfNextMonth == 5 && endOfNextMonth == 31))
+    {
+        calendarRows = 6;
+    }
+    else
+    {
+        calendarRows = 5;
+    }
 
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
@@ -575,7 +634,7 @@ function createCalendarMonth()
         var tr = document.createElement("tr");
         for (j = 0; j < 7; j++)
         {
-            while (j + 1 < startOfCurrentMonth && check == true)
+            while (j < startOfCurrentMonth && check == true)
             {
                 var td = document.createElement("td");
                 td.className = "box";
@@ -592,23 +651,33 @@ function createCalendarMonth()
     
             check = false;
             x += 1;
-    
+
             var td = document.createElement("td");
             var div = document.createElement("div");
-
-            td.className = "box";
-            td.appendChild(div);
-
-            if (x > endOfCurrentMonth)
+    
+            if (x < day)
             {
-                break;
+                td.className = "box";
+                div.innerText = x;
+                div.className = "box_past";
             }
             else
             {
-                div.innerText = x;
+                td.className = "box";
+
+                if (x > endOfCurrentMonth)
+                {
+                    break;
+                }
+                else
+                {
+                    div.innerText = x;
+                }
+
+                div.className = "box";
             }
-    
-            div.className = "box";
+   
+            td.appendChild(div);     
             tr.appendChild(td);
         }
     
@@ -623,17 +692,26 @@ function createCalendarMonth2()
 {
     var x = 0;
     var check = true;
-    var calendarRows = Math.ceil(endOfNextMonth / 7);
+    var calendarRows = 0;
 
+    if ((startOfNextMonth == 6 && endOfNextMonth >= 30) || (startOfNextMonth == 5 && endOfNextMonth == 31))
+    {
+        calendarRows = 6;
+    }
+    else
+    {
+        calendarRows = 5;
+    }
+    
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
     calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
 
     const table = document.createElement("table");
     const tbody = document.createElement("tbody");
 
-    for (i = 0; i < calendarRows + 1; i++)
+    for (i = 0; i < calendarRows; i++)
     {
         var tr = document.createElement("tr");
         for (j = 0; j < 7; j++)
@@ -682,8 +760,19 @@ function createCalendarMonth2()
     calendar2.appendChild(table);
 }
 
-createCalendarMonth();
-createCalendarMonth2();
+//createCalendarMonth();
+//createCalendarMonth2();
+
+moveCalendarLeft.onclick = function ()
+{
+    console.log("joel")
+}
+
+moveCalendarRight.onclick = function ()
+{
+    console.log("adam")
+}
+
 
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");
@@ -732,9 +821,3 @@ searchButton.onclick = function()
 
 
 
-
-
-
-
-
-//  WYSI pepeAgony
