@@ -17,7 +17,9 @@ logo.onclick = function()
     }
 }
 
-//  header scaling
+/*--------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------HEADER SCALING----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 window.onscroll = function() { headerScaling() };
 
 function headerScaling() 
@@ -85,8 +87,9 @@ function headerScaling()
     }
 }
 
-/* ------------------------------- BUTTONS ------------------------------- */
-//  SCROLL MENU
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------SCROLL MENU BUTTONS-------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
 const scrollMenu = document.getElementById("ScrollMenu");
@@ -94,7 +97,6 @@ const scrollMenu = document.getElementById("ScrollMenu");
 buttonLeft.style.display = "none"; 
 scrollMenu.scrollLeft == 0;
 
-/* left button */
 buttonLeft.onclick = function()
 {
     scrollMenu.scrollLeft -= window.innerWidth - 320;
@@ -106,7 +108,6 @@ buttonLeft.onclick = function()
     }
 }
 
-/* right button */
 buttonRight.onclick = function()
 {
     scrollMenu.scrollLeft += window.innerWidth - 320;
@@ -118,7 +119,9 @@ buttonRight.onclick = function()
     }
 }
 
-//  DISPLAYING FORMS FOR STAYS/EXPERIENCES
+/*--------------------------------------------------------------------------------------------------------------------
+----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const staysMenuButton = document.getElementById("StaysMenuButton");
 const experiencesMenuButton = document.getElementById("ExperiencesMenuButton");
 const staysMenuForm = document.getElementById("StaysMenuForm");
@@ -140,7 +143,9 @@ experiencesMenuButton.onclick = function()
     staysMenuButton.style.textShadow = "";
 }
 
-// LANGUAGES AND REGIONS / CURRENCIES
+/*--------------------------------------------------------------------------------------------------------------------
+---------------------------------------------LANGUAGE AND CURRENCIES MODAL--------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const languagesButton = document.getElementById("ModalLanguageAndRegionButton");
 const currenciesButton = document.getElementById("ModalCurrenciesButton");
 
@@ -159,7 +164,9 @@ currenciesButton.onclick = function()
     languages.style.display = "none";
 }
 
-// FORM BUTTONS ITS SCUFFED BUT ITS MINE AND I WILL PROTECT THIS SHIT CODE WITH MY ROTTEN FISH SWORD
+/*--------------------------------------------------------------------------------------------------------------------
+---------------------------------------FORM BUTTONS DISPLAYING DROPDOWN WINDOWS---------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const whereButton = document.getElementById("WhereButton");
 const whereDropdown = document.getElementById("WhereDropdown");
 
@@ -293,8 +300,9 @@ openWindow(whereButtonExperiences, whereDropdownExperiences);
 openWindow(datesButtonExperiences, datesDropdownExperiences);
 openWindow(whoButtonExperiences, whoDropdownExperiences);
 
-
-// MINI FORM BUTTONS (opening the big form thingy big header transition idk how its called just opens shit and closes shit)
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------MINI FORM BUTTONS---------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const anywhereButton = document.getElementById("MiniAnywhereButton");
 const anyWeekButton = document.getElementById("MiniAnyWeekButton");
 const addGuestsButton = document.getElementById("MiniAddGuestsButton");
@@ -359,7 +367,9 @@ addGuestsButton.onclick = function()
      console.log("CA PY BA RA capybara capybara capybara capybara")
 }
 
-// FORM DROPDOWN WINDOW THINGY BUTTONS i made it better i forgot to change this oopsie
+/*--------------------------------------------------------------------------------------------------------------------
+---------------------------------------------WHO FORM DROPDOWN WINDOW/FORM--------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const adultsCount = document.getElementById("AdultsCount");
 const decrementAdultCountButton = document.getElementById("DecreaseAdultCount");
 const incrementAdultCountButton = document.getElementById("IncreaseAdultCount");
@@ -534,77 +544,28 @@ changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
-//  CALENDAR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-const checkinFormInput = document.getElementById("CheckinInput");
-const checkoutFormInput = document.getElementById("CheckoutInput");
-
-/*
-    Leap Years are any year that can be exactly divided by 4 (such as 2020, 2024, 2028, etc)
- 	except if it can be exactly divided by 100, then it isn't (such as 2100, 2200, etc)
- 	except if it can be exactly divided by 400, then it is (such as 2000, 2400)
-
-    need days/months/years
-*/
+/*--------------------------------------------------------------------------------------------------------------------
+----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
-const calendarDates = document.getElementById("CalendarDates");
-const daysOfWeek = document.querySelector("days_list");
-const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
-const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
 var date = new Date();
 var day = date.getDate();   // 1-31 days and then
 var month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
 var year = date.getFullYear();
+var currentMonth = date.getMonth();
+var currentYear = date.getFullYear();
 
-//  im using english as my main language for at least 5 years coz its better than my polish... 
-//  ...but names of months in english... this scares me... never can remember stuff in the middle
-//  in fact i dont even remember names of months in polish fully!                 TODAY
+//  i have skill issue i dont even know months name in polish                    TODAY
 //              styczen      luty      marzec   kwiecien  maj  czerwiec lipiec  sierpien   wrzesien   pazdziernik  listopad    grudzien
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+//  do. not. fking. touch. this. D O N O T. donut.
 var startOfCurrentMonth = new Date(year, month, 0).getDay();
-var endOfCurrentMonth = new Date(year, month, 1).getDate();
-
+var endOfCurrentMonth = new Date(year, month +1, 0).getDate();
 var startOfNextMonth = new Date(year, month + 1, 0).getDay();
-var endOfNextMonth = new Date(year, month + 1, 0).getDate();
-
-console.log(startOfCurrentMonth)
-console.log(endOfCurrentMonth)
-console.log(startOfNextMonth)
-console.log(endOfNextMonth)
-
-//  have previous month to move current month to previous with smooth transition
-//  have current month than will have greyed out days
-//  have second month next to current one
-//  have third month on screen loaded but hidded for also transistion
-//  here test values to test stuff coz my brain small
-
-function generateMonths(startCurrentMonth, endCurrentMonth, startNextMonth, endNextMonth)
-{
-    if (month >= 12)
-    {
-        month = 0;
-        year += 1;
-    }
-
-    var x = 0;
-    var check = true;
-    const caledarRows = 6;
-
-    //const monthNameDiv = document.createElement("div");
-    //monthNameDiv.innerHTML =  months[month] + ` ${year}`;
-
-    /*console.log(monthNameDiv.innerHTML = months[month] + ` ${year}`)*/
-}
-
-
-
-for (i = 0; i <20; i++)
-{
-    //generateMonths(startOfCurrentMonth, endOfCurrentMonth, startOfNextMonth, endOfNextMonth);   
-}
-
+var endOfNextMonth = new Date(year, month + 2, 0).getDate();
 
 function createCalendarMonth()
 {
@@ -612,7 +573,7 @@ function createCalendarMonth()
     var check = true;
     var calendarRows = 0;
 
-    if ((startOfNextMonth == 6 && endOfNextMonth >= 30) || (startOfNextMonth == 5 && endOfNextMonth == 31))
+    if ((startOfCurrentMonth == 6 && endOfCurrentMonth >= 30) || (startOfCurrentMonth == 5 && endOfCurrentMonth == 31))
     {
         calendarRows = 6;
     }
@@ -623,7 +584,15 @@ function createCalendarMonth()
 
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    if (month == -1)
+    {
+        monthNameDiv.innerHTML = months[11] + ` ${year}`;
+    }
+    else
+    {
+        monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    }
+    
     calendar.insertBefore(monthNameDiv, calendar.children[0]);
 
     const table = document.createElement("table");
@@ -655,7 +624,7 @@ function createCalendarMonth()
             var td = document.createElement("td");
             var div = document.createElement("div");
     
-            if (x < day)
+            if (x < day && (month == currentMonth && year == currentYear))
             {
                 td.className = "box";
                 div.innerText = x;
@@ -685,6 +654,7 @@ function createCalendarMonth()
         table.appendChild(tbody);
     }
 
+    table.className = "nothing";
     calendar.appendChild(table);
 }
 
@@ -702,10 +672,18 @@ function createCalendarMonth2()
     {
         calendarRows = 5;
     }
-    
+  
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
+    if (month == -1)
+    {
+        monthNameDiv.innerHTML = months[0] + ` ${year}`;
+    }
+    else
+    {
+        monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
+    }
+
     calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
 
     const table = document.createElement("table");
@@ -757,22 +735,119 @@ function createCalendarMonth2()
         table.appendChild(tbody);
     }
 
+    table.className = "nothing";
     calendar2.appendChild(table);
 }
 
-//createCalendarMonth();
-//createCalendarMonth2();
+createCalendarMonth();
+createCalendarMonth2();
+
+//  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
+const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
+const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
 moveCalendarLeft.onclick = function ()
-{
-    console.log("joel")
+{  
+    if (moveCalendarLeft.style.cursor == "pointer")
+    {
+        const monthNames = document.querySelectorAll(".month_name");
+        const tables = document.querySelectorAll(".nothing");
+
+        monthNames.forEach(function(e)
+        {
+            e.remove();
+        });
+
+        tables.forEach(function(e)
+        {
+            e.remove();
+        });
+
+        month -= 1;
+        startOfNextMonth = new Date(year, month + 1, 0).getDay();
+        endOfNextMonth = new Date(year, month + 2, 0).getDate();
+
+        endOfCurrentMonth = new Date(year, month +1, 0).getDate();
+        startOfCurrentMonth = new Date(year, month, 0).getDay();
+
+        createCalendarMonth2();
+        if (month == -1)
+        {
+            year -= 1;
+        }
+        
+        createCalendarMonth();
+        if (month == -1)
+        {
+            month = 11
+        }
+
+        if (month == currentMonth && year == currentYear)
+        {
+            moveCalendarLeft.style.cursor = "not-allowed";
+            moveCalendarLeft.style.color = "#dcdcdc";
+            moveCalendarLeft.style.background = "none";
+        }
+    } 
 }
 
 moveCalendarRight.onclick = function ()
 {
-    console.log("adam")
+    if (moveCalendarRight.style.cursor == "pointer")
+    {
+        const monthNames = document.querySelectorAll(".month_name");
+        const tables = document.querySelectorAll(".nothing");
+
+        monthNames.forEach(function(e)
+        {
+            e.remove();
+        });
+
+        tables.forEach(function(e)
+        {
+            e.remove();
+        });
+
+        month += 1;
+        startOfCurrentMonth = new Date(year, month, 0).getDay();
+
+        if (month == 11)
+        {
+            month = -1;
+        }
+
+        endOfCurrentMonth = new Date(year, month +1, 0).getDate();
+
+        createCalendarMonth();
+        if (month == -1)
+        {
+            year += 1;
+        }
+
+        startOfNextMonth = new Date(year, month + 1, 0).getDay();
+        endOfNextMonth = new Date(year, month + 2, 0).getDate();
+   
+        createCalendarMonth2();
+        if (month == -1)
+        {
+            month = 0;
+        }
+
+        if (month > currentMonth && year >= currentYear)
+        {
+            moveCalendarLeft.style.cursor = "pointer";
+            moveCalendarLeft.style.color = "";
+            moveCalendarLeft.style.background = "";
+        }
+    } 
 }
 
+const checkinFormInput = document.getElementById("CheckinInput");
+const checkoutFormInput = document.getElementById("CheckoutInput");
+
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");

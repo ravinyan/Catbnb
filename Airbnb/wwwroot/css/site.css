@@ -293,6 +293,10 @@ li.box {
     padding: 0px;
 }
 
+table.nothing {
+    /* css class just so i can easly remove tables in calendars... lol */
+}
+
 td.box {
     padding: 0px;
 }
@@ -308,6 +312,7 @@ div.box {
     border: 1px solid white;
     margin: 1px;
     user-select: none;
+    font-weight: 600
 }
 
 div.box_past {
