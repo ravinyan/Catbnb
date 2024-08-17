@@ -6,10 +6,6 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-/* 
-   other fix didnt work somehow shit broke 
-   and this is the solution to scrollbar nightmare (html and body class)
-*/
 html {
     position: relative;
     min-height: 100%;
@@ -18,7 +14,6 @@ html {
 body {
     overflow-x: hidden;
 }
-
 
 /* -------------------------------------- REMOVING SHADOWS -------------------------------------- */
 /* focus on deez nuts */
@@ -277,28 +272,46 @@ div.month_name {
 
 ul.days_list {
     list-style-type: none;
-    display: flex;
-    justify-content: center;
     font-size: 12px;
     padding: 0px;
-    justify-content: space-between;
-    margin: 0px;
+    margin: 1px;
     user-select: none;
+    margin-block-end: 20px;
+    display: flex;
+    max-width: 350px;
+    justify-content: space-between;
 }
 
 li.box {
-    height: 50px;
     width: 50px;
     text-align: center;
-    padding: 0px;
 }
 
 table.nothing {
     /* css class just so i can easly remove tables in calendars... lol */
+    min-width: 350px;
 }
 
 td.box {
     padding: 0px;
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 970px) {
+    #Calendar2 {
+        display: none;
+    }
+
+    div.calendars {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+}
+div.calendars {
+    display: flex;
+    width: 100%;
 }
 
 div.box {
@@ -310,7 +323,7 @@ div.box {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    margin: 1px;
+    
     user-select: none;
     font-weight: 600
 }
@@ -324,7 +337,7 @@ div.box_past {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    margin: 1px;
+    
     color: #dcdcdc;
     user-select: none;
 }
@@ -338,7 +351,7 @@ div.blank_box {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    margin: 1px;
+    
 }
 
     div.box:hover {

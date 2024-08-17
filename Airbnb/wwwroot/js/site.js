@@ -763,7 +763,15 @@ moveCalendarLeft.onclick = function ()
             e.remove();
         });
 
-        month -= 1;
+        if (month == -1)
+        {
+            //  do nothing... its a check so calendar properly works for when going from decemblabla to novembeblablabla
+        }
+        else
+        {
+            month -= 1;
+        }
+        
         startOfNextMonth = new Date(year, month + 1, 0).getDay();
         endOfNextMonth = new Date(year, month + 2, 0).getDate();
 
@@ -808,7 +816,15 @@ moveCalendarRight.onclick = function ()
             e.remove();
         });
 
-        month += 1;
+        if (month == 11)
+        {
+            //  another check when going from dec/jan to jan/feb to AGAIN dec/jan to AGAIN jan/feb and it breaks there lol
+        }
+        else
+        {
+            month += 1;
+        }
+
         startOfCurrentMonth = new Date(year, month, 0).getDay();
 
         if (month == 11)
@@ -828,10 +844,6 @@ moveCalendarRight.onclick = function ()
         endOfNextMonth = new Date(year, month + 2, 0).getDate();
    
         createCalendarMonth2();
-        if (month == -1)
-        {
-            month = 0;
-        }
 
         if (month > currentMonth && year >= currentYear)
         {
