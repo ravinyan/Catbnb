@@ -129,6 +129,7 @@ input.input {
     outline: none;
     text-overflow: ellipsis;
     background: none !important;
+    font-weight: 600;
 }
 
 div.who_container {
@@ -289,7 +290,6 @@ li.box {
 
 table.nothing {
     /* css class just so i can easly remove tables in calendars... lol */
-    min-width: 350px;
 }
 
 td.box {
@@ -309,9 +309,11 @@ td.box {
         justify-content: center;
     }
 }
+
 div.calendars {
     display: flex;
     width: 100%;
+    justify-content: center;
 }
 
 div.box {

@@ -746,6 +746,7 @@ createCalendarMonth2();
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
+
 moveCalendarLeft.onclick = function ()
 {  
     if (moveCalendarLeft.style.cursor == "pointer")
@@ -798,7 +799,7 @@ moveCalendarLeft.onclick = function ()
         }
     } 
 }
-
+var numba = document.querySelectorAll("div.box");
 moveCalendarRight.onclick = function ()
 {
     if (moveCalendarRight.style.cursor == "pointer")
@@ -851,11 +852,76 @@ moveCalendarRight.onclick = function ()
             moveCalendarLeft.style.color = "";
             moveCalendarLeft.style.background = "";
         }
+
+        numba = document.querySelectorAll("div.box");
     } 
 }
 
+//  ------------------------ CALENDAR FORM INPUT ------------------------
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
+
+console.log(calendar.childNodes[1].innerText);
+console.log();
+
+numba.forEach(function(e)
+{
+    e.onclick = function()
+    {
+        if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
+        {
+            if (checkinButton.style.backgroundColor == "white")
+            {
+                checkinFormInput.value = e.innerText + " " + months[month].slice(0,3);
+            }
+            else if (checkoutButton.style.backgroundColor == "white")
+            {
+                checkoutFormInput.value = e.innerText + " " + months[month].slice(0,3);
+            }
+        }
+
+        if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
+        {
+            if (checkinButton.style.backgroundColor == "white")
+            {
+                checkinFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
+            }
+            else if (checkoutButton.style.backgroundColor == "white")
+            {
+                checkoutFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
+            }
+        }
+
+        if (checkinFormInput != "" && checkinFormInput.value.slice(0,1) > checkoutFormInput.value.slice(0,1))
+        {
+            if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
+            {
+                checkinFormInput.value = e.innerText + " " + months[month].slice(0,3);
+            }
+            else if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
+            {
+                checkinFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
+            }
+
+            checkoutFormInput.value = "";
+            
+            onClickButtonFocus(checkinButton);
+            onClickButtonUnfocus(checkoutButton);
+        }
+
+        if (checkinFormInput.value != "" && checkoutFormInput.value == "")
+        {
+            onClickButtonFocus(checkoutButton);
+            onClickButtonUnfocus(checkinButton);
+        }
+        else if (checkinFormInput.value == "" && checkoutFormInput.value != "")
+        {
+            onClickButtonFocus(checkinButton);
+            onClickButtonUnfocus(checkoutButton);
+        }
+    }
+})
+
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
