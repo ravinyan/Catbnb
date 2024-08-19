@@ -325,9 +325,27 @@ div.box {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    
     user-select: none;
     font-weight: 600
+}
+
+    div.box:hover {
+        border-color: black;
+    }
+
+div.selected {
+    height: 49px;
+    width: 49px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid white;
+    user-select: none;
+    font-weight: 600;
+    background-color: black;
+    color: white;
 }
 
 div.box_past {
@@ -355,12 +373,6 @@ div.blank_box {
     border: 1px solid white;
     
 }
-
-    div.box:hover {
-        background-color: white;
-        border-color: black;
-    }
-
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {

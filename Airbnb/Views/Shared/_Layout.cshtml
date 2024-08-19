@@ -385,25 +385,71 @@
                 </div>
                 <div id="ExperiencesMenuForm" style="display: none">
                     <form class="form">
-                        <div class="justify-content-center d-flex" style="width: 850px">
+                        <div class="justify-content-center d-flex position-relative" style="width: 850px">
                             @* form *@
                             <div class="border shadow-sm form_border d-inline-flex">
-                                <div class="d-flex w-100">
+                                <div class="form_container">
                                     @* WHERE *@
-                                    <div style="width: 33.33%">
-                                        <label class="shadowe w-100">
+                                    <div style="width: 33.33%; border-radius: 50px">
+                                        <label class="shadowe w-100" style="border-radius: 50px;">
                                             <div id="WhereButtonExperiences" class="label_box">
-                                                <div class="fw-bold">
+                                                <div class="fw-bold" style="background: none">
                                                     Where
                                                 </div>
-                                                <input class="border-0 input" placeholder="Search destinations" />
+                                                <input class="border-0 input" placeholder="Search destinations" value="" spellcheck="false" />
                                             </div>
                                         </label>
                                         @* popup modal thingy *@
-                                        <div id="WhereDropdownExperiences" class="modal_window">
-                                            <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                <div style="color: white">
-                                                    <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                        <div id="WhereDropdownExperiences" class="shadow dropdown_window" style="left: 0px; min-width: 50%;">
+                                            <div class="dropdown_window_header">Search by region</div>
+                                            <div class="dropdown_window_grid shadowe">
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        I'm flexible
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Southeast Asia
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Spain
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Middle East
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        Italy
+                                                    </div>
+                                                </div>
+                                                <div class="region_box">
+                                                    <button type="button" class="p-0 border-0 w-100" style="background: none">
+                                                        <img class="image_box" src="~/img/red-square.png" />
+                                                    </button>
+                                                    <div>
+                                                        United states
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -412,38 +458,112 @@
                                     <div style="width: 33.33%; display: flex">
                                         <div class="w-100">
                                             <label class="shadowe w-100">
-                                                <div id="DatesButton" class="label_box">
-                                                    <div class="fw-bold text-nowrap">
+                                                <div id="DatesButtonExperiences" class="label_box">
+                                                    <div class="fw-bold text-nowrap" style="background: none">
                                                         Add dates
                                                     </div>
                                                     <input class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            <div id="DatesDropdown" class="modal_window">
-                                                <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                    <div style="color: white">
-                                                        <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                            <div id="DatesDropdownExperiences" class="shadow dropdown_window" style="width: 100%; left: 0px">
+                                                <div style="display: flex; justify-content: center">
+                                                    <div style="background-color: #dedede; justify-content: center; display: flex; border-radius: 50px; align-items: center">
+                                                        <div class="shadowe">
+                                                            <button id="DatesButton" type="button" class="btn" style="border-radius: 50px; margin: 5px; background-color: white">
+                                                                Dates
+                                                            </button>
+                                                        </div>
+                                                        <div class="shadowe">
+                                                            <button id="MonthsButton" type="button" class="btn" style="border-radius: 50px; margin-block-start: 5px; margin-block-end: 5px;">
+                                                                Months
+                                                            </button>
+                                                        </div>
+                                                        <div class="shadowe">
+                                                            <button id="FlexibleButton" type="button" class="btn" style="border-radius: 50px; margin: 5px;">
+                                                                Flexible
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="shadowe" style="width: 100%; height: 0px">
+                                                    <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
+                                                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                        </svg>
+                                                    </button>
+                                                    <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
+                                                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="calendars">
+                                                    <div id="Calendar" style="max-width: 375px; padding: 10px">
+                                                        <ul class="days_list">
+                                                            @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                            <li class="box">Mon</li>
+                                                            <li class="box">Tue</li>
+                                                            <li class="box">Wed</li>
+                                                            <li class="box">Thu</li>
+                                                            <li class="box">Fri</li>
+                                                            <li class="box">Sat</li>
+                                                            <li class="box">Sun</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div id="Calendar2" style="max-width: 375px; padding: 10px">
+                                                        <ul class="days_list">
+                                                            @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                            <li class="box">Mon</li>
+                                                            <li class="box">Tue</li>
+                                                            <li class="box">Wed</li>
+                                                            <li class="box">Thu</li>
+                                                            <li class="box">Fri</li>
+                                                            <li class="box">Sat</li>
+                                                            <li class="box">Sun</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="shadowe">
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            Exact dates
+                                                        </button>
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            +- 1 day
+                                                        </button>
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            +- 2 days
+                                                        </button>
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            +- 3 days
+                                                        </button>
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            +- 7 days
+                                                        </button>
+                                                        <button type="button" class="btn" style="border-radius: 50px">
+                                                            +- 14 days
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     @* WHO *@
-                                    <div style="width: 33.6%" class="d-inline-flex">
-                                        <div class="shadowe d-flex w-100">
-                                            <div class="who_container">
-                                                <label style="background:none">
-                                                    <div id="WhoButtonExperiences" class="label_box">
-                                                        <div class="fw-bold">
+                                    <div style="width: 33.3%; border-radius: 50px;">
+                                        <div class=" d-flex w-100" style="border-radius: 50px">
+                                            <div id="WhoButtonExperiences" class="who_container">
+                                                <label style="background:none; width: 100%; border-radius: 50px;">
+                                                    <div class="label_box" style="background: none">
+                                                        <div class="fw-bold" style="background: none">
                                                             Who
                                                         </div>
-                                                        <input class="border-0 input" type="search" placeholder="Add guests" />
+                                                        <input id="GuestsInputExperiences" class="border-0 input" type="search" placeholder="Add guests" value="" spellcheck="false" readonly />
                                                     </div>
                                                 </label>
                                             </div>
                                             <div class="search_button_box" style="background: none">
-                                                <button id="SearchButton" type="button" class="search_button" style="z-index: 727">
+                                                <button id="SearchButtonExperiences" type="button" class="search_button" style="z-index: 727">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 1 16 16">
                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                                     </svg>
@@ -451,10 +571,99 @@
                                             </div>
                                         </div>
                                         @* popup modal thingy *@
-                                        <div id="WhoDropdownExperiences" class="modal_window">
-                                            <div style="padding-inline-start: 20px; padding-inline-end: 20px">
-                                                <div style="color: white">
-                                                    <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                        <div id="WhoDropdownExperiences" class="shadow dropdown_window test" style="right: 0px; min-width: 50%;">
+                                            <div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Adults
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Ages 13 or above
+                                                        </div>
+                                                    </section>
+                                                    <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseAdultCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="AdultsCount"> 0 </div>
+                                                        <button id="IncreaseAdultCount" type="button" class="guest_button_increase guest_button_color " style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Children
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Ages 2 - 12
+                                                        </div>
+                                                    </section>
+                                                    <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseChildCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="ChildrenCount"> 0 </div>
+                                                        <button id="IncreaseChildCount" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Infants
+                                                        </div>
+                                                        <div style="font-size: 14px; font-weight: 200; padding-block-start: 4px">
+                                                            Under 2
+                                                        </div>
+                                                    </section>
+                                                    <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreaseInfantCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="InfantsCount"> 0 </div>
+                                                        <button id="IncreaseInfantCount" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="guest_box">
+                                                    <section>
+                                                        <div style="font-weight: bold">
+                                                            Pets
+                                                        </div>
+                                                        <button type="button" class="border-0" style="background: none; padding: 0px; text-decoration: underline; font-size: 14px; padding-block-start: 4px">
+                                                            Bringing a service animal?
+                                                        </button>
+                                                    </section>
+                                                    <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
+                                                        <button id="DecreasePetCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                                            </svg>
+                                                        </button>
+                                                        <div id="PetsCount"> 0 </div>
+                                                        <button id="IncreasePetCount" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
+                                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -584,7 +793,6 @@
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

@@ -180,8 +180,8 @@ const whoDropdown = document.getElementById("WhoDropdown");
 const whereButtonExperiences = document.getElementById("WhereButtonExperiences");
 const whereDropdownExperiences = document.getElementById("WhereDropdownExperiences");
 
-const datesButtonExperiences = document.getElementById("DatesButton");
-const datesDropdownExperiences =  document.getElementById("DatesDropdown");
+const datesButtonExperiences = document.getElementById("DatesButtonExperiences");
+const datesDropdownExperiences =  document.getElementById("DatesDropdownExperiences");
 
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
@@ -266,6 +266,49 @@ document.addEventListener('click', event =>
         onClickButtonUnfocus(whoButton);
     }
 });
+
+document.addEventListener('click', event => 
+{
+    if (!whereDropdownExperiences.contains(event.target) && !whereButtonExperiences.contains(event.target) && whereDropdownExperiences.style.display == "block") 
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        whereDropdownExperiences.style.display = "none";
+        onClickButtonUnfocus(whereButtonExperiences);
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!datesDropdownExperiences.contains(event.target) && !datesButtonExperiences.contains(event.target) && datesDropdownExperiences.style.display == "block") 
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        datesDropdownExperiences.style.display = "none";
+        onClickButtonUnfocus(datesButtonExperiences);
+    }
+});
+
+document.addEventListener('click', event => 
+{
+    if (!whoDropdownExperiences.contains(event.target) && !whoButtonExperiences.contains(event.target) && whoDropdownExperiences.style.display == "block") 
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        whoDropdownExperiences.style.display = "none";
+        onClickButtonUnfocus(whoButtonExperiences);
+    }
+});
+
 
 //  its just to reset form background color when there is no focus on any button and bg color is still grey
 document.addEventListener('click', event =>
@@ -746,7 +789,6 @@ createCalendarMonth2();
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
-
 moveCalendarLeft.onclick = function ()
 {  
     if (moveCalendarLeft.style.cursor == "pointer")
@@ -799,7 +841,7 @@ moveCalendarLeft.onclick = function ()
         }
     } 
 }
-var numba = document.querySelectorAll("div.box");
+
 moveCalendarRight.onclick = function ()
 {
     if (moveCalendarRight.style.cursor == "pointer")
@@ -852,8 +894,6 @@ moveCalendarRight.onclick = function ()
             moveCalendarLeft.style.color = "";
             moveCalendarLeft.style.background = "";
         }
-
-        numba = document.querySelectorAll("div.box");
     } 
 }
 
@@ -861,67 +901,69 @@ moveCalendarRight.onclick = function ()
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
 
-console.log(calendar.childNodes[1].innerText);
-console.log();
+var getStupidCalendarDates = document.querySelector("div.calendars");
 
-numba.forEach(function(e)
+getStupidCalendarDates.onclick = function(e)
 {
-    e.onclick = function()
+    if (e.target.children.length == 0 && e.target.className == "box")
     {
-        if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
+        if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
         {
             if (checkinButton.style.backgroundColor == "white")
             {
-                checkinFormInput.value = e.innerText + " " + months[month].slice(0,3);
+                checkinFormInput.value = e.target.innerText + " " + months[month].slice(0,3);
             }
             else if (checkoutButton.style.backgroundColor == "white")
             {
-                checkoutFormInput.value = e.innerText + " " + months[month].slice(0,3);
+                checkoutFormInput.value = e.target.innerText + " " + months[month].slice(0,3);
             }
-        }
 
-        if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
+            e.target.className[0] = "selected";
+        }
+        else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
         {
             if (checkinButton.style.backgroundColor == "white")
             {
-                checkinFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
+                checkinFormInput.value = e.target.innerText + " " + months[month + 1].slice(0,3);
             }
             else if (checkoutButton.style.backgroundColor == "white")
             {
-                checkoutFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
+                checkoutFormInput.value = e.target.innerText + " " + months[month + 1].slice(0,3);
+                
             }
+
+            e.target.className[0] = "selected";
         }
 
-        if (checkinFormInput != "" && checkinFormInput.value.slice(0,1) > checkoutFormInput.value.slice(0,1))
+        if (+checkoutFormInput.value.slice(0, 2).trim() <= +checkinFormInput.value.slice(0, 2).trim() && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
-            if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
-            {
-                checkinFormInput.value = e.innerText + " " + months[month].slice(0,3);
-            }
-            else if (e.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
-            {
-                checkinFormInput.value = e.innerText + " " + months[month + 1].slice(0,3);
-            }
-
+            checkinFormInput.value = checkoutFormInput.value;
             checkoutFormInput.value = "";
-            
-            onClickButtonFocus(checkinButton);
             onClickButtonUnfocus(checkoutButton);
-        }
+            onClickButtonFocus(checkinButton);
 
+            e.target.className[0] = "box";
+        }
+        else if (+checkoutFormInput.value.slice(0, 2).trim() >= +checkinFormInput.value.slice(0, 2).trim())
+        {
+            onClickButtonUnfocus(checkoutButton);
+            onClickButtonFocus(checkinButton);
+
+            e.target.className[0] = "box";
+        }
+        
         if (checkinFormInput.value != "" && checkoutFormInput.value == "")
         {
-            onClickButtonFocus(checkoutButton);
             onClickButtonUnfocus(checkinButton);
+            onClickButtonFocus(checkoutButton);
         }
-        else if (checkinFormInput.value == "" && checkoutFormInput.value != "")
+        if (checkinFormInput.value == "" && checkoutFormInput.value != "")
         {
-            onClickButtonFocus(checkinButton);
             onClickButtonUnfocus(checkoutButton);
+            onClickButtonFocus(checkinButton);
         }
     }
-})
-
+}
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
@@ -964,9 +1006,6 @@ searchButton.onclick = function()
     location.reload();
     console.log("stop searching")
 }
-
-
-
 
 
 
