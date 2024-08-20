@@ -56,7 +56,7 @@ function headerScaling()
         whoDropdownExperiences.style.display = "none";
 
         form.style.backgroundColor = ""
-
+        formExperiences.style.backgroundColor = ""
         onClickButtonUnfocus(whereButton);
         onClickButtonUnfocus(checkinButton);
         onClickButtonUnfocus(checkoutButton);
@@ -133,6 +133,8 @@ staysMenuButton.onclick = function()
     experiencesMenuForm.style.display = "none";
     staysMenuButton.style.textShadow = "0px 0px 1px black";
     experiencesMenuButton.style.textShadow = "";
+
+    form.style.backgroundColor = ""
 }
 
 experiencesMenuButton.onclick = function()
@@ -141,6 +143,8 @@ experiencesMenuButton.onclick = function()
     staysMenuForm.style.display = "none";
     experiencesMenuButton.style.textShadow = "0px 0px 1px black";
     staysMenuButton.style.textShadow = "";
+
+    formExperiences.style.backgroundColor = ""
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -186,7 +190,8 @@ const datesDropdownExperiences =  document.getElementById("DatesDropdownExperien
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
-const form = document.querySelector(".form_container")
+const form = document.querySelector(".form_container");
+const formExperiences = document.querySelector(".form_container2");
 
 function onClickButtonFocus(button)
 {
@@ -201,8 +206,10 @@ function onClickButtonUnfocus(button)
     button.style.boxShadow = "";
 }
 
+//  i feel like it better to have 1 event listener with 8 if statements than 8 event listeners with 8 if statements total
 document.addEventListener('click', event => 
 {
+    //  WHERE
     if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target) && whereDropdown.style.display == "block") 
     {
         if (!form.contains(event.target))
@@ -213,11 +220,8 @@ document.addEventListener('click', event =>
         whereDropdown.style.display = "none";
         onClickButtonUnfocus(whereButton);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) &&
+    //  CHECK IN
+    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) &&
          datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white")
     {
         if (!form.contains(event.target))
@@ -232,11 +236,8 @@ document.addEventListener('click', event =>
         
         onClickButtonUnfocus(checkinButton);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target) && 
+    //  CHECK OUT
+    else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target) && 
          datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
     {
         if (!form.contains(event.target))
@@ -251,11 +252,8 @@ document.addEventListener('click', event =>
 
         onClickButtonUnfocus(checkoutButton);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target) && whoDropdown.style.display == "block") 
+    //  WHO
+    else if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target) && whoDropdown.style.display == "block") 
     {
         if (!form.contains(event.target))
         {
@@ -265,60 +263,49 @@ document.addEventListener('click', event =>
         whoDropdown.style.display = "none";
         onClickButtonUnfocus(whoButton);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!whereDropdownExperiences.contains(event.target) && !whereButtonExperiences.contains(event.target) && whereDropdownExperiences.style.display == "block") 
+    //  WHERE EXPERIENCES
+    else if (!whereDropdownExperiences.contains(event.target) && !whereButtonExperiences.contains(event.target) && whereDropdownExperiences.style.display == "block") 
     {
-        if (!form.contains(event.target))
+        if (!formExperiences.contains(event.target))
         {
-            form.style.backgroundColor = "";
+            formExperiences.style.backgroundColor = "";
         }
 
         whereDropdownExperiences.style.display = "none";
         onClickButtonUnfocus(whereButtonExperiences);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!datesDropdownExperiences.contains(event.target) && !datesButtonExperiences.contains(event.target) && datesDropdownExperiences.style.display == "block") 
+    //  DATES EXPERIENCES
+    else if (!datesDropdownExperiences.contains(event.target) && !datesButtonExperiences.contains(event.target) && datesDropdownExperiences.style.display == "block") 
     {
-        if (!form.contains(event.target))
+        if (!formExperiences.contains(event.target))
         {
-            form.style.backgroundColor = "";
+            formExperiences.style.backgroundColor = "";
         }
 
         datesDropdownExperiences.style.display = "none";
         onClickButtonUnfocus(datesButtonExperiences);
     }
-});
-
-document.addEventListener('click', event => 
-{
-    if (!whoDropdownExperiences.contains(event.target) && !whoButtonExperiences.contains(event.target) && whoDropdownExperiences.style.display == "block") 
+    //  WHO EXPERIENCES
+    else if (!whoDropdownExperiences.contains(event.target) && !whoButtonExperiences.contains(event.target) && whoDropdownExperiences.style.display == "block") 
     {
-        if (!form.contains(event.target))
+        if (!formExperiences.contains(event.target))
         {
-            form.style.backgroundColor = "";
+            formExperiences.style.backgroundColor = "";
         }
 
         whoDropdownExperiences.style.display = "none";
         onClickButtonUnfocus(whoButtonExperiences);
     }
-});
-
-
-//  its just to reset form background color when there is no focus on any button and bg color is still grey
-document.addEventListener('click', event =>
-{
-    if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white" && checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" 
-    && !form.contains(event.target))
+    //  FORM BACKGROUND RESET ON CLICK OUTSIDE
+    else if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white" && 
+             checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" && 
+             whereButtonExperiences.style.backgroundColor != "white" && datesButtonExperiences.style.backgroundColor != "white" && 
+             whoButtonExperiences.style.backgroundColor != "white" && !form.contains(event.target))
     {
         form.style.backgroundColor = "";
+        formExperiences.style.backgroundColor = "";
     }
-})
+});
 
 function openWindow(button, dropdown)
 {
@@ -329,6 +316,7 @@ function openWindow(button, dropdown)
         dropdown.style.display = "block"
 
         form.style.backgroundColor = "#dedede";
+        formExperiences.style.backgroundColor = "#dedede";
         button.style.backgroundColor = "white";
         button.style.boxShadow = "0 .125rem .25rem rgba(0,0,0,.075)";
     }
@@ -603,6 +591,7 @@ var currentYear = date.getFullYear();
 //  i have skill issue i dont even know months name in polish                    TODAY
 //              styczen      luty      marzec   kwiecien  maj  czerwiec lipiec  sierpien   wrzesien   pazdziernik  listopad    grudzien
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const monthsAbbreviations = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 //  do. not. fking. touch. this. D O N O T. donut.
 var startOfCurrentMonth = new Date(year, month, 0).getDay();
@@ -887,7 +876,7 @@ moveCalendarRight.onclick = function ()
         endOfNextMonth = new Date(year, month + 2, 0).getDate();
    
         createCalendarMonth2();
-
+        
         if (month > currentMonth && year >= currentYear)
         {
             moveCalendarLeft.style.cursor = "pointer";
@@ -900,58 +889,69 @@ moveCalendarRight.onclick = function ()
 //  ------------------------ CALENDAR FORM INPUT ------------------------
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
-
 var getStupidCalendarDates = document.querySelector("div.calendars");
 
 getStupidCalendarDates.onclick = function(e)
 {
     if (e.target.children.length == 0 && e.target.className == "box")
     {
+        //  check what calendar is clicked and pick date and assign month to the correct form
         if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
         {
             if (checkinButton.style.backgroundColor == "white")
             {
-                checkinFormInput.value = e.target.innerText + " " + months[month].slice(0,3);
+                checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4);
             }
             else if (checkoutButton.style.backgroundColor == "white")
             {
-                checkoutFormInput.value = e.target.innerText + " " + months[month].slice(0,3);
-            }
-
-            e.target.className[0] = "selected";
+                checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4);
+            }        
         }
         else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
         {
             if (checkinButton.style.backgroundColor == "white")
             {
-                checkinFormInput.value = e.target.innerText + " " + months[month + 1].slice(0,3);
+                checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4);
             }
             else if (checkoutButton.style.backgroundColor == "white")
             {
-                checkoutFormInput.value = e.target.innerText + " " + months[month + 1].slice(0,3);
-                
+                checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4); 
+            }
+        }
+
+        //  validation
+        if (checkoutFormInput.value.slice(-4) < checkinFormInput.value.slice(-4))
+        {
+            if (checkoutButton.style.backgroundColor == "white")
+            {
+                checkinFormInput.value = checkoutFormInput.value;
             }
 
-            e.target.className[0] = "selected";
+            checkoutFormInput.value = ""; 
         }
-
-        if (+checkoutFormInput.value.slice(0, 2).trim() <= +checkinFormInput.value.slice(0, 2).trim() && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2).trim()) < monthsAbbreviations.indexOf(checkinFormInput.value.slice(2).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
-            checkinFormInput.value = checkoutFormInput.value;
-            checkoutFormInput.value = "";
-            onClickButtonUnfocus(checkoutButton);
-            onClickButtonFocus(checkinButton);
+            if (checkoutButton.style.backgroundColor == "white")
+            {
+                checkinFormInput.value = checkoutFormInput.value;
+            }
 
-            e.target.className[0] = "box";
+            checkoutFormInput.value = "";  
         }
-        else if (+checkoutFormInput.value.slice(0, 2).trim() >= +checkinFormInput.value.slice(0, 2).trim())
+        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2).trim()) == monthsAbbreviations.indexOf(checkinFormInput.value.slice(2).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
-            onClickButtonUnfocus(checkoutButton);
-            onClickButtonFocus(checkinButton);
+            if (+checkoutFormInput.value.slice(0, 2).trim() < +checkinFormInput.value.slice(0, 2).trim())
+            {
+                if (checkoutButton.style.backgroundColor == "white")
+                {
+                    checkinFormInput.value = checkoutFormInput.value;
+                }
 
-            e.target.className[0] = "box";
+                checkoutFormInput.value = "";
+            } 
         }
-        
+
+        //  QoL swap
         if (checkinFormInput.value != "" && checkoutFormInput.value == "")
         {
             onClickButtonUnfocus(checkinButton);
@@ -961,14 +961,13 @@ getStupidCalendarDates.onclick = function(e)
         {
             onClickButtonUnfocus(checkoutButton);
             onClickButtonFocus(checkinButton);
-        }
+        } 
     }
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");
 const flexibleButton = document.getElementById("FlexibleButton");
@@ -1000,6 +999,7 @@ flexibleButton.onclick = function()
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
 
 const searchButton = document.getElementById("SearchButton");
+const searchButtonExperiences = document.getElementById("SearchButtonExperiences");
 
 searchButton.onclick = function()
 {
@@ -1007,6 +1007,11 @@ searchButton.onclick = function()
     console.log("stop searching")
 }
 
+searchButtonExperiences.onclick = function()
+{
+    location.reload();
+    console.log("stop searching lol")
+}
 
 
 
