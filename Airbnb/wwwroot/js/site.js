@@ -598,12 +598,20 @@ var startOfCurrentMonth = new Date(year, month, 0).getDay();
 var endOfCurrentMonth = new Date(year, month +1, 0).getDate();
 var startOfNextMonth = new Date(year, month + 1, 0).getDay();
 var endOfNextMonth = new Date(year, month + 2, 0).getDate();
+var selectedCheckinDate = "";
+var selectedCheckoutDate = "";
+var selectedCheckinMonth = "";
+var selectedCheckoutMonth = "";
+var selectedCheckinYear = "";
+var selectedCheckoutYear = "";
 
 function createCalendarMonth()
 {
     var x = 0;
     var check = true;
     var calendarRows = 0;
+    var added1 = false;
+    var added2 = false;
 
     if ((startOfCurrentMonth == 6 && endOfCurrentMonth >= 30) || (startOfCurrentMonth == 5 && endOfCurrentMonth == 31))
     {
@@ -672,7 +680,24 @@ function createCalendarMonth()
                 }
                 else
                 {
-                    div.innerText = x;
+                    if (selectedCheckinDate != "" && added1 == false && x == selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
+                    {
+                        div = selectedCheckinDate;
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        added1 = true;
+                    }
+                    else if (selectedCheckoutDate != "" && added2 == false && x == selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+                    {
+                        div = selectedCheckoutDate;
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        added2 = true;
+                    }
+                    else
+                    {
+                        div.innerText = x;
+                    }
                 }
 
                 div.className = "box";
@@ -695,6 +720,8 @@ function createCalendarMonth2()
     var x = 0;
     var check = true;
     var calendarRows = 0;
+    var added1 = false;
+    var added2 = false;
 
     if ((startOfNextMonth == 6 && endOfNextMonth >= 30) || (startOfNextMonth == 5 && endOfNextMonth == 31))
     {
@@ -748,7 +775,6 @@ function createCalendarMonth2()
             var div = document.createElement("div");
 
             td.className = "box";
-            td.appendChild(div);
 
             if (x > endOfNextMonth)
             {
@@ -756,10 +782,28 @@ function createCalendarMonth2()
             }
             else
             {
-                div.innerText = x;
+                if (selectedCheckinDate != "" && added1 == false && x == selectedCheckinDate.innerText && selectedCheckinMonth == months[month + 1] && selectedCheckinYear == year)
+                {
+                    div = selectedCheckinDate;
+                    div.style.backgroundColor = "black";
+                    div.style.color = "white";
+                    added1 = true;
+                }
+                else if (selectedCheckoutDate != "" && added2 == false && x == selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month + 1] && selectedCheckoutYear == year)
+                {
+                    div = selectedCheckoutDate;
+                    div.style.backgroundColor = "black";
+                    div.style.color = "white";
+                    added2 = true;
+                }
+                else
+                {
+                    div.innerText = x;
+                }
             }
     
             div.className = "box";
+            td.appendChild(div);
             tr.appendChild(td);
         }
     
@@ -918,6 +962,26 @@ getStupidCalendarDates.onclick = function(e)
                 checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4); 
             }
         }
+        
+        //  work in regress feedback for selecting dates
+        //  change stuff inside here to make it dynamic and then change bg color to black and color to white
+        //  and add shadow in between checkin/checkout feedback markers... somehow...
+        if (selectedCheckinDate == "" && checkinButton.style.backgroundColor == "white")
+        {
+            selectedCheckinDate = e.target;
+            selectedCheckinDate.style.backgroundColor = "black";
+            selectedCheckinDate.style.color = "white";
+            selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+        }
+        else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
+        {
+            selectedCheckoutDate = e.target;
+            selectedCheckoutDate.style.backgroundColor = "black";
+            selectedCheckoutDate.style.color = "white";
+            selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
+            selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+        }
 
         //  validation
         if (checkoutFormInput.value.slice(-4) < checkinFormInput.value.slice(-4))
@@ -929,7 +993,7 @@ getStupidCalendarDates.onclick = function(e)
 
             checkoutFormInput.value = ""; 
         }
-        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2).trim()) < monthsAbbreviations.indexOf(checkinFormInput.value.slice(2).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) < monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
             if (checkoutButton.style.backgroundColor == "white")
             {
@@ -938,7 +1002,7 @@ getStupidCalendarDates.onclick = function(e)
 
             checkoutFormInput.value = "";  
         }
-        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2).trim()) == monthsAbbreviations.indexOf(checkinFormInput.value.slice(2).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) == monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
             if (+checkoutFormInput.value.slice(0, 2).trim() < +checkinFormInput.value.slice(0, 2).trim())
             {
@@ -997,7 +1061,6 @@ flexibleButton.onclick = function()
 }
 
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
-
 const searchButton = document.getElementById("SearchButton");
 const searchButtonExperiences = document.getElementById("SearchButtonExperiences");
 
