@@ -296,6 +296,8 @@ li.box {
 
 table.nothing {
     /* css class just so i can easly remove tables in calendars... lol */
+    border-spacing: 0px 2px;
+    border-collapse: unset;
 }
 
 td.box {
@@ -336,7 +338,7 @@ div.box {
 }
 
     div.box:hover {
-        border-color: black;
+        border-color: black !important;
     }
 
 div.selected {
@@ -363,7 +365,6 @@ div.box_past {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    
     color: #dcdcdc;
     user-select: none;
 }

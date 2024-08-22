@@ -680,14 +680,14 @@ function createCalendarMonth()
                 }
                 else
                 {
-                    if (selectedCheckinDate != "" && added1 == false && x == selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
+                    if (selectedCheckinDate != "" && added1 == false && x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
                     {
                         div = selectedCheckinDate;
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                         added1 = true;
                     }
-                    else if (selectedCheckoutDate != "" && added2 == false && x == selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+                    else if (selectedCheckoutDate != "" && added2 == false && x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
                     {
                         div = selectedCheckoutDate;
                         div.style.backgroundColor = "black";
@@ -699,6 +699,52 @@ function createCalendarMonth()
                         div.innerText = x;
                     }
                 }
+
+                //  bla bla
+                if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
+                {
+                    td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
+                }
+
+                if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+                {
+                    td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                }
+
+                if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+                &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+                &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
+                &&  selectedCheckoutYear == year)
+                {
+                    td.style.background = "#dcdcdc";
+                    div.style.borderColor = "#dcdcdc"; 
+                }
+
+                if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+                &&  months.indexOf(months[month]) != months.indexOf(selectedCheckoutMonth)
+                &&  x > +selectedCheckinDate.innerText &&  selectedCheckoutYear == year)
+                {
+                    td.style.background = "#dcdcdc";
+                    div.style.borderColor = "#dcdcdc";   
+                }
+
+                if (months.indexOf(months[month]) != months.indexOf(selectedCheckinMonth) 
+                &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+                &&  x < +selectedCheckoutDate.innerText && selectedCheckoutYear == year)
+                {
+                    td.style.background = "#dcdcdc";
+                    div.style.borderColor = "#dcdcdc";   
+                }
+
+                //if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) 
+                //&&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
+                //&&  selectedCheckoutYear == year)
+                //{
+                //    td.style.background = "#dcdcdc";
+                //    div.style.borderColor = "#dcdcdc";  
+                //}
+
+                //  bla bla
 
                 div.className = "box";
             }
@@ -801,6 +847,49 @@ function createCalendarMonth2()
                     div.innerText = x;
                 }
             }
+
+            if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month + 1] && selectedCheckinYear == year)
+            {
+                td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
+            }
+
+            if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month + 1] && selectedCheckoutYear == year)
+            {
+                td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+            }
+
+            if (months.indexOf(months[month + 1]) == months.indexOf(selectedCheckinMonth) 
+            &&  months.indexOf(months[month + 1]) == months.indexOf(selectedCheckoutMonth)
+            &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
+            &&  selectedCheckoutYear == year)
+            {
+                td.style.background = "#dcdcdc";
+                div.style.borderColor = "#dcdcdc"; 
+            }
+
+            if (months.indexOf(months[month + 1]) == months.indexOf(selectedCheckinMonth) 
+            &&  months.indexOf(months[month + 1]) != months.indexOf(selectedCheckoutMonth)
+            &&  x > +selectedCheckinDate.innerText &&  selectedCheckoutYear == year)
+            {
+                td.style.background = "#dcdcdc";
+                div.style.borderColor = "#dcdcdc";   
+            }
+
+            if (months.indexOf(months[month + 1]) != months.indexOf(selectedCheckinMonth) 
+            &&  months.indexOf(months[month + 1]) == months.indexOf(selectedCheckoutMonth)
+            &&  x < +selectedCheckoutDate.innerText &&  selectedCheckoutYear == year)
+            {
+                td.style.background = "#dcdcdc";
+                div.style.borderColor = "#dcdcdc";   
+            }
+
+            //if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) 
+            //&&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
+            //&&  selectedCheckoutYear == year)
+            //{
+            //    td.style.background = "#dcdcdc";
+            //    div.style.borderColor = "#dcdcdc";  
+            //}
     
             div.className = "box";
             td.appendChild(div);
