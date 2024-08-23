@@ -736,13 +736,13 @@ function createCalendarMonth()
                     div.style.borderColor = "#dcdcdc";   
                 }
 
-                //if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) 
-                //&&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
-                //&&  selectedCheckoutYear == year)
-                //{
-                //    td.style.background = "#dcdcdc";
-                //    div.style.borderColor = "#dcdcdc";  
-                //}
+                if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) 
+                &&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
+                &&  selectedCheckoutYear == year)
+                {
+                    td.style.background = "#dcdcdc";
+                    div.style.borderColor = "#dcdcdc";  
+                }
 
                 //  bla bla
 
@@ -883,13 +883,13 @@ function createCalendarMonth2()
                 div.style.borderColor = "#dcdcdc";   
             }
 
-            //if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) 
-            //&&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
-            //&&  selectedCheckoutYear == year)
-            //{
-            //    td.style.background = "#dcdcdc";
-            //    div.style.borderColor = "#dcdcdc";  
-            //}
+            if (months.indexOf(months[month + 1]) > months.indexOf(selectedCheckinMonth) 
+            &&  months.indexOf(months[month + 1]) < months.indexOf(selectedCheckoutMonth)
+            &&  selectedCheckoutYear == year)
+            {
+                td.style.background = "#dcdcdc";
+                div.style.borderColor = "#dcdcdc";  
+            }
     
             div.className = "box";
             td.appendChild(div);
@@ -1022,7 +1022,7 @@ moveCalendarRight.onclick = function ()
 //  ------------------------ CALENDAR FORM INPUT ------------------------
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
-var getStupidCalendarDates = document.querySelector("div.calendars");
+const getStupidCalendarDates = document.querySelector("div.calendars");
 
 getStupidCalendarDates.onclick = function(e)
 {
@@ -1051,10 +1051,23 @@ getStupidCalendarDates.onclick = function(e)
                 checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4); 
             }
         }
+
+        //  reset feedback thingy if it was applied before
+        if (selectedCheckinDate != "" && checkinButton.style.backgroundColor == "white")
+        {
+            selectedCheckinDate.style.backgroundColor = "";
+            selectedCheckinDate.style.color = "";
+            selectedCheckinDate = "";
+        }
         
-        //  work in regress feedback for selecting dates
-        //  change stuff inside here to make it dynamic and then change bg color to black and color to white
-        //  and add shadow in between checkin/checkout feedback markers... somehow...
+        if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
+        {
+            selectedCheckoutDate.style.backgroundColor = "";
+            selectedCheckoutDate.style.color = "";
+            selectedCheckoutDate = "";
+        }
+
+        //  apply feedback thingy
         if (selectedCheckinDate == "" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate = e.target;
@@ -1062,6 +1075,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.color = "white";
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+
         }
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1070,6 +1085,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.color = "white";
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+
         }
 
         //  validation
@@ -1117,6 +1134,39 @@ getStupidCalendarDates.onclick = function(e)
         } 
     }
 }
+
+calendar2.childNodes[4].childNodes[0].addEventListener("mouseover", function(e)
+{
+    console.log("potato - " + e.target.childNodes[0].localName)
+    if (selectedCheckinDate != "" && e.target.childNodes[0].loaclName == "")
+    {
+        if (+e.target.childNodes[0].innerText > +selectedCheckinDate.innerText)
+        {
+            if (+e.target.innerText)
+            {
+
+            }
+            e.target.childNodes[0].style.backgroundColor = "black";
+            e.target.childNodes[0].style.color = "white";
+        }
+    }
+})
+
+calendar2.childNodes[4].childNodes[0].addEventListener("mouseout", function(e)
+{
+    if (selectedCheckinDate != ""  && e.target.childNodes[0].innerText != "")
+    {
+        if (+e.target.childNodes[0].innerText > +selectedCheckinDate.innerText)
+        {
+            if (+e.target.innerText)
+            {
+
+            }
+            e.target.childNodes[0].style.backgroundColor = "";
+            e.target.childNodes[0].style.color = "";
+        }
+    }
+})
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
