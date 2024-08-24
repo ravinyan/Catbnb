@@ -646,7 +646,7 @@ function createCalendarMonth()
             while (j < startOfCurrentMonth && check == true)
             {
                 var td = document.createElement("td");
-                td.className = "box";
+                td.className = "td_box";
 
                 var div = document.createElement("div");
                 div.innerText = "";
@@ -666,13 +666,13 @@ function createCalendarMonth()
     
             if (x < day && (month == currentMonth && year == currentYear))
             {
-                td.className = "box";
+                td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
             else
             {
-                td.className = "box";
+                td.className = "td_box";
 
                 if (x > endOfCurrentMonth)
                 {
@@ -802,7 +802,7 @@ function createCalendarMonth2()
             while (j < startOfNextMonth && check == true)
             {
                 var td = document.createElement("td");
-                td.className = "box";
+                td.className = "td_box";
 
                 var div = document.createElement("div");
                 div.innerText = "";
@@ -820,7 +820,7 @@ function createCalendarMonth2()
             var td = document.createElement("td");
             var div = document.createElement("div");
 
-            td.className = "box";
+            td.className = "td_box";
 
             if (x > endOfNextMonth)
             {
@@ -1024,9 +1024,31 @@ const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
 const getStupidCalendarDates = document.querySelector("div.calendars");
 
+function calendarValidationCSS()
+{
+    if (checkoutButton.style.backgroundColor == "white")
+    {
+        checkinFormInput.value = checkoutFormInput.value;
+
+        selectedCheckinDate.style.backgroundColor = "";
+        selectedCheckinDate.style.color = "";
+        selectedCheckinDate = selectedCheckoutDate;
+
+        selectedCheckoutDate.style.backgroundColor = "";
+        selectedCheckoutDate.style.color = "";
+
+        selectedCheckinDate.style.backgroundColor = "black";
+        selectedCheckinDate.style.color = "white";
+   
+        selectedCheckoutDate = "";
+    }
+
+    checkoutFormInput.value = "";
+}
+
 getStupidCalendarDates.onclick = function(e)
 {
-    if (e.target.children.length == 0 && e.target.className == "box")
+    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
     {
         //  check what calendar is clicked and pick date and assign month to the correct form
         if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
@@ -1052,14 +1074,15 @@ getStupidCalendarDates.onclick = function(e)
             }
         }
 
-        //  reset feedback thingy if it was applied before
+
+        //  reset feedback
         if (selectedCheckinDate != "" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate.style.backgroundColor = "";
             selectedCheckinDate.style.color = "";
             selectedCheckinDate = "";
         }
-        
+
         if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
         {
             selectedCheckoutDate.style.backgroundColor = "";
@@ -1067,7 +1090,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate = "";
         }
 
-        //  apply feedback thingy
+        //  apply feedback
         if (selectedCheckinDate == "" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate = e.target;
@@ -1075,8 +1098,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.color = "white";
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-
-
+        
+        
         }
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1085,39 +1108,24 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.color = "white";
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-
-
+        
+        
         }
 
         //  validation
         if (checkoutFormInput.value.slice(-4) < checkinFormInput.value.slice(-4))
         {
-            if (checkoutButton.style.backgroundColor == "white")
-            {
-                checkinFormInput.value = checkoutFormInput.value;
-            }
-
-            checkoutFormInput.value = ""; 
+             calendarValidationCSS();
         }
         else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) < monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
-            if (checkoutButton.style.backgroundColor == "white")
-            {
-                checkinFormInput.value = checkoutFormInput.value;
-            }
-
-            checkoutFormInput.value = "";  
+             calendarValidationCSS();
         }
         else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) == monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
             if (+checkoutFormInput.value.slice(0, 2).trim() < +checkinFormInput.value.slice(0, 2).trim())
             {
-                if (checkoutButton.style.backgroundColor == "white")
-                {
-                    checkinFormInput.value = checkoutFormInput.value;
-                }
-
-                checkoutFormInput.value = "";
+                calendarValidationCSS();
             } 
         }
 
@@ -1135,36 +1143,20 @@ getStupidCalendarDates.onclick = function(e)
     }
 }
 
-calendar2.childNodes[4].childNodes[0].addEventListener("mouseover", function(e)
+//  this is nightmare for my brain its so hard to think of stuff even tho i know the solution
+calendar2.addEventListener("mouseover", function(e)
 {
-    console.log("potato - " + e.target.childNodes[0].localName)
-    if (selectedCheckinDate != "" && e.target.childNodes[0].loaclName == "")
+    if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
     {
-        if (+e.target.childNodes[0].innerText > +selectedCheckinDate.innerText)
-        {
-            if (+e.target.innerText)
-            {
-
-            }
-            e.target.childNodes[0].style.backgroundColor = "black";
-            e.target.childNodes[0].style.color = "white";
-        }
+        e.target.classList.add("box_new_hover");
     }
 })
 
-calendar2.childNodes[4].childNodes[0].addEventListener("mouseout", function(e)
+calendar2.addEventListener("mouseout", function(e)
 {
-    if (selectedCheckinDate != ""  && e.target.childNodes[0].innerText != "")
-    {
-        if (+e.target.childNodes[0].innerText > +selectedCheckinDate.innerText)
-        {
-            if (+e.target.innerText)
-            {
-
-            }
-            e.target.childNodes[0].style.backgroundColor = "";
-            e.target.childNodes[0].style.color = "";
-        }
+    if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
+    {    
+        e.target.classList.remove("box_new_hover");
     }
 })
 
