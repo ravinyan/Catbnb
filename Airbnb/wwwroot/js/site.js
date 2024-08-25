@@ -1023,6 +1023,7 @@ moveCalendarRight.onclick = function ()
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
 const getStupidCalendarDates = document.querySelector("div.calendars");
+var previousDate = "";
 
 function calendarValidationCSS()
 {
@@ -1030,16 +1031,15 @@ function calendarValidationCSS()
     {
         checkinFormInput.value = checkoutFormInput.value;
 
-        selectedCheckinDate.style.backgroundColor = "";
+        selectedCheckinDate.style.background = "";
         selectedCheckinDate.style.color = "";
+        previousDate.style.background = "";
+        previousDate.style.color = "";
+
         selectedCheckinDate = selectedCheckoutDate;
-
-        selectedCheckoutDate.style.backgroundColor = "";
-        selectedCheckoutDate.style.color = "";
-
-        selectedCheckinDate.style.backgroundColor = "black";
+        selectedCheckinDate.style.background = "black";
         selectedCheckinDate.style.color = "white";
-   
+
         selectedCheckoutDate = "";
     }
 
@@ -1074,18 +1074,17 @@ getStupidCalendarDates.onclick = function(e)
             }
         }
 
-
         //  reset feedback
         if (selectedCheckinDate != "" && checkinButton.style.backgroundColor == "white")
         {
-            selectedCheckinDate.style.backgroundColor = "";
+            selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
             selectedCheckinDate = "";
         }
 
         if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
         {
-            selectedCheckoutDate.style.backgroundColor = "";
+            selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
             selectedCheckoutDate = "";
         }
@@ -1094,7 +1093,7 @@ getStupidCalendarDates.onclick = function(e)
         if (selectedCheckinDate == "" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate = e.target;
-            selectedCheckinDate.style.backgroundColor = "black";
+            selectedCheckinDate.style.background = "black";
             selectedCheckinDate.style.color = "white";
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
@@ -1104,7 +1103,7 @@ getStupidCalendarDates.onclick = function(e)
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
             selectedCheckoutDate = e.target;
-            selectedCheckoutDate.style.backgroundColor = "black";
+            selectedCheckoutDate.style.background = "black";
             selectedCheckoutDate.style.color = "white";
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
@@ -1139,9 +1138,75 @@ getStupidCalendarDates.onclick = function(e)
         {
             onClickButtonUnfocus(checkoutButton);
             onClickButtonFocus(checkinButton);
-        } 
+        }
+
+        previousDate = e.target;
     }
 }
+// "linear-gradient(to right, white 50%, #dcdcdc 50%";
+// "linear-gradient(to right, #dcdcdc 50%, white 50%";
+//  ok this is mess but it works i dont give a shit IT WORKS... ...partially
+function applyShadowBetweenDates(target)
+{
+    for (i = 0; i < calendar2.childNodes[4].childNodes[0].childNodes.length; i++)
+    {
+        for (j = 0; j < 7; j++)
+        {
+            //  i love silencing errors
+            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +selectedCheckinDate.innerText)
+            {
+                //  shut up error
+            }
+
+            //  from selected checkin date to hovered date
+            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +target.innerText
+            &&  +calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +selectedCheckinDate.innerText)
+            {
+                if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckinDate.innerText)
+                {
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderImage = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                }
+                else
+                {
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
+                }
+            }
+
+            //  reset css from hovered date to checking date so the css doesnt stay all the time
+            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +target.innerText
+            &&  +calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText > +selectedCheckinDate.innerText)
+            {
+                if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +target.innerText)
+                {
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderImage = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                }
+                else
+                {
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                }
+            }
+            
+            //  gives error or whatever so this code is here to shut up the error
+            if (calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == endOfNextMonth)
+            {
+                break;
+            }
+
+            if ("you are null" == "buh")
+            {
+                calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+            }
+        }
+    }
+}
+
+
+
 
 //  this is nightmare for my brain its so hard to think of stuff even tho i know the solution
 calendar2.addEventListener("mouseover", function(e)
@@ -1149,13 +1214,18 @@ calendar2.addEventListener("mouseover", function(e)
     if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
     {
         e.target.classList.add("box_new_hover");
+
+        if (selectedCheckinDate != "")
+        {
+            applyShadowBetweenDates(e.target);
+        }
     }
 })
 
 calendar2.addEventListener("mouseout", function(e)
 {
-    if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
-    {    
+    if (((selectedCheckinDate == "" || selectedCheckoutDate == "") || selectedCheckoutDate != "") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
+    {   
         e.target.classList.remove("box_new_hover");
     }
 })

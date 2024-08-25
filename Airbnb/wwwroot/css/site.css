@@ -347,7 +347,7 @@ div.box {
         color: white;
     }
 
-div.selected {
+/*div.selected {
     height: 49px;
     width: 49px;
     border-radius: 50px;
@@ -360,7 +360,7 @@ div.selected {
     font-weight: 600;
     background-color: black;
     color: white;
-}
+}*/
 
 div.box_past {
     height: 49px;
