@@ -221,8 +221,9 @@ document.addEventListener('click', event =>
         onClickButtonUnfocus(whereButton);
     }
     //  CHECK IN
-    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) &&
-         datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white")
+    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) 
+         &&   datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white"
+         &&   event.target != imstupidsvg)
     {
         if (!form.contains(event.target))
         {
@@ -237,8 +238,9 @@ document.addEventListener('click', event =>
         onClickButtonUnfocus(checkinButton);
     }
     //  CHECK OUT
-    else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target) && 
-         datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
+    else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target)
+         &&   datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white"
+         &&   event.target != imstupidsvg)
     {
         if (!form.contains(event.target))
         {
@@ -297,10 +299,10 @@ document.addEventListener('click', event =>
         onClickButtonUnfocus(whoButtonExperiences);
     }
     //  FORM BACKGROUND RESET ON CLICK OUTSIDE
-    else if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white" && 
-             checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" && 
-             whereButtonExperiences.style.backgroundColor != "white" && datesButtonExperiences.style.backgroundColor != "white" && 
-             whoButtonExperiences.style.backgroundColor != "white" && !form.contains(event.target))
+    else if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white"
+         &&  checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" 
+         &&  whereButtonExperiences.style.backgroundColor != "white" && datesButtonExperiences.style.backgroundColor != "white" 
+         &&  whoButtonExperiences.style.backgroundColor != "white" && !form.contains(event.target))
     {
         form.style.backgroundColor = "";
         formExperiences.style.backgroundColor = "";
@@ -313,7 +315,7 @@ function openWindow(button, dropdown)
     {
         e.preventDefault();
 
-        dropdown.style.display = "block"
+        dropdown.style.display = "block";
 
         form.style.backgroundColor = "#dedede";
         formExperiences.style.backgroundColor = "#dedede";
@@ -1022,6 +1024,8 @@ moveCalendarRight.onclick = function ()
 //  ------------------------ CALENDAR FORM INPUT ------------------------
 const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
+const clearCalendarFormInputButton = document.getElementById("ClearCalendarFormInputsButton");
+const imstupidsvg = document.getElementById("ClearCalendarFormInputsButtonSVG");
 const getStupidCalendarDates = document.querySelector("div.calendars");
 var previousDate = "";
 
@@ -1125,7 +1129,12 @@ getStupidCalendarDates.onclick = function(e)
             if (+checkoutFormInput.value.slice(0, 2).trim() < +checkinFormInput.value.slice(0, 2).trim())
             {
                 calendarValidationCSS();
-            } 
+            }
+        }
+
+        if (checkinFormInput.value != "" && checkoutFormInput.value != "")
+        {
+            clearCalendarFormInputButton.style.display = "block";
         }
 
         //  QoL swap
@@ -1143,6 +1152,19 @@ getStupidCalendarDates.onclick = function(e)
         previousDate = e.target;
     }
 }
+
+clearCalendarFormInputButton.onclick = function()
+{
+    checkinFormInput.value = "";
+    checkoutFormInput.value = "";
+
+    clearCalendarFormInputButton.style.display = "none";
+    
+    onClickButtonUnfocus(checkoutButton);
+    onClickButtonFocus(checkinButton);
+}
+
+
 // "linear-gradient(to right, white 50%, #dcdcdc 50%";
 // "linear-gradient(to right, #dcdcdc 50%, white 50%";
 //  ok this is mess but it works i dont give a shit IT WORKS... ...partially
@@ -1205,9 +1227,6 @@ function applyShadowBetweenDates(target)
     }
 }
 
-
-
-
 //  this is nightmare for my brain its so hard to think of stuff even tho i know the solution
 calendar2.addEventListener("mouseover", function(e)
 {
@@ -1267,13 +1286,11 @@ const searchButtonExperiences = document.getElementById("SearchButtonExperiences
 
 searchButton.onclick = function()
 {
-    location.reload();
     console.log("stop searching")
 }
 
 searchButtonExperiences.onclick = function()
 {
-    location.reload();
     console.log("stop searching lol")
 }
 

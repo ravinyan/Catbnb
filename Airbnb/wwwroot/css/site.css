@@ -32,6 +32,10 @@ div.nav_bar_shadow :hover {
     background-color: #e8e8e8;
 }
 
+.shadoweP:hover {
+    background-color: #e8e8e8;
+}
+
 /* -------------------------------------- HEADER CLASSES -------------------------------------- */
 header.header {
     background-color: white;
@@ -347,21 +351,6 @@ div.box {
         color: white;
     }
 
-/*div.selected {
-    height: 49px;
-    width: 49px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 1px solid white;
-    user-select: none;
-    font-weight: 600;
-    background-color: black;
-    color: white;
-}*/
-
 div.box_past {
     height: 49px;
     width: 49px;
@@ -385,6 +374,20 @@ div.blank_box {
     flex-direction: column;
     border: 1px solid white;
     
+}
+
+button.resetDatesForm {
+    position: relative;
+    top: -57px;
+    border-radius: 50px;
+    z-index: 100;
+    background: transparent;
+    border: none;
+    width: 25px;
+    height: 25px;
+    padding: 0px;
+    left: 88px;
+    display: none;
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */

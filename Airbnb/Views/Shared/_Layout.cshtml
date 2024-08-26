@@ -159,6 +159,7 @@
                                                         Check in
                                                     </div>
                                                     <input id="CheckinInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
+                                                    
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
@@ -245,17 +246,24 @@
                                             </div>
                                         </div>
                                         <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
-                                        <div style="width: 50%">
+                                        <div style="width: 50%; display: inline-block">
                                             <label class="shadowe w-100">
                                                 <div id="CheckoutButton" class="label_box">
                                                     <div class="fw-bold text-nowrap" style="background: none">
                                                         Check out
+                                                        
                                                     </div>
                                                     <input id="CheckoutInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
                                                 </div>
                                             </label>
-                                            @* popup modal thingy *@
-                                            
+                                            <div style="position: absolute;">
+                                                <button id="ClearCalendarFormInputsButton" type="button" class="resetDatesForm">
+                                                    <svg id="ClearCalendarFormInputsButtonSVG" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x shadoweP " viewBox="0 0 16 16" style="border-radius: 50px;">
+                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            @* popup modal thingy *@                       
                                         </div>    
                                     </div>
                                     @* WHO *@
@@ -454,6 +462,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     @* Date *@
                                     <div style="width: 33.33%; display: flex">
                                         <div class="w-100">
@@ -508,6 +517,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     @* WHO *@
                                     <div style="width: 33.3%; border-radius: 50px;">
                                         <div class=" d-flex w-100" style="border-radius: 50px">
