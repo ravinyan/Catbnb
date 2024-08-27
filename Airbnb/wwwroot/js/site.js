@@ -223,7 +223,7 @@ document.addEventListener('click', event =>
     //  CHECK IN
     else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) 
          &&   datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white"
-         &&   event.target != imstupidsvg)
+         &&   event.target != imstupidsvg && event.target != imstupidpath)
     {
         if (!form.contains(event.target))
         {
@@ -239,8 +239,7 @@ document.addEventListener('click', event =>
     }
     //  CHECK OUT
     else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target)
-         &&   datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white"
-         &&   event.target != imstupidsvg)
+         &&   datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
     {
         if (!form.contains(event.target))
         {
@@ -705,12 +704,12 @@ function createCalendarMonth()
                 //  bla bla
                 if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
                 {
-                    td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
+                    td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
                 }
 
                 if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
                 {
-                    td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                    td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
                 }
 
                 if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
@@ -852,12 +851,12 @@ function createCalendarMonth2()
 
             if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month + 1] && selectedCheckinYear == year)
             {
-                td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
+                td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
             }
 
             if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month + 1] && selectedCheckoutYear == year)
             {
-                td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
             }
 
             if (months.indexOf(months[month + 1]) == months.indexOf(selectedCheckinMonth) 
@@ -1026,6 +1025,7 @@ const checkinFormInput = document.getElementById("CheckinInput");
 const checkoutFormInput = document.getElementById("CheckoutInput");
 const clearCalendarFormInputButton = document.getElementById("ClearCalendarFormInputsButton");
 const imstupidsvg = document.getElementById("ClearCalendarFormInputsButtonSVG");
+const imstupidpath = document.getElementById("ClearCalendarFormInputsButtonPATH");
 const getStupidCalendarDates = document.querySelector("div.calendars");
 var previousDate = "";
 
@@ -1101,8 +1101,6 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.color = "white";
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-        
-        
         }
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1111,8 +1109,6 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.color = "white";
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-        
-        
         }
 
         //  validation
@@ -1158,85 +1154,184 @@ clearCalendarFormInputButton.onclick = function()
     checkinFormInput.value = "";
     checkoutFormInput.value = "";
 
+    selectedCheckinDate.style.background = "";
+    selectedCheckinDate.style.color = "";
+    selectedCheckoutDate.style.background = "";
+    selectedCheckoutDate.style.color = "";
+    selectedCheckinDate = "";
+    selectedCheckoutDate = "";
+
+    removeShadowsBetweenDates(calendar);
+    removeShadowsBetweenDates(calendar2);
+
     clearCalendarFormInputButton.style.display = "none";
     
     onClickButtonUnfocus(checkoutButton);
     onClickButtonFocus(checkinButton);
 }
 
-
-// "linear-gradient(to right, white 50%, #dcdcdc 50%";
-// "linear-gradient(to right, #dcdcdc 50%, white 50%";
-//  ok this is mess but it works i dont give a shit IT WORKS... ...partially
-function applyShadowBetweenDates(target)
+//  need to validate months and years pain
+function applyShadowBetweenDates(currentCalendar, target)
 {
-    for (i = 0; i < calendar2.childNodes[4].childNodes[0].childNodes.length; i++)
+    for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
     {
         for (j = 0; j < 7; j++)
         {
-            //  i love silencing errors
-            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +selectedCheckinDate.innerText)
+            loop:
+            try
             {
-                //  shut up error
-            }
+                if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "" 
+                &&  (selectedCheckinDate == "" && selectedCheckoutDate == ""))
+                {
+                    //  wtf this is so cool i can label for loops lol
+                    break loop;
+                }
+                else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == endOfNextMonth)
+                {
 
-            //  from selected checkin date to hovered date
-            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +target.innerText
-            &&  +calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +selectedCheckinDate.innerText)
-            {
-                if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckinDate.innerText)
-                {
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%";
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderImage = "linear-gradient(to right, #dcdcdc 50%, white 50%";
                 }
-                else
-                {
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
-                }
-            }
 
-            //  reset css from hovered date to checking date so the css doesnt stay all the time
-            if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +target.innerText
-            &&  +calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText > +selectedCheckinDate.innerText)
-            {
-                if (+calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +target.innerText)
+                //  yes its a mess... no i wont make it more readable
+                if ((+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +target.innerText
+                &&   +currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +selectedCheckinDate.innerText)
+                ||  (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText > +target.innerText
+                &&   +currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText <= +selectedCheckoutDate.innerText))
                 {
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%";
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderImage = "linear-gradient(to right, #dcdcdc 50%, white 50%";
+                    //  checkin date selected
+                    if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckoutDate.innerText)
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
+                    }
+                    //  checkout date selected
+                    else if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckinDate.innerText)
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                    }
+                    //  fill everything between checkin and checkout dates
+                    else
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
+                    }
                 }
-                else
+                else if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +target.innerText)
                 {
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
-                    calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                    //  apply css to checkout/checkin date
+                    if (selectedCheckinDate != "")
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                    }
+                    else if (selectedCheckoutDate != "")
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                    }
                 }
             }
-            
-            //  gives error or whatever so this code is here to shut up the error
-            if (calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == endOfNextMonth)
+            catch
             {
-                break;
-            }
-
-            if ("you are null" == "buh")
-            {
-                calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
-                calendar2.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                //  your mom
             }
         }
     }
 }
 
-//  this is nightmare for my brain its so hard to think of stuff even tho i know the solution
+function removeShadowsBetweenDates(currentCalendar)
+{
+     for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
+    {
+        for (j = 0; j < 7; j++)
+        {
+            loop:
+            try
+            {
+                //  this is a lot of if else if statements... please stay away from it its dangerous and it can bite... and bark... ?
+                //  nvm i improved it not it can only bark... still dangerous 
+                if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "")
+                {
+                    //  skip cycle instantly if background is white
+                    break loop;
+                }
+
+                if (selectedCheckinDate == "")
+                {
+                    if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "rgb(220, 220, 220)")
+                    {
+                        //  if checking date is selected but checkout hover point is outside of calendar - make everything that was grey be white
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                    }
+                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    {
+                        //  clear checkin date css grey shadow
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                    }
+                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    {
+                        //  clear checkout date css grey shadow
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                    }
+                }
+                else if (selectedCheckoutDate == "")
+                {
+                    //  everything but backwards
+                    if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "rgb(220, 220, 220)")
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                    }
+                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                    }
+                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    {
+                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                    }
+                } 
+            }
+            catch
+            {
+                //  your dad
+            }
+        }
+    }
+}
+
+calendar.addEventListener("mouseover", function(e)
+{
+    if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
+    {
+        e.target.classList.add("box_new_hover");
+
+        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        {
+            applyShadowBetweenDates(calendar, e.target);
+        }
+    }
+})
+
+calendar.addEventListener("mouseout", function(e)
+{
+    if (((selectedCheckinDate == "" || selectedCheckoutDate == "") || selectedCheckoutDate != "") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
+    {   
+        e.target.classList.remove("box_new_hover");
+
+        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        {
+            removeShadowsBetweenDates(calendar);
+        }
+    }
+})
+
 calendar2.addEventListener("mouseover", function(e)
 {
     if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
     {
         e.target.classList.add("box_new_hover");
 
-        if (selectedCheckinDate != "")
+        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
         {
-            applyShadowBetweenDates(e.target);
+            applyShadowBetweenDates(calendar2, e.target);
         }
     }
 })
@@ -1246,6 +1341,11 @@ calendar2.addEventListener("mouseout", function(e)
     if (((selectedCheckinDate == "" || selectedCheckoutDate == "") || selectedCheckoutDate != "") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
     {   
         e.target.classList.remove("box_new_hover");
+
+        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        {
+            removeShadowsBetweenDates(calendar2);
+        }
     }
 })
 
