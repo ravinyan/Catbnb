@@ -1173,6 +1173,9 @@ clearCalendarFormInputButton.onclick = function()
 //  need to validate months and years pain
 function applyShadowBetweenDates(currentCalendar, target)
 {
+    var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
+    var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+    
     for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
     {
         for (j = 0; j < 7; j++)
@@ -1180,18 +1183,13 @@ function applyShadowBetweenDates(currentCalendar, target)
             loop:
             try
             {
-                if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "" 
-                &&  (selectedCheckinDate == "" && selectedCheckoutDate == ""))
+                if ((selectedCheckinDate != "" && (+target.innerText < selectedCheckinDate.innerText))
+                ||  (selectedCheckoutDate != "" && (+target.innerText > selectedCheckoutDate.innerText)))
                 {
-                    //  wtf this is so cool i can label for loops lol
                     break loop;
                 }
-                else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == endOfNextMonth)
-                {
 
-                }
-
-                //  yes its a mess... no i wont make it more readable
+                //  this doesnt assume months yet
                 if ((+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +target.innerText
                 &&   +currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +selectedCheckinDate.innerText)
                 ||  (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText > +target.innerText
@@ -1210,8 +1208,65 @@ function applyShadowBetweenDates(currentCalendar, target)
                     //  fill everything between checkin and checkout dates
                     else
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
+                        if (selectedCheckinDate != "")
+                        {
+                            if (months.indexOf(selectedCheckinMonth) == targetMonth)
+                            {
+                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
+                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
+                            }
+                            else if (months.indexOf(selectedCheckinMonth) < targetMonth)
+                            {
+                                if (months.indexOf(selectedCheckinMonth + 1) == targetMonth)
+                                {
+                                    //  if target months == checkin month + 1 (so 1 higher than checkin (so exampe from september to october))
+                                    //  my
+                                }
+
+                                if (targetMonth - months.indexOf(selectedCheckinMonth) != 0)
+                                {
+                                    //  fully fill months that are between both indexes...
+                                    //  head
+                                }
+                                    //  is               
+                            }
+                            else if (selectedCheckinYear < targetYear)
+                            {
+                                if ("if year is different then fill everything from checkin date to end of checking date year")
+                                {
+                                    //  empty
+                                }
+                            }
+                        }
+                        else if (selectedCheckoutDate != "")
+                        {
+                            if (months.indexOf(targetMonth))
+                            {
+                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
+                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
+                            }
+                            else if (months.indexOf(selectedCheckoutMonth) < targetMonth)
+                            {
+                                if ("")
+                                {
+                                    //  my
+                                }
+
+                                if ("")
+                                {
+                                    //  head
+                                }
+
+                                //  is
+                            }
+                            else if (selectedCheckoutYear > targetYear)
+                            {
+                                if ("")
+                                {
+                                    //  empty
+                                }
+                            }
+                        }
                     }
                 }
                 else if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +target.innerText)
