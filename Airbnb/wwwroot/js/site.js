@@ -1183,103 +1183,94 @@ function applyShadowBetweenDates(currentCalendar, target)
             loop:
             try
             {
+                //  instantly break the loop if one of these conditions is met to make this for loop more efficient i guess
                 if ((selectedCheckinDate != "" && (+target.innerText < selectedCheckinDate.innerText))
                 ||  (selectedCheckoutDate != "" && (+target.innerText > selectedCheckoutDate.innerText)))
                 {
                     break loop;
                 }
 
-                //  this doesnt assume months yet
-                if ((+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText < +target.innerText
-                &&   +currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText >= +selectedCheckinDate.innerText)
-                ||  (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText > +target.innerText
-                &&   +currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText <= +selectedCheckoutDate.innerText))
+                var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+
+                //  if checkin or checkout selected is in the same month and year as target
+                if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) == targetMonth) && selectedCheckinYear == targetYear
+                ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) == targetMonth) && selectedCheckoutYear == targetYear) 
                 {
-                    //  checkin date selected
-                    if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckoutDate.innerText)
+                    if ((+divBox.innerText < +target.innerText && +divBox.innerText >= +selectedCheckinDate.innerText)
+                    ||  (+divBox.innerText > +target.innerText && +divBox.innerText <= +selectedCheckoutDate.innerText))
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
+                        if (divBox.innerText == +selectedCheckoutDate.innerText)
+                        {
+                            //  checkin date selected
+                            tdBox.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
+                        }
+                        else if (+divBox.innerText == +selectedCheckinDate.innerText) 
+                        {
+                            //  checkout date selected
+                            tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                        }
+                        else
+                        {
+                            //  fill everything between checkin and checkout dates
+                            tdBox.style.background = "#dcdcdc";
+                            divBox.style.borderColor = "#dcdcdc";
+                        }
                     }
-                    //  checkout date selected
-                    else if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +selectedCheckinDate.innerText)
+                    else if (+divBox.innerText == +target.innerText)
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
-                    }
-                    //  fill everything between checkin and checkout dates
-                    else
-                    {
+                        //  apply css to checkout/checkin date whichever is the target one
                         if (selectedCheckinDate != "")
                         {
-                            if (months.indexOf(selectedCheckinMonth) == targetMonth)
-                            {
-                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
-                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
-                            }
-                            else if (months.indexOf(selectedCheckinMonth) < targetMonth)
-                            {
-                                if (months.indexOf(selectedCheckinMonth + 1) == targetMonth)
-                                {
-                                    //  if target months == checkin month + 1 (so 1 higher than checkin (so exampe from september to october))
-                                    //  my
-                                }
-
-                                if (targetMonth - months.indexOf(selectedCheckinMonth) != 0)
-                                {
-                                    //  fully fill months that are between both indexes...
-                                    //  head
-                                }
-                                    //  is               
-                            }
-                            else if (selectedCheckinYear < targetYear)
-                            {
-                                if ("if year is different then fill everything from checkin date to end of checking date year")
-                                {
-                                    //  empty
-                                }
-                            }
+                            tdBox.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
                         }
                         else if (selectedCheckoutDate != "")
                         {
-                            if (months.indexOf(targetMonth))
-                            {
-                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "#dcdcdc";
-                                currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "#dcdcdc";
-                            }
-                            else if (months.indexOf(selectedCheckoutMonth) < targetMonth)
-                            {
-                                if ("")
-                                {
-                                    //  my
-                                }
-
-                                if ("")
-                                {
-                                    //  head
-                                }
-
-                                //  is
-                            }
-                            else if (selectedCheckoutYear > targetYear)
-                            {
-                                if ("")
-                                {
-                                    //  empty
-                                }
-                            }
+                            tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
                         }
                     }
                 }
-                else if (+currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].innerText == +target.innerText)
+                //  if checking and checkout are in different months but same year
+                else if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) < targetMonth) && selectedCheckinYear == targetYear
+                     ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) > targetMonth) && selectedCheckoutYear == targetYear)
                 {
-                    //  apply css to checkout/checkin date
-                    if (selectedCheckinDate != "")
+                    //  need to make sure its on correct calendars... it works... but only on calendar the target is
+                    if (divBox.innerText == +selectedCheckoutDate.innerText)
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                        tdBox.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
                     }
-                    else if (selectedCheckoutDate != "")
+                    else if (+divBox.innerText == +selectedCheckinDate.innerText) 
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                        tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
                     }
+
+                    if (+selectedCheckinDate.innerText < +divBox.innerText && +divBox.innerText != endOfCurrentMonth)
+                    {
+                        tdBox.style.background = "#dcdcdc";
+                        divBox.style.borderColor = "#dcdcdc";
+                    }
+                    else if (+selectedCheckoutDate.innerText < +divBox.innerText && +divBox.innerText != endOfCurrentMonth)
+                    {
+                        tdBox.style.background = "#dcdcdc";
+                        divBox.style.borderColor = "#dcdcdc";
+                    }
+                    else if (+divBox.innerText == endOfCurrentMonth)
+                    {
+                        if (selectedCheckinDate != "")
+                        {
+                            tdBox.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                        }
+                        else if (selectedCheckoutDate != "")
+                        {
+                            tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                        }
+                    }
+                }
+                //  if checking and checkout are in different years
+                else if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) < targetMonth) && selectedCheckinYear != targetYear
+                     ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) > targetMonth) && selectedCheckoutYear != targetYear)
+                {
+
                 }
             }
             catch
@@ -1307,40 +1298,43 @@ function removeShadowsBetweenDates(currentCalendar)
                     break loop;
                 }
 
+                var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+
                 if (selectedCheckinDate == "")
                 {
-                    if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "rgb(220, 220, 220)")
+                    if (tdBox.style.background == "rgb(220, 220, 220)")
                     {
                         //  if checking date is selected but checkout hover point is outside of calendar - make everything that was grey be white
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                        tdBox.style.background = "";
+                        divBox.style.borderColor = "";
                     }
-                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
                     {
                         //  clear checkin date css grey shadow
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        tdBox.style.background = "";
                     }
-                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
                     {
                         //  clear checkout date css grey shadow
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        tdBox.style.background = "";
                     }
                 }
                 else if (selectedCheckoutDate == "")
                 {
                     //  everything but backwards
-                    if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "rgb(220, 220, 220)")
+                    if (tdBox.style.background == "rgb(220, 220, 220)")
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.borderColor = "";
+                        tdBox.style.background = "";
+                        divBox.style.borderColor = "";
                     }
-                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        tdBox.style.background = "";
                     }
-                    else if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
                     {
-                        currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background = "";
+                        tdBox.style.background = "";
                     }
                 } 
             }
