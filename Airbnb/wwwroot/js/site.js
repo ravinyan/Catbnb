@@ -1175,23 +1175,35 @@ function applyShadowBetweenDates(currentCalendar, target)
 {
     var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
     var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-    
-    for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
+    var previousCalendar = ""
+
+    if (selectedCheckinDate != "")
+    {
+        previousCalendar = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+    }
+    else if (selectedCheckoutDate != "")
+    {
+        previousCalendar = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+    }
+
+    for (i = 0; i < 7; i++)
     {
         for (j = 0; j < 7; j++)
         {
             loop:
             try
             {
-                //  instantly break the loop if one of these conditions is met to make this for loop more efficient i guess
-                if ((selectedCheckinDate != "" && (+target.innerText < selectedCheckinDate.innerText))
-                ||  (selectedCheckoutDate != "" && (+target.innerText > selectedCheckoutDate.innerText)))
+                try 
                 {
-                    break loop;
-                }
+                    var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                }catch{} //  i hate you from the bottom of my heart 
 
-                var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                try
+                {
+                    var divBox2 = previousCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox2 = previousCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                }catch{} //  i swear to fucking god this is getting so annoying i fucking hate this try catch bullshit AAAAAAAAAAAAAAAAAAA
 
                 //  if checkin or checkout selected is in the same month and year as target
                 if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) == targetMonth) && selectedCheckinYear == targetYear
@@ -1234,35 +1246,74 @@ function applyShadowBetweenDates(currentCalendar, target)
                 else if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) < targetMonth) && selectedCheckinYear == targetYear
                      ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) > targetMonth) && selectedCheckoutYear == targetYear)
                 {
-                    //  need to make sure its on correct calendars... it works... but only on calendar the target is
-                    if (divBox.innerText == +selectedCheckoutDate.innerText)
+                    try 
                     {
-                        tdBox.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
-                    }
-                    else if (+divBox.innerText == +selectedCheckinDate.innerText) 
-                    {
-                        tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
-                    }
+                        //  it is first selected date be it checkin or checkout
+                        if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
+                        {
+                            if (divBox2.innerText == +selectedCheckoutDate.innerText)
+                            {
+                                tdBox2.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
+                            }
+                            else if (+divBox2.innerText == +selectedCheckinDate.innerText) 
+                            {
+                                tdBox2.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                            }
 
-                    if (+selectedCheckinDate.innerText < +divBox.innerText && +divBox.innerText != endOfCurrentMonth)
-                    {
-                        tdBox.style.background = "#dcdcdc";
-                        divBox.style.borderColor = "#dcdcdc";
-                    }
-                    else if (+selectedCheckoutDate.innerText < +divBox.innerText && +divBox.innerText != endOfCurrentMonth)
-                    {
-                        tdBox.style.background = "#dcdcdc";
-                        divBox.style.borderColor = "#dcdcdc";
-                    }
-                    else if (+divBox.innerText == endOfCurrentMonth)
-                    {
-                        if (selectedCheckinDate != "")
-                        {
-                            tdBox.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                            if (+selectedCheckinDate.innerText < +divBox2.innerText && +divBox2.innerText <= endOfCurrentMonth)
+                            {
+                                tdBox2.style.background = "#dcdcdc";
+                                divBox2.style.borderColor = "#dcdcdc";
+                            }
                         }
-                        else if (selectedCheckoutDate != "")
+                    }catch{} //  i hate you i hope you step on a lego
+                        
+                    try
+                    {
+                        //  it is first selected date be it checkin or checkout
+                        if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
                         {
-                            tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                            if (divBox2.innerText == +selectedCheckinDate.innerText)
+                            {
+                                tdBox2.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                            }
+                            else if (+divBox2.innerText == +selectedCheckoutDate.innerText) 
+                            {
+                                tdBox2.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
+                            }
+
+                            if (+selectedCheckoutDate.innerText > +divBox2.innerText)
+                            {
+                                tdBox2.style.background = "#dcdcdc";
+                                divBox2.style.borderColor = "#dcdcdc";
+                            }
+                        }
+                    }catch{} //  I HATE YOU IDIOT
+
+                    //  it is second selected date and it changes whenever the target is
+                    if ((+divBox.innerText <= +target.innerText && selectedCheckinDate != "")
+                    ||  (+divBox.innerText >= +target.innerText && selectedCheckoutDate != ""))
+                    {
+                        if (+target.innerText > +divBox.innerText && selectedCheckinDate != "" && divBox.innerText != "")
+                        {
+                            tdBox.style.background = "#dcdcdc";
+                            divBox.style.borderColor = "#dcdcdc";
+                        }
+                        else if (+target.innerText < +divBox.innerText && selectedCheckoutDate != "" && divBox.innerText != "")
+                        {
+                            tdBox.style.background = "#dcdcdc";
+                            divBox.style.borderColor = "#dcdcdc";
+                        }
+                        else if (+divBox.innerText == +target.innerText)
+                        {
+                            if (selectedCheckinDate != "")
+                            {
+                                tdBox.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                            }
+                            else if (selectedCheckoutDate != "")
+                            {
+                                tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+                            }
                         }
                     }
                 }
@@ -1273,25 +1324,20 @@ function applyShadowBetweenDates(currentCalendar, target)
 
                 }
             }
-            catch
-            {
-                //  your mom
-            }
+            catch{} //  your mom  
         }
     }
 }
 
 function removeShadowsBetweenDates(currentCalendar)
 {
-     for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
+    for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
     {
         for (j = 0; j < 7; j++)
         {
             loop:
             try
-            {
-                //  this is a lot of if else if statements... please stay away from it its dangerous and it can bite... and bark... ?
-                //  nvm i improved it not it can only bark... still dangerous 
+            { 
                 if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "")
                 {
                     //  skip cycle instantly if background is white
@@ -1337,11 +1383,7 @@ function removeShadowsBetweenDates(currentCalendar)
                         tdBox.style.background = "";
                     }
                 } 
-            }
-            catch
-            {
-                //  your dad
-            }
+            }catch{} //  your dad
         }
     }
 }
