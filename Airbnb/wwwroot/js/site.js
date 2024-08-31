@@ -1034,7 +1034,8 @@ function calendarValidationCSS()
     if (checkoutButton.style.backgroundColor == "white")
     {
         checkinFormInput.value = checkoutFormInput.value;
-
+        removeShadowsBetweenDates(calendar);
+        removeShadowsBetweenDates(calendar2);
         selectedCheckinDate.style.background = "";
         selectedCheckinDate.style.color = "";
         previousDate.style.background = "";
@@ -1154,15 +1155,15 @@ clearCalendarFormInputButton.onclick = function()
     checkinFormInput.value = "";
     checkoutFormInput.value = "";
 
+    removeShadowsBetweenDates(calendar);
+    removeShadowsBetweenDates(calendar2);
+
     selectedCheckinDate.style.background = "";
     selectedCheckinDate.style.color = "";
     selectedCheckoutDate.style.background = "";
     selectedCheckoutDate.style.color = "";
     selectedCheckinDate = "";
     selectedCheckoutDate = "";
-
-    removeShadowsBetweenDates(calendar);
-    removeShadowsBetweenDates(calendar2);
 
     clearCalendarFormInputButton.style.display = "none";
     
@@ -1186,7 +1187,7 @@ function applyShadowBetweenDates(currentCalendar, target)
         previousCalendar = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
     }
 
-    for (i = 0; i < 7; i++)
+    for (i = 0; i < 6; i++)
     {
         for (j = 0; j < 7; j++)
         {
@@ -1282,7 +1283,7 @@ function applyShadowBetweenDates(currentCalendar, target)
                                 tdBox2.style.background = "linear-gradient(to right,  #dcdcdc 50%, white 50%)";
                             }
 
-                            if (+selectedCheckoutDate.innerText > +divBox2.innerText)
+                            if (+selectedCheckoutDate.innerText > +divBox2.innerText && divBox2.innerText != "")
                             {
                                 tdBox2.style.background = "#dcdcdc";
                                 divBox2.style.borderColor = "#dcdcdc";
@@ -1331,70 +1332,136 @@ function applyShadowBetweenDates(currentCalendar, target)
 
 function removeShadowsBetweenDates(currentCalendar)
 {
-    for (i = 0; i < currentCalendar.childNodes[4].childNodes[0].childNodes.length; i++)
+    var previousCalendar = ""
+
+    if (selectedCheckinDate != "")
+    {
+        previousCalendar = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+    }
+    else if (selectedCheckoutDate != "")
+    {
+        previousCalendar = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+    }
+
+    for (i = 0; i < 6; i++)
     {
         for (j = 0; j < 7; j++)
         {
             loop:
             try
-            { 
-                if (currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.background == "")
+            {
+                try
                 {
-                    //  skip cycle instantly if background is white
-                    break loop;
-                }
-
-                var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
-
+                    var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                }catch{} //  let me guess
+                
+                try
+                {
+                    var divBox2 = previousCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox2 = previousCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                }catch{} // you are the problem arent you... you werent... but was later
+                
                 if (selectedCheckinDate == "")
                 {
-                    if (tdBox.style.background == "rgb(220, 220, 220)")
+                    if (tdBox.style.background == "rgb(220, 220, 220)"
+                    ||  tdBox2.style.background == "rgb(220, 220, 220)")
                     {
                         //  if checking date is selected but checkout hover point is outside of calendar - make everything that was grey be white
                         tdBox.style.background = "";
                         divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
-                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
                     {
                         //  clear checkin date css grey shadow
                         tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
-                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
                     {
                         //  clear checkout date css grey shadow
                         tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
                 }
                 else if (selectedCheckoutDate == "")
                 {
                     //  everything but backwards
-                    if (tdBox.style.background == "rgb(220, 220, 220)")
+                    if (tdBox.style.background == "rgb(220, 220, 220)"
+                    ||  tdBox2.style.background == "rgb(220, 220, 220)")
                     {
                         tdBox.style.background = "";
                         divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
-                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
                     {
                         tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
-                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    else if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
                     {
                         tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
                     }
-                } 
+                }
+                else if (selectedCheckinDate != "" && selectedCheckoutDate != "")
+                {
+                    if (tdBox.style.background == "rgb(220, 220, 220)"
+                    ||  tdBox2.style.background == "rgb(220, 220, 220)")
+                    {
+                        tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
+                    }
+
+                    if (tdBox.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, rgb(220, 220, 220) 50%, white 50%)")
+                    {
+                        tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
+                    }
+
+                    if (tdBox.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)"
+                         ||  tdBox2.style.background == "linear-gradient(to right, white 50%, rgb(220, 220, 220) 50%)")
+                    {
+                        tdBox.style.background = "";
+                        divBox.style.borderColor = "";
+                        tdBox2.style.background = "";
+                        divBox2.style.borderColor = "";
+                    }
+                }
+
             }catch{} //  your dad
         }
     }
 }
-
+ 
 calendar.addEventListener("mouseover", function(e)
 {
     if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
     {
         e.target.classList.add("box_new_hover");
 
-        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
             applyShadowBetweenDates(calendar, e.target);
         }
@@ -1407,7 +1474,7 @@ calendar.addEventListener("mouseout", function(e)
     {   
         e.target.classList.remove("box_new_hover");
 
-        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
             removeShadowsBetweenDates(calendar);
         }
@@ -1420,7 +1487,7 @@ calendar2.addEventListener("mouseover", function(e)
     {
         e.target.classList.add("box_new_hover");
 
-        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
             applyShadowBetweenDates(calendar2, e.target);
         }
@@ -1433,7 +1500,7 @@ calendar2.addEventListener("mouseout", function(e)
     {   
         e.target.classList.remove("box_new_hover");
 
-        if (selectedCheckinDate != "" || selectedCheckoutDate != "")
+        if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
             removeShadowsBetweenDates(calendar2);
         }
