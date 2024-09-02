@@ -1031,23 +1031,29 @@ var previousDate = "";
 
 function calendarValidationCSS()
 {
-    if (checkoutButton.style.backgroundColor == "white")
+    removeShadowsBetweenDates(calendar);
+    removeShadowsBetweenDates(calendar2);
+
+    selectedCheckinDate.style.background = "";
+    selectedCheckinDate.style.color = "";
+    selectedCheckoutDate.style.background = "";
+    selectedCheckoutDate.style.color = "";
+
+    if (checkinButton.style.backgroundColor == "white")
+    {
+    }
+    else
     {
         checkinFormInput.value = checkoutFormInput.value;
-        removeShadowsBetweenDates(calendar);
-        removeShadowsBetweenDates(calendar2);
-        selectedCheckinDate.style.background = "";
-        selectedCheckinDate.style.color = "";
-        previousDate.style.background = "";
-        previousDate.style.color = "";
-
         selectedCheckinDate = selectedCheckoutDate;
-        selectedCheckinDate.style.background = "black";
-        selectedCheckinDate.style.color = "white";
-
-        selectedCheckoutDate = "";
+        selectedCheckinMonth = selectedCheckoutMonth;
+        selectedCheckinYear = selectedCheckoutYear;
     }
 
+    selectedCheckinDate.style.background = "black";
+    selectedCheckinDate.style.color = "white";
+
+    selectedCheckoutDate = "";
     checkoutFormInput.value = "";
 }
 
@@ -1085,6 +1091,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
             selectedCheckinDate = "";
+
+            removeShadowsBetweenDates(e.target.parentElement.parentElement.parentElement.parentElement.parentElement);
         }
 
         if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
@@ -1092,6 +1100,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
             selectedCheckoutDate = "";
+
+            removeShadowsBetweenDates(e.target.parentElement.parentElement.parentElement.parentElement.parentElement);
         }
 
         //  apply feedback
@@ -1102,6 +1112,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.color = "white";
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+            applyShadowBetweenDates(e.target.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate);
         }
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1110,23 +1122,25 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.color = "white";
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+            applyShadowBetweenDates(e.target.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckoutDate);
         }
 
         //  validation
-        if (checkoutFormInput.value.slice(-4) < checkinFormInput.value.slice(-4))
+        if ((+selectedCheckinDate.innerText > +selectedCheckoutDate.innerText) 
+        &&  (selectedCheckinMonth == selectedCheckoutMonth) && (selectedCheckinYear == selectedCheckoutYear)
+        &&  (selectedCheckinDate != "" && selectedCheckoutDate != ""))
         {
              calendarValidationCSS();
         }
-        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) < monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        else if (months.indexOf(selectedCheckinMonth) > months.indexOf(selectedCheckoutMonth)
+             &&  (selectedCheckinYear == selectedCheckoutYear ) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
              calendarValidationCSS();
         }
-        else if (monthsAbbreviations.indexOf(checkoutFormInput.value.slice(2, 6).trim()) == monthsAbbreviations.indexOf(checkinFormInput.value.slice(2, 6).trim()) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        else if ((selectedCheckinYear > selectedCheckoutYear) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
         {
-            if (+checkoutFormInput.value.slice(0, 2).trim() < +checkinFormInput.value.slice(0, 2).trim())
-            {
-                calendarValidationCSS();
-            }
+            calendarValidationCSS();
         }
 
         if (checkinFormInput.value != "" && checkoutFormInput.value != "")
@@ -1171,7 +1185,6 @@ clearCalendarFormInputButton.onclick = function()
     onClickButtonFocus(checkinButton);
 }
 
-//  years less pain
 function applyShadowBetweenDates(currentCalendar, target)
 {
     var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
