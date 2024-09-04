@@ -596,7 +596,7 @@ const monthsAbbreviations = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "A
 
 //  do. not. fking. touch. this. D O N O T. donut.
 var startOfCurrentMonth = new Date(year, month, 0).getDay();
-var endOfCurrentMonth = new Date(year, month +1, 0).getDate();
+var endOfCurrentMonth = new Date(year, month + 1, 0).getDate();
 var startOfNextMonth = new Date(year, month + 1, 0).getDay();
 var endOfNextMonth = new Date(year, month + 2, 0).getDate();
 var selectedCheckinDate = "";
@@ -706,44 +706,47 @@ function createCalendarMonth()
                 {
                     td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
                 }
-
-                if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+                if (month == -1)
                 {
-                    td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                    if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+                    {
+                        td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                    }
                 }
+                
+                //  oh god will need to fix how months work and my brain hurts too much
+                    if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+                    &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+                    &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
+                    &&  selectedCheckoutYear == year)
+                    {
+                        td.style.background = "#dcdcdc";
+                        div.style.borderColor = "#dcdcdc"; 
+                    }
 
-                if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
-                &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
-                &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
-                &&  selectedCheckoutYear == year)
-                {
-                    td.style.background = "#dcdcdc";
-                    div.style.borderColor = "#dcdcdc"; 
-                }
+                    if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+                    &&  months.indexOf(months[month]) != months.indexOf(selectedCheckoutMonth)
+                    &&  x > +selectedCheckinDate.innerText &&  selectedCheckoutYear == year)
+                    {
+                        td.style.background = "#dcdcdc";
+                        div.style.borderColor = "#dcdcdc";   
+                    }
 
-                if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
-                &&  months.indexOf(months[month]) != months.indexOf(selectedCheckoutMonth)
-                &&  x > +selectedCheckinDate.innerText &&  selectedCheckoutYear == year)
-                {
-                    td.style.background = "#dcdcdc";
-                    div.style.borderColor = "#dcdcdc";   
-                }
+                    if (months.indexOf(months[month]) != months.indexOf(selectedCheckinMonth) 
+                    &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+                    &&  x < +selectedCheckoutDate.innerText && selectedCheckoutYear == year)
+                    {
+                        td.style.background = "#dcdcdc";
+                        div.style.borderColor = "#dcdcdc";   
+                    }
 
-                if (months.indexOf(months[month]) != months.indexOf(selectedCheckinMonth) 
-                &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
-                &&  x < +selectedCheckoutDate.innerText && selectedCheckoutYear == year)
-                {
-                    td.style.background = "#dcdcdc";
-                    div.style.borderColor = "#dcdcdc";   
-                }
-
-                if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) && selectedCheckinMonth != ""
-                &&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
-                &&  selectedCheckoutYear == year)
-                {
-                    td.style.background = "#dcdcdc";
-                    div.style.borderColor = "#dcdcdc";  
-                }
+                    if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) && selectedCheckinMonth != ""
+                    &&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
+                    &&  selectedCheckoutYear == year)
+                    {
+                        td.style.background = "#dcdcdc";
+                        div.style.borderColor = "#dcdcdc";  
+                    }
 
                 //  bla bla
 
@@ -1222,6 +1225,7 @@ function correctShadowBetweenDates(currentCalendar)
                 break loop;
             }
             
+            //  SAME MONTH SAME YEAR
             if ((selectedCheckinDate != "" && selectedCheckoutDate != "") 
             &&  (selectedCheckinMonth == selectedCheckoutMonth) 
             &&  (selectedCheckinYear == selectedCheckoutYear))
@@ -1241,22 +1245,14 @@ function correctShadowBetweenDates(currentCalendar)
                     divBox.style.borderColor = "#dcdcdc";
                 }
             }
+            //  DIFFERENT MONTH SAME YEAR
             else if ((selectedCheckinDate != "" && selectedCheckoutDate != "") 
                  &&  (months.indexOf(selectedCheckinMonth) < months.indexOf(selectedCheckoutMonth))
                  &&  (selectedCheckinYear == selectedCheckoutYear))
             {
-                if (otherCalendar.contains(selectedCheckinDate))
+                if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
                 {
-                    if (+selectedCheckinDate.innerText == divBox2.innerText)
-                    {
-                        tdBox2.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
-                    }
-                    else if (+selectedCheckinDate.innerText < divBox2.innerText)
-                    {
-                        tdBox2.style.background = "#dcdcdc";
-                        divBox2.style.borderColor = "#dcdcdc";
-                    }
-
+                    //  fill shadow for checkout date on current calendar when changing checkout date
                     if (+selectedCheckoutDate.innerText == divBox.innerText)
                     {
                         tdBox.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
@@ -1266,19 +1262,33 @@ function correctShadowBetweenDates(currentCalendar)
                         tdBox.style.background = "#dcdcdc";
                         divBox.style.borderColor = "#dcdcdc";
                     }
-                }
-                else if (otherCalendar.contains(selectedCheckoutDate))
-                {
-                    if (+selectedCheckoutDate.innerText == divBox2.innerText)
+
+                    //  checkin selected shadow other
+                    if (+selectedCheckinDate.innerText == divBox2.innerText
+                    &&  otherCalendar == selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement)
                     {
-                        tdBox2.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                        tdBox2.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
                     }
-                    else if (+selectedCheckoutDate.innerText > divBox2.innerText && divBox2.innerText != "")
+                    else if (+selectedCheckinDate.innerText < divBox2.innerText
+                         &&  otherCalendar == selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement)
                     {
                         tdBox2.style.background = "#dcdcdc";
                         divBox2.style.borderColor = "#dcdcdc";
                     }
 
+                    //  fill empty calendar with shadow
+                    if (otherCalendar != selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement
+                    &&  otherCalendar != selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement
+                    &&  months.indexOf(currentCalendar.childNodes[1].innerText.slice(0, -5)) > months.indexOf(otherCalendar.childNodes[1].innerText.slice(0, -5))
+                    &&  divBox2.innerText != "")
+                    {
+                        tdBox2.style.background = "#dcdcdc";
+                        divBox2.style.borderColor = "#dcdcdc";
+                    }
+                }
+                else if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
+                {
+                    //  fill shadow for checkin date on current calendar when changing checkin date
                     if (+selectedCheckinDate.innerText == divBox.innerText)
                     {
                         tdBox.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
@@ -1288,8 +1298,32 @@ function correctShadowBetweenDates(currentCalendar)
                         tdBox.style.background = "#dcdcdc";
                         divBox.style.borderColor = "#dcdcdc";
                     }
+
+                    //  checkout selected shadow other
+                    if (+selectedCheckoutDate.innerText == divBox2.innerText 
+                    &&  otherCalendar == selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement)
+                    {
+                        tdBox2.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+                    }
+                    else if (+selectedCheckoutDate.innerText > divBox2.innerText && divBox2.innerText != ""
+                         &&  otherCalendar == selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement)
+                    {
+                        tdBox2.style.background = "#dcdcdc";
+                        divBox2.style.borderColor = "#dcdcdc";
+                    }
+
+                    //  fill empty calendar with shadow
+                    if (otherCalendar != selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement
+                    &&  otherCalendar != selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement
+                    &&  months.indexOf(currentCalendar.childNodes[1].innerText.slice(0, -5)) < months.indexOf(otherCalendar.childNodes[1].innerText.slice(0, -5))
+                    &&  divBox2.innerText != "")
+                    {
+                        tdBox2.style.background = "#dcdcdc";
+                        divBox2.style.borderColor = "#dcdcdc";
+                    }
                 }
             }
+            //  DIFFERENT MONTH DIFFERENT YEAR
             else if ((selectedCheckinDate != "" && selectedCheckoutDate != "") 
                  &&  (months.indexOf(selectedCheckinMonth) < months.indexOf(selectedCheckoutMonth))
                  &&  (selectedCheckinYear < selectedCheckoutYear))
@@ -1539,7 +1573,18 @@ function removeShadowsBetweenDates(currentCalendar)
 {
     var otherCalendar = ""
 
-    if (selectedCheckinDate != "")
+    if (selectedCheckinDate != "" && selectedCheckoutDate != "")
+    {
+        if (currentCalendar == calendar2)
+        {
+            otherCalendar = calendar;
+        }
+        else if (currentCalendar == calendar)
+        {
+            otherCalendar = calendar2;
+        }
+    }
+    else if (selectedCheckinDate != "")
     {
         otherCalendar = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
 
@@ -1577,8 +1622,6 @@ function removeShadowsBetweenDates(currentCalendar)
                     var tdBox2 = otherCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
                 }catch{} // you are the problem arent you... you werent... but was later
                 
-                //  lol i was thinking so much how to do stuff i didnt realized i can do it extremely simple and way more readable... 
-                //  ...and it fixed one bug i had lmao
                 //  clear css simply and clean
                 if ((selectedCheckinDate == "" || selectedCheckoutDate == "")
                 ||  (selectedCheckinDate != "" && selectedCheckoutDate != ""))
