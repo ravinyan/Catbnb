@@ -625,14 +625,15 @@ function createCalendarMonth()
 
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    if (month == -1)
-    {
-        monthNameDiv.innerHTML = months[11] + ` ${year}`;
-    }
-    else
-    {
-        monthNameDiv.innerHTML = months[month] + ` ${year}`;
-    }
+    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    //if (month == 0)
+    //{
+    //    monthNameDiv.innerHTML = months[11] + ` ${year}`;
+    //}
+    //else
+    //{
+    //    monthNameDiv.innerHTML = months[month] + ` ${year}`;
+    //}
     
     calendar.insertBefore(monthNameDiv, calendar.children[0]);
 
@@ -784,14 +785,15 @@ function createCalendarMonth2()
   
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    if (month == -1)
-    {
-        monthNameDiv.innerHTML = months[0] + ` ${year}`;
-    }
-    else
-    {
-        monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
-    }
+    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
+    //if (month == 0)
+    //{
+    //    monthNameDiv.innerHTML = months[0] + ` ${year}`;
+    //}
+    //else
+    //{
+    //    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
+    //}
 
     calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
 
@@ -932,32 +934,30 @@ moveCalendarLeft.onclick = function ()
             e.remove();
         });
 
-        if (month == -1)
-        {
-            //  do nothing... its a check so calendar properly works for when going from decemblabla to novembeblablabla
-        }
-        else
-        {
-            month -= 1;
-        }
-        
-        startOfNextMonth = new Date(year, month + 1, 0).getDay();
-        endOfNextMonth = new Date(year, month + 2, 0).getDate();
 
-        endOfCurrentMonth = new Date(year, month +1, 0).getDate();
-        startOfCurrentMonth = new Date(year, month, 0).getDay();
+        //if (month == -1)
+        //{
+        //    //  do nothing... its a check so calendar properly works for when going from decemblabla to novembeblablabla
+        //}
+        //else
+        //{
+            month -= 1;
+        //}
+
+        startOfNextMonth = new Date(year, month + 2, 0).getDay();
+        endOfNextMonth = new Date(year, month + 3, 0).getDate();
 
         createCalendarMonth2();
+       
         if (month == -1)
         {
             year -= 1;
-        }
-        
-        createCalendarMonth();
-        if (month == -1)
-        {
             month = 11
         }
+
+        startOfCurrentMonth = new Date(year, month, 0).getDay();
+        endOfCurrentMonth = new Date(year, month + 1, 0).getDate();
+        createCalendarMonth();
 
         if (month == currentMonth && year == currentYear)
         {
@@ -985,28 +985,37 @@ moveCalendarRight.onclick = function ()
             e.remove();
         });
 
-        if (month == 11)
-        {
-            //  another check when going from dec/jan to jan/feb to AGAIN dec/jan to AGAIN jan/feb and it breaks there lol
-        }
-        else
-        {
+        //  please end my misery i hate this so much this should be braindead simple why its so hard
+
+        //if (month == 11)
+        //{
+        //    //  another check when going from dec/jan to jan/feb to AGAIN dec/jan to AGAIN jan/feb and it breaks there lol
+        //}
+        //else
+        //{
             month += 1;
+        //}
+        if (month == 12)
+        {
+            month = 0;
         }
 
         startOfCurrentMonth = new Date(year, month, 0).getDay();
 
         if (month == 11)
         {
-            month = -1;
+            endOfCurrentMonth = new Date(year, 0 + 1, 0).getDate();
+        }
+        else
+        {
+            endOfCurrentMonth = new Date(year, month +1, 0).getDate();
         }
 
-        endOfCurrentMonth = new Date(year, month +1, 0).getDate();
-
         createCalendarMonth();
-        if (month == -1)
+        if (month == 11)
         {
             year += 1;
+            month = -1;
         }
 
         startOfNextMonth = new Date(year, month + 1, 0).getDay();
