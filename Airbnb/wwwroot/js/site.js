@@ -605,42 +605,50 @@ var selectedCheckinMonth = "";
 var selectedCheckoutMonth = "";
 var selectedCheckinYear = "";
 var selectedCheckoutYear = "";
+var rightButtonClicked = false;
+var leftButtonClicked = false;
 
 function createCalendarMonth()
 {
     var x = 0;
     var check = true;
-    var calendarRows = 0;
     var added1 = false;
     var added2 = false;
 
-    if ((startOfCurrentMonth == 6 && endOfCurrentMonth >= 30) || (startOfCurrentMonth == 5 && endOfCurrentMonth == 31))
+    if (month == 11)
     {
-        calendarRows = 6;
+        month -= 1;
     }
-    else
+
+    if (month == 11 && rightButtonClicked == true)
     {
-        calendarRows = 5;
+        month = 0;
+        year += 1;
     }
+    if (rightButtonClicked == true)
+    {
+        month += 1;
+    }
+
+    if (month == 0 && leftButtonClicked == true)
+    {
+        month = 11;
+        year -= 1;
+    }
+
+    startOfCurrentMonth = new Date(year, month, 0).getDay();
+    endOfCurrentMonth = new Date(year, month + 1, 0).getDate();
 
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
     monthNameDiv.innerHTML = months[month] + ` ${year}`;
-    //if (month == 0)
-    //{
-    //    monthNameDiv.innerHTML = months[11] + ` ${year}`;
-    //}
-    //else
-    //{
-    //    monthNameDiv.innerHTML = months[month] + ` ${year}`;
-    //}
     
     calendar.insertBefore(monthNameDiv, calendar.children[0]);
 
     const table = document.createElement("table");
     const tbody = document.createElement("tbody");
 
-    for (i = 0; i < calendarRows; i++)
+    for (i = 0; i < 6; i++)
     {
         var tr = document.createElement("tr");
         for (j = 0; j < 7; j++)
@@ -770,37 +778,52 @@ function createCalendarMonth2()
 {
     var x = 0;
     var check = true;
-    var calendarRows = 0;
     var added1 = false;
     var added2 = false;
 
-    if ((startOfNextMonth == 6 && endOfNextMonth >= 30) || (startOfNextMonth == 5 && endOfNextMonth == 31))
+    if (month < 0)
     {
-        calendarRows = 6;
+        month = 0;
     }
-    else
+
+    if (month == 0 && leftButtonClicked == true)
     {
-        calendarRows = 5;
+        month = 11;
+        year -= 1;
     }
-  
+    else if (leftButtonClicked == true)
+    {
+        month -= 1;
+    }
+
+    if (month == 11 && rightButtonClicked == true)
+    {
+        month = -1;
+        year += 1;
+    }
+
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
-    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
-    //if (month == 0)
-    //{
-    //    monthNameDiv.innerHTML = months[0] + ` ${year}`;
-    //}
-    //else
-    //{
-    //    monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
-    //}
 
+    if (month + 1 == 12 || month == 0)
+    {
+        monthNameDiv.innerHTML = months[month] + ` ${year}`;
+        startOfNextMonth = new Date(year, month, 0).getDay();
+        endOfNextMonth = new Date(year, month + 1, 0).getDate();
+    }
+    else 
+    {
+        monthNameDiv.innerHTML = months[month + 1] + ` ${year}`;
+        startOfNextMonth = new Date(year, month + 1, 0).getDay();
+        endOfNextMonth = new Date(year, month + 2, 0).getDate();
+    }
+    
     calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
 
     const table = document.createElement("table");
     const tbody = document.createElement("tbody");
 
-    for (i = 0; i < calendarRows; i++)
+    for (i = 0; i < 6; i++)
     {
         var tr = document.createElement("tr");
         for (j = 0; j < 7; j++)
@@ -917,7 +940,7 @@ createCalendarMonth2();
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 
-moveCalendarLeft.onclick = function ()
+moveCalendarLeft.onclick = function()
 {  
     if (moveCalendarLeft.style.cursor == "pointer")
     {
@@ -934,30 +957,12 @@ moveCalendarLeft.onclick = function ()
             e.remove();
         });
 
-
-        //if (month == -1)
-        //{
-        //    //  do nothing... its a check so calendar properly works for when going from decemblabla to novembeblablabla
-        //}
-        //else
-        //{
-            month -= 1;
-        //}
-
-        startOfNextMonth = new Date(year, month + 2, 0).getDay();
-        endOfNextMonth = new Date(year, month + 3, 0).getDate();
+        leftButtonClicked = true;
 
         createCalendarMonth2();
-       
-        if (month == -1)
-        {
-            year -= 1;
-            month = 11
-        }
-
-        startOfCurrentMonth = new Date(year, month, 0).getDay();
-        endOfCurrentMonth = new Date(year, month + 1, 0).getDate();
         createCalendarMonth();
+        
+        leftButtonClicked = false;
 
         if (month == currentMonth && year == currentYear)
         {
@@ -968,7 +973,7 @@ moveCalendarLeft.onclick = function ()
     } 
 }
 
-moveCalendarRight.onclick = function ()
+moveCalendarRight.onclick = function()
 {
     if (moveCalendarRight.style.cursor == "pointer")
     {
@@ -985,43 +990,14 @@ moveCalendarRight.onclick = function ()
             e.remove();
         });
 
-        //  please end my misery i hate this so much this should be braindead simple why its so hard
+        //  please end my misery i hate this so much its not simple at all i want to eat sand
 
-        //if (month == 11)
-        //{
-        //    //  another check when going from dec/jan to jan/feb to AGAIN dec/jan to AGAIN jan/feb and it breaks there lol
-        //}
-        //else
-        //{
-            month += 1;
-        //}
-        if (month == 12)
-        {
-            month = 0;
-        }
-
-        startOfCurrentMonth = new Date(year, month, 0).getDay();
-
-        if (month == 11)
-        {
-            endOfCurrentMonth = new Date(year, 0 + 1, 0).getDate();
-        }
-        else
-        {
-            endOfCurrentMonth = new Date(year, month +1, 0).getDate();
-        }
+        rightButtonClicked = true;
 
         createCalendarMonth();
-        if (month == 11)
-        {
-            year += 1;
-            month = -1;
-        }
-
-        startOfNextMonth = new Date(year, month + 1, 0).getDay();
-        endOfNextMonth = new Date(year, month + 2, 0).getDate();
-   
         createCalendarMonth2();
+
+        rightButtonClicked = false;
         
         if (month > currentMonth && year >= currentYear)
         {
