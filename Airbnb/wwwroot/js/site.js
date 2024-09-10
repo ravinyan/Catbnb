@@ -578,7 +578,7 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
-----------------------------------------------------------------------------------------------------------------------*/
+--------(this was very fun challenge but holy shit its finally complete 1k+ lines of code for stupid calendar)--------*/
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 
@@ -589,8 +589,6 @@ var year = date.getFullYear();
 var currentMonth = date.getMonth();
 var currentYear = date.getFullYear();
 
-//  i have skill issue i dont even know months name in polish                    TODAY
-//              styczen      luty      marzec   kwiecien  maj  czerwiec lipiec  sierpien   wrzesien   pazdziernik  listopad    grudzien
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const monthsAbbreviations = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -610,50 +608,85 @@ var leftButtonClicked = false;
 var nextMonth = "";
 var nextYear = "";
 
-//  fuck you fuck you fuck you fucko ufouc you fuck fuc fou fuck yoyu fukc fuouc fuck you fuck you fuco yoyu
+//  IT WORKS I DONT CARE JUST GET ME OUT OF HERE PLEASE AAAAAAAAAAAAAAAAAAAAAAAAA
 function keepShadowBetweenDates(month, x, td, div)
 {
-    if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
+    if (selectedCheckinDate != "" && selectedCheckoutDate != "")
     {
-        td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
-    }
+        if (x == +selectedCheckinDate.innerText && selectedCheckinMonth == months[month] && selectedCheckinYear == year)
+        {
+            td.style.background = "linear-gradient(to right, white 50%, #dcdcdc 50%)";
+        }
 
-    if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
-    {
-        td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
-    }
+        if (x == +selectedCheckoutDate.innerText && selectedCheckoutMonth == months[month] && selectedCheckoutYear == year)
+        {
+            td.style.background = "linear-gradient(to right, #dcdcdc 50%, white 50%)";
+        }
 
-    if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
-    &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
-    &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
-    &&  selectedCheckoutYear == year)
-    {
-        td.style.background = "#dcdcdc";
-        div.style.borderColor = "#dcdcdc"; 
-    }
-    
-    if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
-    &&  months.indexOf(months[month]) != months.indexOf(selectedCheckoutMonth)
-    &&  x > +selectedCheckinDate.innerText &&  selectedCheckoutYear == year)
-    {
-        td.style.background = "#dcdcdc";
-        div.style.borderColor = "#dcdcdc";   
-    }
-    
-    if (months.indexOf(months[month]) != months.indexOf(selectedCheckinMonth) 
-    &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
-    &&  x < +selectedCheckoutDate.innerText &&  selectedCheckoutYear == year)
-    {
-        td.style.background = "#dcdcdc";
-        div.style.borderColor = "#dcdcdc";   
-    }
-    
-    if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth) && selectedCheckinMonth != ""
-    &&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
-    &&  selectedCheckoutYear == year)
-    {
-        td.style.background = "#dcdcdc";
-        div.style.borderColor = "#dcdcdc";  
+        if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+        &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+        &&  x > +selectedCheckinDate.innerText && x < +selectedCheckoutDate.innerText
+        &&  selectedCheckoutYear == year && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc"; 
+        }
+        
+        if (months.indexOf(months[month]) == months.indexOf(selectedCheckinMonth) 
+        &&  months.indexOf(months[month]) != months.indexOf(selectedCheckoutMonth)
+        &&  x > +selectedCheckinDate.innerText && selectedCheckoutYear == year && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc";   
+        }
+        
+        if (months.indexOf(months[month]) != months.indexOf(selectedCheckinMonth) 
+        &&  months.indexOf(months[month]) == months.indexOf(selectedCheckoutMonth)
+        &&  x < +selectedCheckoutDate.innerText && selectedCheckoutYear == year && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc";   
+        }
+        
+        if (months.indexOf(months[month]) > months.indexOf(selectedCheckinMonth)
+        &&  months.indexOf(months[month]) < months.indexOf(selectedCheckoutMonth)
+        &&  selectedCheckoutYear == year && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc";  
+        }
+
+        if (months.indexOf(selectedCheckinMonth) == months.indexOf(months[month])
+        &&  selectedCheckinYear != selectedCheckoutYear && x > +selectedCheckinDate.innerText && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc";
+        }
+        else if (months.indexOf(selectedCheckinMonth) < months.indexOf(months[month])
+             &&  selectedCheckinYear != selectedCheckoutYear && selectedCheckinYear == year)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc"; 
+        }
+
+        if (months.indexOf(selectedCheckoutMonth) == months.indexOf(months[month])
+        &&  selectedCheckinYear != selectedCheckoutYear && x < +selectedCheckoutDate.innerText && selectedCheckoutYear == nextYear)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc"; 
+        }
+        else if (months.indexOf(selectedCheckoutMonth) > months.indexOf(months[month])
+             &&  selectedCheckinYear != selectedCheckoutYear && selectedCheckoutYear == nextYear)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc"; 
+        }
+
+        if (year < selectedCheckoutYear && year > selectedCheckinYear || nextYear < selectedCheckoutYear && nextYear > selectedCheckinYear)
+        {
+            td.style.background = "#dcdcdc";
+            div.style.borderColor = "#dcdcdc"; 
+        }
     }
 }
 
