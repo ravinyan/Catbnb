@@ -128,7 +128,7 @@ div.form_container2 {
 }
 
 div.label_box {
-    padding: 11px 22px;
+    padding: 10px 16px;
     font-size: 14px;
     border-radius: 50px;
 }
@@ -140,6 +140,7 @@ input.input {
     text-overflow: ellipsis;
     background: none !important;
     font-weight: 600;
+    font-size: 12px;
 }
 
 div.who_container {
@@ -389,6 +390,17 @@ button.resetDatesForm {
     left: 88px;
     display: none;
 }
+
+button.PM {
+    border-radius: 50px;
+    background-color: white;
+    padding: 6px 10px;
+    border: 1px solid #d1d1d1;
+}
+
+    button.PM:hover {
+        border-color: black;
+    }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
