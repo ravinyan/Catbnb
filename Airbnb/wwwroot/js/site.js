@@ -1813,15 +1813,44 @@ calendarPM14Button.onclick = function(e)
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
+---------------------------------------------CIRCLE OF DEATH AND SUFFERING--------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+//  for refference coz i have NO CLUE how to approach this
+//  https://dev.to/mzusin/how-to-drag-a-shape-along-an-svg-ellipse-path-a-step-by-step-guide-3b66
+//  https://www.w3schools.com/HOWTO/howto_js_draggable.asp
+//  https://www.w3schools.com/graphics/svg_circle.asp
+//  https://www.w3schools.com/graphics/svg_path.asp
+
+//test for {} colours coz i learned how to change text colors in text editor and now my comments are lime green instead of boring green
+
+if ("banana")
+{
+    if ("on")
+    {
+        if ("pizza")
+        {
+            // hi
+        }
+    }
+}
+
+/*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 const datesButton = document.getElementById("DatesButton");
 const monthsButton = document.getElementById("MonthsButton");
 const flexibleButton = document.getElementById("FlexibleButton");
+const datesBlock = document.getElementById("DatesBlock");
+const monthsBlock = document.getElementById("MonthsBlock");
+const flexibleBlock = document.getElementById("FlexibleBlock");
+
 
 datesButton.onclick = function()
 {
     datesButton.style.backgroundColor = "white";
+    datesBlock.style.display = "block";
+    monthsBlock.style.display = "none";
+    flexibleBlock.style.display = "none";
 
     monthsButton.style.backgroundColor = "";
     flexibleButton.style.backgroundColor = "";
@@ -1830,6 +1859,9 @@ datesButton.onclick = function()
 monthsButton.onclick = function()
 {
     monthsButton.style.backgroundColor = "white";
+    datesBlock.style.display = "none";
+    monthsBlock.style.display = "block";
+    flexibleBlock.style.display = "none";
 
     datesButton.style.backgroundColor = "";
     flexibleButton.style.backgroundColor = "";
@@ -1838,6 +1870,9 @@ monthsButton.onclick = function()
 flexibleButton.onclick = function()
 {
     flexibleButton.style.backgroundColor = "white";
+    datesBlock.style.display = "none";
+    monthsBlock.style.display = "none";
+    flexibleBlock.style.display = "block";
 
     datesButton.style.backgroundColor = "";
     monthsButton.style.backgroundColor = "";

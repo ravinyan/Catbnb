@@ -182,65 +182,88 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="shadowe" style="width: 100%; height: 0px">
-                                                    <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
-                                                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                        </svg>
-                                                    </button>
-                                                    <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
-                                                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                                                        </svg>
-                                                    </button>
+                                                <div id="DatesBlock" style="display: none">
+                                                    <div class="shadowe" style="width: 100%; height: 0px">
+                                                        <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
+                                                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                            </svg>
+                                                        </button>
+                                                        <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
+                                                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="calendars">
+                                                        <div id="Calendar" style="max-width: 375px; padding: 10px">
+                                                            <ul class="days_list">
+                                                                @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                                <li class="box">Mon</li>
+                                                                <li class="box">Tue</li>
+                                                                <li class="box">Wed</li>
+                                                                <li class="box">Thu</li>
+                                                                <li class="box">Fri</li>
+                                                                <li class="box">Sat</li>
+                                                                <li class="box">Sun</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="Calendar2" style="max-width: 375px; padding: 10px">
+                                                            <ul class="days_list">
+                                                                @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                                <li class="box">Mon</li>
+                                                                <li class="box">Tue</li>
+                                                                <li class="box">Wed</li>
+                                                                <li class="box">Thu</li>
+                                                                <li class="box">Fri</li>
+                                                                <li class="box">Sat</li>
+                                                                <li class="box">Sun</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
+                                                            <button id="CalendarExactDatesButton" type="button" class="PM">
+                                                                Exact dates
+                                                            </button>
+                                                            <button id="CalendarPM1Button" type="button" class="PM">
+                                                                ± 1 day
+                                                            </button>
+                                                            <button id="CalendarPM2Button" type="button" class="PM">
+                                                                ± 2 days
+                                                            </button>
+                                                            <button id="CalendarPM3Button" type="button" class="PM">
+                                                                ± 3 days
+                                                            </button>
+                                                            <button id="CalendarPM7Button" type="button" class="PM">
+                                                                ± 7 days
+                                                            </button>
+                                                            <button id="CalendarPM14Button" type="button" class="PM">
+                                                                ± 14 days
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="calendars">
-                                                    <div id="Calendar" style="max-width: 375px; padding: 10px">
-                                                        <ul class="days_list">
-                                                            @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                            <li class="box">Mon</li>
-                                                            <li class="box">Tue</li>
-                                                            <li class="box">Wed</li>
-                                                            <li class="box">Thu</li>
-                                                            <li class="box">Fri</li>
-                                                            <li class="box">Sat</li>
-                                                            <li class="box">Sun</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div id="Calendar2" style="max-width: 375px; padding: 10px">
-                                                        <ul class="days_list">
-                                                            @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                            <li class="box">Mon</li>
-                                                            <li class="box">Tue</li>
-                                                            <li class="box">Wed</li>
-                                                            <li class="box">Thu</li>
-                                                            <li class="box">Fri</li>
-                                                            <li class="box">Sat</li>
-                                                            <li class="box">Sun</li>
-                                                        </ul>
+                                                <div id="MonthsBlock" style="display: block">
+                                                    <div style=" ">
+                                                        <div class="months_block_header">
+                                                            When's your trip?
+                                                        </div>
+                                                        <div class="months_block_BigScaryCircle"> 
+                                                            <svg height="350" width="350" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle r="145" cx="50%" cy="50%" fill="none" stroke="red" stroke-width="5" opacity="0.5"></circle>
+                                                                @*there is grab and grabbing that i need pretty intuitive but i know i will forget that
+                                                                  when i type fast i can see that my new green comment colour changes from white to lime green lol*@
+                                                                <circle r="30" cx="317" cy="50%" fill="cyan" cursor="grab"></circle>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="months_block_footer">
+                                                            dates
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
-                                                        <button id="CalendarExactDatesButton" type="button" class="PM">
-                                                            Exact dates
-                                                        </button>
-                                                        <button id="CalendarPM1Button" type="button" class="PM">
-                                                            ± 1 day
-                                                        </button>
-                                                        <button id="CalendarPM2Button" type="button" class="PM">
-                                                            ± 2 days
-                                                        </button>
-                                                        <button id="CalendarPM3Button" type="button" class="PM">
-                                                            ± 3 days
-                                                        </button>
-                                                        <button id="CalendarPM7Button" type="button" class="PM">
-                                                            ± 7 days
-                                                        </button>
-                                                        <button id="CalendarPM14Button" type="button" class="PM">
-                                                            ± 14 days
-                                                        </button>
-                                                    </div>
+                                                <div id="FlexibleBlock" style="display: none">
+                                                    quack
                                                 </div>
                                             </div>
                                         </div>
