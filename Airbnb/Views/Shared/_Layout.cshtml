@@ -182,6 +182,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @* dates block *@
                                                 <div id="DatesBlock" style="display: none">
                                                     <div class="shadowe" style="width: 100%; height: 0px">
                                                         <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
@@ -244,17 +245,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @* months block *@
                                                 <div id="MonthsBlock" style="display: block">
                                                     <div style=" ">
-                                                        <div class="months_block_header">
-                                                            When's your trip?
+                                                        <div id="XYTEST" class="months_block_header">
+                                                            When's your trip? 
                                                         </div>
                                                         <div class="months_block_BigScaryCircle"> 
-                                                            <svg height="350" width="350" xmlns="http://www.w3.org/2000/svg">
+                                                            <svg id="MonthsCircleSVG" height="350" width="350" xmlns="http://www.w3.org/2000/svg">
                                                                 <circle r="145" cx="50%" cy="50%" fill="none" stroke="red" stroke-width="5" opacity="0.5"></circle>
-                                                                @*there is grab and grabbing that i need pretty intuitive but i know i will forget that
-                                                                  when i type fast i can see that my new green comment colour changes from white to lime green lol*@
-                                                                <circle r="30" cx="317" cy="50%" fill="cyan" cursor="grab"></circle>
+                                                                <circle id="DraggableCircle" r="30" cx="317" cy="50%" fill="cyan" cursor="grab"></circle>
                                                             </svg>
                                                         </div>
                                                         <div class="months_block_footer">
@@ -262,6 +262,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @* flexible block *@
                                                 <div id="FlexibleBlock" style="display: none">
                                                     quack
                                                 </div>

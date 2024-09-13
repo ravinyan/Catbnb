@@ -1820,19 +1820,61 @@ calendarPM14Button.onclick = function(e)
 //  https://www.w3schools.com/HOWTO/howto_js_draggable.asp
 //  https://www.w3schools.com/graphics/svg_circle.asp
 //  https://www.w3schools.com/graphics/svg_path.asp
+//    ^Y
+//    |    
+//    ----> X
+//  WARNING!!! WARNING!!! I HAVE NO CLUE WHAT IM DOING I HAVE LITERALLY 0 CLUE THIS IS WIZARD MAGIC TO ME
+//  this will take long time coz i want to slowly learn everything to have perfect understanding of this in the future
+const draggableCircle = document.getElementById("DraggableCircle");
+const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
+const XYTEST = document.getElementById("XYTEST");
 
-//test for {} colours coz i learned how to change text colors in text editor and now my comments are lime green instead of boring green
-
-if ("banana")
+function dragCircleCSS()
 {
-    if ("on")
+    draggableCircle.onmouseup = function()
     {
-        if ("pizza")
-        {
-            // hi
-        }
+        draggableCircle.style.cursor = "grab";
+    }
+
+    draggableCircle.onmousedown = function()
+    {
+        draggableCircle.style.cursor = "grabbing";
+        document.body.style.cursor = "grabbing";
+        document.body.style.userSelect = "none";
+    }
+
+    document.body.onmouseup = function()
+    {
+        document.body.style.cursor = "default";
+        draggableCircle.style.cursor = "grab";
     }
 }
+
+console.log(draggableCircle.cx);
+console.log(draggableCircle.cy)
+function moveCircle()
+{
+    monthsCircleSVG.onmousemove = function(e)
+    {
+        e.preventDefault();
+        if (document.body.style.cursor == "grabbing")
+        {
+            console.log(e.target);
+            console.log(e.offsetY);
+            console.log(e.offsetX);
+            var posY = e.offsetY;
+            var posX = e.offsetX;
+            XYTEST.innerText = `shit: `;
+            XYTEST.innerText += ` Y: ${posY} ||| X: ${posX}`;
+
+            draggableCircle.style.cx = `${posX}`;
+            draggableCircle.style.cy = `${posY}`;
+        }
+    }   
+}
+
+moveCircle();
+dragCircleCSS();
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
@@ -1843,7 +1885,6 @@ const flexibleButton = document.getElementById("FlexibleButton");
 const datesBlock = document.getElementById("DatesBlock");
 const monthsBlock = document.getElementById("MonthsBlock");
 const flexibleBlock = document.getElementById("FlexibleBlock");
-
 
 datesButton.onclick = function()
 {
