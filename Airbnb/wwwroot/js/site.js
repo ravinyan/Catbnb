@@ -1827,6 +1827,7 @@ calendarPM14Button.onclick = function(e)
 //  this will take long time coz i want to slowly learn everything to have perfect understanding of this in the future
 const draggableCircle = document.getElementById("DraggableCircle");
 const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
+const monthsCircle = document.getElementById("MonthsCircle");
 const XYTEST = document.getElementById("XYTEST");
 
 function dragCircleCSS()
@@ -1850,8 +1851,6 @@ function dragCircleCSS()
     }
 }
 
-console.log(draggableCircle.cx);
-console.log(draggableCircle.cy)
 function moveCircle()
 {
     monthsCircleSVG.onmousemove = function(e)
@@ -1859,16 +1858,36 @@ function moveCircle()
         e.preventDefault();
         if (document.body.style.cursor == "grabbing")
         {
-            console.log(e.target);
-            console.log(e.offsetY);
-            console.log(e.offsetX);
             var posY = e.offsetY;
             var posX = e.offsetX;
+            var centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
+            var centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
+            var monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
+            var draggableCircleRadius = draggableCircle.getBoundingClientRect().width / 2;
+            var absoluteSVGTop = monthsCircle.getBoundingClientRect().top;
+            var absoluteSVGLeft = monthsCircle.getBoundingClientRect().left;
+
+            var relativeMouseX = posX - (absoluteSVGLeft - centreSVGLeft);
+            var relativeMouseY = posY - (absoluteSVGTop - centreSVGTop);
+            
+            var angle = Math.atan2(relativeMouseY / monthsCircleRadius, relativeMouseX / monthsCircleRadius);
+
+            var newX = centreSVGLeft + Math.cos(angle) * monthsCircleRadius;
+            var newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
+
+
+            console.log(relativeMouseX);
+            console.log(relativeMouseY)
+
+            draggableCircle.style.cx = `${newX}`;
+            draggableCircle.style.cy = `${newY}`;
+
+
             XYTEST.innerText = `shit: `;
             XYTEST.innerText += ` Y: ${posY} ||| X: ${posX}`;
-
-            draggableCircle.style.cx = `${posX}`;
-            draggableCircle.style.cy = `${posY}`;
+            //XYTEST.innerText += ` C: ${circ}`;
+            //draggableCircle.style.cx = `${posX}`;
+            //draggableCircle.style.cy = `${posY}`;
         }
     }   
 }
