@@ -1853,41 +1853,32 @@ function dragCircleCSS()
 
 function moveCircle()
 {
-    monthsCircleSVG.onmousemove = function(e)
+    document.onmousemove = function(e)
     {
-        e.preventDefault();
+        //e.preventDefault();
         if (document.body.style.cursor == "grabbing")
         {
-            var posY = e.offsetY;
-            var posX = e.offsetX;
-            var centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
-            var centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
-            var monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
-            var draggableCircleRadius = draggableCircle.getBoundingClientRect().width / 2;
-            var absoluteSVGTop = monthsCircle.getBoundingClientRect().top;
-            var absoluteSVGLeft = monthsCircle.getBoundingClientRect().left;
+            let posY = e.clientY;
+            let posX = e.clientX;
+            let rect = e.target.getBoundingClientRect();
+            const centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
+            const centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
+            const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
+            const absoluteTop = monthsCircle.getBoundingClientRect().top;
+            const absoluteLeft = monthsCircle.getBoundingClientRect().left;
 
-            var relativeMouseX = posX - (absoluteSVGLeft - centreSVGLeft);
-            var relativeMouseY = posY - (absoluteSVGTop - centreSVGTop);
-            
-            var angle = Math.atan2(relativeMouseY / monthsCircleRadius, relativeMouseX / monthsCircleRadius);
+            let relativeMouseY = (posY - absoluteTop - monthsCircleRadius);
+            let relativeMouseX = (posX - absoluteLeft - monthsCircleRadius);
 
-            var newX = centreSVGLeft + Math.cos(angle) * monthsCircleRadius;
-            var newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
+            let angle = Math.atan2(relativeMouseY / monthsCircleRadius, relativeMouseX / monthsCircleRadius);
+            let newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
+            let newX = centreSVGLeft + Math.cos(angle) * monthsCircleRadius;
 
-
-            console.log(relativeMouseX);
-            console.log(relativeMouseY)
-
-            draggableCircle.style.cx = `${newX}`;
             draggableCircle.style.cy = `${newY}`;
-
+            draggableCircle.style.cx = `${newX}`;
 
             XYTEST.innerText = `shit: `;
             XYTEST.innerText += ` Y: ${posY} ||| X: ${posX}`;
-            //XYTEST.innerText += ` C: ${circ}`;
-            //draggableCircle.style.cx = `${posX}`;
-            //draggableCircle.style.cy = `${posY}`;
         }
     }   
 }
