@@ -579,6 +579,8 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
 --------(this was very fun challenge but holy shit its finally complete 1k+ lines of code for stupid calendar)--------*/
+
+//  IT HAS MORE BUGS WILL DO THEM LATER IM FIGHTING WITH MATH
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 
@@ -1854,13 +1856,14 @@ function dragCircleCSS()
 function moveCircle()
 {
     document.onmousemove = function(e)
-    {
+    {let y = e.offsetY;
+            let x = e.offsetX;
         //e.preventDefault();
         if (document.body.style.cursor == "grabbing")
         {
+            
             let posY = e.clientY;
             let posX = e.clientX;
-            let rect = e.target.getBoundingClientRect();
             const centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
             const centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
             const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
@@ -1877,9 +1880,15 @@ function moveCircle()
             draggableCircle.style.cy = `${newY}`;
             draggableCircle.style.cx = `${newX}`;
 
-            XYTEST.innerText = `shit: `;
-            XYTEST.innerText += ` Y: ${posY} ||| X: ${posX}`;
+            var A1 = 175 + (145 * Math.cos(240 * Math.PI / 180))
+            var A2 = 175 + (145 * Math.sin(240 * Math.PI / 180))
+
+            console.log("X: " + A1)
+            console.log("Y: " + A2)
         }
+        
+        XYTEST.innerText = `shit: `;
+        XYTEST.innerText += ` Y: ${x} ||| X: ${y}`;
     }   
 }
 
