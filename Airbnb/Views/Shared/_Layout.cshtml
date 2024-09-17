@@ -247,35 +247,48 @@
                                                 </div>
                                                 @* months block *@
                                                 <div id="MonthsBlock" style="display: block">
-                                                    <div style=" ">
-                                                        <div id="XYTEST" class="months_block_header">
+                                                    <div>
+                                                        <div class="months_block_header">
                                                             When's your trip? 
                                                         </div>
-                                                        <div class="months_block_BigScaryCircle"> 
-                                                            <svg id="MonthsCircleSVG" style="height: 350px; width: 350px" xmlns="http://www.w3.org/2000/svg">
-                                                                <svg height="350" width="350" xmlns="http://www.w3.org/2000/svg">
-                                                                    @*why its so hard*@
-                                                                    <path d="M175 175 L320 175 Z" style="fill:none;stroke:red;stroke-width:3" />
-                                                                    <path d="M175 175 L300.5736 247.5 Z" style="fill:none;stroke:purple;stroke-width:3" />
-                                                                    <path d="M175 175 L247.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:3" />
-
-                                                                    <path d="M175 175 L175 320 Z" style="fill:none;stroke: blue;stroke-width:3" />
-                                                                    <path d="M175 175 L102.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:3" />
-                                                                    <path d="M175 175 L49.4263 247.5 Z" style="fill:none;stroke:purple;stroke-width:3" />
-
-                                                                    <path d="M175 175 L30 175 Z" style="fill:none;stroke:green;stroke-width:3" />
-                                                                    <path d="M175 175 L49.4263 102.5 Z" style="fill:none;stroke:purple;stroke-width:3" />
-                                                                    <path d="M175 175 L102.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:3" />
-                                                                    
-                                                                    <path d="M175 175 L175 30 Z" style="fill:none;stroke:yellow;stroke-width:3" />
-                                                                    <path d="M175 175 L247.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:3" />
-                                                                    <path d="M175 175 L300.5736 102.5 Z" style="fill:none;stroke:purple;stroke-width:3" />
+                                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                                            <div class="months_block_BigScaryCircle">
+                                                                <div id="MonthsNumber" style="font-size: 50px; display: flex; justify-content: center; align-items: center; text-align: center; top: 100px; left: 100px; max-width: 150px; min-width: 150px; position: absolute">
+                                                                    3 Months
+                                                                </div>
+                                                                <div id="MonthsDot1" style="left: 232.5px; top: 34.4263px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot2" style="left: 285.5736px; top: 87.5px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot3" style="left: 305px; top: 160px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot4" style="left: 285.5736px; top: 232.5px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot5" style="left: 232.5px; top: 285.5736px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot6" style="left: 160px; top: 305px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot7" style="left: 87.5px; top: 285.5736px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot8" style="left: 34.4263px; top: 232.5px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot9" style="left: 15px; top: 160px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot10" style="left: 34.4263px; top: 87.5px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot11" style="left: 87.5px; top: 34.4263px" class="months_circle_dot">O</div>
+                                                                <div id="MonthsDot12" style="left: 160px; top: 15px" class="months_circle_dot">O</div>
+                                                                <svg id="MonthsCircleSVG" style="height: 350px; width: 350px;" xmlns="http://www.w3.org/2000/svg">
+                                                                    @*  <svg height="350" width="350" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M175 175 L320 175 Z" style="fill:none;stroke:red;stroke-width:1" />
+                                                                        <path d="M175 175 L300.5736 247.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L247.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L175 320 Z" style="fill:none;stroke: blue;stroke-width:1" />
+                                                                        <path d="M175 175 L102.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L49.4263 247.5 Z" style="fill:none;stroke:purple;stroke-width:1" />                                                            
+                                                                        <path d="M175 175 L30 175 Z" style="fill:none;stroke:green;stroke-width:1" />
+                                                                        <path d="M175 175 L49.4263 102.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L102.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L175 30 Z" style="fill:none;stroke:yellow;stroke-width:1" />                                  
+                                                                        <path d="M175 175 L247.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                        <path d="M175 175 L300.5736 102.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
+                                                                    </svg> *@
+                                                                    <circle id="MonthsCircle" r="145" cx="50%" cy="50%" fill="none"></circle>
+                                                                    <circle id="DraggableCircle" r="30" cx="320" cy="50%" fill="cyan" cursor="grab"></circle>
                                                                 </svg>
-                                                                <circle id="MonthsCircle" r="145" cx="50%" cy="50%" fill="none" stroke="black" stroke-width="5" opacity="0.5"></circle>
-                                                                <circle id="DraggableCircle" r="30" cx="320" cy="50%" fill="cyan" cursor="grab"></circle>
-                                                            </svg>
+                                                            </div>
                                                         </div>
-                                                        <div class="months_block_footer">
+                                                        <div id="DatesChosen" class="months_block_footer">
                                                             dates
                                                         </div>
                                                     </div>

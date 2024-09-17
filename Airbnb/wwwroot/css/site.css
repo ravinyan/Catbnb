@@ -412,15 +412,26 @@ div.months_block_header {
 }
 
 div.months_block_BigScaryCircle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 350px;
+    height: 350px;
+    position: relative;
 }
 
 div.months_block_footer {
     display: flex;
     justify-content: center;
     margin-block-start: 20px;
+}
+
+div.months_circle_dot {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    z-index: -1;
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */

@@ -580,7 +580,7 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
 --------(this was very fun challenge but holy shit its finally complete 1k+ lines of code for stupid calendar)--------*/
 
-//  IT HAS MORE BUGS WILL DO THEM LATER IM FIGHTING WITH MATH
+//  IT HAS MORE BUGS WILL DO THEM LATER IM FIGHTING WITH MATH (shadow bug when years selected is 2024 and >2024)
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 
@@ -1830,7 +1830,8 @@ calendarPM14Button.onclick = function(e)
 const draggableCircle = document.getElementById("DraggableCircle");
 const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
 const monthsCircle = document.getElementById("MonthsCircle");
-const XYTEST = document.getElementById("XYTEST");
+const monthNumber = document.getElementById("MonthsNumber");
+const datesChosen = document.getElementById("DatesChosen");
 
 function dragCircleCSS()
 {
@@ -1856,22 +1857,19 @@ function dragCircleCSS()
 function moveCircle()
 {
     document.onmousemove = function(e)
-    {let y = e.offsetY;
-            let x = e.offsetX;
-        //e.preventDefault();
+    {
         if (document.body.style.cursor == "grabbing")
         {
-            
             let posY = e.clientY;
             let posX = e.clientX;
             const centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
             const centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
-            const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
             const absoluteTop = monthsCircle.getBoundingClientRect().top;
             const absoluteLeft = monthsCircle.getBoundingClientRect().left;
+            const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
 
-            let relativeMouseY = (posY - absoluteTop - monthsCircleRadius);
-            let relativeMouseX = (posX - absoluteLeft - monthsCircleRadius);
+            let relativeMouseY = posY - absoluteTop - monthsCircleRadius;
+            let relativeMouseX = posX - absoluteLeft - monthsCircleRadius;
 
             let angle = Math.atan2(relativeMouseY / monthsCircleRadius, relativeMouseX / monthsCircleRadius);
             let newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
@@ -1879,16 +1877,61 @@ function moveCircle()
 
             draggableCircle.style.cy = `${newY}`;
             draggableCircle.style.cx = `${newX}`;
+            
+            let degrees = angle * (180/Math.PI);
 
-            var A1 = 175 + (145 * Math.cos(240 * Math.PI / 180))
-            var A2 = 175 + (145 * Math.sin(240 * Math.PI / 180))
-
-            console.log("X: " + A1)
-            console.log("Y: " + A2)
+            switch (true)
+            {
+                case degrees > -75 && degrees < -45:
+                    monthNumber.innerText = "1 Month";
+                    datesChosen.innerText = months[0] + " " + new Date(year, 0, 1).getDate() + " - " + months[0] + " " + new Date(year, 0, 0).getDate();
+                    break;
+                case degrees > -45 && degrees < -15:
+                    monthNumber.innerText = "2 Months";
+                    datesChosen.innerText = months[1] + " " + new Date(year, 1, 1).getDate() + " - " + months[1] + " " + new Date(year, 1, 0).getDate();
+                    break;
+                case degrees > -15 && degrees < 15:
+                    monthNumber.innerText = "3 Months";
+                    datesChosen.innerText = months[2] + " " + new Date(year, 2, 1).getDate() + " - " + months[2] + " " + new Date(year, 2, 0).getDate();
+                    break;
+                case degrees > 15 && degrees < 45:
+                    monthNumber.innerText = "4 Months";
+                    datesChosen.innerText = months[3] + " " + new Date(year, 3, 1).getDate() + " - " + months[3] + " " + new Date(year, 3, 0).getDate();
+                    break;
+                case degrees > 45 && degrees < 75:
+                    monthNumber.innerText = "5 Months";
+                    datesChosen.innerText = months[4] + " " + new Date(year, 4, 1).getDate() + " - " + months[4] + " " + new Date(year, 4, 0).getDate();
+                    break;
+                case degrees > 75 && degrees < 105:
+                    monthNumber.innerText = "6 Months";
+                    datesChosen.innerText = months[5] + " " + new Date(year, 5, 1).getDate() + " - " + months[5] + " " + new Date(year, 5, 0).getDate();
+                    break;
+                case degrees > 105 && degrees < 135:
+                    monthNumber.innerText = "7 Months";
+                    datesChosen.innerText = months[6] + " " + new Date(year, 6, 1).getDate() + " - " + months[6] + " " + new Date(year, 6, 0).getDate();
+                    break;
+                case degrees > 135 && degrees < 165:
+                    monthNumber.innerText = "8 Months";
+                    datesChosen.innerText = months[7] + " " + new Date(year, 7, 1).getDate() + " - " + months[7] + " " + new Date(year, 7, 0).getDate();
+                    break;
+                case degrees < -165 || degrees > 165:
+                    monthNumber.innerText = "9 Months";
+                    datesChosen.innerText = months[8] + " " + new Date(year, 8, 1).getDate() + " - " + months[8] + " " + new Date(year, 8, 0).getDate();
+                    break;
+                case degrees > -165 && degrees < -135:
+                    monthNumber.innerText = "10 Months";
+                    datesChosen.innerText = months[9] + " " + new Date(year, 9, 1).getDate() + " - " + months[9] + " " + new Date(year, 9, 0).getDate();
+                    break;
+                case degrees > -135 && degrees < -105:
+                    monthNumber.innerText = "11 Months";
+                    datesChosen.innerText = months[10] + " " + new Date(year, 10, 1).getDate() + " - " + months[10] + " " + new Date(year, 10, 0).getDate();
+                    break;
+                case degrees > -105 && degrees < -75:
+                    monthNumber.innerText = "12 Months";
+                    datesChosen.innerText = months[11] + " " + new Date(year, 11, 1).getDate() + " - " + months[11] + " " + new Date(year, 11, 0).getDate();
+                    break;
+            }
         }
-        
-        XYTEST.innerText = `shit: `;
-        XYTEST.innerText += ` Y: ${x} ||| X: ${y}`;
     }   
 }
 
