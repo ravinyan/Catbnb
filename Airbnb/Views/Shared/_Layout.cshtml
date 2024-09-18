@@ -150,8 +150,19 @@
                                         </div>
                                     </div>
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
-                                    @* Check in/ Check out *@
-                                    <div style="width: 33.33%; display: flex; background: none">
+                                    @* WHEN *@
+                                    <div id="WhenFormMenu" style="width: 33.33%; display: flex; background: none; display: none">
+                                        <label class="shadowe w-100">
+                                            <div id="WhenButton" class="label_box">
+                                                <div class="fw-bold text-nowrap" style="background: none">
+                                                    When
+                                                </div>
+                                                <input id="WhenInput" class="border-0 input" type="search" placeholder="Anytime" value="" spellcheck="false" readonly />
+                                            </div>
+                                        </label>
+                                    </div>
+                                    @* CHECK IN/ CHECK OUT *@
+                                    <div id="CheckinFormMenu" style="width: 33.33%; display: flex; background: none;">
                                         <div style="width: 50%">
                                             <label class="shadowe w-100">
                                                 <div id="CheckinButton" class="label_box">
@@ -162,142 +173,6 @@
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
-                                            <div id="CheckinDropdown" class="shadow dropdown_window" style="width: 100%; left: 0px">
-                                                <div style="display: flex; justify-content: center">
-                                                    <div style="background-color: #dedede; justify-content: center; display: flex; border-radius: 50px; align-items: center">
-                                                        <div class="shadowe">
-                                                            <button id="DatesButton" type="button" class="btn" style="border-radius: 50px; margin: 5px; background-color: white">
-                                                                Dates
-                                                            </button>
-                                                        </div>
-                                                        <div class="shadowe">
-                                                            <button id="MonthsButton" type="button" class="btn" style="border-radius: 50px; margin-block-start: 5px; margin-block-end: 5px;">
-                                                                Months
-                                                            </button>
-                                                        </div>
-                                                        <div class="shadowe">
-                                                            <button id="FlexibleButton" type="button" class="btn" style="border-radius: 50px; margin: 5px;">
-                                                                Flexible
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @* dates block *@
-                                                <div id="DatesBlock" style="display: none">
-                                                    <div class="shadowe" style="width: 100%; height: 0px">
-                                                        <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
-                                                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                            </svg>
-                                                        </button>
-                                                        <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
-                                                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <div class="calendars">
-                                                        <div id="Calendar" style="max-width: 375px; padding: 10px">
-                                                            <ul class="days_list">
-                                                                @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                                <li class="box">Mon</li>
-                                                                <li class="box">Tue</li>
-                                                                <li class="box">Wed</li>
-                                                                <li class="box">Thu</li>
-                                                                <li class="box">Fri</li>
-                                                                <li class="box">Sat</li>
-                                                                <li class="box">Sun</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div id="Calendar2" style="max-width: 375px; padding: 10px">
-                                                            <ul class="days_list">
-                                                                @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                                <li class="box">Mon</li>
-                                                                <li class="box">Tue</li>
-                                                                <li class="box">Wed</li>
-                                                                <li class="box">Thu</li>
-                                                                <li class="box">Fri</li>
-                                                                <li class="box">Sat</li>
-                                                                <li class="box">Sun</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
-                                                            <button id="CalendarExactDatesButton" type="button" class="PM">
-                                                                Exact dates
-                                                            </button>
-                                                            <button id="CalendarPM1Button" type="button" class="PM">
-                                                                ± 1 day
-                                                            </button>
-                                                            <button id="CalendarPM2Button" type="button" class="PM">
-                                                                ± 2 days
-                                                            </button>
-                                                            <button id="CalendarPM3Button" type="button" class="PM">
-                                                                ± 3 days
-                                                            </button>
-                                                            <button id="CalendarPM7Button" type="button" class="PM">
-                                                                ± 7 days
-                                                            </button>
-                                                            <button id="CalendarPM14Button" type="button" class="PM">
-                                                                ± 14 days
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @* months block *@
-                                                <div id="MonthsBlock" style="display: block">
-                                                    <div>
-                                                        <div class="months_block_header">
-                                                            When's your trip? 
-                                                        </div>
-                                                        <div style="display: flex; justify-content: center; align-items: center;">
-                                                            <div class="months_block_BigScaryCircle">
-                                                                <div id="MonthsNumber" style="font-size: 50px; display: flex; justify-content: center; align-items: center; text-align: center; top: 100px; left: 100px; max-width: 150px; min-width: 150px; position: absolute">
-                                                                    3 Months
-                                                                </div>
-                                                                <div id="MonthsDot1" style="left: 232.5px; top: 34.4263px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot2" style="left: 285.5736px; top: 87.5px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot3" style="left: 305px; top: 160px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot4" style="left: 285.5736px; top: 232.5px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot5" style="left: 232.5px; top: 285.5736px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot6" style="left: 160px; top: 305px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot7" style="left: 87.5px; top: 285.5736px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot8" style="left: 34.4263px; top: 232.5px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot9" style="left: 15px; top: 160px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot10" style="left: 34.4263px; top: 87.5px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot11" style="left: 87.5px; top: 34.4263px" class="months_circle_dot">O</div>
-                                                                <div id="MonthsDot12" style="left: 160px; top: 15px" class="months_circle_dot">O</div>
-                                                                <svg id="MonthsCircleSVG" style="height: 350px; width: 350px;" xmlns="http://www.w3.org/2000/svg">
-                                                                    @*  <svg height="350" width="350" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M175 175 L320 175 Z" style="fill:none;stroke:red;stroke-width:1" />
-                                                                        <path d="M175 175 L300.5736 247.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L247.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L175 320 Z" style="fill:none;stroke: blue;stroke-width:1" />
-                                                                        <path d="M175 175 L102.5 300.5736 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L49.4263 247.5 Z" style="fill:none;stroke:purple;stroke-width:1" />                                                            
-                                                                        <path d="M175 175 L30 175 Z" style="fill:none;stroke:green;stroke-width:1" />
-                                                                        <path d="M175 175 L49.4263 102.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L102.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L175 30 Z" style="fill:none;stroke:yellow;stroke-width:1" />                                  
-                                                                        <path d="M175 175 L247.5 49.4263 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                        <path d="M175 175 L300.5736 102.5 Z" style="fill:none;stroke:purple;stroke-width:1" />
-                                                                    </svg> *@
-                                                                    <circle id="MonthsCircle" r="145" cx="50%" cy="50%" fill="none"></circle>
-                                                                    <circle id="DraggableCircle" r="30" cx="320" cy="50%" fill="cyan" cursor="grab"></circle>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                        <div id="DatesChosen" class="months_block_footer">
-                                                            dates
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @* flexible block *@
-                                                <div id="FlexibleBlock" style="display: none">
-                                                    quack
-                                                </div>
-                                            </div>
                                         </div>
                                         <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                         <div style="width: 50%; display: inline-block">
@@ -319,6 +194,130 @@
                                             </div>
                                             @* popup modal thingy *@                       
                                         </div>    
+                                    </div>
+                                    @* DATES DROPDOWN *@
+                                    <div id="CheckinDropdown" class="shadow dropdown_window" style="width: 100%; left: 0px">
+                                        <div style="display: flex; justify-content: center">
+                                            <div style="background-color: #dedede; justify-content: center; display: flex; border-radius: 50px; align-items: center">
+                                                <div class="shadowe">
+                                                    <button id="DatesButton" type="button" class="btn" style="border-radius: 50px; margin: 5px; background-color: white">
+                                                        Dates
+                                                    </button>
+                                                </div>
+                                                <div class="shadowe">
+                                                    <button id="MonthsButton" type="button" class="btn" style="border-radius: 50px; margin-block-start: 5px; margin-block-end: 5px;">
+                                                        Months
+                                                    </button>
+                                                </div>
+                                                <div class="shadowe">
+                                                    <button id="FlexibleButton" type="button" class="btn" style="border-radius: 50px; margin: 5px;">
+                                                        Flexible
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @* dates block *@
+                                        <div id="DatesBlock" style="display: block">
+                                            <div class="shadowe" style="width: 100%; height: 0px">
+                                                <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
+                                                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                    </svg>
+                                                </button>
+                                                <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
+                                                        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="calendars">
+                                                <div id="Calendar" style="max-width: 375px; padding: 10px">
+                                                    <ul class="days_list">
+                                                        @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                        <li class="box">Mon</li>
+                                                        <li class="box">Tue</li>
+                                                        <li class="box">Wed</li>
+                                                        <li class="box">Thu</li>
+                                                        <li class="box">Fri</li>
+                                                        <li class="box">Sat</li>
+                                                        <li class="box">Sun</li>
+                                                    </ul>
+                                                </div>
+                                                <div id="Calendar2" style="max-width: 375px; padding: 10px">
+                                                    <ul class="days_list">
+                                                        @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                        <li class="box">Mon</li>
+                                                        <li class="box">Tue</li>
+                                                        <li class="box">Wed</li>
+                                                        <li class="box">Thu</li>
+                                                        <li class="box">Fri</li>
+                                                        <li class="box">Sat</li>
+                                                        <li class="box">Sun</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
+                                                    <button id="CalendarExactDatesButton" type="button" class="PM">
+                                                        Exact dates
+                                                    </button>
+                                                    <button id="CalendarPM1Button" type="button" class="PM">
+                                                        ± 1 day
+                                                    </button>
+                                                    <button id="CalendarPM2Button" type="button" class="PM">
+                                                        ± 2 days
+                                                    </button>
+                                                    <button id="CalendarPM3Button" type="button" class="PM">
+                                                        ± 3 days
+                                                    </button>
+                                                    <button id="CalendarPM7Button" type="button" class="PM">
+                                                        ± 7 days
+                                                    </button>
+                                                    <button id="CalendarPM14Button" type="button" class="PM">
+                                                        ± 14 days
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @* months block *@
+                                        <div id="MonthsBlock" style="display: none">
+                                            <div>
+                                                <div class="months_block_header">
+                                                    When's your trip?
+                                                </div>
+                                                <div style="display: flex; justify-content: center; align-items: center;">
+                                                    <div class="months_block_BigScaryCircle">
+                                                        <div id="MonthsNumber" style="font-size: 50px; display: flex; justify-content: center; align-items: center; text-align: center; top: 100px; left: 100px; max-width: 150px; min-width: 150px; position: absolute">
+                                                            3 Months
+                                                        </div>
+                                                        <div id="MonthsDot1" style="left: 232.5px; top: 34.4263px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot2" style="left: 285.5736px; top: 87.5px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot3" style="left: 305px; top: 160px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot4" style="left: 285.5736px; top: 232.5px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot5" style="left: 232.5px; top: 285.5736px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot6" style="left: 160px; top: 305px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot7" style="left: 87.5px; top: 285.5736px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot8" style="left: 34.4263px; top: 232.5px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot9" style="left: 15px; top: 160px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot10" style="left: 34.4263px; top: 87.5px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot11" style="left: 87.5px; top: 34.4263px" class="months_circle_dot">O</div>
+                                                        <div id="MonthsDot12" style="left: 160px; top: 15px" class="months_circle_dot">O</div>
+                                                        @*click the circles to beat*@
+                                                        <svg id="MonthsCircleSVG" style="height: 350px; width: 350px;" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle id="MonthsCircle" r="145" cx="50%" cy="50%" fill="none"></circle>
+                                                            <circle id="DraggableCircle" r="30" cx="320" cy="50%" fill="cyan" cursor="grab"></circle>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div id="DatesChosen" class="months_block_footer" style="text-decoration: underline; font-weight: bold">
+                                                    dates
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @* flexible block *@
+                                        <div id="FlexibleBlock" style="display: none">
+                                            quack
+                                        </div>
                                     </div>
                                     @* WHO *@
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>

@@ -190,6 +190,8 @@ const datesDropdownExperiences =  document.getElementById("DatesDropdownExperien
 const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
+const whenButton = document.getElementById("WhenButton");
+
 const form = document.querySelector(".form_container");
 const formExperiences = document.querySelector(".form_container2");
 
@@ -206,8 +208,8 @@ function onClickButtonUnfocus(button)
     button.style.boxShadow = "";
 }
 
-//  i feel like it better to have 1 event listener with 8 if statements than 8 event listeners with 8 if statements total
-document.addEventListener('click', event => 
+//  i feel like it better to have 1 event listener with >8 if statements than 8 event listeners with 8 if statements total
+document.addEventListener('mousedown', event => 
 {
     //  WHERE
     if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target) && whereDropdown.style.display == "block") 
@@ -252,6 +254,18 @@ document.addEventListener('click', event =>
         }
 
         onClickButtonUnfocus(checkoutButton);
+    }
+    //  WHEN
+    else if (!datesDropdown.contains(event.target) && !whenButton.contains(event.target)
+         &&   datesDropdown.style.display == "block" && whenButton.style.backgroundColor == "white")
+    {
+        if (!form.contains(event.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        datesDropdown.style.display = "none";
+        onClickButtonUnfocus(whenButton);
     }
     //  WHO
     else if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target) && whoDropdown.style.display == "block") 
@@ -327,6 +341,7 @@ openWindow(whereButton, whereDropdown);
 openWindow(checkinButton, datesDropdown);
 openWindow(checkoutButton, datesDropdown);
 openWindow(whoButton, whoDropdown);
+openWindow(whenButton, datesDropdown);
 
 openWindow(whereButtonExperiences, whereDropdownExperiences);
 openWindow(datesButtonExperiences, datesDropdownExperiences);
@@ -1817,21 +1832,18 @@ calendarPM14Button.onclick = function(e)
 /*--------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------CIRCLE OF DEATH AND SUFFERING--------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-//  for refference coz i have NO CLUE how to approach this
-//  https://dev.to/mzusin/how-to-drag-a-shape-along-an-svg-ellipse-path-a-step-by-step-guide-3b66
-//  https://www.w3schools.com/HOWTO/howto_js_draggable.asp
-//  https://www.w3schools.com/graphics/svg_circle.asp
 //  https://www.w3schools.com/graphics/svg_path.asp
 //    ^Y
 //    |    
 //    ----> X
-//  WARNING!!! WARNING!!! I HAVE NO CLUE WHAT IM DOING I HAVE LITERALLY 0 CLUE THIS IS WIZARD MAGIC TO ME
-//  this will take long time coz i want to slowly learn everything to have perfect understanding of this in the future
+//  i have now the knowledge of x and y and circles and with this power i will do nothing coz everything is already more or less done
 const draggableCircle = document.getElementById("DraggableCircle");
 const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
 const monthsCircle = document.getElementById("MonthsCircle");
 const monthNumber = document.getElementById("MonthsNumber");
 const datesChosen = document.getElementById("DatesChosen");
+const whenInput = document.getElementById("WhenInput");
+var degrees = "";
 
 function dragCircleCSS()
 {
@@ -1847,10 +1859,63 @@ function dragCircleCSS()
         document.body.style.userSelect = "none";
     }
 
-    document.body.onmouseup = function()
+    document.onmouseup = function()
     {
         document.body.style.cursor = "default";
         draggableCircle.style.cursor = "grab";
+
+        //  snap to middle point of chosen month
+        switch (true)
+        {
+            case degrees > -75 && degrees < -45:
+                draggableCircle.style.cy = `49.4263px`;
+                draggableCircle.style.cx = `247.5px`;
+                break;
+            case degrees > -45 && degrees < -15:
+                draggableCircle.style.cy = `102.5px`;
+                draggableCircle.style.cx = `300.5736px`;
+                break;
+            case degrees > -15 && degrees < 15:
+                draggableCircle.style.cy = `175px`;
+                draggableCircle.style.cx = `320px`;
+                break;
+            case degrees > 15 && degrees < 45:
+                draggableCircle.style.cy = `247.5px`;
+                draggableCircle.style.cx = `300.5736px`;
+                break;
+            case degrees > 45 && degrees < 75:
+                draggableCircle.style.cy = `300.5736px`;
+                draggableCircle.style.cx = `247.5px`;
+                break;
+            case degrees > 75 && degrees < 105:
+                draggableCircle.style.cy = `320px`;
+                draggableCircle.style.cx = `175px`;
+                break;
+            case degrees > 105 && degrees < 135:
+                draggableCircle.style.cy = `300.5736px`;
+                draggableCircle.style.cx = `102.5px`;
+                break;
+            case degrees > 135 && degrees < 165:
+                draggableCircle.style.cy = `247.5px`;
+                draggableCircle.style.cx = `49.4263px`;
+                break;
+            case degrees < -165 || degrees > 165:
+                draggableCircle.style.cy = `175px`;
+                draggableCircle.style.cx = `30px`;
+                break;
+            case degrees > -165 && degrees < -135:
+                draggableCircle.style.cy = `102.5px`;
+                draggableCircle.style.cx = `49.4263px`;
+                break;
+            case degrees > -135 && degrees < -105:
+                draggableCircle.style.cy = `49.4263px`;
+                draggableCircle.style.cx = `102.5px`;
+                break;
+            case degrees > -105 && degrees < -75:
+                draggableCircle.style.cy = `30px`;
+                draggableCircle.style.cx = `175px`;
+                break;
+        }
     }
 }
 
@@ -1864,6 +1929,7 @@ function moveCircle()
             let posX = e.clientX;
             const centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
             const centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
+
             const absoluteTop = monthsCircle.getBoundingClientRect().top;
             const absoluteLeft = monthsCircle.getBoundingClientRect().left;
             const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
@@ -1874,21 +1940,31 @@ function moveCircle()
             let angle = Math.atan2(relativeMouseY / monthsCircleRadius, relativeMouseX / monthsCircleRadius);
             let newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
             let newX = centreSVGLeft + Math.cos(angle) * monthsCircleRadius;
-
-            draggableCircle.style.cy = `${newY}`;
-            draggableCircle.style.cx = `${newX}`;
-            
-            let degrees = angle * (180/Math.PI);
+           
+            //  if scrolled down while holding the circle it the circle will SOMETIMES go into middle and getBoundingClientRect() 
+            //  will give every varbiable value 0 since it wont exist in that scenario which will set circle to y amd x = 175
+            //  this is fix for that lol im good at finding bugs
+            if (absoluteLeft == 0)
+            {
+            }
+            else
+            {
+                draggableCircle.style.cy = `${newY}`;
+                draggableCircle.style.cx = `${newX}`;
+                degrees = angle * (180/Math.PI);
+            }
 
             switch (true)
             {
                 case degrees > -75 && degrees < -45:
                     monthNumber.innerText = "1 Month";
+                    //  all the innerText/values are for testing will change tomorrow
+                    whenInput.value = monthsAbbreviations[month] + " - " + monthsAbbreviations[month + 1];
                     datesChosen.innerText = months[0] + " " + new Date(year, 0, 1).getDate() + " - " + months[0] + " " + new Date(year, 0, 0).getDate();
                     break;
                 case degrees > -45 && degrees < -15:
                     monthNumber.innerText = "2 Months";
-                    datesChosen.innerText = months[1] + " " + new Date(year, 1, 1).getDate() + " - " + months[1] + " " + new Date(year, 1, 0).getDate();
+                    datesChosen.innerText = months[1] + " " + new Date(year, 1, 1).getDate() + " " + year + " - " + months[1] + " " + new Date(year, 1, 0).getDate() + " " + nextYear;
                     break;
                 case degrees > -15 && degrees < 15:
                     monthNumber.innerText = "3 Months";
@@ -1938,6 +2014,11 @@ function moveCircle()
 moveCircle();
 dragCircleCSS();
 
+datesChosen.onclick = function()
+{
+    //  will need to put dates block into its own modal... how fun
+}
+
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
@@ -1948,12 +2029,21 @@ const datesBlock = document.getElementById("DatesBlock");
 const monthsBlock = document.getElementById("MonthsBlock");
 const flexibleBlock = document.getElementById("FlexibleBlock");
 
+const checkinFormMenu = document.getElementById("CheckinFormMenu");
+const whenFormMenu = document.getElementById("WhenFormMenu");
+
 datesButton.onclick = function()
 {
     datesButton.style.backgroundColor = "white";
     datesBlock.style.display = "block";
     monthsBlock.style.display = "none";
     flexibleBlock.style.display = "none";
+
+    checkinFormMenu.style.display = "flex";
+    whenFormMenu.style.display = "none";
+    onClickButtonUnfocus(whenButton);
+    onClickButtonUnfocus(checkoutButton);
+    onClickButtonFocus(checkinButton);
 
     monthsButton.style.backgroundColor = "";
     flexibleButton.style.backgroundColor = "";
@@ -1966,6 +2056,10 @@ monthsButton.onclick = function()
     monthsBlock.style.display = "block";
     flexibleBlock.style.display = "none";
 
+    checkinFormMenu.style.display = "none";
+    whenFormMenu.style.display = "flex";
+    onClickButtonFocus(whenButton);
+
     datesButton.style.backgroundColor = "";
     flexibleButton.style.backgroundColor = "";
 }
@@ -1976,6 +2070,10 @@ flexibleButton.onclick = function()
     datesBlock.style.display = "none";
     monthsBlock.style.display = "none";
     flexibleBlock.style.display = "block";
+
+    checkinFormMenu.style.display = "none";
+    whenFormMenu.style.display = "flex";
+    onClickButtonFocus(whenButton);
 
     datesButton.style.backgroundColor = "";
     monthsButton.style.backgroundColor = "";
