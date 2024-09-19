@@ -1919,6 +1919,17 @@ function dragCircleCSS()
     }
 }
 
+for (i = 1; i < 20; i++)
+{
+    //  i fucking hate dates i fucking hate dates i FUCKING HATE DATES WHY THIS IS SO FUCKING DOGSHIT AND DOESNT WORK FOR FUCK SAKE
+    //  WHY IT CANT WORK CORRECTLY THIS IS SO USELESS
+    const date2 = new Date(year, month + 1, 0)
+    date2.setMonth(date2.getMonth() + i);
+    
+    console.log(date2)
+    console.log(date2.getMonth());
+}
+
 function moveCircle()
 {
     document.onmousemove = function(e)
@@ -1954,57 +1965,106 @@ function moveCircle()
                 degrees = angle * (180/Math.PI);
             }
 
+            const startDate = new Date(year, month, 1);
+            const endDate = new Date(year, month + 1, 0);
             switch (true)
             {
                 case degrees > -75 && degrees < -45:
                     monthNumber.innerText = "1 Month";
-                    //  all the innerText/values are for testing will change tomorrow
                     whenInput.value = monthsAbbreviations[month] + " - " + monthsAbbreviations[month + 1];
-                    datesChosen.innerText = months[0] + " " + new Date(year, 0, 1).getDate() + " - " + months[0] + " " + new Date(year, 0, 0).getDate();
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    startDate.setMonth(startDate.getMonth() + 1);
+                    endDate.setMonth(endDate.getMonth() + 1);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > -45 && degrees < -15:
                     monthNumber.innerText = "2 Months";
-                    datesChosen.innerText = months[1] + " " + new Date(year, 1, 1).getDate() + " " + year + " - " + months[1] + " " + new Date(year, 1, 0).getDate() + " " + nextYear;
+                    startDate.setMonth(startDate.getMonth() + 2);
+                    endDate.setMonth(endDate.getMonth() + 2);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > -15 && degrees < 15:
                     monthNumber.innerText = "3 Months";
-                    datesChosen.innerText = months[2] + " " + new Date(year, 2, 1).getDate() + " - " + months[2] + " " + new Date(year, 2, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 3);
+                    endDate.setMonth(endDate.getMonth() + 3);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > 15 && degrees < 45:
                     monthNumber.innerText = "4 Months";
-                    datesChosen.innerText = months[3] + " " + new Date(year, 3, 1).getDate() + " - " + months[3] + " " + new Date(year, 3, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 4);
+                    endDate.setMonth(endDate.getMonth() + 4);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > 45 && degrees < 75:
                     monthNumber.innerText = "5 Months";
-                    datesChosen.innerText = months[4] + " " + new Date(year, 4, 1).getDate() + " - " + months[4] + " " + new Date(year, 4, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 5);
+                    endDate.setMonth(endDate.getMonth() + 5);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > 75 && degrees < 105:
                     monthNumber.innerText = "6 Months";
-                    datesChosen.innerText = months[5] + " " + new Date(year, 5, 1).getDate() + " - " + months[5] + " " + new Date(year, 5, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 6);
+                    endDate.setMonth(endDate.getMonth() + 6);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > 105 && degrees < 135:
                     monthNumber.innerText = "7 Months";
-                    datesChosen.innerText = months[6] + " " + new Date(year, 6, 1).getDate() + " - " + months[6] + " " + new Date(year, 6, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 7);
+                    endDate.setMonth(endDate.getMonth() + 7);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > 135 && degrees < 165:
                     monthNumber.innerText = "8 Months";
-                    datesChosen.innerText = months[7] + " " + new Date(year, 7, 1).getDate() + " - " + months[7] + " " + new Date(year, 7, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 8);
+                    endDate.setMonth(endDate.getMonth() + 8);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees < -165 || degrees > 165:
                     monthNumber.innerText = "9 Months";
-                    datesChosen.innerText = months[8] + " " + new Date(year, 8, 1).getDate() + " - " + months[8] + " " + new Date(year, 8, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 9);
+                    endDate.setMonth(endDate.getMonth() + 9);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > -165 && degrees < -135:
                     monthNumber.innerText = "10 Months";
-                    datesChosen.innerText = months[9] + " " + new Date(year, 9, 1).getDate() + " - " + months[9] + " " + new Date(year, 9, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 10);
+                    endDate.setMonth(endDate.getMonth() + 10);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > -135 && degrees < -105:
                     monthNumber.innerText = "11 Months";
-                    datesChosen.innerText = months[10] + " " + new Date(year, 10, 1).getDate() + " - " + months[10] + " " + new Date(year, 10, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 11);
+                    endDate.setMonth(endDate.getMonth() + 11);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
                 case degrees > -105 && degrees < -75:
                     monthNumber.innerText = "12 Months";
-                    datesChosen.innerText = months[11] + " " + new Date(year, 11, 1).getDate() + " - " + months[11] + " " + new Date(year, 11, 0).getDate();
+                    startDate.setMonth(startDate.getMonth() + 12);
+                    endDate.setMonth(endDate.getMonth() + 12);
+                    startDate.setDate(1);
+                    endDate.setDate(0);
+                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
                     break;
             }
         }
