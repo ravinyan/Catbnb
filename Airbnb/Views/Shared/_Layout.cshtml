@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="~/Airbnb.styles.css" asp-append-version="true" />
 </head>
 <body>
+@*     <div>
+
+        <button id="ModalTest" type="button">
+            MODAL TEST
+        </button>
+    </div> *@
     <div style="position: sticky; top: 0px; width: 100%; height: 262px; z-index: 100">
         <header id="heder" class="border-bottom header">
             <div id="TopHeader" style="height: 161px; transition: 0.2s">
@@ -309,8 +315,18 @@
                                                         </svg>
                                                     </div>
                                                 </div>
-                                                <div id="DatesChosen" class="months_block_footer" style="text-decoration: underline; font-weight: bold">
-                                                    dates
+                                                <div class="months_block_footer">
+                                                    <div>
+                                                        <button id="WhenStartDate" type="button" class="when_buttons">
+                                                            a
+                                                        </button>
+                                                    </div>
+                                                    <div style="padding: 0 5px;">to</div>
+                                                    <div>
+                                                        <button id="WhenEndDate" type="button" class="when_buttons">
+                                                           
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -764,11 +780,7 @@
 
         @* grey bagraunde *@
         <div id="GreyBackground" style="left: 0px; right: 0px; top: 161px; bottom: 0px; height: 100vh; display: none; position: fixed; z-index: auto; background-color: gray; opacity: 0.2">
-        </div>
-
-
-        @*TESTING STUFF THIS SHIT MAKES MY HEAD HURTS I WANT TO EAT THIS CODE IM GOING INSANE*@
-        
+        </div> 
     </div> 
 
     <div>
@@ -791,6 +803,9 @@
             </div>
         </div>
     </div>
+
+    <div id="ModalBackground" class="modal_background"></div>
+    
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

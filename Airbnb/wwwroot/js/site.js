@@ -61,6 +61,7 @@ function headerScaling()
         onClickButtonUnfocus(checkinButton);
         onClickButtonUnfocus(checkoutButton);
         onClickButtonUnfocus(whoButton);
+        onClickButtonUnfocus(whenButton);
     }
     else 
     {
@@ -223,10 +224,15 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(whereButton);
     }
     //  CHECK IN
-    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target) 
+    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target)
          &&   datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white"
          &&   event.target != imstupidsvg && event.target != imstupidpath)
     {
+        if (event.target == modal || event.target == modalBackground)
+        {
+            return;
+        }
+
         if (!form.contains(event.target))
         {
             form.style.backgroundColor = "";
@@ -243,6 +249,11 @@ document.addEventListener('mousedown', event =>
     else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target)
          &&   datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
     {
+        if (event.target == modal || event.target == modalBackground)
+        {
+            return;
+        }
+
         if (!form.contains(event.target))
         {
             form.style.backgroundColor = "";
@@ -259,6 +270,11 @@ document.addEventListener('mousedown', event =>
     else if (!datesDropdown.contains(event.target) && !whenButton.contains(event.target)
          &&   datesDropdown.style.display == "block" && whenButton.style.backgroundColor == "white")
     {
+        if (event.target == modal || event.target == modalBackground)
+        {
+            return;
+        }
+
         if (!form.contains(event.target))
         {
             form.style.backgroundColor = "";
@@ -1841,9 +1857,24 @@ const draggableCircle = document.getElementById("DraggableCircle");
 const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
 const monthsCircle = document.getElementById("MonthsCircle");
 const monthNumber = document.getElementById("MonthsNumber");
-const datesChosen = document.getElementById("DatesChosen");
+const whenStartDate = document.getElementById("WhenStartDate");
+const whenEndDate = document.getElementById("WhenEndDate");
 const whenInput = document.getElementById("WhenInput");
 var degrees = "";
+
+function setWhenValues(startDate, endDate, month, number)
+{
+    monthNumber.innerText = month;
+    endDate.setMonth(endDate.getMonth() + number);
+    whenInput.value = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${currentYear} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
+    whenStartDate.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${startDate.getFullYear()}`;
+    whenEndDate.innerText = `${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
+}
+
+if (whenInput.value == "")
+{
+    setWhenValues(new Date(year, month + 1, 1), new Date(year, month + 1, 1), "3 Months", 3)
+}
 
 function dragCircleCSS()
 {
@@ -1919,17 +1950,6 @@ function dragCircleCSS()
     }
 }
 
-for (i = 1; i < 20; i++)
-{
-    //  i fucking hate dates i fucking hate dates i FUCKING HATE DATES WHY THIS IS SO FUCKING DOGSHIT AND DOESNT WORK FOR FUCK SAKE
-    //  WHY IT CANT WORK CORRECTLY THIS IS SO USELESS
-    const date2 = new Date(year, month + 1, 0)
-    date2.setMonth(date2.getMonth() + i);
-    
-    console.log(date2)
-    console.log(date2.getMonth());
-}
-
 function moveCircle()
 {
     document.onmousemove = function(e)
@@ -1952,9 +1972,6 @@ function moveCircle()
             let newY = centreSVGTop + Math.sin(angle) * monthsCircleRadius;
             let newX = centreSVGLeft + Math.cos(angle) * monthsCircleRadius;
            
-            //  if scrolled down while holding the circle it the circle will SOMETIMES go into middle and getBoundingClientRect() 
-            //  will give every varbiable value 0 since it wont exist in that scenario which will set circle to y amd x = 175
-            //  this is fix for that lol im good at finding bugs
             if (absoluteLeft == 0)
             {
             }
@@ -1965,106 +1982,46 @@ function moveCircle()
                 degrees = angle * (180/Math.PI);
             }
 
-            const startDate = new Date(year, month, 1);
-            const endDate = new Date(year, month + 1, 0);
+            const startDate = new Date(year, month + 1, 1);
+            const endDate = new Date(year, month + 1, 1);
+
             switch (true)
             {
                 case degrees > -75 && degrees < -45:
-                    monthNumber.innerText = "1 Month";
-                    whenInput.value = monthsAbbreviations[month] + " - " + monthsAbbreviations[month + 1];
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    startDate.setMonth(startDate.getMonth() + 1);
-                    endDate.setMonth(endDate.getMonth() + 1);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "1 Month", 1);
                     break;
                 case degrees > -45 && degrees < -15:
-                    monthNumber.innerText = "2 Months";
-                    startDate.setMonth(startDate.getMonth() + 2);
-                    endDate.setMonth(endDate.getMonth() + 2);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "2 Months", 2);
                     break;
                 case degrees > -15 && degrees < 15:
-                    monthNumber.innerText = "3 Months";
-                    startDate.setMonth(startDate.getMonth() + 3);
-                    endDate.setMonth(endDate.getMonth() + 3);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "3 Months", 3);
                     break;
                 case degrees > 15 && degrees < 45:
-                    monthNumber.innerText = "4 Months";
-                    startDate.setMonth(startDate.getMonth() + 4);
-                    endDate.setMonth(endDate.getMonth() + 4);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "4 Months", 4);
                     break;
                 case degrees > 45 && degrees < 75:
-                    monthNumber.innerText = "5 Months";
-                    startDate.setMonth(startDate.getMonth() + 5);
-                    endDate.setMonth(endDate.getMonth() + 5);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "5 Months", 5);
                     break;
                 case degrees > 75 && degrees < 105:
-                    monthNumber.innerText = "6 Months";
-                    startDate.setMonth(startDate.getMonth() + 6);
-                    endDate.setMonth(endDate.getMonth() + 6);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "6 Months", 6);
                     break;
                 case degrees > 105 && degrees < 135:
-                    monthNumber.innerText = "7 Months";
-                    startDate.setMonth(startDate.getMonth() + 7);
-                    endDate.setMonth(endDate.getMonth() + 7);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "7 Months", 7);
                     break;
                 case degrees > 135 && degrees < 165:
-                    monthNumber.innerText = "8 Months";
-                    startDate.setMonth(startDate.getMonth() + 8);
-                    endDate.setMonth(endDate.getMonth() + 8);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "8 Months", 8);
                     break;
                 case degrees < -165 || degrees > 165:
-                    monthNumber.innerText = "9 Months";
-                    startDate.setMonth(startDate.getMonth() + 9);
-                    endDate.setMonth(endDate.getMonth() + 9);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "9 Months", 9);
                     break;
                 case degrees > -165 && degrees < -135:
-                    monthNumber.innerText = "10 Months";
-                    startDate.setMonth(startDate.getMonth() + 10);
-                    endDate.setMonth(endDate.getMonth() + 10);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "10 Months", 10);
                     break;
                 case degrees > -135 && degrees < -105:
-                    monthNumber.innerText = "11 Months";
-                    startDate.setMonth(startDate.getMonth() + 11);
-                    endDate.setMonth(endDate.getMonth() + 11);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "11 Months", 11);
                     break;
                 case degrees > -105 && degrees < -75:
-                    monthNumber.innerText = "12 Months";
-                    startDate.setMonth(startDate.getMonth() + 12);
-                    endDate.setMonth(endDate.getMonth() + 12);
-                    startDate.setDate(1);
-                    endDate.setDate(0);
-                    datesChosen.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]}`;
+                    setWhenValues(startDate, endDate, "12 Months", 12);
                     break;
             }
         }
@@ -2074,9 +2031,24 @@ function moveCircle()
 moveCircle();
 dragCircleCSS();
 
-datesChosen.onclick = function()
+const modaltest = document.getElementById("ModalTest");
+const modal = document.getElementById("Modal");
+const modalBackground = document.getElementById("ModalBackground");
+
+whenStartDate.onclick = function()
 {
-    //  will need to put dates block into its own modal... how fun
+    modal.style.display = "block";
+    modalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
+}
+
+modalBackground.onclick = function()
+{
+    modalBackground.style.display = "none";
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
 }
 
 /*--------------------------------------------------------------------------------------------------------------------

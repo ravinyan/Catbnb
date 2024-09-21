@@ -421,6 +421,7 @@ div.months_block_footer {
     display: flex;
     justify-content: center;
     margin-block-start: 20px;
+    align-items: center;
 }
 
 div.months_circle_dot {
@@ -432,6 +433,76 @@ div.months_circle_dot {
     align-items: center;
     user-select: none;
     z-index: -1;
+}
+
+button.when_buttons {
+    text-decoration: underline;
+    font-weight: bold;
+    background: none;
+    border: none;
+}
+
+/* modal testing */
+
+div.modal_window {
+    display: none;
+    position: absolute;
+    width: 800px;
+    height: 400px;
+    left: calc(50% - 400px);
+    top: 100px;
+    background: white;
+    z-index: 1000;
+    animation: openModal 0.15s;
+    opacity: 1;
+}
+
+div.modal_background {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    z-index: 999;
+    background-color: black;
+    opacity: 0.4;
+    animation: fadeIn 0.15s;
+}
+
+/*this is cool wtf*/
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes openModal {
+    0% {
+        top: 50px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 100px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
