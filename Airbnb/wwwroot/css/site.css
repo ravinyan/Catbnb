@@ -448,13 +448,18 @@ div.modal_window {
     display: none;
     position: absolute;
     width: 800px;
-    height: 400px;
+    height: 450px;
     left: calc(50% - 400px);
-    top: 100px;
+    top: 70px;
     background: white;
     z-index: 1000;
-    animation: openModal 0.15s;
+    animation: openModal 0.2s;
     opacity: 1;
+    border-radius: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    max-height: calc(100vh - 130px);
 }
 
 div.modal_background {
@@ -469,7 +474,32 @@ div.modal_background {
     z-index: 999;
     background-color: black;
     opacity: 0.4;
-    animation: fadeIn 0.15s;
+    animation: fadeIn 0.2s;
+}
+
+div.modal_header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 15px;
+}
+
+div.modal_body {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+}
+
+div.modal_footer {
+    width: 100%;
+    height: 20%;
+    padding: 15px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 
 /*this is cool wtf*/
@@ -485,23 +515,13 @@ div.modal_background {
 
 @keyframes openModal {
     0% {
-        top: 50px;
+        top: 0px;
         opacity: 0;
     }
 
     100% {
-        top: 100px;
+        top: 70px;
         opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 0.4;
-    }
-
-    100% {
-        opacity: 0;
     }
 }
 

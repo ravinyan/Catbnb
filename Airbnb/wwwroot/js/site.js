@@ -210,12 +210,16 @@ function onClickButtonUnfocus(button)
 }
 
 //  i feel like it better to have 1 event listener with >8 if statements than 8 event listeners with 8 if statements total
-document.addEventListener('mousedown', event => 
+document.addEventListener('mousedown', function(e) 
 {
-    //  WHERE
-    if (!whereDropdown.contains(event.target) && !whereButton.contains(event.target) && whereDropdown.style.display == "block") 
+    if (e.target == imstupidsvg || e.target == imstupidpath || modalStartDate.style.display == "block" || modalEndDate.style.display == "block")
     {
-        if (!form.contains(event.target))
+        return;
+    }
+    //  WHERE
+    else if (!whereDropdown.contains(e.target) && !whereButton.contains(e.target) && whereDropdown.style.display == "block") 
+    {
+        if (!form.contains(e.target))
         {
             form.style.backgroundColor = "";
         }
@@ -224,21 +228,15 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(whereButton);
     }
     //  CHECK IN
-    else if (!datesDropdown.contains(event.target) && !checkinButton.contains(event.target)
-         &&   datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white"
-         &&   event.target != imstupidsvg && event.target != imstupidpath)
+    else if (!datesDropdown.contains(e.target) && !checkinButton.contains(e.target)
+         &&   datesDropdown.style.display == "block" && checkinButton.style.backgroundColor == "white")
     {
-        if (event.target == modal || event.target == modalBackground)
-        {
-            return;
-        }
-
-        if (!form.contains(event.target))
+        if (!form.contains(e.target))
         {
             form.style.backgroundColor = "";
         }
         
-        if (!checkoutButton.contains(event.target))
+        if (!checkoutButton.contains(e.target))
         {
             datesDropdown.style.display = "none";
         }
@@ -246,20 +244,15 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(checkinButton);
     }
     //  CHECK OUT
-    else if (!datesDropdown.contains(event.target) && !checkoutButton.contains(event.target)
+    else if (!datesDropdown.contains(e.target) && !checkoutButton.contains(e.target)
          &&   datesDropdown.style.display == "block" && checkoutButton.style.backgroundColor == "white")
     {
-        if (event.target == modal || event.target == modalBackground)
-        {
-            return;
-        }
-
-        if (!form.contains(event.target))
+        if (!form.contains(e.target))
         {
             form.style.backgroundColor = "";
         }
         
-        if (!checkinButton.contains(event.target))
+        if (!checkinButton.contains(e.target))
         {
             datesDropdown.style.display = "none";
         }
@@ -267,15 +260,10 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(checkoutButton);
     }
     //  WHEN
-    else if (!datesDropdown.contains(event.target) && !whenButton.contains(event.target)
+    else if (!datesDropdown.contains(e.target) && !whenButton.contains(e.target)
          &&   datesDropdown.style.display == "block" && whenButton.style.backgroundColor == "white")
     {
-        if (event.target == modal || event.target == modalBackground)
-        {
-            return;
-        }
-
-        if (!form.contains(event.target))
+        if (!form.contains(e.target))
         {
             form.style.backgroundColor = "";
         }
@@ -284,9 +272,9 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(whenButton);
     }
     //  WHO
-    else if (!whoDropdown.contains(event.target) && !whoButton.contains(event.target) && whoDropdown.style.display == "block") 
+    else if (!whoDropdown.contains(e.target) && !whoButton.contains(e.target) && whoDropdown.style.display == "block") 
     {
-        if (!form.contains(event.target))
+        if (!form.contains(e.target))
         {
             form.style.backgroundColor = "";
         }
@@ -295,9 +283,9 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(whoButton);
     }
     //  WHERE EXPERIENCES
-    else if (!whereDropdownExperiences.contains(event.target) && !whereButtonExperiences.contains(event.target) && whereDropdownExperiences.style.display == "block") 
+    else if (!whereDropdownExperiences.contains(e.target) && !whereButtonExperiences.contains(e.target) && whereDropdownExperiences.style.display == "block") 
     {
-        if (!formExperiences.contains(event.target))
+        if (!formExperiences.contains(e.target))
         {
             formExperiences.style.backgroundColor = "";
         }
@@ -306,9 +294,9 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(whereButtonExperiences);
     }
     //  DATES EXPERIENCES
-    else if (!datesDropdownExperiences.contains(event.target) && !datesButtonExperiences.contains(event.target) && datesDropdownExperiences.style.display == "block") 
+    else if (!datesDropdownExperiences.contains(e.target) && !datesButtonExperiences.contains(e.target) && datesDropdownExperiences.style.display == "block") 
     {
-        if (!formExperiences.contains(event.target))
+        if (!formExperiences.contains(e.target))
         {
             formExperiences.style.backgroundColor = "";
         }
@@ -317,9 +305,9 @@ document.addEventListener('mousedown', event =>
         onClickButtonUnfocus(datesButtonExperiences);
     }
     //  WHO EXPERIENCES
-    else if (!whoDropdownExperiences.contains(event.target) && !whoButtonExperiences.contains(event.target) && whoDropdownExperiences.style.display == "block") 
+    else if (!whoDropdownExperiences.contains(e.target) && !whoButtonExperiences.contains(e.target) && whoDropdownExperiences.style.display == "block") 
     {
-        if (!formExperiences.contains(event.target))
+        if (!formExperiences.contains(e.target))
         {
             formExperiences.style.backgroundColor = "";
         }
@@ -331,7 +319,7 @@ document.addEventListener('mousedown', event =>
     else if (whereButton.style.backgroundColor != "white" && checkinButton.style.backgroundColor != "white"
          &&  checkoutButton.style.backgroundColor != "white" && whoButton.style.backgroundColor != "white" 
          &&  whereButtonExperiences.style.backgroundColor != "white" && datesButtonExperiences.style.backgroundColor != "white" 
-         &&  whoButtonExperiences.style.backgroundColor != "white" && !form.contains(event.target))
+         &&  whoButtonExperiences.style.backgroundColor != "white" && !form.contains(e.target))
     {
         form.style.backgroundColor = "";
         formExperiences.style.backgroundColor = "";
@@ -726,7 +714,7 @@ function keepShadowBetweenDates(month, x, td, div)
     }
 }
 
-function createCalendarMonth()
+function createCalendarMonth(calendarId)
 {
     var x = 0;
     var check = true;
@@ -764,7 +752,7 @@ function createCalendarMonth()
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
     monthNameDiv.innerHTML = months[month] + ` ${year}`;
-    calendar.insertBefore(monthNameDiv, calendar.children[0]);
+    calendarId.insertBefore(monthNameDiv, calendarId.children[0]);
 
     const table = document.createElement("table");
     const tbody = document.createElement("tbody");
@@ -847,10 +835,10 @@ function createCalendarMonth()
     }
 
     table.className = "nothing";
-    calendar.appendChild(table);
+    calendarId.appendChild(table);
 }
 
-function createCalendarMonth2()
+function createCalendarMonth2(calendarId)
 {
     nextMonth = month + 1;
     nextYear = year;
@@ -875,7 +863,7 @@ function createCalendarMonth2()
     const monthNameDiv = document.createElement("div");
     monthNameDiv.className = "month_name";
     monthNameDiv.innerHTML = months[nextMonth] + ` ${nextYear}`;
-    calendar2.insertBefore(monthNameDiv, calendar2.children[0]);
+    calendarId.insertBefore(monthNameDiv, calendarId.children[0]);
 
     const table = document.createElement("table");
     const tbody = document.createElement("tbody");
@@ -948,11 +936,11 @@ function createCalendarMonth2()
     }
 
     table.className = "nothing";
-    calendar2.appendChild(table);
+    calendarId.appendChild(table);
 }
 
-createCalendarMonth();
-createCalendarMonth2();
+createCalendarMonth(calendar);
+createCalendarMonth2(calendar2);
 
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
@@ -977,8 +965,8 @@ moveCalendarLeft.onclick = function()
 
         leftButtonClicked = true;
 
-        createCalendarMonth();
-        createCalendarMonth2(); 
+        createCalendarMonth(calendar);
+        createCalendarMonth2(calendar2); 
 
         leftButtonClicked = false;
 
@@ -1010,8 +998,8 @@ moveCalendarRight.onclick = function()
 
         rightButtonClicked = true;
 
-        createCalendarMonth();
-        createCalendarMonth2();
+        createCalendarMonth(calendar);
+        createCalendarMonth2(calendar2);
 
         rightButtonClicked = false;
         
@@ -2031,13 +2019,40 @@ function moveCircle()
 moveCircle();
 dragCircleCSS();
 
-const modaltest = document.getElementById("ModalTest");
-const modal = document.getElementById("Modal");
+const modalStartDate = document.getElementById("ModalStartDate");
+const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
+const monthsCalendar = document.getElementById("MonthsCalendar");
+const monthsCalendar2 = document.getElementById("MonthsCalendar2");
+
+const monthsStartExactDatesButton = document.getElementById("MonthsStartExactDatesButton");
+const monthsStartPM1Button = document.getElementById("MonthsStartPM1Button");
+const monthsStartPM2Button = document.getElementById("MonthsStartPM2Button");
+const monthsStartPM3Button = document.getElementById("MonthsStartPM3Button");
+const monthsStartPM7Button = document.getElementById("MonthsStartPM7Button");
+const monthsStartPM14Button = document.getElementById("MonthsStartPM14Button");
+
+const monthsEndExactDatesButton = document.getElementById("MonthsEndExactDatesButton");
+const monthsEndPM1Button = document.getElementById("MonthsEndPM1Button");
+const monthsEndPM2Button = document.getElementById("MonthsEndPM2Button");
+const monthsEndPM3Button = document.getElementById("MonthsEndPM3Button");
+const monthsEndPM7Button = document.getElementById("MonthsEndPM7Button");
+const monthsEndPM14Button = document.getElementById("MonthsEndPM14Button");
+
+createCalendarMonth(monthsCalendar);
+createCalendarMonth2(monthsCalendar2);
 
 whenStartDate.onclick = function()
 {
-    modal.style.display = "block";
+    modalStartDate.style.display = "block";
+    modalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
+}
+
+whenEndDate.onclick = function()
+{
+    modalEndDate.style.display = "block";
     modalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
@@ -2046,7 +2061,8 @@ whenStartDate.onclick = function()
 modalBackground.onclick = function()
 {
     modalBackground.style.display = "none";
-    modal.style.display = "none";
+    modalStartDate.style.display = "none";
+    modalEndDate.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
 }
