@@ -525,6 +525,16 @@ div.modal_footer {
     }
 }
 
+/*loginababababa*/
+button.login_dropdown_button {
+    display: flex;
+    background: none;
+    border: none;
+    padding: 13px 10px;
+    width: 100%;
+    font-size: 14px;
+}
+
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
     position: sticky;

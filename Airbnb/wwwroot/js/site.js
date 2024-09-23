@@ -2141,8 +2141,19 @@ searchButtonExperiences.onclick = function()
     console.log("stop searching lol")
 }
 
+// something whatever i dont feel like doing anything
+const loginButton = document.getElementById("LoginButton");
+const loginDropdown = document.getElementById("LoginDropdown");
+//  modals
+const singUpButton = document.getElementById("SingUpButton");
+const logInButton = document.getElementById("LogInButton");
+//  web pages
+const giftCardsButton = document.getElementById("GiftCardsButton");
+const airbnbYourHomeButton = document.getElementById("AirbnbYourHomeButton");
+const hostAnExperienceButton = document.getElementById("HostAnExperienceButton");
+const helpCenterButton = document.getElementById("HelpCenterButton");
 
-
-
-
-
+loginButton.onclick = function()
+{
+    loginDropdown.style.display = "block";
+}
