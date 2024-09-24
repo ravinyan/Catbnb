@@ -945,72 +945,82 @@ createCalendarMonth2(calendar2);
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
+const datesButton = document.getElementById("DatesButton");
 
-moveCalendarLeft.onclick = function()
-{  
-    if (moveCalendarLeft.style.cursor == "pointer")
-    {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-
-        monthNames.forEach(function(e)
-        {
-            e.remove();
-        });
-
-        tables.forEach(function(e)
-        {
-            e.remove();
-        });
-
-        leftButtonClicked = true;
-
-        createCalendarMonth(calendar);
-        createCalendarMonth2(calendar2); 
-
-        leftButtonClicked = false;
-
-        if (month == currentMonth && year == currentYear)
-        {
-            moveCalendarLeft.style.cursor = "not-allowed";
-            moveCalendarLeft.style.color = "#dcdcdc";
-            moveCalendarLeft.style.background = "none";
-        }
-    } 
-}
-
-moveCalendarRight.onclick = function()
+function MoveCalendarsLeft(moveButton, firstCalendar, secondCalendar)
 {
-    if (moveCalendarRight.style.cursor == "pointer")
-    {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-
-        monthNames.forEach(function(e)
+    moveButton.onclick = function()
+    {  
+        if (moveButton.style.cursor == "pointer")
         {
-            e.remove();
-        });
-
-        tables.forEach(function(e)
-        {
-            e.remove();
-        });
-
-        rightButtonClicked = true;
-
-        createCalendarMonth(calendar);
-        createCalendarMonth2(calendar2);
-
-        rightButtonClicked = false;
-        
-        if (month > currentMonth && year >= currentYear)
-        {
-            moveCalendarLeft.style.cursor = "pointer";
-            moveCalendarLeft.style.color = "";
-            moveCalendarLeft.style.background = "";
-        }
-    } 
+            const monthNames = document.querySelectorAll(".month_name");
+            const tables = document.querySelectorAll(".nothing");
+    
+            monthNames.forEach(function(e)
+            {
+                e.remove();
+            });
+    
+            tables.forEach(function(e)
+            {
+                e.remove();
+            });
+    
+            leftButtonClicked = true;
+    
+            createCalendarMonth(firstCalendar);
+            createCalendarMonth2(secondCalendar); 
+    
+            leftButtonClicked = false;
+    
+            if (month == currentMonth && year == currentYear)
+            {
+                moveButton.style.cursor = "not-allowed";
+                moveButton.style.color = "#dcdcdc";
+                moveButton.style.background = "none";
+            }
+        } 
+    }
 }
+
+function MoveCalendarsRight(moveButton, leftButton, firstCalendar, secondCalendar)
+{
+    moveButton.onclick = function()
+    {
+        if (moveButton.style.cursor == "pointer")
+        {
+            const monthNames = document.querySelectorAll(".month_name");
+            const tables = document.querySelectorAll(".nothing");
+    
+            monthNames.forEach(function(e)
+            {
+                e.remove();
+            });
+    
+            tables.forEach(function(e)
+            {
+                e.remove();
+            });
+    
+            rightButtonClicked = true;
+    
+            createCalendarMonth(firstCalendar);
+            createCalendarMonth2(secondCalendar);
+    
+            rightButtonClicked = false;
+            
+            if (month > currentMonth && year >= currentYear)
+            {
+                leftButton.style.cursor = "pointer";
+                leftButton.style.color = "";
+                leftButton.style.background = "";
+            }
+        } 
+    }
+}
+
+MoveCalendarsLeft(moveCalendarLeft, calendar, calendar2);
+MoveCalendarsRight(moveCalendarRight, moveCalendarLeft, calendar, calendar2);
 
 //  ------------------------ CALENDAR FORM INPUT ------------------------
 const checkinFormInput = document.getElementById("CheckinInput");
@@ -2024,6 +2034,8 @@ const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
 const monthsCalendar = document.getElementById("MonthsCalendar");
 const monthsCalendar2 = document.getElementById("MonthsCalendar2");
+const monthsCalendar3 = document.getElementById("MonthsCalendar3");
+const monthsCalendar4 = document.getElementById("MonthsCalendar4");
 
 const monthsStartExactDatesButton = document.getElementById("MonthsStartExactDatesButton");
 const monthsStartPM1Button = document.getElementById("MonthsStartPM1Button");
@@ -2039,8 +2051,29 @@ const monthsEndPM3Button = document.getElementById("MonthsEndPM3Button");
 const monthsEndPM7Button = document.getElementById("MonthsEndPM7Button");
 const monthsEndPM14Button = document.getElementById("MonthsEndPM14Button");
 
+const moveMonthsStartCalendarsLeft = document.getElementById("MoveMonthsStartCalendarsLeft");
+const moveMonthsStartCalendarsRight = document.getElementById("MoveMonthsStartCalendarsRight");
+const moveMonthsEndCalendarsLeft = document.getElementById("MoveMonthsEndCalendarsLeft");
+const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalendarsRight");
+const monthsButton = document.getElementById("MonthsButton");
+
+
+    if (whenStartDate.style.display == "block")
+    {
+        MoveCalendarsLeft(moveMonthsStartCalendarsLeft, monthsCalendar, monthsCalendar2);
+        MoveCalendarsRight(moveMonthsStartCalendarsRight, moveMonthsStartCalendarsLeft, monthsCalendar, monthsCalendar2);
+    }
+    else if (whenEndDate.style.display == "block")
+    {
+        MoveCalendarsLeft(moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
+        MoveCalendarsRight(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
+    }
+
+
 createCalendarMonth(monthsCalendar);
 createCalendarMonth2(monthsCalendar2);
+createCalendarMonth(monthsCalendar3);
+createCalendarMonth2(monthsCalendar4);
 
 whenStartDate.onclick = function()
 {
@@ -2070,8 +2103,6 @@ modalBackground.onclick = function()
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-const datesButton = document.getElementById("DatesButton");
-const monthsButton = document.getElementById("MonthsButton");
 const flexibleButton = document.getElementById("FlexibleButton");
 const datesBlock = document.getElementById("DatesBlock");
 const monthsBlock = document.getElementById("MonthsBlock");
