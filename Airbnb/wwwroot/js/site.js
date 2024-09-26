@@ -597,7 +597,7 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
---------(this was very fun challenge but holy shit its finally complete 1k+ lines of code for stupid calendar)--------*/
+--------(this was very fun challenge but holy shit its finally (not)complete 1k+ lines of code for stupid calendar)--------*/
 
 //  IT HAS MORE BUGS WILL DO THEM LATER IM FIGHTING WITH MATH (shadow bug when years selected is 2024 and >2024)
 const calendar = document.getElementById("Calendar");
@@ -802,6 +802,7 @@ function createCalendarMonth(calendarId)
                     if (selectedCheckinDate != "" && addedCheckinDate == false && x == +selectedCheckinDate.innerText 
                     &&  selectedCheckinMonth == months[month] && selectedCheckinYear == year)
                     {
+                        console.log(selectedCheckinDate)
                         div = selectedCheckinDate;
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
@@ -837,6 +838,7 @@ function createCalendarMonth(calendarId)
     table.className = "nothing";
     calendarId.appendChild(table);
 }
+
 
 function createCalendarMonth2(calendarId)
 {
@@ -939,9 +941,15 @@ function createCalendarMonth2(calendarId)
     calendarId.appendChild(table);
 }
 
+
 createCalendarMonth(calendar);
 createCalendarMonth2(calendar2);
 
+selectedCheckinDate = calendar2.childNodes[4].childNodes[0].childNodes[0].childNodes[6].childNodes[0];
+selectedCheckinDate.style.background = "black"
+selectedCheckinDate.style.color = "white";
+selectedCheckinMonth = "October";
+selectedCheckinYear = 2024;
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
@@ -2113,6 +2121,38 @@ function initializeCalendars(firstCalendar, secondCalendar, leftButton)
     }
 }
 
+// how
+function testing1234bananapizzabirdsaregovermentdrones77777777777(firstCalendar, secondCalendar, leftButton)
+{
+    month = currentMonth;
+    year = currentYear;
+    const monthNames = document.querySelectorAll(".month_name");
+    const tables = document.querySelectorAll(".nothing");
+    
+    var startDate = ""
+    var endDate = ""
+
+    monthNames.forEach(function(e)
+    {
+        e.remove();
+    });
+   
+    tables.forEach(function(e)
+    {
+        e.remove();
+    });
+   
+    createCalendarMonth(firstCalendar);
+    createCalendarMonth2(secondCalendar);
+
+    if (month == currentMonth && year == currentYear)
+    {
+        leftButton.style.cursor = "not-allowed";
+        leftButton.style.color = "#dcdcdc";
+        leftButton.style.background = "none";
+    }
+}
+
 whenStartDate.onclick = function()
 {
     modalStartDate.style.display = "block";
@@ -2120,7 +2160,7 @@ whenStartDate.onclick = function()
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 
-    initializeCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft);
+    testing1234bananapizzabirdsaregovermentdrones77777777777(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft);
 }
 
 whenEndDate.onclick = function()

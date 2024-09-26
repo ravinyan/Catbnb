@@ -316,10 +316,12 @@ td.td_box {
         display: none;
     }
 
-    div.calendars {
-        display: flex;
-        width: 100%;
-        justify-content: center;
+    #MonthsCalendar2 {
+        display: none;
+    }
+
+    #MonthsCalendar4 {
+        display: none;
     }
 }
 
