@@ -945,11 +945,6 @@ function createCalendarMonth2(calendarId)
 createCalendarMonth(calendar);
 createCalendarMonth2(calendar2);
 
-selectedCheckinDate = calendar2.childNodes[4].childNodes[0].childNodes[0].childNodes[6].childNodes[0];
-selectedCheckinDate.style.background = "black"
-selectedCheckinDate.style.color = "white";
-selectedCheckinMonth = "October";
-selectedCheckinYear = 2024;
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
@@ -1380,24 +1375,24 @@ function correctShadowBetweenDates(currentCalendar)
     } 
 }
 
-function applyShadowBetweenDates(currentCalendar, target)
+function applyShadowBetweenDates(currentCalendar, target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
     var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
     var otherCalendar = ""
 
-    if (selectedCheckinDate != "")
+    if (checkinDate != "")
     {
-        otherCalendar = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+        otherCalendar = checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
 
         if (currentCalendar == calendar2)
         {
             otherCalendar = calendar;
         }
     }
-    else if (selectedCheckoutDate != "")
+    else if (checkoutDate != "")
     {
-        otherCalendar = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+        otherCalendar = checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
 
         if (currentCalendar == calendar)
         {
@@ -1425,18 +1420,18 @@ function applyShadowBetweenDates(currentCalendar, target)
                 }catch{} //  i swear to fucking god this is getting so annoying i fucking hate this try catch bullshit AAAAAAAAAAAAAAAAAAA
 
                 //  IF ITS SAME MONTH SAME YEAR
-                if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) == targetMonth) && selectedCheckinYear == targetYear
-                ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) == targetMonth) && selectedCheckoutYear == targetYear) 
+                if ((checkinDate != "" && months.indexOf(checkinMonth) == targetMonth) && checkinYear == targetYear
+                ||  (checkoutDate != "" && months.indexOf(checkoutMonth) == targetMonth) && checkoutYear == targetYear) 
                 {
-                    if ((+divBox.innerText < +target.innerText && +divBox.innerText >= +selectedCheckinDate.innerText)
-                    ||  (+divBox.innerText > +target.innerText && +divBox.innerText <= +selectedCheckoutDate.innerText))
+                    if ((+divBox.innerText < +target.innerText && +divBox.innerText >= +checkinDate.innerText)
+                    ||  (+divBox.innerText > +target.innerText && +divBox.innerText <= +checkoutDate.innerText))
                     {
                         if (divBox.innerText == +selectedCheckoutDate.innerText)
                         {
                             //  checkin date selected
                             tdBox.style.background = calendarShadowCheckoutColor;
                         }
-                        else if (+divBox.innerText == +selectedCheckinDate.innerText) 
+                        else if (+divBox.innerText == +checkinDate.innerText) 
                         {
                             //  checkout date selected
                             tdBox.style.background = calendarShadowCheckinColor;
@@ -1451,42 +1446,42 @@ function applyShadowBetweenDates(currentCalendar, target)
                     else if (+divBox.innerText == +target.innerText)
                     {
                         //  apply css to checkout/checkin date whichever is the target one
-                        if (selectedCheckinDate != "")
+                        if (checkinDate != "")
                         {
                             tdBox.style.background = calendarShadowCheckoutColor;
                         }
-                        else if (selectedCheckoutDate != "")
+                        else if (checkoutDate != "")
                         {
                             tdBox.style.background = calendarShadowCheckinColor;
                         }
                     }
                 }
                 //  IF ITS DIFFERENT MONTH SAME YEAR
-                else if ((selectedCheckinDate != "" && months.indexOf(selectedCheckinMonth) < targetMonth) && selectedCheckinYear == targetYear
-                     ||  (selectedCheckoutDate != "" && months.indexOf(selectedCheckoutMonth) > targetMonth) && selectedCheckoutYear == targetYear)
+                else if ((checkinDate != "" && months.indexOf(checkinMonth) < targetMonth) && checkinYear == targetYear
+                     ||  (checkoutDate != "" && months.indexOf(checkoutMonth) > targetMonth) && checkoutYear == targetYear)
                 {
                     try 
                     {
                         //  it is first selected date is checkin and target is on different calendar
-                        if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
+                        if (checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
                         {
-                            if (divBox2.innerText == +selectedCheckoutDate.innerText)
+                            if (divBox2.innerText == +checkoutDate.innerText)
                             {
                                 tdBox2.style.background = calendarShadowCheckoutColor;
                             }
-                            else if (+divBox2.innerText == +selectedCheckinDate.innerText) 
+                            else if (+divBox2.innerText == +checkinDate.innerText) 
                             {
                                 tdBox2.style.background = calendarShadowCheckinColor;
                             }
 
-                            if (+selectedCheckinDate.innerText < +divBox2.innerText && +divBox2.innerText <= endOfCurrentMonth)
+                            if (+checkinDate.innerText < +divBox2.innerText && +divBox2.innerText <= endOfCurrentMonth)
                             {
                                 tdBox2.style.background = calendarShadowColor;
                                 divBox2.style.borderColor = calendarShadowColor;
                             }
 
                             //  filling empty calendar between checkin and checkout calendars
-                            if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar
+                            if (checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar
                             &&  divBox2.innerText != "")
                             {
                                 tdBox2.style.background = calendarShadowColor;
@@ -1498,25 +1493,25 @@ function applyShadowBetweenDates(currentCalendar, target)
                     try
                     {
                         //  it is first selected date is checkout and target is on different calendar
-                        if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
+                        if (checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != currentCalendar)
                         {
-                            if (divBox2.innerText == +selectedCheckinDate.innerText)
+                            if (divBox2.innerText == +checkinDate.innerText)
                             {
                                 tdBox2.style.background = calendarShadowCheckinColor;
                             }
-                            else if (+divBox2.innerText == +selectedCheckoutDate.innerText) 
+                            else if (+divBox2.innerText == +checkoutDate.innerText) 
                             {
                                 tdBox2.style.background = calendarShadowCheckoutColor;
                             }
 
-                            if (+selectedCheckoutDate.innerText > +divBox2.innerText && divBox2.innerText != "")
+                            if (+checkoutDate.innerText > +divBox2.innerText && divBox2.innerText != "")
                             {
                                 tdBox2.style.background = calendarShadowColor;
                                 divBox2.style.borderColor = calendarShadowColor;
                             }
 
                             //  filling empty calendar between checkin and checkout calendars
-                            if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar2
+                            if (checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar2
                             &&  divBox2.innerText != "")
                             {
                                 tdBox2.style.background = calendarShadowColor;
@@ -1526,26 +1521,26 @@ function applyShadowBetweenDates(currentCalendar, target)
                     }catch{} //  I HATE YOU IDIOT
 
                     //  it is second selected date and it changes whenever the target is
-                    if ((+divBox.innerText <= +target.innerText && selectedCheckinDate != "")
-                    ||  (+divBox.innerText >= +target.innerText && selectedCheckoutDate != ""))
+                    if ((+divBox.innerText <= +target.innerText && checkinDate != "")
+                    ||  (+divBox.innerText >= +target.innerText && checkoutDate != ""))
                     {
-                        if (+target.innerText > +divBox.innerText && selectedCheckinDate != "" && divBox.innerText != "")
+                        if (+target.innerText > +divBox.innerText && checkinDate != "" && divBox.innerText != "")
                         {
                             tdBox.style.background = calendarShadowColor;
                             divBox.style.borderColor = calendarShadowColor;
                         }
-                        else if (+target.innerText < +divBox.innerText && selectedCheckoutDate != "" && divBox.innerText != "")
+                        else if (+target.innerText < +divBox.innerText && checkoutDate != "" && divBox.innerText != "")
                         {
                             tdBox.style.background = calendarShadowColor;
                             divBox.style.borderColor = calendarShadowColor;
                         }
                         else if (+divBox.innerText == +target.innerText)
                         {
-                            if (selectedCheckinDate != "")
+                            if (checkinDate != "")
                             {
                                 tdBox.style.background = calendarShadowCheckoutColor;
                             }
-                            else if (selectedCheckoutDate != "")
+                            else if (checkoutDate != "")
                             {
                                 tdBox.style.background = calendarShadowCheckinColor;
                             }
@@ -1553,23 +1548,23 @@ function applyShadowBetweenDates(currentCalendar, target)
                     }
                 }
                 //  IF ITS DIFFERENT YEARS
-                else if ((selectedCheckinDate != "") && selectedCheckinYear != targetYear
-                     ||  (selectedCheckoutDate != "") && selectedCheckoutYear != targetYear)
+                else if ((checkinDate != "") && checkinYear != targetYear
+                     ||  (checkoutDate != "") && checkoutYear != targetYear)
                 {
                     try
                     {
-                        if (selectedCheckinYear != "" && selectedCheckinYear < +targetYear)
+                        if (checkinYear != "" && checkinYear < +targetYear)
                         {
-                            if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement == null
+                            if (checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement == null
                             &&  divBox2.innerText != "")
                             {
                                 tdBox2.style.background = calendarShadowColor;
                                 divBox2.style.borderColor = calendarShadowColor;
                             }
-                            else if (selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar2
-                            &&  divBox2.innerText != "" && +divBox2.innerText >= +selectedCheckinDate.innerText)
+                            else if (checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar2
+                            &&  divBox2.innerText != "" && +divBox2.innerText >= +checkinDate.innerText)
                             {
-                                if (+divBox2.innerText == +selectedCheckinDate.innerText)
+                                if (+divBox2.innerText == +checkinDate.innerText)
                                 {
                                     tdBox2.style.background = calendarShadowCheckinColor;
                                 }
@@ -1584,18 +1579,18 @@ function applyShadowBetweenDates(currentCalendar, target)
 
                     try
                     {
-                        if (selectedCheckoutYear != "" && selectedCheckoutYear > +targetYear)
+                        if (checkoutYear != "" && checkoutYear > +targetYear)
                         {
-                            if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement == null
+                            if (checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement == null
                             &&  divBox2.innerText != "")
                             {
                                 tdBox2.style.background = calendarShadowColor;
                                 divBox2.style.borderColor = calendarShadowColor;
                             }
-                            else if (selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar
-                            &&  divBox2.innerText != "" && +divBox2.innerText <= +selectedCheckoutDate.innerText)
+                            else if (checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement != calendar
+                            &&  divBox2.innerText != "" && +divBox2.innerText <= +checkoutDate.innerText)
                             {
-                                if (+divBox2.innerText == +selectedCheckoutDate.innerText)
+                                if (+divBox2.innerText == +checkoutDate.innerText)
                                 {
                                     tdBox2.style.background = calendarShadowCheckoutColor;
                                 }
@@ -1609,26 +1604,26 @@ function applyShadowBetweenDates(currentCalendar, target)
                     }catch{} // at this point im just going to do this here too... even if there are none or i didnt found any
                     
                     
-                    if ((+divBox.innerText <= +target.innerText && selectedCheckinDate != "")
-                    ||  (+divBox.innerText >= +target.innerText && selectedCheckoutDate != ""))
+                    if ((+divBox.innerText <= +target.innerText && checkinDate != "")
+                    ||  (+divBox.innerText >= +target.innerText && checkoutDate != ""))
                     {
-                        if (+target.innerText > +divBox.innerText && selectedCheckinDate != "" && divBox.innerText != "")
+                        if (+target.innerText > +divBox.innerText && checkinDate != "" && divBox.innerText != "")
                         {
                             tdBox.style.background = calendarShadowColor;
                             divBox.style.borderColor = calendarShadowColor;
                         }
-                        else if (+target.innerText < +divBox.innerText && selectedCheckoutDate != "" && divBox.innerText != "")
+                        else if (+target.innerText < +divBox.innerText && checkoutDate != "" && divBox.innerText != "")
                         {
                             tdBox.style.background = calendarShadowColor;
                             divBox.style.borderColor = calendarShadowColor;
                         }
                         else if (+divBox.innerText == +target.innerText)
                         {
-                            if (selectedCheckinDate != "")
+                            if (checkinDate != "")
                             {
                                 tdBox.style.background = calendarShadowCheckoutColor;
                             }
-                            else if (selectedCheckoutDate != "")
+                            else if (checkoutDate != "")
                             {
                                 tdBox.style.background = calendarShadowCheckinColor;
                             }
@@ -1641,11 +1636,11 @@ function applyShadowBetweenDates(currentCalendar, target)
     }
 }
 
-function removeShadowsBetweenDates(currentCalendar)
+function removeShadowsBetweenDates(currentCalendar, checkinDate, checkoutDate)
 {
     var otherCalendar = ""
 
-    if (selectedCheckinDate != "" && selectedCheckoutDate != "")
+    if (checkinDate != "" && checkoutDate != "")
     {
         if (currentCalendar == calendar2)
         {
@@ -1656,18 +1651,18 @@ function removeShadowsBetweenDates(currentCalendar)
             otherCalendar = calendar2;
         }
     }
-    else if (selectedCheckinDate != "")
+    else if (checkinDate != "")
     {
-        otherCalendar = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+        otherCalendar = checkinDate.parentElement.parentElement.parentElement.parentElement.parentElement;
 
         if (currentCalendar == calendar2)
         {
             otherCalendar = calendar;
         }
     }
-    else if (selectedCheckoutDate != "")
+    else if (checkoutDate != "")
     {
-        otherCalendar = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
+        otherCalendar = checkoutDate.parentElement.parentElement.parentElement.parentElement.parentElement;
 
         if (currentCalendar == calendar)
         {
@@ -1695,8 +1690,8 @@ function removeShadowsBetweenDates(currentCalendar)
                 }catch{} // you are the problem arent you... you werent... but was later
                 
                 //  clear css simply and clean
-                if ((selectedCheckinDate == "" || selectedCheckoutDate == "")
-                ||  (selectedCheckinDate != "" && selectedCheckoutDate != ""))
+                if ((checkinDate == "" || checkoutDate == "")
+                ||  (checkinDate != "" && checkoutDate != ""))
                 {
                     if (tdBox.style.background != ""
                     ||  tdBox2.style.background != "")
@@ -1712,6 +1707,7 @@ function removeShadowsBetweenDates(currentCalendar)
     }
 }
 
+
 calendar.addEventListener("mouseover", function(e)
 {
     if ((selectedCheckinDate == "" || selectedCheckoutDate == "") && e.target.children.length == 0 && e.target.className == "box")
@@ -1720,7 +1716,7 @@ calendar.addEventListener("mouseover", function(e)
 
         if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
-            applyShadowBetweenDates(calendar, e.target);
+            applyShadowBetweenDates(calendar, e.target,selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
         }
     }
 })
@@ -1733,7 +1729,7 @@ calendar.addEventListener("mouseout", function(e)
 
         if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
-            removeShadowsBetweenDates(calendar);
+            removeShadowsBetweenDates(calendar, selectedCheckinDate, selectedCheckoutDate);
         }
     }
 })
@@ -1746,7 +1742,7 @@ calendar2.addEventListener("mouseover", function(e)
 
         if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
-            applyShadowBetweenDates(calendar2, e.target);
+            applyShadowBetweenDates(calendar2, e.target,selectedCheckinDate, selectedCheckoutMonth, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
         }
     }
 })
@@ -1759,10 +1755,13 @@ calendar2.addEventListener("mouseout", function(e)
 
         if (selectedCheckinDate == "" || selectedCheckoutDate == "")
         {
-            removeShadowsBetweenDates(calendar2);
+            removeShadowsBetweenDates(calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
     }
 })
+
+
+
 
 //  ------------------------ (+-) DATES OPTIONS BUTTONS ------------------------
 //  PM stands for Pure Memory coz im arcaea player and this is the only acceptable acronym even tho it means Plus Minus here.....
@@ -2121,7 +2120,7 @@ function initializeCalendars(firstCalendar, secondCalendar, leftButton)
     }
 }
 
-// how
+//  everything is a mess and i need to fix my brain slowly... by everything i mean everything
 function testing1234bananapizzabirdsaregovermentdrones77777777777(firstCalendar, secondCalendar, leftButton)
 {
     month = currentMonth;
