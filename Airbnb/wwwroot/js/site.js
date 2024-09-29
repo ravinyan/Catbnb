@@ -1029,7 +1029,7 @@ const checkoutFormInput = document.getElementById("CheckoutInput");
 const clearCalendarFormInputButton = document.getElementById("ClearCalendarFormInputsButton");
 const imstupidsvg = document.getElementById("ClearCalendarFormInputsButtonSVG");
 const imstupidpath = document.getElementById("ClearCalendarFormInputsButtonPATH");
-const getStupidCalendarDates = document.querySelector("div.calendars");
+const getStupidCalendarDates = document.getElementById("DatesCalendars");
 
 function calendarValidationCSS()
 {
@@ -1121,7 +1121,8 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
 
-            removeShadowsBetweenDates(selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement);
+            //  lol it just works without any parameters... well lets just add them anyway
+            removeShadowsBetweenDates(selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckinDate = "";     
         }
         else if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
@@ -1129,7 +1130,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
-            removeShadowsBetweenDates(selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement);
+            removeShadowsBetweenDates(selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckoutDate = "";
         }
 
@@ -1853,6 +1854,25 @@ const whenStartDate = document.getElementById("WhenStartDate");
 const whenEndDate = document.getElementById("WhenEndDate");
 const whenInput = document.getElementById("WhenInput");
 var degrees = "";
+const startDate = new Date(year, month + 1, 1);
+const endDate = new Date(year, month + 5, 0);
+const startMonth = startDate.getMonth();
+const endMonth = endDate.getMonth();
+const startYear = startDate.getFullYear();
+const endYear = endDate.getFullYear();
+var selectedStartDate = "";
+var selectedEndDate = "";
+var selectedStartMonth = "";
+var selectedEndMonth = "";
+var selectedStartYear = "";
+var selectedEndYear = "";
+var startDateValue = "";
+var endDateValue = "";
+
+function initializeDates()
+{
+
+}
 
 function setWhenValues(startDate, endDate, month, number)
 {
@@ -2049,6 +2069,87 @@ const monthsCalendar2 = document.getElementById("MonthsCalendar2");
 const monthsCalendar3 = document.getElementById("MonthsCalendar3");
 const monthsCalendar4 = document.getElementById("MonthsCalendar4");
 
+const getStupidCalendarDatesAgain = document.getElementById("StartMonthsCalendars");
+const getStupidCalendarDatesAgainAgain = document.getElementById("EndMonthsCalendars");
+
+getStupidCalendarDatesAgain.onclick = function(e)
+{
+    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+    {
+        if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar))
+        {
+            startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar.childNodes[1].innerText.slice(-4);
+            console.log(startDateValue);
+        }
+        else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar2))
+        {
+            startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar2.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar2.childNodes[1].innerText.slice(-4);
+            console.log(startDateValue);
+        }
+
+        //  reset feedback
+        if (selectedStartDate != "")
+        {
+            selectedStartDate.style.background = "";
+            selectedStartDate.style.color = "";
+
+            removeShadowsBetweenDates(selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedStartDate, selectedEndDate);
+            selectedStartDate = "";     
+        }
+
+        //  apply feedback
+        if (selectedStartDate == "")
+        {
+            selectedStartDate = e.target;
+            selectedStartDate.style.background = "black";
+            selectedStartDate.style.color = "white";
+            selectedStartMonth = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            selectedStartYear = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+           //correctShadowBetweenDates(selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement);
+        }
+    }
+}
+
+getStupidCalendarDatesAgainAgain.onclick = function(e)
+{
+    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+    {
+       if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar3))
+       {
+           endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar3.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar3.childNodes[1].innerText.slice(-4);
+           console.log(endDateValue);
+       }
+       else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar4))
+       {
+           endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar4.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar4.childNodes[1].innerText.slice(-4);
+           console.log(endDateValue);
+       }
+
+       //  reset feedback
+       if (selectedEndDate != "")
+       {
+           selectedEndDate.style.background = "";
+           selectedEndDate.style.color = "";
+
+           removeShadowsBetweenDates(selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedStartDate, selectedEndDate);
+           selectedEndDate = "";     
+       }
+
+       //  apply feedback
+       if (selectedEndDate == "")
+       {
+           selectedEndDate = e.target;
+           selectedEndDate.style.background = "black";
+           selectedEndDate.style.color = "white";
+           selectedEndMonth = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+           selectedEndYear = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+          //correctShadowBetweenDates(selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement);
+       }
+    }
+}
+
 function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, secondCalendar)
 {
     if (rightButton.style.cursor == "pointer")
@@ -2068,8 +2169,8 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
     
         rightButtonClicked = true;
     
-        createCalendarMonth(firstCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
-        createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear); 
+        createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+        createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
     
         rightButtonClicked = false;
     
@@ -2108,8 +2209,8 @@ function moveMonthsCalendarsLeft(rightButton, leftButton, firstCalendar, secondC
     
         leftButtonClicked = true;
     
-        createCalendarMonth(firstCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
-        createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear); 
+        createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+        createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
     
         leftButtonClicked = false;
     
@@ -2149,44 +2250,34 @@ moveMonthsEndCalendarsLeft.onclick = function()
     moveMonthsCalendarsLeft(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
 }
 
-const startDate = "";
-const endDate = "";
-
-function initializeCalendars(firstCalendar, secondCalendar, leftButton)
+function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton)
 {
-    if (firstCalendar == monthsCalendar || firstCalendar == monthsCalendar3)
+    month = currentMonth;
+    year = currentYear;
+
+    if (month >= 11)
     {
-        month = currentMonth;
-        year = currentYear;
-        if (month >= 11)
-        {
-            month == 1;
-            year = currentYear + 1;
-        }
-
-        if (modalStartDate.style.display == "block")
-        {
-            // startDate = first day of month after current one... so current + 1
-            //startDate.style.backgroundColor = "black";
-            //startDate.style.color = "white";
-        
-            //endDate.style.backgroundColor = "";
-            //endDate.style.color = "";
-        }
-        else if (modalEndDate.style.display == "block")
-        {
-            //  endDate = last day of 3rd month after current one... so current + 4 
-            //endDate.style.backgroundColor = "black";
-            //endDate.style.color = "white";
-
-            //startDate.style.backgroundColor = "";
-            //startDate.style.color = ""; 
-        } 
+        month == 1;
+        year = currentYear + 1;
     }
-    else 
+
+    if (modalStartDate.style.display == "block")
     {
-        month = currentMonth - 1;
-        year = currentYear;
+        // startDate = first day of month after current one... so current + 1
+        //startDate.style.backgroundColor = "black";
+        //startDate.style.color = "white";
+    
+        //endDate.style.backgroundColor = "";
+        //endDate.style.color = "";
+    }
+    else if (modalEndDate.style.display == "block")
+    {
+        //  endDate = last day of 3rd month after current one... so current + 4 
+        //endDate.style.backgroundColor = "black";
+        //endDate.style.color = "white";
+
+        //startDate.style.backgroundColor = "";
+        //startDate.style.color = ""; 
     }
 
     const monthNames = document.querySelectorAll(".month_name");
@@ -2202,12 +2293,12 @@ function initializeCalendars(firstCalendar, secondCalendar, leftButton)
         e.remove();
     });
 
-    rightButtonClicked = true
+    rightButtonClicked = true;
 
-    createCalendarMonth(firstCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
-    createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+    createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
 
-    rightButtonClicked = false
+    rightButtonClicked = false;
 
     if (month == currentMonth && year == currentYear)
     {
@@ -2227,33 +2318,55 @@ const modalStartDate = document.getElementById("ModalStartDate");
 const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
 
-whenStartDate.onclick = function()
-{
-    modalStartDate.style.display = "block";
-    modalBackground.style.display = "block";
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = "19px";
-
-    initializeCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft);
-}
-
-whenEndDate.onclick = function()
-{
-    modalEndDate.style.display = "block";
-    modalBackground.style.display = "block";
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = "19px";
-
-    initializeCalendars(monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft);
-}
-
-modalBackground.onclick = function()
+function closeModal()
 {
     modalBackground.style.display = "none";
     modalStartDate.style.display = "none";
     modalEndDate.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
+}
+
+function openModal(modal)
+{
+    modal.style.display = "block";
+    modalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
+}
+
+whenStartDate.onclick = function()
+{
+    openModal(modalStartDate);
+    initializeMonthsCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft);
+}
+
+whenEndDate.onclick = function()
+{
+    openModal(modalEndDate);
+    initializeMonthsCalendars(monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft);
+}
+
+modalBackground.onclick = function()
+{
+    closeModal();
+}
+
+const saveStartDateButton = document.getElementById("SaveMonthStartDate");
+const saveEndDateButton = document.getElementById("SaveMonthEndDate");
+
+saveStartDateButton.onclick = function()
+{
+                                     // ${PM}           //${PM}
+    whenInput.value = `${startDateValue} - ${endDateValue}`
+    closeModal();
+}
+
+saveEndDateButton.onclick = function()
+{
+                                      //${PM}           //${PM}
+    whenInput.value = `${startDateValue} - ${endDateValue}`
+    closeModal();
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -2269,9 +2382,35 @@ const flexibleBlock = document.getElementById("FlexibleBlock");
 const checkinFormMenu = document.getElementById("CheckinFormMenu");
 const whenFormMenu = document.getElementById("WhenFormMenu");
 
+function initializeDatesCalendars(firstCalendar, secondCalendar)
+{
+    month = currentMonth - 1;
+    year = currentYear;
+   
+    const monthNames = document.querySelectorAll(".month_name");
+    const tables = document.querySelectorAll(".nothing");
+   
+    monthNames.forEach(function(e)
+    {
+        e.remove();
+    });
+   
+    tables.forEach(function(e)
+    {
+        e.remove();
+    });
+
+    rightButtonClicked = true;
+
+    createCalendarMonth(firstCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+
+    rightButtonClicked = false;
+}
+
 datesButton.onclick = function()
 {
-    initializeCalendars(calendar, calendar2, moveCalendarLeft);
+    initializeDatesCalendars(calendar, calendar2);
     
     datesButton.style.backgroundColor = "white";
     datesBlock.style.display = "block";
