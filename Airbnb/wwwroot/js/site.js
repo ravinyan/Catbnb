@@ -713,7 +713,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
         }
     }
 }
-
+const monthsCalendar = document.getElementById("MonthsCalendar");
 function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     var x = 0;
@@ -799,6 +799,13 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
+                    if (calendarId == monthsCalendar && x == 2)
+                    {
+                        // oh no... i need to remake everything... oh no.......
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                    }
+
                     if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
                     {
@@ -1869,6 +1876,17 @@ var selectedEndYear = "";
 var startDateValue = "";
 var endDateValue = "";
 
+var startDateLastDay = new Date(year, month + 2, 0);
+startDateLastDay.getDate()
+
+
+
+var a = new Date(year, month, 0).getDay();
+var b = new Date(year, month + 1, 0).getDate();
+var c = new Date(year, month + 1, 0).getDay();
+var d = new Date(year, month + 2, 0).getDate();
+
+
 function initializeDates()
 {
 
@@ -2064,7 +2082,7 @@ const moveMonthsStartCalendarsRight = document.getElementById("MoveMonthsStartCa
 const moveMonthsEndCalendarsLeft = document.getElementById("MoveMonthsEndCalendarsLeft");
 const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalendarsRight");
 
-const monthsCalendar = document.getElementById("MonthsCalendar");
+
 const monthsCalendar2 = document.getElementById("MonthsCalendar2");
 const monthsCalendar3 = document.getElementById("MonthsCalendar3");
 const monthsCalendar4 = document.getElementById("MonthsCalendar4");
@@ -2187,6 +2205,42 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
             rightButton.style.color = "#dcdcdc";
             rightButton.style.background = "none";
         }
+
+        //var testarray = [];
+        //var testarray2 = [];
+        //var testdata = "";
+        //var testdata2 = "";
+
+        //getStupidCalendarDatesAgain.childNodes[1].childNodes[4].childNodes[0].childNodes[0].childNodes.forEach
+        //(
+        //    (e) => testarray.push(e.childNodes[0])
+        //)
+
+        //getStupidCalendarDatesAgain.childNodes[3].childNodes[4].childNodes[0].childNodes[4].childNodes.forEach
+        //(
+        //    (e) => testarray2.push(e.childNodes[0])
+        //)
+
+        //for (i = 0; i < 7; i++)
+        //{
+        //    if (testarray[i].innerText == 1)
+        //    {
+        //        selectedStartDate = testarray[i];
+        //        break;
+        //    }
+        //}
+
+        //for (i = 0; i < 7; i++)
+        //{
+        //    if (testarray2[i].innerText == endDate.getDate())
+        //    {
+        //        selectedEndDate = testarray2[i];
+        //        break;
+        //    }
+        //}
+
+        //console.log(selectedStartDate)
+        //console.log(selectedEndDate)
     }
 }
 
@@ -2334,6 +2388,10 @@ function openModal(modal)
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
+
+
+
+
 
 whenStartDate.onclick = function()
 {
