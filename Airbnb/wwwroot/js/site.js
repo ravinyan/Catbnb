@@ -713,7 +713,10 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
         }
     }
 }
+
 const monthsCalendar = document.getElementById("MonthsCalendar");
+const monthsCalendar2 = document.getElementById("MonthsCalendar2");
+
 function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     var x = 0;
@@ -799,12 +802,14 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
-                    if (calendarId == monthsCalendar && x == 2)
+                    if (calendarId == monthsCalendar && x == 2 && year == 2024 && month == 10)
                     {
                         // oh no... i need to remake everything... oh no.......
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                     }
+
+                    
 
                     if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
@@ -909,6 +914,13 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             }
             else
             {
+
+                if (calendarId == monthsCalendar2 && x == 31 && nextYear == 2025 && nextMonth == 0)
+                {
+                    div.style.backgroundColor = "black";
+                    div.style.color = "white";
+                }
+
                 if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
                 &&  checkinMonth == months[nextMonth] && checkinYear == year)
                 {
@@ -2083,7 +2095,7 @@ const moveMonthsEndCalendarsLeft = document.getElementById("MoveMonthsEndCalenda
 const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalendarsRight");
 
 
-const monthsCalendar2 = document.getElementById("MonthsCalendar2");
+
 const monthsCalendar3 = document.getElementById("MonthsCalendar3");
 const monthsCalendar4 = document.getElementById("MonthsCalendar4");
 
@@ -2530,8 +2542,8 @@ searchButtonExperiences.onclick = function()
 }
 
 // something whatever i dont feel like doing anything
-const loginButton = document.getElementById("LoginButton");
-const loginDropdown = document.getElementById("LoginDropdown");
+const userMenuDropdownButton = document.getElementById("UserMenuDropdownButton");
+const userMenuDropdown = document.getElementById("UserMenuDropdown");
 //  modals
 const singUpButton = document.getElementById("SingUpButton");
 const logInButton = document.getElementById("LogInButton");
@@ -2541,7 +2553,15 @@ const airbnbYourHomeButton = document.getElementById("AirbnbYourHomeButton");
 const hostAnExperienceButton = document.getElementById("HostAnExperienceButton");
 const helpCenterButton = document.getElementById("HelpCenterButton");
 
-loginButton.onclick = function()
+userMenuDropdownButton.onclick = function()
 {
-    loginDropdown.style.display = "block";
+    userMenuDropdown.style.display = "block";
 }
+
+document.addEventListener("click", function(e)
+{
+    if ((!userMenuDropdown.contains(e.target) && !userMenuDropdownButton.contains(e.target)) && userMenuDropdown.style.display == "block")
+    {
+        userMenuDropdown.style.display = "none";
+    }
+})
