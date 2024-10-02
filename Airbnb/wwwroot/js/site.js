@@ -631,8 +631,23 @@ var nextYear = "";
 const calendarShadowColor = "#f0f0f0";
 const calendarShadowCheckinColor = "linear-gradient(to right, white 50%, #f0f0f0 50%)";
 const calendarShadowCheckoutColor = "linear-gradient(to right, #f0f0f0 50%, white 50%)";
+//  months calendar variables
+const monthsCalendar = document.getElementById("MonthsCalendar");
+const monthsCalendar2 = document.getElementById("MonthsCalendar2");
+const monthsCalendar3 = document.getElementById("MonthsCalendar3");
+const monthsCalendar4 = document.getElementById("MonthsCalendar4");
+const startDate = new Date(year, month + 1, 1);
+const endDate = new Date(year, month + 5, 0);
+var selectedStartDate = "";
+var selectedEndDate = "";
+var selectedStartMonth = "";
+var selectedEndMonth = "";
+var selectedStartYear = "";
+var selectedEndYear = "";
+var startDateValue = "";
+var endDateValue = "";
+//  how to shorten this abomination of vars and consts... well i cant but i wish i could
 
-//  IT WORKS I DONT CARE JUST GET ME OUT OF HERE PLEASE AAAAAAAAAAAAAAAAAAAAAAAAA
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     if (checkinDate != "" && checkoutDate != "")
@@ -642,7 +657,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowCheckinColor;
         }
 
-        if (x == +checkoutDate.innerText && checkoutMonth == months[month] && checkoutYear == year)
+        if (x == +checkoutDate.innerText && checkoutMonth == months[month] && checkoutYear == nextYear)
         {
             td.style.background = calendarShadowCheckoutColor;
         }
@@ -713,9 +728,6 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
         }
     }
 }
-
-const monthsCalendar = document.getElementById("MonthsCalendar");
-const monthsCalendar2 = document.getElementById("MonthsCalendar2");
 
 function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -802,15 +814,6 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
-                    if (calendarId == monthsCalendar && x == 2 && year == 2024 && month == 10)
-                    {
-                        // oh no... i need to remake everything... oh no.......
-                        div.style.backgroundColor = "black";
-                        div.style.color = "white";
-                    }
-
-                    
-
                     if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
                     {
@@ -830,9 +833,25 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                     else
                     {
                         div.innerText = x;
+
+                        if (calendarId == monthsCalendar && x == 1 && month == months.indexOf(selectedStartMonth) && year == selectedStartYear)
+                        {
+                            // oh no... i need to remake everything... oh no.......
+                            div.style.backgroundColor = "black";
+                            div.style.color = "white";
+                         
+                            selectedStartDate = div;
+                        }
                     }
                 }
-  
+
+                if (selectedEndDate == "")
+                {
+                    selectedEndDate = document.createElement("div");
+                    selectedEndDate.innerText = endDate.getDate();
+                }
+
+                keepShadowBetweenDates(month, x, td, div, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
                 keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
 
                 div.className = "box";
@@ -914,13 +933,6 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             }
             else
             {
-
-                if (calendarId == monthsCalendar2 && x == 31 && nextYear == 2025 && nextMonth == 0)
-                {
-                    div.style.backgroundColor = "black";
-                    div.style.color = "white";
-                }
-
                 if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
                 &&  checkinMonth == months[nextMonth] && checkinYear == year)
                 {
@@ -940,9 +952,24 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                 else
                 {
                     div.innerText = x;
+
+                    if (calendarId == monthsCalendar2 && x == endDate.getDate() && nextMonth == months.indexOf(selectedEndMonth) && nextYear == selectedEndYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+
+                        selectedEndDate = div; 
+                    }
                 }
             }
 
+            if (selectedEndDate == "")
+            {
+                selectedEndDate = document.createElement("div");
+                selectedEndDate.innerText = endDate.getDate();  
+            }
+
+            keepShadowBetweenDates(nextMonth, x, td, div, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
             keepShadowBetweenDates(nextMonth, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
     
             div.className = "box";
@@ -960,6 +987,8 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 
 createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+
+
 
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
@@ -1873,36 +1902,7 @@ const whenStartDate = document.getElementById("WhenStartDate");
 const whenEndDate = document.getElementById("WhenEndDate");
 const whenInput = document.getElementById("WhenInput");
 var degrees = "";
-const startDate = new Date(year, month + 1, 1);
-const endDate = new Date(year, month + 5, 0);
-const startMonth = startDate.getMonth();
-const endMonth = endDate.getMonth();
-const startYear = startDate.getFullYear();
-const endYear = endDate.getFullYear();
-var selectedStartDate = "";
-var selectedEndDate = "";
-var selectedStartMonth = "";
-var selectedEndMonth = "";
-var selectedStartYear = "";
-var selectedEndYear = "";
-var startDateValue = "";
-var endDateValue = "";
 
-var startDateLastDay = new Date(year, month + 2, 0);
-startDateLastDay.getDate()
-
-
-
-var a = new Date(year, month, 0).getDay();
-var b = new Date(year, month + 1, 0).getDate();
-var c = new Date(year, month + 1, 0).getDay();
-var d = new Date(year, month + 2, 0).getDate();
-
-
-function initializeDates()
-{
-
-}
 
 function setWhenValues(startDate, endDate, month, number)
 {
@@ -2094,11 +2094,6 @@ const moveMonthsStartCalendarsRight = document.getElementById("MoveMonthsStartCa
 const moveMonthsEndCalendarsLeft = document.getElementById("MoveMonthsEndCalendarsLeft");
 const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalendarsRight");
 
-
-
-const monthsCalendar3 = document.getElementById("MonthsCalendar3");
-const monthsCalendar4 = document.getElementById("MonthsCalendar4");
-
 const getStupidCalendarDatesAgain = document.getElementById("StartMonthsCalendars");
 const getStupidCalendarDatesAgainAgain = document.getElementById("EndMonthsCalendars");
 
@@ -2201,7 +2196,7 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
     
         createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
         createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
-    
+
         rightButtonClicked = false;
     
         if (month > currentMonth && year >= currentYear)
@@ -2217,42 +2212,6 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
             rightButton.style.color = "#dcdcdc";
             rightButton.style.background = "none";
         }
-
-        //var testarray = [];
-        //var testarray2 = [];
-        //var testdata = "";
-        //var testdata2 = "";
-
-        //getStupidCalendarDatesAgain.childNodes[1].childNodes[4].childNodes[0].childNodes[0].childNodes.forEach
-        //(
-        //    (e) => testarray.push(e.childNodes[0])
-        //)
-
-        //getStupidCalendarDatesAgain.childNodes[3].childNodes[4].childNodes[0].childNodes[4].childNodes.forEach
-        //(
-        //    (e) => testarray2.push(e.childNodes[0])
-        //)
-
-        //for (i = 0; i < 7; i++)
-        //{
-        //    if (testarray[i].innerText == 1)
-        //    {
-        //        selectedStartDate = testarray[i];
-        //        break;
-        //    }
-        //}
-
-        //for (i = 0; i < 7; i++)
-        //{
-        //    if (testarray2[i].innerText == endDate.getDate())
-        //    {
-        //        selectedEndDate = testarray2[i];
-        //        break;
-        //    }
-        //}
-
-        //console.log(selectedStartDate)
-        //console.log(selectedEndDate)
     }
 }
 
@@ -2327,28 +2286,14 @@ function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton)
         year = currentYear + 1;
     }
 
-    if (modalStartDate.style.display == "block")
-    {
-        // startDate = first day of month after current one... so current + 1
-        //startDate.style.backgroundColor = "black";
-        //startDate.style.color = "white";
-    
-        //endDate.style.backgroundColor = "";
-        //endDate.style.color = "";
-    }
-    else if (modalEndDate.style.display == "block")
-    {
-        //  endDate = last day of 3rd month after current one... so current + 4 
-        //endDate.style.backgroundColor = "black";
-        //endDate.style.color = "white";
-
-        //startDate.style.backgroundColor = "";
-        //startDate.style.color = ""; 
-    }
+    selectedStartMonth = months[startDate.getMonth()];
+    selectedStartYear = startDate.getFullYear();
+    selectedEndMonth = months[endDate.getMonth()];
+    selectedEndYear = endDate.getFullYear();
 
     const monthNames = document.querySelectorAll(".month_name");
     const tables = document.querySelectorAll(".nothing");
-   
+  
     monthNames.forEach(function(e)
     {
         e.remove();
@@ -2400,10 +2345,6 @@ function openModal(modal)
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
-
-
-
-
 
 whenStartDate.onclick = function()
 {
