@@ -618,8 +618,8 @@ var startOfCurrentMonth = new Date(year, month, 0).getDay();
 var endOfCurrentMonth = new Date(year, month + 1, 0).getDate();
 var startOfNextMonth = new Date(year, month + 1, 0).getDay();
 var endOfNextMonth = new Date(year, month + 2, 0).getDate();
-var selectedCheckinDate = "";
-var selectedCheckoutDate = "";
+var selectedCheckinDate = document.createElement(null);
+var selectedCheckoutDate = document.createElement(null);
 var selectedCheckinMonth = "";
 var selectedCheckoutMonth = "";
 var selectedCheckinYear = "";
@@ -638,16 +638,16 @@ const monthsCalendar3 = document.getElementById("MonthsCalendar3");
 const monthsCalendar4 = document.getElementById("MonthsCalendar4");
 const startDate = new Date(year, month + 1, 1);
 const endDate = new Date(year, month + 5, 0);
-var selectedStartDate = "";
-var selectedEndDate = "";
+var selectedStartDate = document.createElement(null);
+var selectedEndDate = document.createElement(null);
 var selectedStartMonth = "";
 var selectedEndMonth = "";
 var selectedStartYear = "";
 var selectedEndYear = "";
 var startDateValue = "";
 var endDateValue = "";
-//  how to shorten this abomination of vars and consts... well i cant but i wish i could
 
+//  how to shorten this abomination of vars and consts... well i cant but i wish i could
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     if (checkinDate != "" && checkoutDate != "")
@@ -986,8 +986,6 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
-
-
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
@@ -1168,7 +1166,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.color = "";
 
             //  lol it just works without any parameters... well lets just add them anyway
-            removeShadowsBetweenDates(selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate);
+            removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckinDate = "";     
         }
         else if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
@@ -1176,7 +1174,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
-            removeShadowsBetweenDates(selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate);
+            removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckoutDate = "";
         }
 
@@ -1189,7 +1187,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-           correctShadowBetweenDates(selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+           correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
         else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1199,7 +1197,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctShadowBetweenDates(selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+            correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
 
         //  validation
@@ -2128,10 +2126,11 @@ getStupidCalendarDatesAgain.onclick = function(e)
             selectedStartMonth = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedStartYear = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
             
-            correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+            correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
         }
     }
 }
+
 function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
     for (i = 0; i < 6; i++)
@@ -2163,12 +2162,11 @@ function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkou
                     divBox2.style.borderColor = "";
                 }
             }
-
         }
     }
 }
 
-function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
     for (i = 0; i < 6; i++)
     {
@@ -2178,59 +2176,49 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
             {
                 var divBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
                 var tdBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
-            }
-            catch{} //  banana
+            }catch{} //  banana
+
             try 
             {
                 var divBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
                 var tdBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
-            }
-            catch{} //  pizza
-
-           
+            }catch{} //  pizza
+            
+            //  first calendar
             if (firstCalendar.contains(checkinDate))
             {
                 if (+checkinDate.innerText == +divBox.innerText)
                 {
                     tdBox.style.background = calendarShadowCheckinColor;
                 }
-                else if (+checkinDate.innerText < +divBox.innerText)
+                else if (+checkinDate.innerText < +divBox.innerText && divBox.innerText != "")
                 {
                     divBox.style.borderColor = calendarShadowColor;
                     tdBox.style.background = calendarShadowColor;
                 }
-                
-                if (firstCalendar.contains(checkoutDate) && divBox.innerText != "")
-                {
-                    if (+checkoutDate.innerText == +divBox.innerText)
-                    {
-                        tdBox.style.background = calendarShadowCheckoutColor;
-                    }
-                    else if (+checkoutDate.innerText > +divBox.innerText)
-                    {
-                        divBox.style.borderColor = calendarShadowColor;
-                        tdBox.style.background = calendarShadowColor;
-                    }
-                }
-                else if(secondCalendar.contains(checkoutDate) && divBox2.innerText != "")
-                {
-                    if (+checkoutDate.innerText == +divBox2.innerText)
-                    {
-                        tdBox2.style.background = calendarShadowCheckoutColor;
-                    }
-                    else if (+checkoutDate.innerText > +divBox2.innerText)
-                    {
-                        divBox2.style.borderColor = calendarShadowColor;
-                        tdBox2.style.background = calendarShadowColor;
-                    }
-                }
-                else if (divBox2.innerText != "")
+
+                if (!secondCalendar.contains(checkoutDate) && divBox2.innerText != "")
                 {
                     divBox2.style.borderColor = calendarShadowColor;
                     tdBox2.style.background = calendarShadowColor;
                 }
             }
-            else if (secondCalendar.contains(checkinDate))
+
+            if (firstCalendar.contains(checkoutDate))
+            {
+                if (+checkoutDate.innerText == +divBox.innerText)
+                {
+                    tdBox.style.background = calendarShadowCheckoutColor;
+                }
+                else if (+checkoutDate.innerText > +divBox.innerText)
+                {
+                    divBox.style.borderColor = calendarShadowColor;
+                    tdBox.style.background = calendarShadowColor;
+                }
+            }
+            
+            //  second calendar
+            if (secondCalendar.contains(checkinDate))
             {
                 if (+checkinDate.innerText == +divBox2.innerText)
                 {
@@ -2238,22 +2226,29 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
                 }
                 else if (+checkinDate.innerText < +divBox2.innerText)
                 {
-                    if (!firstCalendar.contains(checkoutDate) && !secondCalendar.contains(checkoutDate))
-                    {
-                        divBox2.style.borderColor = calendarShadowColor;
-                        tdBox2.style.background = calendarShadowColor;
-                    }
-                    else if (+checkoutDate.innerText == +divBox2.innerText)
-                    {
-                        tdBox2.style.background = calendarShadowCheckoutColor;
-                    }
-                    else if (+checkoutDate.innerText > +divBox2.innerText)
-                    {
-                        divBox2.style.borderColor = calendarShadowColor;
-                        tdBox2.style.background = calendarShadowColor;
-                    }
-                } 
-            }  
+                    divBox2.style.borderColor = calendarShadowColor;
+                    tdBox2.style.background = calendarShadowColor;
+                }
+            }
+
+            if (secondCalendar.contains(checkoutDate))
+            {
+                if (+checkoutDate.innerText == +divBox2.innerText)
+                {
+                    tdBox2.style.background = calendarShadowCheckoutColor;
+                }
+                else if (+checkoutDate.innerText > +divBox2.innerText && divBox2.innerText != "")
+                {
+                    divBox2.style.borderColor = calendarShadowColor;
+                    tdBox2.style.background = calendarShadowColor;
+                }
+
+                if (!firstCalendar.contains(checkinDate) && divBox.innerText != "")
+                {
+                    divBox.style.borderColor = calendarShadowColor;
+                    tdBox.style.background = calendarShadowColor;
+                }
+            }
         }
     }  
 }
@@ -2321,18 +2316,17 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
 
         rightButtonClicked = false;
     
-        if (month > currentMonth && year >= currentYear)
-        {
-            leftButton.style.cursor = "pointer";
-            leftButton.style.color = "";
-            leftButton.style.background = "";
-        }
-
         if (month == currentMonth && year == currentYear + 1)
         {
             rightButton.style.cursor = "not-allowed";
             rightButton.style.color = "#dcdcdc";
             rightButton.style.background = "none";
+        }
+        else
+        {
+            leftButton.style.cursor = "pointer";
+            leftButton.style.color = "";
+            leftButton.style.background = "";
         }
     }
 }
@@ -2367,8 +2361,7 @@ function moveMonthsCalendarsLeft(rightButton, leftButton, firstCalendar, secondC
             leftButton.style.color = "#dcdcdc";
             leftButton.style.background = "none";
         }
-
-        if (month < currentMonth && year <= currentYear + 1)
+        else
         {
             rightButton.style.cursor = "pointer";
             rightButton.style.color = "";
@@ -2397,7 +2390,7 @@ moveMonthsEndCalendarsLeft.onclick = function()
     moveMonthsCalendarsLeft(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
 }
 
-function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton)
+function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton, rightButton)
 {
     month = currentMonth;
     year = currentYear;
@@ -2445,6 +2438,13 @@ function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton)
         leftButton.style.color = "";
         leftButton.style.background = "";
     }
+
+    if (rightButton.style.cursor == "not-allowed")
+    {
+        rightButton.style.cursor = "pointer";
+        rightButton.style.color = "";
+        rightButton.style.background = "";
+    }
 }
 
 const modalStartDate = document.getElementById("ModalStartDate");
@@ -2471,13 +2471,13 @@ function openModal(modal)
 whenStartDate.onclick = function()
 {
     openModal(modalStartDate);
-    initializeMonthsCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft);
+    initializeMonthsCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft, moveMonthsStartCalendarsRight);
 }
 
 whenEndDate.onclick = function()
 {
     openModal(modalEndDate);
-    initializeMonthsCalendars(monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft);
+    initializeMonthsCalendars(monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft, moveMonthsEndCalendarsRight);
 }
 
 modalBackground.onclick = function()
