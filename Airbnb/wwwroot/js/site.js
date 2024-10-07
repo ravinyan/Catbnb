@@ -644,18 +644,6 @@ var selectedStartMonth = "";
 var selectedEndMonth = "";
 var selectedStartYear = "";
 var selectedEndYear = "";
-var startDateValue = "";
-var endDateValue = "";
-
-console.log(selectedStartDate)
-
-if (selectedStartDate.tagName == "NULL")
-{
-    console.log("VI VON")
-
-
-}
-
 
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -1105,7 +1093,7 @@ function calendarValidationCSS(firstCalendar, secondCalendar, checkinDate, check
     selectedCheckinDate.style.background = "black";
     selectedCheckinDate.style.color = "white";
 
-    selectedCheckoutDate = "";
+    selectedCheckoutDate = document.createElement(null);
     checkoutFormInput.value = "";
 }
 
@@ -1166,26 +1154,25 @@ getStupidCalendarDates.onclick = function(e)
         }
 
         //  reset feedback
-        if (selectedCheckinDate != "" && checkinButton.style.backgroundColor == "white")
+        if (selectedCheckinDate.tagName != "NULL" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
 
-            //  lol it just works without any parameters... well lets just add them anyway
             removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
-            selectedCheckinDate = "";     
+            selectedCheckinDate = document.createElement(null);     
         }
-        else if (selectedCheckoutDate != "" && checkoutButton.style.backgroundColor == "white")
+        else if (selectedCheckoutDate.tagName != "NULL" && checkoutButton.style.backgroundColor == "white")
         {
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
             removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
-            selectedCheckoutDate = "";
+            selectedCheckoutDate = document.createElement(null); 
         }
 
         //  apply feedback
-        if (selectedCheckinDate == "" && checkinButton.style.backgroundColor == "white")
+        if (selectedCheckinDate.tagName == "NULL" && checkinButton.style.backgroundColor == "white")
         {
             selectedCheckinDate = e.target;
             selectedCheckinDate.style.background = "black";
@@ -1195,7 +1182,7 @@ getStupidCalendarDates.onclick = function(e)
 
            correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
-        else if (selectedCheckoutDate == "" && checkoutButton.style.backgroundColor == "white")
+        else if (selectedCheckoutDate.tagName == "NULL" && checkoutButton.style.backgroundColor == "white")
         {
             selectedCheckoutDate = e.target;
             selectedCheckoutDate.style.background = "black";
@@ -1209,7 +1196,7 @@ getStupidCalendarDates.onclick = function(e)
         //  validation
         if ((+selectedCheckinDate.innerText > +selectedCheckoutDate.innerText) 
         &&  (selectedCheckinMonth == selectedCheckoutMonth) && (selectedCheckinYear == selectedCheckoutYear)
-        &&  (selectedCheckinDate != "" && selectedCheckoutDate != ""))
+        &&  (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
         {
              calendarValidationCSS(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
@@ -1253,8 +1240,8 @@ clearCalendarFormInputButton.onclick = function()
     selectedCheckinDate.style.color = "";
     selectedCheckoutDate.style.background = "";
     selectedCheckoutDate.style.color = "";
-    selectedCheckinDate = "";
-    selectedCheckoutDate = "";
+    selectedCheckinDate = document.createElement(null);
+    selectedCheckoutDate = document.createElement(null);
 
     clearCalendarFormInputButton.style.display = "none";
     
@@ -1816,6 +1803,20 @@ var tembobaryChonkoutBalue = "";
 calendarExactDatesButton.style.borderColor = "black";
 calendarExactDatesButton.style.background = "#f0f0f0";
 previousElementCalendarPMButton = calendarExactDatesButton;
+var pmArray = [" ±1", " ±2", " ±3", " ±7", " ±14"];
+
+function SWAPEM(tembobaryBalue)
+{
+    for (i = 0; i < pmArray.length; i++)
+    {
+        if (tembobaryBalue.includes(pmArray[i]))
+        {
+            tembobaryBalue = tembobaryBalue.replace(pmArray[i], "");
+        }
+    }
+
+    return tembobaryBalue;
+}
 
 function addPMAmount(input, element)
 {
@@ -1823,9 +1824,14 @@ function addPMAmount(input, element)
     previousElementCalendarPMButton.style.background = "";
     element.style.borderColor = "black";
     element.style.background = "#f0f0f0";
-
     pmText = ` ${input}`;
 
+    if (pmText != "")
+    {
+        pmText = "";
+        pmText = ` ${input}`;
+    }
+    
     if (tembobaryChonkinBalue != "")
     {
         checkinFormInput.value = tembobaryChonkinBalue;
@@ -1837,23 +1843,19 @@ function addPMAmount(input, element)
 
     if (checkinFormInput.value != "")
     {
-        if (checkinFormInput.value.includes(" ±1" || " ±2" || " ±3" || " ±7" || " ±14"))
-        {
-            checkinFormInput.value = checkinFormInput.value.replace(" ±1" || " ±2" || " ±3" || " ±7" || " ±14", "");
-        }
-
         tembobaryChonkinBalue = checkinFormInput.value;
-        checkinFormInput.value += pmText
+
+        tembobaryChonkinBalue = SWAPEM(tembobaryChonkinBalue);
+
+        checkinFormInput.value = `${tembobaryChonkinBalue}${pmText}` 
     }
     if (checkoutFormInput.value != "")
     {
-        if (checkoutFormInput.value.includes(" ±1" || " ±2" || " ±3" || " ±7" || " ±14"))
-        {
-            checkoutFormInput.value = checkoutFormInput.value.replace(" ±1" || " ±2" || " ±3" || " ±7" || " ±14", "");
-        }
-
         tembobaryChonkoutBalue = checkoutFormInput.value;
-        checkoutFormInput.value += pmText;
+
+        tembobaryChonkoutBalue = SWAPEM(tembobaryChonkoutBalue);
+
+        checkoutFormInput.value = `${tembobaryChonkoutBalue}${pmText}` 
     }
 
     previousElementCalendarPMButton = element;
@@ -1904,6 +1906,8 @@ const whenStartDate = document.getElementById("WhenStartDate");
 const whenEndDate = document.getElementById("WhenEndDate");
 const whenInput = document.getElementById("WhenInput");
 var degrees = "";
+var startDateValue = "";
+var endDateValue = "";
 
 function setWhenValues(startDate, endDate, month, number)
 {
@@ -1912,6 +1916,8 @@ function setWhenValues(startDate, endDate, month, number)
     whenInput.value = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${currentYear} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
     whenStartDate.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${startDate.getFullYear()}`;
     whenEndDate.innerText = `${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
+    startDateValue = whenStartDate.innerText;
+    endDateValue = whenEndDate.innerText;
 }
 
 if (whenInput.value == "")
@@ -2088,7 +2094,102 @@ const monthsEndPM3Button = document.getElementById("MonthsEndPM3Button");
 const monthsEndPM7Button = document.getElementById("MonthsEndPM7Button");
 const monthsEndPM14Button = document.getElementById("MonthsEndPM14Button");
 
-//  this is a wall.
+var startMonthsPMValue = "";
+var endMonthsPMValue = "";
+var savedStartMonthsPMValue = "";
+var savedEndMonthsPMValue = "";
+monthsStartExactDatesButton.style.borderColor = "black";
+monthsStartExactDatesButton.style.background = "#f0f0f0";
+monthsEndExactDatesButton.style.borderColor = "black";
+monthsEndExactDatesButton.style.background = "#f0f0f0";
+var previousMonthsStartPMElement = monthsStartExactDatesButton;
+var previousMonthsEndPMElement = monthsEndExactDatesButton;
+
+function addMonthsPMValueStart(value, element)
+{
+    previousMonthsStartPMElement.style.borderColor = "";
+    previousMonthsStartPMElement.style.background = "";
+    startMonthsPMValue = "";
+
+    element.style.borderColor = "black";
+    element.style.background = "#f0f0f0";
+    startMonthsPMValue = value;
+
+    previousMonthsStartPMElement = element;
+}
+
+function addMonthsPMValueEnd(value, element)
+{
+    previousMonthsEndPMElement.style.borderColor = "";
+    previousMonthsEndPMElement.style.background = "";
+    endMonthsPMValue = "";
+
+    element.style.borderColor = "black";
+    element.style.background = "#f0f0f0";
+    endMonthsPMValue = value;
+
+    previousMonthsEndPMElement = element;
+}
+
+monthsStartExactDatesButton.onclick = function(e)
+{
+    addMonthsPMValueStart("", e.target);
+}
+
+monthsStartPM1Button.onclick = function(e)
+{
+    addMonthsPMValueStart("±1", e.target);
+}
+
+monthsStartPM2Button.onclick = function(e)
+{
+    addMonthsPMValueStart("±2", e.target);
+}
+
+monthsStartPM3Button.onclick = function(e)
+{
+    addMonthsPMValueStart("±3", e.target);
+}
+
+monthsStartPM7Button.onclick = function(e)
+{
+    addMonthsPMValueStart("±7", e.target);
+}
+
+monthsStartPM14Button.onclick = function(e)
+{
+    addMonthsPMValueStart("±14", e.target);
+}
+
+monthsEndExactDatesButton.onclick = function(e)
+{
+    addMonthsPMValueEnd("", e.target);
+}
+
+monthsEndPM1Button.onclick = function(e)
+{
+    addMonthsPMValueEnd("±1", e.target);
+}
+
+monthsEndPM2Button.onclick = function(e)
+{
+    addMonthsPMValueEnd("±2", e.target);
+}
+
+monthsEndPM3Button.onclick = function(e)
+{
+    addMonthsPMValueEnd("±3", e.target);
+}
+
+monthsEndPM7Button.onclick = function(e)
+{
+    addMonthsPMValueEnd("±7", e.target);
+}
+
+monthsEndPM14Button.onclick = function(e)
+{
+    addMonthsPMValueEnd("±14", e.target);
+}
 
 const moveMonthsStartCalendarsLeft = document.getElementById("MoveMonthsStartCalendarsLeft");
 const moveMonthsStartCalendarsRight = document.getElementById("MoveMonthsStartCalendarsRight");
@@ -2442,10 +2543,117 @@ moveMonthsEndCalendarsLeft.onclick = function()
     moveMonthsCalendarsLeft(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
 }
 
+function rememberStartButtonClickedCSS(PMAmout)
+{
+    if (PMAmout == "")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartExactDatesButton.style.borderColor = "black";
+        monthsStartExactDatesButton.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartExactDatesButton;
+    }
+    else if (PMAmout == "±1")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartPM1Button.style.borderColor = "black";
+        monthsStartPM1Button.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartPM1Button;
+    }
+    else if (PMAmout == "±2")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartPM2Button.style.borderColor = "black";
+        monthsStartPM2Button.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartPM2Button;
+    }
+    else if (PMAmout == "±3")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartPM3Button.style.borderColor = "black";
+        monthsStartPM3Button.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartPM3Button;
+    }
+    else if (PMAmout == "±7")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartPM7Button.style.borderColor = "black";
+        monthsStartPM7Button.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartPM7Button;
+    }
+    else if (PMAmout == "±14")
+    {
+        previousMonthsStartPMElement.style.borderColor = "";
+        previousMonthsStartPMElement.style.background = "";
+        monthsStartPM14Button.style.borderColor = "black";
+        monthsStartPM14Button.style.background = "#f0f0f0";
+        previousMonthsStartPMElement = monthsStartPM14Button;
+    }
+}
+
+function rememberEndButtonClickedCSS(PMAmout)
+{
+    if (PMAmout == "")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndExactDatesButton.style.borderColor = "black";
+        monthsEndExactDatesButton.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndExactDatesButton;
+    }
+    else if (PMAmout == "±1")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndPM1Button.style.borderColor = "black";
+        monthsEndPM1Button.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndPM1Button;
+    }
+    else if (PMAmout == "±2")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndPM2Button.style.borderColor = "black";
+        monthsEndPM2Button.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndPM2Button;
+    }
+    else if (PMAmout == "±3")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndPM3Button.style.borderColor = "black";
+        monthsEndPM3Button.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndPM3Button;
+    }
+    else if (PMAmout == "±7")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndPM7Button.style.borderColor = "black";
+        monthsEndPM7Button.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndPM7Button;
+    }
+    else if (PMAmout == "±14")
+    {
+        previousMonthsEndPMElement.style.borderColor = "";
+        previousMonthsEndPMElement.style.background = "";
+        monthsEndPM14Button.style.borderColor = "black";
+        monthsEndPM14Button.style.background = "#f0f0f0";
+        previousMonthsEndPMElement = monthsEndPM14Button;
+    }
+}
+
 function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton, rightButton)
 {
     month = currentMonth;
     year = currentYear;
+
+    rememberStartButtonClickedCSS(savedStartMonthsPMValue);
+    rememberEndButtonClickedCSS(savedEndMonthsPMValue);
 
     if (month >= 11)
     {
@@ -2542,15 +2750,15 @@ const saveEndDateButton = document.getElementById("SaveMonthEndDate");
 
 saveStartDateButton.onclick = function()
 {
-                                     // ${PM}           //${PM}
-    whenInput.value = `${startDateValue} - ${endDateValue}`
+    savedStartMonthsPMValue = startMonthsPMValue;
+    whenInput.value = `${startDateValue} ${savedStartMonthsPMValue} - ${endDateValue} ${savedEndMonthsPMValue}`
     closeModal();
 }
 
 saveEndDateButton.onclick = function()
 {
-                                      //${PM}           //${PM}
-    whenInput.value = `${startDateValue} - ${endDateValue}`
+    savedEndMonthsPMValue = endMonthsPMValue;
+    whenInput.value = `${startDateValue} ${savedStartMonthsPMValue} - ${endDateValue} ${savedEndMonthsPMValue}`
     closeModal();
 }
 
