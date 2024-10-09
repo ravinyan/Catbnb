@@ -640,10 +640,10 @@ const startDate = new Date(year, month + 1, 1);
 const endDate = new Date(year, month + 5, 0);
 var selectedStartDate = document.createElement(null);
 var selectedEndDate = document.createElement(null);
-var selectedStartMonth = "";
-var selectedEndMonth = "";
-var selectedStartYear = "";
-var selectedEndYear = "";
+var selectedStartMonth = months[startDate.getMonth()];
+var selectedEndMonth = months[endDate.getMonth()];
+var selectedStartYear = startDate.getFullYear();
+var selectedEndYear = endDate.getFullYear();
 
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -1909,20 +1909,30 @@ var degrees = "";
 var startDateValue = "";
 var endDateValue = "";
 
-function setWhenValues(startDate, endDate, month, number)
+function setWhenValues(dateStart, dateEnd, month, number)
 {
     monthNumber.innerText = month;
-    endDate.setMonth(endDate.getMonth() + number);
-    whenInput.value = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${currentYear} - ${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
-    whenStartDate.innerText = `${startDate.getDate()} ${monthsAbbreviations[startDate.getMonth()]} ${startDate.getFullYear()}`;
-    whenEndDate.innerText = `${endDate.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${endDate.getFullYear()}`;
-    startDateValue = whenStartDate.innerText;
-    endDateValue = whenEndDate.innerText;
+    //dateEnd.setMonth(dateEnd.getMonth() + number);
+
+    //selectedEndMonth = months[dateEnd.getMonth()];
+
+    console.log(dateEnd)
+
+    dateStart.setMonth(dateStart.getMonth())
+
+    dateEnd.setMonth(dateEnd.getMonth() + number)
+
+    //console.log(dateEnd)
+    //whenInput.value = `${dateStart.getDate()} ${monthsAbbreviations[dateStart.getMonth()]} ${currentYear} - ${dateEnd.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${dateEnd.getFullYear()}`;
+    whenStartDate.innerText = `${dateStart.getDate()} ${monthsAbbreviations[dateStart.getMonth()]} ${dateStart.getFullYear()}`;
+    whenEndDate.innerText = `${dateEnd.getDate()} ${monthsAbbreviations[dateEnd.getMonth()]} ${dateEnd.getFullYear()}`;
+    //startDateValue = whenStartDate.innerText;
+    //endDateValue = whenEndDate.innerText;
 }
 
 if (whenInput.value == "")
 {
-    setWhenValues(new Date(year, month + 1, 1), new Date(year, month + 1, 1), "3 Months", 3)
+    //setWhenValues(startDate, endDate, "3 Months", 3)
 }
 
 function dragCircleCSS()
@@ -2031,46 +2041,48 @@ function moveCircle()
                 degrees = angle * (180/Math.PI);
             }
 
-            const startDate = new Date(year, month + 1, 1);
-            const endDate = new Date(year, month + 1, 1);
+            const startDay = new Date(selectedStartYear, months.indexOf(selectedStartMonth), 1);
+            const endDay = new Date(2024, 10, 1);
+
+            console.log(endDay)
 
             switch (true)
             {
                 case degrees > -75 && degrees < -45:
-                    setWhenValues(startDate, endDate, "1 Month", 1);
+                    setWhenValues(startDay, endDay, "1 Month", 1);
                     break;
                 case degrees > -45 && degrees < -15:
-                    setWhenValues(startDate, endDate, "2 Months", 2);
+                    setWhenValues(startDay, endDay, "2 Months", 2);
                     break;
                 case degrees > -15 && degrees < 15:
-                    setWhenValues(startDate, endDate, "3 Months", 3);
+                    setWhenValues(startDay, endDay, "3 Months", 3);
                     break;
                 case degrees > 15 && degrees < 45:
-                    setWhenValues(startDate, endDate, "4 Months", 4);
+                    setWhenValues(startDay, endDay, "4 Months", 4);
                     break;
                 case degrees > 45 && degrees < 75:
-                    setWhenValues(startDate, endDate, "5 Months", 5);
+                    setWhenValues(startDay, endDay, "5 Months", 5);
                     break;
                 case degrees > 75 && degrees < 105:
-                    setWhenValues(startDate, endDate, "6 Months", 6);
+                    setWhenValues(startDay, endDay, "6 Months", 6);
                     break;
                 case degrees > 105 && degrees < 135:
-                    setWhenValues(startDate, endDate, "7 Months", 7);
+                    setWhenValues(startDay, endDay, "7 Months", 7);
                     break;
                 case degrees > 135 && degrees < 165:
-                    setWhenValues(startDate, endDate, "8 Months", 8);
+                    setWhenValues(startDay, endDay, "8 Months", 8);
                     break;
                 case degrees < -165 || degrees > 165:
-                    setWhenValues(startDate, endDate, "9 Months", 9);
+                    setWhenValues(startDay, endDay, "9 Months", 9);
                     break;
                 case degrees > -165 && degrees < -135:
-                    setWhenValues(startDate, endDate, "10 Months", 10);
+                    setWhenValues(startDay, endDay, "10 Months", 10);
                     break;
                 case degrees > -135 && degrees < -105:
-                    setWhenValues(startDate, endDate, "11 Months", 11);
+                    setWhenValues(startDay, endDay, "11 Months", 11);
                     break;
                 case degrees > -105 && degrees < -75:
-                    setWhenValues(startDate, endDate, "12 Months", 12);
+                    setWhenValues(startDay, endDay, "12 Months", 12);
                     break;
             }
         }
