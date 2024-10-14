@@ -655,8 +655,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
         {
             td.style.background = calendarShadowCheckinColor;
         }
-
-        if (x == +checkoutDate.innerText && checkoutMonth == months[month] && checkoutYear == nextYear)
+        else if (x == +checkoutDate.innerText && checkoutMonth == months[month] && checkoutYear == nextYear)
         {
             td.style.background = calendarShadowCheckoutColor;
         }
@@ -669,7 +668,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor; 
         }
-        
+      
         if (months.indexOf(months[month]) == months.indexOf(checkinMonth) 
         &&  months.indexOf(months[month]) != months.indexOf(checkoutMonth)
         &&  x > +checkinDate.innerText && checkoutYear == year && checkinYear == year)
@@ -677,7 +676,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;   
         }
-        
+      
         if (months.indexOf(months[month]) != months.indexOf(checkinMonth) 
         &&  months.indexOf(months[month]) == months.indexOf(checkoutMonth)
         &&  x < +checkoutDate.innerText && checkoutYear == year && checkinYear == year)
@@ -685,7 +684,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;   
         }
-        
+      
         if (months.indexOf(months[month]) > months.indexOf(checkinMonth)
         &&  months.indexOf(months[month]) < months.indexOf(checkoutMonth)
         &&  checkoutYear == year && checkinYear == year)
@@ -1666,46 +1665,44 @@ const whenInput = document.getElementById("WhenInput");
 var degrees = "";
 var startDateValue = "";
 var endDateValue = "";
+var savedStartMonthsPMValue = "";
+var savedEndMonthsPMValue = "";
 
-function setWhenValues(dateStart, dateEnd, month, number)
+function setWhenValues(dateStart, month, number)
 {
+    if (monthNumber.innerText == month)
+    {
+
+    }
+    else
+    {
+        whenInput.innerText = "";
+
+        var s = new Date(dateStart);
+        var e = new Date(dateStart);
+
+        e.setMonth(e.getMonth() + number)
+
+        whenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()} ${savedStartMonthsPMValue}`;
+        whenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()} ${savedEndMonthsPMValue}`;
+        
+        whenInput.appendChild(document.createTextNode(`${whenStartDate.innerText}`))
+        whenInput.appendChild(document.createTextNode(" - "))
+        whenInput.appendChild(document.createTextNode(`${whenEndDate.innerText}`))
+
+        selectedEndMonth = months[e.getMonth()];
+        selectedEndYear = e.getFullYear();
+
+        startDateValue = whenStartDate.innerText;
+        endDateValue = whenEndDate.innerText;
+    }
+
     monthNumber.innerText = month;
-
-    var s = new Date(dateStart);
-    var e = new Date(dateStart);
-
-    e.setMonth(e.getMonth() + number)
-
-    //whenInput.value = `${dateStart.getDate()} ${monthsAbbreviations[dateStart.getMonth()]} ${currentYear} - ${dateEnd.getDate()} ${monthsAbbreviations[endDate.getMonth()]} ${dateEnd.getFullYear()}`;
-    //if (selectedStartDate.innerText > s.getDate())
-    //{
-    //    whenStartDate.innerText = `${selectedStartDate.innerText} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
-    //}
-    //else
-    //{
-    //    whenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
-    //}
-
-    //if(selectedEndDate.innerText > e.getDate())
-    //{
-    //    whenEndDate.innerText = `${selectedEndDate.innerText} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;  
-    //}
-    //else
-    //{
-    //    whenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
-    //}
-    whenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
-    whenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
-    //startDateValue = whenStartDate.innerText;
-    //endDateValue = whenEndDate.innerText;
-
-    selectedEndMonth = months[e.getMonth()];
-    selectedEndYear = e.getFullYear();
 }
 
-if (whenInput.value == "")
+if (whenInput.innerText == "")
 {
-    //setWhenValues(startDate, endDate, "3 Months", 3)
+    setWhenValues(startDate, "3 Months", 3)
 }
 
 function dragCircleCSS()
@@ -1817,40 +1814,40 @@ function moveCircle()
             switch (true)
             {
                 case degrees > -75 && degrees < -45:
-                    setWhenValues(startDate, endDate, "1 Month", 1);
+                    setWhenValues(startDate, "1 Month", 1);
                     break;
                 case degrees > -45 && degrees < -15:
-                    setWhenValues(startDate, endDate, "2 Months", 2);
+                    setWhenValues(startDate, "2 Months", 2);
                     break;
                 case degrees > -15 && degrees < 15:
-                    setWhenValues(startDate, endDate, "3 Months", 3);
+                    setWhenValues(startDate, "3 Months", 3);
                     break;
                 case degrees > 15 && degrees < 45:
-                    setWhenValues(startDate, endDate, "4 Months", 4);
+                    setWhenValues(startDate, "4 Months", 4);
                     break;
                 case degrees > 45 && degrees < 75:
-                    setWhenValues(startDate, endDate, "5 Months", 5);
+                    setWhenValues(startDate, "5 Months", 5);
                     break;
                 case degrees > 75 && degrees < 105:
-                    setWhenValues(startDate, endDate, "6 Months", 6);
+                    setWhenValues(startDate, "6 Months", 6);
                     break;
                 case degrees > 105 && degrees < 135:
-                    setWhenValues(startDate, endDate, "7 Months", 7);
+                    setWhenValues(startDate, "7 Months", 7);
                     break;
                 case degrees > 135 && degrees < 165:
-                    setWhenValues(startDate, endDate, "8 Months", 8);
+                    setWhenValues(startDate, "8 Months", 8);
                     break;
                 case degrees < -165 || degrees > 165:
-                    setWhenValues(startDate, endDate, "9 Months", 9);
+                    setWhenValues(startDate, "9 Months", 9);
                     break;
                 case degrees > -165 && degrees < -135:
-                    setWhenValues(startDate, endDate, "10 Months", 10);
+                    setWhenValues(startDate, "10 Months", 10);
                     break;
                 case degrees > -135 && degrees < -105:
-                    setWhenValues(startDate, endDate, "11 Months", 11);
+                    setWhenValues(startDate, "11 Months", 11);
                     break;
                 case degrees > -105 && degrees < -75:
-                    setWhenValues(startDate, endDate, "12 Months", 12);
+                    setWhenValues(startDate, "12 Months", 12);
                     break;
             }
         }
@@ -1876,8 +1873,6 @@ const monthsEndPM14Button = document.getElementById("MonthsEndPM14Button");
 
 var startMonthsPMValue = "";
 var endMonthsPMValue = "";
-var savedStartMonthsPMValue = "";
-var savedEndMonthsPMValue = "";
 monthsStartExactDatesButton.style.borderColor = "black";
 monthsStartExactDatesButton.style.background = "#f0f0f0";
 monthsEndExactDatesButton.style.borderColor = "black";
@@ -1978,6 +1973,9 @@ const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalend
 
 const getStupidCalendarDatesAgain = document.getElementById("StartMonthsCalendars");
 const getStupidCalendarDatesAgainAgain = document.getElementById("EndMonthsCalendars");
+
+var previousMonthsSelectedStartDate = "";
+var previousMonthsSelectedEndDate = "";
 
 function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
@@ -2144,7 +2142,7 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
                 }
             }
         }
-    }  
+    }
 }
 
 getStupidCalendarDatesAgain.onclick = function(e)
@@ -2423,29 +2421,28 @@ function rememberEndButtonClickedCSS(PMAmout)
     }
 }
 
-function initializeMonthsCalendars(firstCalendar, secondCalendar, leftButton, rightButton)
+function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton, rightButton)
 {
-    month = currentMonth;
-    year = currentYear;
-
     rememberStartButtonClickedCSS(savedStartMonthsPMValue);
     rememberEndButtonClickedCSS(savedEndMonthsPMValue);
 
-    if (month >= 11)
+    if (e.target == whenStartDate)
     {
-        month == 1;
-        year = currentYear + 1;
+        month = months.indexOf(selectedStartMonth) - 1;
+        year = selectedStartYear;
+
+        if (month >= 11)
+        {
+            month == 1;
+            year = currentYear + 1;
+        }
+    }
+    else if (e.target == whenEndDate)
+    {
+        month = months.indexOf(selectedEndMonth) - 2;
+        year = selectedEndYear;
     }
 
-    if (selectedStartMonth == months[startDate.getMonth()] && selectedStartYear == startDate.getFullYear() 
-    &&  selectedEndMonth == months[endDate.getMonth()] && selectedEndYear == endDate.getFullYear())
-    {
-        selectedStartMonth = months[startDate.getMonth()];
-        selectedStartYear = startDate.getFullYear();
-        selectedEndMonth = months[endDate.getMonth()];
-        selectedEndYear = endDate.getFullYear();
-    }
-    
     const monthNames = document.querySelectorAll(".month_name");
     const tables = document.querySelectorAll(".nothing");
   
@@ -2491,13 +2488,29 @@ const modalStartDate = document.getElementById("ModalStartDate");
 const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
 
-function closeModal()
+function closeModal(e)
 {
     modalBackground.style.display = "none";
     modalStartDate.style.display = "none";
     modalEndDate.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
+
+    if (e.target == modalBackground && previousMonthsSelectedStartDate != "")
+    {
+        selectedStartDate = previousMonthsSelectedStartDate;
+    }
+
+    if (e.target == modalBackground && previousMonthsSelectedEndDate != "")
+    {
+        selectedEndDate = previousMonthsSelectedEndDate;
+    }
+
+    if (e.target == saveStartDateButton || e.target == saveEndDateButton)
+    {
+        previousMonthsSelectedStartDate = "";
+        previousMonthsSelectedEndDate = "";
+    }
 }
 
 function openModal(modal)
@@ -2508,21 +2521,21 @@ function openModal(modal)
     document.body.style.paddingRight = "19px";
 }
 
-whenStartDate.onclick = function()
+whenStartDate.onclick = function(e)
 {
     openModal(modalStartDate);
-    initializeMonthsCalendars(monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft, moveMonthsStartCalendarsRight);
+    initializeMonthsCalendars(e, monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft, moveMonthsStartCalendarsRight);
 }
 
-whenEndDate.onclick = function()
+whenEndDate.onclick = function(e)
 {
     openModal(modalEndDate);
-    initializeMonthsCalendars(monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft, moveMonthsEndCalendarsRight);
+    initializeMonthsCalendars(e, monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft, moveMonthsEndCalendarsRight);
 }
 
-modalBackground.onclick = function()
+modalBackground.onclick = function(e)
 {
-    closeModal();
+    closeModal(e);
 }
 
 const saveStartDateButton = document.getElementById("SaveMonthStartDate");
@@ -2534,18 +2547,38 @@ var savedSelectedEndDate = "";
 var savedSelectedEndMonth = "";
 var savedSelectedEndYear = "";
 
-saveStartDateButton.onclick = function()
+saveStartDateButton.onclick = function(e)
 {
     savedStartMonthsPMValue = startMonthsPMValue;
-    whenInput.value = `${startDateValue} ${savedStartMonthsPMValue} - ${endDateValue} ${savedEndMonthsPMValue}`
-    closeModal();
+
+    if (whenInput.innerText != "")
+    {
+        whenInput.innerText = "";
+    }
+
+    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
+    whenInput.appendChild(document.createTextNode(" - "))
+    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`))
+    whenStartDate.innerText = `${startDateValue} ${savedStartMonthsPMValue}`;
+
+    closeModal(e);
 }
 
-saveEndDateButton.onclick = function()
+saveEndDateButton.onclick = function(e)
 {
     savedEndMonthsPMValue = endMonthsPMValue;
-    whenInput.value = `${startDateValue} ${savedStartMonthsPMValue} - ${endDateValue} ${savedEndMonthsPMValue}`
-    closeModal();
+    
+    if (whenInput.innerText != "")
+    {
+        whenInput.innerText = "";
+    }
+
+    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
+    whenInput.appendChild(document.createTextNode(" - "))
+    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`))
+    whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
+
+    closeModal(e);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
