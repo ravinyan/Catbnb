@@ -597,9 +597,8 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
---------(this was very fun challenge but holy shit its finally (not)complete 1k+ lines of code for stupid calendar)--------*/
+--------------------------------------------------ALSO WHEN CALENDARS-------------------------------------------------*/
 
-//  IT HAS MORE BUGS WILL DO THEM LATER IM FIGHTING WITH MATH (shadow bug when years selected is 2024 and >2024)
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 
@@ -646,6 +645,8 @@ var selectedStartMonth = months[startDate.getMonth()];
 var selectedEndMonth = months[endDate.getMonth()];
 var selectedStartYear = startDate.getFullYear();
 var selectedEndYear = endDate.getFullYear();
+var previousMonthsSelectedStartDate = "";
+var previousMonthsSelectedEndDate = "";
 
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -819,6 +820,8 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                      
                         selectedStartDate = div;
                         selectedStartDate.innerText = x;
+
+                       //previousMonthsSelectedStartDate = selectedStartDate;
                     }
                     else if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
@@ -929,6 +932,8 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 
                     selectedEndDate = div;
                     selectedEndDate.innerText = x;
+
+                    //previousMonthsSelectedEndDate = selectedEndDate;
                 }
                 else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
                 &&  checkinMonth == months[nextMonth] && checkinYear == nextYear)
@@ -1693,8 +1698,64 @@ function setWhenValues(dateStart, month, number)
         selectedEndMonth = months[e.getMonth()];
         selectedEndYear = e.getFullYear();
 
-        startDateValue = whenStartDate.innerText;
-        endDateValue = whenEndDate.innerText;
+        selectedStartDate.innerText = "1";
+        selectedEndDate.innerText = "1";
+
+        startDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`
+        endDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`
+
+        //  switch for changing position on circle when setting different month ehere
+        //switch (true)
+        //{
+        //    case selectedEndMonth == s.setMonth(s.getMonth() + 1):
+        //        draggableCircle.style.cy = `49.4263px`;
+        //        draggableCircle.style.cx = `247.5px`;
+        //        break;
+        //    case degrees > -45 && degrees < -15:
+        //        draggableCircle.style.cy = `102.5px`;
+        //        draggableCircle.style.cx = `300.5736px`;
+        //        break;
+        //    case degrees > -15 && degrees < 15:
+        //        draggableCircle.style.cy = `175px`;
+        //        draggableCircle.style.cx = `320px`;
+        //        break;
+        //    case degrees > 15 && degrees < 45:
+        //        draggableCircle.style.cy = `247.5px`;
+        //        draggableCircle.style.cx = `300.5736px`;
+        //        break;
+        //    case degrees > 45 && degrees < 75:
+        //        draggableCircle.style.cy = `300.5736px`;
+        //        draggableCircle.style.cx = `247.5px`;
+        //        break;
+        //    case degrees > 75 && degrees < 105:
+        //        draggableCircle.style.cy = `320px`;
+        //        draggableCircle.style.cx = `175px`;
+        //        break;
+        //    case degrees > 105 && degrees < 135:
+        //        draggableCircle.style.cy = `300.5736px`;
+        //        draggableCircle.style.cx = `102.5px`;
+        //        break;
+        //    case degrees > 135 && degrees < 165:
+        //        draggableCircle.style.cy = `247.5px`;
+        //        draggableCircle.style.cx = `49.4263px`;
+        //        break;
+        //    case degrees < -165 || degrees > 165:
+        //        draggableCircle.style.cy = `175px`;
+        //        draggableCircle.style.cx = `30px`;
+        //        break;
+        //    case degrees > -165 && degrees < -135:
+        //        draggableCircle.style.cy = `102.5px`;
+        //        draggableCircle.style.cx = `49.4263px`;
+        //        break;
+        //    case degrees > -135 && degrees < -105:
+        //        draggableCircle.style.cy = `49.4263px`;
+        //        draggableCircle.style.cx = `102.5px`;
+        //        break;
+        //    case degrees > -105 && degrees < -75:
+        //        draggableCircle.style.cy = `30px`;
+        //        draggableCircle.style.cx = `175px`;
+        //        break;
+        //}
     }
 
     monthNumber.innerText = month;
@@ -1974,9 +2035,6 @@ const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalend
 const getStupidCalendarDatesAgain = document.getElementById("StartMonthsCalendars");
 const getStupidCalendarDatesAgainAgain = document.getElementById("EndMonthsCalendars");
 
-var previousMonthsSelectedStartDate = "";
-var previousMonthsSelectedEndDate = "";
-
 function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
     for (i = 0; i < 6; i++)
@@ -2143,19 +2201,38 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
             }
         }
     }
+
+    //if ((firstCalendar == monthsCalendar || firstCalendar == monthsCalendar3) && previousMonthsSelectedStartDate == "")
+    //{
+    //    previousMonthsSelectedStartDate = checkinDate;
+    //}
+
+    //if ((firstCalendar == monthsCalendar || firstCalendar == monthsCalendar3) && previousMonthsSelectedEndDate == "")
+    //{
+    //    previousMonthsSelectedEndDate = checkoutDate;
+    //}
 }
+
+//    previousMonthsSelectedStartDate = selectedStartDate;
+//    previousMonthsSelectedEndDate = selectedEndDate;
+
 
 getStupidCalendarDatesAgain.onclick = function(e)
 {
-    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
     {
-        if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar))
+        if (previousMonthsSelectedStartDate == "")
         {
-            startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar.childNodes[1].innerText.slice(-4);
-        }
-        else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar2))
-        {
-            startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar2.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar2.childNodes[1].innerText.slice(-4);
+            if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar))
+            {
+                startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar.childNodes[1].innerText.slice(-4);
+            }
+            else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar2))
+            {
+                startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar2.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar2.childNodes[1].innerText.slice(-4);
+            }
+
+            previousMonthsSelectedStartDate = e.target;
         }
 
         //  reset feedback
@@ -2184,38 +2261,43 @@ getStupidCalendarDatesAgain.onclick = function(e)
 
 getStupidCalendarDatesAgainAgain.onclick = function(e)
 {
-    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
     {
-       if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar3))
-       {
-           endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar3.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar3.childNodes[1].innerText.slice(-4);
-       }
-       else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar4))
-       {
-           endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar4.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar4.childNodes[1].innerText.slice(-4);
-       }
+        if (previousMonthsSelectedEndDate == "")
+        {
+            if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar3))
+            {
+                endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar3.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar3.childNodes[1].innerText.slice(-4);
+            }
+            else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar4))
+            {
+                endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar4.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar4.childNodes[1].innerText.slice(-4);
+            }
 
-       //  reset feedback
-       if (selectedEndDate != "")
-       {
-           selectedEndDate.style.background = "";
-           selectedEndDate.style.color = "";
-
-           removeMonthsShadows(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
-           selectedEndDate = "";     
-       }
-
-       //  apply feedback
-       if (selectedEndDate == "")
-       {
-           selectedEndDate = e.target;
-           selectedEndDate.style.background = "black";
-           selectedEndDate.style.color = "white";
-           selectedEndMonth = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
-           selectedEndYear = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-
-          correctMonthsDatesShadow(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
-       }
+            previousMonthsSelectedEndDate = e.target;
+        }
+        
+        //  reset feedback
+        if (selectedEndDate != "")
+        {
+            selectedEndDate.style.background = "";
+            selectedEndDate.style.color = "";
+        
+            removeMonthsShadows(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
+            selectedEndDate = "";     
+        }
+        
+        //  apply feedback
+        if (selectedEndDate == "")
+        {
+            selectedEndDate = e.target;
+            selectedEndDate.style.background = "black";
+            selectedEndDate.style.color = "white";
+            selectedEndMonth = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            selectedEndYear = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+        
+           correctMonthsDatesShadow(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
+        }
     }
 }
 
@@ -2441,6 +2523,7 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
     {
         month = months.indexOf(selectedEndMonth) - 2;
         year = selectedEndYear;
+        nextYear = year;
     }
 
     const monthNames = document.querySelectorAll(".month_name");
@@ -2505,12 +2588,6 @@ function closeModal(e)
     {
         selectedEndDate = previousMonthsSelectedEndDate;
     }
-
-    if (e.target == saveStartDateButton || e.target == saveEndDateButton)
-    {
-        previousMonthsSelectedStartDate = "";
-        previousMonthsSelectedEndDate = "";
-    }
 }
 
 function openModal(modal)
@@ -2556,6 +2633,11 @@ saveStartDateButton.onclick = function(e)
         whenInput.innerText = "";
     }
 
+    if (previousMonthsSelectedStartDate != "")
+    {
+        previousMonthsSelectedStartDate = "";
+    }
+
     whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
     whenInput.appendChild(document.createTextNode(" - "))
     whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`))
@@ -2571,6 +2653,11 @@ saveEndDateButton.onclick = function(e)
     if (whenInput.innerText != "")
     {
         whenInput.innerText = "";
+    }
+
+    if (previousMonthsSelectedEndDate != "")
+    {
+        previousMonthsSelectedEndDate = "";
     }
 
     whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
