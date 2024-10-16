@@ -821,7 +821,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                         selectedStartDate = div;
                         selectedStartDate.innerText = x;
 
-                       //previousMonthsSelectedStartDate = selectedStartDate;
+                        previousMonthsSelectedStartDate = selectedStartDate
                     }
                     else if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
@@ -933,7 +933,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                     selectedEndDate = div;
                     selectedEndDate.innerText = x;
 
-                    //previousMonthsSelectedEndDate = selectedEndDate;
+                    previousMonthsSelectedEndDate = selectedEndDate;
                 }
                 else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
                 &&  checkinMonth == months[nextMonth] && checkinYear == nextYear)
@@ -1095,58 +1095,6 @@ getStupidCalendarDates.onclick = function(e)
 {
     if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
     {
-        //  check what calendar is clicked and pick date and assign month to the correct form
-        if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar))
-        {
-            if (checkinButton.style.backgroundColor == "white")
-            {
-                if (calendarExactDatesButton.style.backgroundColor == "rgb(240, 240, 240)")
-                {
-                    checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4);
-                }
-                else
-                {
-                    checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4) + pmText;
-                }    
-            }
-            else if (checkoutButton.style.backgroundColor == "white")
-            {
-                if (calendarExactDatesButton.style.backgroundColor == "rgb(240, 240, 240)")
-                {
-                    checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4);
-                }
-                else
-                {
-                    checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar.childNodes[1].innerText.slice(0, -5))] + " " + calendar.childNodes[1].innerText.slice(-4) + pmText;
-                }
-            }        
-        }
-        else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(calendar2))
-        {
-            if (checkinButton.style.backgroundColor == "white")
-            {
-                if (calendarExactDatesButton.style.backgroundColor == "rgb(240, 240, 240)")
-                {
-                    checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4);
-                }
-                else
-                {
-                    checkinFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4) + pmText;
-                }
-            }
-            else if (checkoutButton.style.backgroundColor == "white")
-            {
-                if (calendarExactDatesButton.style.backgroundColor == "rgb(240, 240, 240)")
-                {
-                    checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4); 
-                }
-                else
-                {
-                    checkoutFormInput.value = e.target.innerText + " " + monthsAbbreviations[months.indexOf(calendar2.childNodes[1].innerText.slice(0, -5))] + " " + calendar2.childNodes[1].innerText.slice(-4) + pmText;
-                } 
-            }
-        }
-
         //  reset feedback
         if (selectedCheckinDate.tagName != "NULL" && checkinButton.style.backgroundColor == "white")
         {
@@ -1187,6 +1135,15 @@ getStupidCalendarDates.onclick = function(e)
             correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
 
+        if (checkinButton.style.backgroundColor == "white")
+        {
+            checkinFormInput.value = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear} ${pmText}`;
+        }
+        else if (checkoutButton.style.backgroundColor == "white")
+        {
+            checkoutFormInput.value = `${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]} ${selectedCheckoutYear} ${pmText}`;
+        }
+
         //  validation
         if ((+selectedCheckinDate.innerText > +selectedCheckoutDate.innerText) 
         &&  (selectedCheckinMonth == selectedCheckoutMonth) && (selectedCheckinYear == selectedCheckoutYear)
@@ -1208,7 +1165,7 @@ getStupidCalendarDates.onclick = function(e)
         {
             clearCalendarFormInputButton.style.display = "block";
         }
-
+  
         //  QoL swap
         if (checkinFormInput.value != "" && checkoutFormInput.value == "")
         {
@@ -1686,14 +1643,14 @@ function setWhenValues(dateStart, month, number)
         var s = new Date(dateStart);
         var e = new Date(dateStart);
 
-        e.setMonth(e.getMonth() + number)
+        e.setMonth(e.getMonth() + number);
 
         whenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()} ${savedStartMonthsPMValue}`;
         whenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()} ${savedEndMonthsPMValue}`;
         
-        whenInput.appendChild(document.createTextNode(`${whenStartDate.innerText}`))
-        whenInput.appendChild(document.createTextNode(" - "))
-        whenInput.appendChild(document.createTextNode(`${whenEndDate.innerText}`))
+        whenInput.appendChild(document.createTextNode(`${whenStartDate.innerText}`));
+        whenInput.appendChild(document.createTextNode(" - "));
+        whenInput.appendChild(document.createTextNode(`${whenEndDate.innerText}`));
 
         selectedEndMonth = months[e.getMonth()];
         selectedEndYear = e.getFullYear();
@@ -1701,61 +1658,8 @@ function setWhenValues(dateStart, month, number)
         selectedStartDate.innerText = "1";
         selectedEndDate.innerText = "1";
 
-        startDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`
-        endDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`
-
-        //  switch for changing position on circle when setting different month ehere
-        //switch (true)
-        //{
-        //    case selectedEndMonth == s.setMonth(s.getMonth() + 1):
-        //        draggableCircle.style.cy = `49.4263px`;
-        //        draggableCircle.style.cx = `247.5px`;
-        //        break;
-        //    case degrees > -45 && degrees < -15:
-        //        draggableCircle.style.cy = `102.5px`;
-        //        draggableCircle.style.cx = `300.5736px`;
-        //        break;
-        //    case degrees > -15 && degrees < 15:
-        //        draggableCircle.style.cy = `175px`;
-        //        draggableCircle.style.cx = `320px`;
-        //        break;
-        //    case degrees > 15 && degrees < 45:
-        //        draggableCircle.style.cy = `247.5px`;
-        //        draggableCircle.style.cx = `300.5736px`;
-        //        break;
-        //    case degrees > 45 && degrees < 75:
-        //        draggableCircle.style.cy = `300.5736px`;
-        //        draggableCircle.style.cx = `247.5px`;
-        //        break;
-        //    case degrees > 75 && degrees < 105:
-        //        draggableCircle.style.cy = `320px`;
-        //        draggableCircle.style.cx = `175px`;
-        //        break;
-        //    case degrees > 105 && degrees < 135:
-        //        draggableCircle.style.cy = `300.5736px`;
-        //        draggableCircle.style.cx = `102.5px`;
-        //        break;
-        //    case degrees > 135 && degrees < 165:
-        //        draggableCircle.style.cy = `247.5px`;
-        //        draggableCircle.style.cx = `49.4263px`;
-        //        break;
-        //    case degrees < -165 || degrees > 165:
-        //        draggableCircle.style.cy = `175px`;
-        //        draggableCircle.style.cx = `30px`;
-        //        break;
-        //    case degrees > -165 && degrees < -135:
-        //        draggableCircle.style.cy = `102.5px`;
-        //        draggableCircle.style.cx = `49.4263px`;
-        //        break;
-        //    case degrees > -135 && degrees < -105:
-        //        draggableCircle.style.cy = `49.4263px`;
-        //        draggableCircle.style.cx = `102.5px`;
-        //        break;
-        //    case degrees > -105 && degrees < -75:
-        //        draggableCircle.style.cy = `30px`;
-        //        draggableCircle.style.cx = `175px`;
-        //        break;
-        //}
+        startDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
+        endDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
     }
 
     monthNumber.innerText = month;
@@ -2213,28 +2117,10 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
     //}
 }
 
-//    previousMonthsSelectedStartDate = selectedStartDate;
-//    previousMonthsSelectedEndDate = selectedEndDate;
-
-
 getStupidCalendarDatesAgain.onclick = function(e)
 {
     if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
     {
-        if (previousMonthsSelectedStartDate == "")
-        {
-            if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar))
-            {
-                startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar.childNodes[1].innerText.slice(-4);
-            }
-            else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar2))
-            {
-                startDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar2.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar2.childNodes[1].innerText.slice(-4);
-            }
-
-            previousMonthsSelectedStartDate = e.target;
-        }
-
         //  reset feedback
         if (selectedStartDate != "")
         {
@@ -2256,6 +2142,8 @@ getStupidCalendarDatesAgain.onclick = function(e)
             
             correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
         }
+
+        startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(selectedStartMonth)]} ${selectedStartYear}`;
     }
 }
 
@@ -2263,20 +2151,6 @@ getStupidCalendarDatesAgainAgain.onclick = function(e)
 {
     if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
     {
-        if (previousMonthsSelectedEndDate == "")
-        {
-            if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar3))
-            {
-                endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar3.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar3.childNodes[1].innerText.slice(-4);
-            }
-            else if (e.target.parentElement.parentElement.parentElement.parentElement.parentNode.contains(monthsCalendar4))
-            {
-                endDateValue = e.target.innerText + " " + monthsAbbreviations[months.indexOf(monthsCalendar4.childNodes[1].innerText.slice(0, -5))] + " " + monthsCalendar4.childNodes[1].innerText.slice(-4);
-            }
-
-            previousMonthsSelectedEndDate = e.target;
-        }
-        
         //  reset feedback
         if (selectedEndDate != "")
         {
@@ -2298,6 +2172,8 @@ getStupidCalendarDatesAgainAgain.onclick = function(e)
         
            correctMonthsDatesShadow(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
         }
+
+        endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(selectedEndMonth)]} ${selectedEndYear}`; 
     }
 }
 
@@ -2571,23 +2447,13 @@ const modalStartDate = document.getElementById("ModalStartDate");
 const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
 
-function closeModal(e)
+function closeModal()
 {
     modalBackground.style.display = "none";
     modalStartDate.style.display = "none";
     modalEndDate.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
-
-    if (e.target == modalBackground && previousMonthsSelectedStartDate != "")
-    {
-        selectedStartDate = previousMonthsSelectedStartDate;
-    }
-
-    if (e.target == modalBackground && previousMonthsSelectedEndDate != "")
-    {
-        selectedEndDate = previousMonthsSelectedEndDate;
-    }
 }
 
 function openModal(modal)
@@ -2610,9 +2476,31 @@ whenEndDate.onclick = function(e)
     initializeMonthsCalendars(e, monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft, moveMonthsEndCalendarsRight);
 }
 
-modalBackground.onclick = function(e)
+modalBackground.onclick = function()
 {
-    closeModal(e);
+    if (previousMonthsSelectedStartDate != "")
+    {
+        selectedStartDate = previousMonthsSelectedStartDate;
+        try
+        {
+            let m = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+        }catch{} // i hate
+    }
+
+    if (previousMonthsSelectedEndDate != "")
+    {
+        selectedEndDate = previousMonthsSelectedEndDate;
+        try
+        {
+            let m = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+        }catch{} // try catch
+    }
+
+    closeModal();
 }
 
 const saveStartDateButton = document.getElementById("SaveMonthStartDate");
@@ -2623,8 +2511,228 @@ var savedSelectedStartYear = "";
 var savedSelectedEndDate = "";
 var savedSelectedEndMonth = "";
 var savedSelectedEndYear = "";
+var cpch1 = "";
+var cpch2 = "";
 
-saveStartDateButton.onclick = function(e)
+function correctCirclePosition()
+{
+    cpch1 = "";
+    cpch2 = "";
+
+    cpch1 = new Date(selectedEndYear, months.indexOf(selectedEndMonth), selectedEndDate.innerText);
+    cpch2 = new Date(startDate);
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth()))
+    {
+        draggableCircle.style.cy = `49.4263px`;
+        draggableCircle.style.cx = `247.5px`;
+        monthNumber.innerText = "1 Month";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 1))
+    {
+        draggableCircle.style.cy = `102.5px`;
+        draggableCircle.style.cx = `300.5736px`;
+        monthNumber.innerText = "2 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 2))
+    {
+        draggableCircle.style.cy = `175px`;
+        draggableCircle.style.cx = `320px`;
+        monthNumber.innerText = "3 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 3))
+    {
+        draggableCircle.style.cy = `247.5px`;
+        draggableCircle.style.cx = `300.5736px`;
+        monthNumber.innerText = "4 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 4))
+    {
+        draggableCircle.style.cy = `300.5736px`;
+        draggableCircle.style.cx = `247.5px`;
+        monthNumber.innerText = "5 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 5))
+    {
+        draggableCircle.style.cy = `320px`;
+        draggableCircle.style.cx = `175px`;
+        monthNumber.innerText = "6 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 6))
+    {
+        draggableCircle.style.cy = `300.5736px`;
+        draggableCircle.style.cx = `102.5px`;
+        monthNumber.innerText = "7 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 7))
+    {
+        draggableCircle.style.cy = `247.5px`;
+        draggableCircle.style.cx = `49.4263px`;
+        monthNumber.innerText = "8 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 8))
+    {
+        draggableCircle.style.cy = `175px`;
+        draggableCircle.style.cx = `30px`;
+        monthNumber.innerText = "9 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 9))
+    {
+        draggableCircle.style.cy = `102.5px`;
+        draggableCircle.style.cx = `49.4263px`;
+        monthNumber.innerText = "10 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 10))
+    {
+        draggableCircle.style.cy = `49.4263px`;
+        draggableCircle.style.cx = `102.5px`;
+        monthNumber.innerText = "11 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+
+    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 11))
+    {
+        draggableCircle.style.cy = `30px`;
+        draggableCircle.style.cx = `175px`;
+        monthNumber.innerText = "12 Months";
+    }
+    else
+    {
+        cpch1 = "";
+        cpch2 = "";
+    }
+    
+
+    //switch (true)
+    //{
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth()):
+    //        draggableCircle.style.cy = `49.4263px`;
+    //        draggableCircle.style.cx = `247.5px`;
+    //        monthNumber.innerText = "1 Month";
+    //        break;
+    //    case cpch1.setMonth(cpch2.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 1):
+    //        draggableCircle.style.cy = `102.5px`;
+    //        draggableCircle.style.cx = `300.5736px`;
+    //        monthNumber.innerText = "2 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 2):
+    //        draggableCircle.style.cy = `175px`;
+    //        draggableCircle.style.cx = `320px`;
+    //        monthNumber.innerText = "3 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 3):
+    //        draggableCircle.style.cy = `247.5px`;
+    //        draggableCircle.style.cx = `300.5736px`;
+    //        monthNumber.innerText = "4 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 4):
+    //        draggableCircle.style.cy = `300.5736px`;
+    //        draggableCircle.style.cx = `247.5px`;
+    //        monthNumber.innerText = "5 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 5):
+    //        draggableCircle.style.cy = `320px`;
+    //        draggableCircle.style.cx = `175px`;
+    //        monthNumber.innerText = "6 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 6):
+    //        draggableCircle.style.cy = `300.5736px`;
+    //        draggableCircle.style.cx = `102.5px`;
+    //        monthNumber.innerText = "7 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 7):
+    //        draggableCircle.style.cy = `247.5px`;
+    //        draggableCircle.style.cx = `49.4263px`;
+    //        monthNumber.innerText = "8 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 8):
+    //        draggableCircle.style.cy = `175px`;
+    //        draggableCircle.style.cx = `30px`;
+    //        monthNumber.innerText = "9 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 9):
+    //        draggableCircle.style.cy = `102.5px`;
+    //        draggableCircle.style.cx = `49.4263px`;
+    //        monthNumber.innerText = "10 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 10):
+    //        draggableCircle.style.cy = `49.4263px`;
+    //        draggableCircle.style.cx = `102.5px`;
+    //        monthNumber.innerText = "11 Months";
+    //        break;
+    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 11):
+    //        draggableCircle.style.cy = `30px`;
+    //        draggableCircle.style.cx = `175px`;
+    //        monthNumber.innerText = "12 Months";
+    //        break;
+    //}
+}
+
+saveStartDateButton.onclick = function()
 {
     savedStartMonthsPMValue = startMonthsPMValue;
 
@@ -2638,15 +2746,15 @@ saveStartDateButton.onclick = function(e)
         previousMonthsSelectedStartDate = "";
     }
 
-    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
-    whenInput.appendChild(document.createTextNode(" - "))
-    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`))
+    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`));
+    whenInput.appendChild(document.createTextNode(" - "));
+    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
     whenStartDate.innerText = `${startDateValue} ${savedStartMonthsPMValue}`;
 
-    closeModal(e);
+    closeModal();
 }
 
-saveEndDateButton.onclick = function(e)
+saveEndDateButton.onclick = function()
 {
     savedEndMonthsPMValue = endMonthsPMValue;
     
@@ -2660,12 +2768,13 @@ saveEndDateButton.onclick = function(e)
         previousMonthsSelectedEndDate = "";
     }
 
-    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`))
-    whenInput.appendChild(document.createTextNode(" - "))
-    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`))
+    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`));
+    whenInput.appendChild(document.createTextNode(" - "));
+    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
     whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
 
-    closeModal(e);
+    correctCirclePosition();
+    closeModal();
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
