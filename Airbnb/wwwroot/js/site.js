@@ -652,11 +652,11 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
 {
     if (checkinDate != "" && checkoutDate != "")
     {
-        if (x == +checkinDate.innerText && checkinMonth == months[month] && checkinYear == year)
+        if (x == +checkinDate.innerText && checkinMonth == months[month] && (checkinYear == year || checkinYear == nextYear))
         {
             td.style.background = calendarShadowCheckinColor;
         }
-        else if (x == +checkoutDate.innerText && checkoutMonth == months[month] && checkoutYear == nextYear)
+        else if (x == +checkoutDate.innerText && checkoutMonth == months[month] && (checkoutYear == nextYear || checkoutYear == year))
         {
             td.style.background = calendarShadowCheckoutColor;
         }
@@ -1684,7 +1684,7 @@ function dragCircleCSS()
         document.body.style.userSelect = "none";
     }
 
-    document.onmouseup = function()
+    document.onmouseup = function(e)
     {
         document.body.style.cursor = "default";
         draggableCircle.style.cursor = "grab";
@@ -1692,6 +1692,8 @@ function dragCircleCSS()
         //  snap to middle point of chosen month
         switch (true)
         {
+            case degrees == "":
+                break;
             case degrees > -75 && degrees < -45:
                 draggableCircle.style.cy = `49.4263px`;
                 draggableCircle.style.cx = `247.5px`;
@@ -2105,16 +2107,83 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
             }
         }
     }
+}
 
-    //if ((firstCalendar == monthsCalendar || firstCalendar == monthsCalendar3) && previousMonthsSelectedStartDate == "")
-    //{
-    //    previousMonthsSelectedStartDate = checkinDate;
-    //}
+function validateMonthsDatesPosition()
+{
+    //  validate position (start and end values need to be minimum 28 days apart of each other)
+    //  example: startDate = january 1 | endDate = january 28 
+    //           startDate = january 5 | endDate = february 2
 
-    //if ((firstCalendar == monthsCalendar || firstCalendar == monthsCalendar3) && previousMonthsSelectedEndDate == "")
-    //{
-    //    previousMonthsSelectedEndDate = checkoutDate;
-    //}
+    let sDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), +selectedStartDate.innerText);
+    let eDate = new Date(selectedEndYear, months.indexOf(selectedEndMonth), +selectedEndDate.innerText);
+    let x = ""
+
+    //  i forgot debugger; exists oopsie
+   
+    if (sDate.getMonth() == eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
+    {
+        x = sDate.getDate() - eDate.getDate();
+        
+        if (x < 0)
+        {
+            eDate.setDate(sDate.getDate() + 28);
+
+            selectedEndDate.innerText = eDate.getDate();
+            selectedEndMonth = months.indexOf(eDate.getMonth());
+            selectedEndYear = eDate.getFullYear();
+        }
+    }
+    else if (sDate.getMonth() != eDate.getMonth())
+    {
+        if (sDate.getMonth() > eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
+        {
+            eDate = new Date(sDate);
+            eDate.setDate(eDate.getDate() + 28);
+
+            selectedEndDate.innerText = eDate.getDate();
+            selectedEndMonth = months.indexOf(eDate.getMonth());
+            selectedEndYear = eDate.getFullYear();
+        }
+        else if (sDate.getFullYear() > eDate.getFullYear())
+        {
+            eDate = new Date(sDate);
+            eDate.setDate(eDate.getDate() + 28);
+
+            selectedEndDate.innerText = eDate.getDate();
+            selectedEndMonth = months.indexOf(eDate.getMonth());
+            selectedEndYear = eDate.getFullYear();
+        }
+        else if (sDate.getMonth() + 1 == eDate.getMonth())
+        {
+            var imLazy = new Date(sDate.getFullYear(), sDate.getMonth() + 1, 0);
+
+            x = (imLazy.getDate() - sDate.getDate()) + eDate.getDate();
+
+            if (x < 28)
+            {
+                eDate = new Date(sDate);
+                eDate.setDate(sDate.getDate() + 28);
+
+                selectedEndDate.innerText = eDate.getDate();
+                selectedEndMonth = months.indexOf(eDate.getMonth());
+                selectedEndYear = eDate.getFullYear();
+            }
+        }
+    }
+
+    //selectedStartDate = 1;
+    //selectedStartMonth = 1;
+    //selectedStartYear = 1;
+
+
+    console.log(" ")
+    console.log(`sday   -   ${sDate.getDate()}`);
+    console.log(`smonth -   ${sDate.getMonth()}`);
+    console.log(`syear  -   ${sDate.getFullYear()}`);
+    console.log(`eday   -   ${eDate.getDate()}`);
+    console.log(`emonth -   ${eDate.getMonth()}`);
+    console.log(`eyear  -   ${eDate.getFullYear()}`);
 }
 
 getStupidCalendarDatesAgain.onclick = function(e)
@@ -2144,6 +2213,9 @@ getStupidCalendarDatesAgain.onclick = function(e)
         }
 
         startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(selectedStartMonth)]} ${selectedStartYear}`;
+
+        validateMonthsDatesPosition();
+        correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
     }
 }
 
@@ -2398,8 +2470,18 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
     else if (e.target == whenEndDate)
     {
         month = months.indexOf(selectedEndMonth) - 2;
-        year = selectedEndYear;
-        nextYear = year;
+
+        if (month == -2)
+        {
+            month = 10;
+            year = selectedStartYear;
+            nextYear = selectedEndYear;
+        }
+        else
+        {
+            year = selectedEndYear;
+            nextYear = year;
+        } 
     }
 
     const monthNames = document.querySelectorAll(".month_name");
@@ -2505,231 +2587,96 @@ modalBackground.onclick = function()
 
 const saveStartDateButton = document.getElementById("SaveMonthStartDate");
 const saveEndDateButton = document.getElementById("SaveMonthEndDate");
-var savedSelectedStartDate = "";
-var savedSelectedStartMonth = "";
-var savedSelectedStartYear = "";
-var savedSelectedEndDate = "";
-var savedSelectedEndMonth = "";
-var savedSelectedEndYear = "";
-var cpch1 = "";
-var cpch2 = "";
 
 function correctCirclePosition()
 {
-    cpch1 = "";
-    cpch2 = "";
+    let cpch1 = "";
+    let cpch2 = "";
 
     cpch1 = new Date(selectedEndYear, months.indexOf(selectedEndMonth), selectedEndDate.innerText);
     cpch2 = new Date(startDate);
 
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth()))
+    loop:
+    for (i = 0; i <= 12; i++)
     {
-        draggableCircle.style.cy = `49.4263px`;
-        draggableCircle.style.cx = `247.5px`;
-        monthNumber.innerText = "1 Month";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
+        cpch1.setMonth(cpch1.getMonth()) 
+        cpch2.setMonth(cpch2.getMonth() + i)
 
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 1))
-    {
-        draggableCircle.style.cy = `102.5px`;
-        draggableCircle.style.cx = `300.5736px`;
-        monthNumber.innerText = "2 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
+        if (cpch1.getMonth() == cpch2.getMonth() && cpch1.getFullYear() == cpch2.getFullYear())
+        {
+            switch (true)
+            {
+                case i == 1:
+                    draggableCircle.style.cy = `49.4263px`;
+                    draggableCircle.style.cx = `247.5px`;
+                    monthNumber.innerText = "1 Month";
+                    break;
+                case i == 2:
+                    draggableCircle.style.cy = `102.5px`;
+                    draggableCircle.style.cx = `300.5736px`;
+                    monthNumber.innerText = "2 Months";
+                    break;
+                case i == 3:
+                    draggableCircle.style.cy = `175px`;
+                    draggableCircle.style.cx = `320px`;
+                    monthNumber.innerText = "3 Months";
+                    break;
+                case i == 4:
+                    draggableCircle.style.cy = `247.5px`;
+                    draggableCircle.style.cx = `300.5736px`;
+                    monthNumber.innerText = "4 Months";
+                    break;
+                case i == 5:
+                    draggableCircle.style.cy = `300.5736px`;
+                    draggableCircle.style.cx = `247.5px`;
+                    monthNumber.innerText = "5 Months";
+                    break;
+                case i == 6:
+                    draggableCircle.style.cy = `320px`;
+                    draggableCircle.style.cx = `175px`;
+                    monthNumber.innerText = "6 Months";
+                    break;
+                case i == 7:
+                    draggableCircle.style.cy = `300.5736px`;
+                    draggableCircle.style.cx = `102.5px`;
+                    monthNumber.innerText = "7 Months";
+                    break;
+                case i == 8:
+                    draggableCircle.style.cy = `247.5px`;
+                    draggableCircle.style.cx = `49.4263px`;
+                    monthNumber.innerText = "8 Months";
+                    break;
+                case i == 9:
+                    draggableCircle.style.cy = `175px`;
+                    draggableCircle.style.cx = `30px`;
+                    monthNumber.innerText = "9 Months";
+                    break;
+                case i == 10:
+                    draggableCircle.style.cy = `102.5px`;
+                    draggableCircle.style.cx = `49.4263px`;
+                    monthNumber.innerText = "10 Months";
+                    break;
+                case i == 11:
+                    draggableCircle.style.cy = `49.4263px`;
+                    draggableCircle.style.cx = `102.5px`;
+                    monthNumber.innerText = "11 Months";
+                    break;
+                case i == 12:
+                    draggableCircle.style.cy = `30px`;
+                    draggableCircle.style.cx = `175px`;
+                    monthNumber.innerText = "12 Months";
+                    break;
+            }
 
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 2))
-    {
-        draggableCircle.style.cy = `175px`;
-        draggableCircle.style.cx = `320px`;
-        monthNumber.innerText = "3 Months";
+            degrees = "";
+            break loop;
+        }
+        else
+        {
+            cpch1 = new Date(selectedEndYear, months.indexOf(selectedEndMonth), selectedEndDate.innerText);
+            cpch2 = new Date(startDate);
+        }
     }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 3))
-    {
-        draggableCircle.style.cy = `247.5px`;
-        draggableCircle.style.cx = `300.5736px`;
-        monthNumber.innerText = "4 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 4))
-    {
-        draggableCircle.style.cy = `300.5736px`;
-        draggableCircle.style.cx = `247.5px`;
-        monthNumber.innerText = "5 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 5))
-    {
-        draggableCircle.style.cy = `320px`;
-        draggableCircle.style.cx = `175px`;
-        monthNumber.innerText = "6 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 6))
-    {
-        draggableCircle.style.cy = `300.5736px`;
-        draggableCircle.style.cx = `102.5px`;
-        monthNumber.innerText = "7 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 7))
-    {
-        draggableCircle.style.cy = `247.5px`;
-        draggableCircle.style.cx = `49.4263px`;
-        monthNumber.innerText = "8 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 8))
-    {
-        draggableCircle.style.cy = `175px`;
-        draggableCircle.style.cx = `30px`;
-        monthNumber.innerText = "9 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 9))
-    {
-        draggableCircle.style.cy = `102.5px`;
-        draggableCircle.style.cx = `49.4263px`;
-        monthNumber.innerText = "10 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 10))
-    {
-        draggableCircle.style.cy = `49.4263px`;
-        draggableCircle.style.cx = `102.5px`;
-        monthNumber.innerText = "11 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-
-    if (cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 11))
-    {
-        draggableCircle.style.cy = `30px`;
-        draggableCircle.style.cx = `175px`;
-        monthNumber.innerText = "12 Months";
-    }
-    else
-    {
-        cpch1 = "";
-        cpch2 = "";
-    }
-    
-
-    //switch (true)
-    //{
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth()):
-    //        draggableCircle.style.cy = `49.4263px`;
-    //        draggableCircle.style.cx = `247.5px`;
-    //        monthNumber.innerText = "1 Month";
-    //        break;
-    //    case cpch1.setMonth(cpch2.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 1):
-    //        draggableCircle.style.cy = `102.5px`;
-    //        draggableCircle.style.cx = `300.5736px`;
-    //        monthNumber.innerText = "2 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 2):
-    //        draggableCircle.style.cy = `175px`;
-    //        draggableCircle.style.cx = `320px`;
-    //        monthNumber.innerText = "3 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 3):
-    //        draggableCircle.style.cy = `247.5px`;
-    //        draggableCircle.style.cx = `300.5736px`;
-    //        monthNumber.innerText = "4 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 4):
-    //        draggableCircle.style.cy = `300.5736px`;
-    //        draggableCircle.style.cx = `247.5px`;
-    //        monthNumber.innerText = "5 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 5):
-    //        draggableCircle.style.cy = `320px`;
-    //        draggableCircle.style.cx = `175px`;
-    //        monthNumber.innerText = "6 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 6):
-    //        draggableCircle.style.cy = `300.5736px`;
-    //        draggableCircle.style.cx = `102.5px`;
-    //        monthNumber.innerText = "7 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 7):
-    //        draggableCircle.style.cy = `247.5px`;
-    //        draggableCircle.style.cx = `49.4263px`;
-    //        monthNumber.innerText = "8 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 8):
-    //        draggableCircle.style.cy = `175px`;
-    //        draggableCircle.style.cx = `30px`;
-    //        monthNumber.innerText = "9 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 9):
-    //        draggableCircle.style.cy = `102.5px`;
-    //        draggableCircle.style.cx = `49.4263px`;
-    //        monthNumber.innerText = "10 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 10):
-    //        draggableCircle.style.cy = `49.4263px`;
-    //        draggableCircle.style.cx = `102.5px`;
-    //        monthNumber.innerText = "11 Months";
-    //        break;
-    //    case cpch1.setMonth(cpch1.getMonth()) == cpch2.setMonth(cpch2.getMonth() + 11):
-    //        draggableCircle.style.cy = `30px`;
-    //        draggableCircle.style.cx = `175px`;
-    //        monthNumber.innerText = "12 Months";
-    //        break;
-    //}
 }
 
 saveStartDateButton.onclick = function()
