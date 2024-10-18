@@ -2109,29 +2109,135 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
     }
 }
 
+function changeMonthsEndValuesCSS(td, div)
+{
+    selectedEndDate.style.background = "";
+    selectedEndDate.style.backgroundColor = "";
+    selectedEndDate.style.color = "";
+
+    div.style.backgroundColor = "black";
+    div.style.color = "white";
+    td.style.background = calendarShadowCheckoutColor;
+    selectedEndDate = div;
+}
+
+function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
+{
+    let x = eDate.getDate();
+    selectedEndMonth = months[eDate.getMonth()];
+    selectedEndYear = eDate.getFullYear();
+
+    loop:
+    for (i = 0; i < 6; i++)
+    {
+        for (j = 0; j < 7; j++)
+        {
+            try
+            {
+                var td = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var div = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+            }catch{}
+            
+            try
+            {
+                var td2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var div2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+            }catch{}
+
+            //debugger;
+            if (+div.innerText == x && firstCalendar.contains(selectedEndDate))
+            {
+                debugger;
+                changeMonthsEndValuesCSS(td, div);
+
+                break loop;
+            }
+            else if (+div2.innerText == x && firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate))
+            {
+                const truth = "banana belongs on pizza and pizza belongs on banana";
+                debugger;
+                changeMonthsEndValuesCSS(td2, div2);
+
+                break loop;
+            }
+            else if (+div2.innerText == x && secondCalendar.contains(selectedEndDate))
+            {
+                debugger;
+                if (+selectedEndDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                {
+                    changeMonthsEndValuesCSS(td2, div2);
+
+                    break loop;
+                }
+                else
+                {
+                    if (selectedStartDate != selectedEndDate)
+                    {
+                        selectedEndDate.style.background = "";
+                        selectedEndDate.parentElement.style.background = "";
+                        selectedEndDate.style.color = "";
+                    }
+                    
+                    selectedEndDate = document.createElement("NULL");
+                    selectedEndDate.innerText = div2.innerText;
+
+                    break loop;
+                }
+            }
+            else if (+div2.innerText == x && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
+            {
+                debugger;
+                if (+selectedEndDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                {
+                    changeMonthsEndValuesCSS(td2, div2);
+
+                    break loop;
+                }
+                else
+                {
+                    if (selectedStartDate != selectedEndDate)
+                    {
+                        selectedEndDate.style.background = "";
+                        selectedEndDate.parentElement.style.background = "";
+                        selectedEndDate.style.color = "";
+                    }
+                    
+                    selectedEndDate = document.createElement("NULL");
+                    selectedEndDate.innerText = div2.innerText;
+
+                    break loop;
+                }
+            }
+            else if (!secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate))
+            {
+                debugger;
+                selectedEndDate = document.createElement("NULL");
+                selectedEndDate.innerText = x;
+
+                break loop;
+            }
+        }
+    }
+
+    correctMonthsDatesShadow(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
+}
+
 function validateMonthsDatesPosition()
 {
-    //  validate position (start and end values need to be minimum 28 days apart of each other)
-    //  example: startDate = january 1 | endDate = january 28 
-    //           startDate = january 5 | endDate = february 2
-
     let sDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), +selectedStartDate.innerText);
     let eDate = new Date(selectedEndYear, months.indexOf(selectedEndMonth), +selectedEndDate.innerText);
     let x = ""
 
-    //  i forgot debugger; exists oopsie
-   
+    // I LOVE debugger;
+    //debugger;
     if (sDate.getMonth() == eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
     {
         x = sDate.getDate() - eDate.getDate();
         
-        if (x < 0)
+        if (x < 0 || x < 28)
         {
             eDate.setDate(sDate.getDate() + 28);
-
-            selectedEndDate.innerText = eDate.getDate();
-            selectedEndMonth = months.indexOf(eDate.getMonth());
-            selectedEndYear = eDate.getFullYear();
+            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
         }
     }
     else if (sDate.getMonth() != eDate.getMonth())
@@ -2140,34 +2246,24 @@ function validateMonthsDatesPosition()
         {
             eDate = new Date(sDate);
             eDate.setDate(eDate.getDate() + 28);
-
-            selectedEndDate.innerText = eDate.getDate();
-            selectedEndMonth = months.indexOf(eDate.getMonth());
-            selectedEndYear = eDate.getFullYear();
+            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
         }
         else if (sDate.getFullYear() > eDate.getFullYear())
         {
             eDate = new Date(sDate);
             eDate.setDate(eDate.getDate() + 28);
-
-            selectedEndDate.innerText = eDate.getDate();
-            selectedEndMonth = months.indexOf(eDate.getMonth());
-            selectedEndYear = eDate.getFullYear();
+            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
         }
         else if (sDate.getMonth() + 1 == eDate.getMonth())
         {
-            var imLazy = new Date(sDate.getFullYear(), sDate.getMonth() + 1, 0);
-
+            let imLazy = new Date(sDate.getFullYear(), sDate.getMonth() + 1, 0);
             x = (imLazy.getDate() - sDate.getDate()) + eDate.getDate();
 
             if (x < 28)
             {
                 eDate = new Date(sDate);
                 eDate.setDate(sDate.getDate() + 28);
-
-                selectedEndDate.innerText = eDate.getDate();
-                selectedEndMonth = months.indexOf(eDate.getMonth());
-                selectedEndYear = eDate.getFullYear();
+                changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
             }
         }
     }
@@ -2215,7 +2311,6 @@ getStupidCalendarDatesAgain.onclick = function(e)
         startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(selectedStartMonth)]} ${selectedStartYear}`;
 
         validateMonthsDatesPosition();
-        correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
     }
 }
 
