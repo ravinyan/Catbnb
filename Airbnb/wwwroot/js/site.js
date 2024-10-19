@@ -2114,7 +2114,11 @@ function changeMonthsEndValuesCSS(td, div)
     selectedEndDate.style.background = "";
     selectedEndDate.style.backgroundColor = "";
     selectedEndDate.style.color = "";
-
+    if (selectedEndDate.tagName != "NULL")
+    {
+        selectedEndDate.parentElement.style.background = "";
+    }
+    
     div.style.backgroundColor = "black";
     div.style.color = "white";
     td.style.background = calendarShadowCheckoutColor;
@@ -2144,35 +2148,56 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                 var div2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
             }catch{}
 
-            //debugger;
-            if (+div.innerText == x && firstCalendar.contains(selectedEndDate))
+            if (+div.innerText == x && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
             {
-                debugger;
-                changeMonthsEndValuesCSS(td, div);
-
-                break loop;
-            }
-            else if (+div2.innerText == x && firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate))
-            {
-                const truth = "banana belongs on pizza and pizza belongs on banana";
-                debugger;
-                changeMonthsEndValuesCSS(td2, div2);
-
-                break loop;
-            }
-            else if (+div2.innerText == x && secondCalendar.contains(selectedEndDate))
-            {
-                debugger;
-                if (+selectedEndDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                //debugger;
+                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
                 {
+                    changeMonthsEndValuesCSS(td2, div2);
+                }
+                else 
+                {
+                    changeMonthsEndValuesCSS(td, div);
+                }
+
+                break loop;
+            }
+            else if ((+div.innerText == x || +div2.innerText == x) && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
+            {
+                // this one borked
+                //debugger;
+                if (+div.innerText == x && +selectedStartDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                {
+                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
+                    changeMonthsEndValuesCSS(td, div);
+
+                    break loop;
+                }
+                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                {
+                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
+                    changeMonthsEndValuesCSS(td2, div2);
+
+                    break loop;
+                }
+            }
+            else if (+div2.innerText == x && (firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate)
+                 ||  firstCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)))
+            {
+                //debugger;
+                if (+selectedStartDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate))
+                {
+                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
 
                     break loop;
                 }
                 else
                 {
-                    if (selectedStartDate != selectedEndDate)
+                    if (selectedStartDate != selectedEndDate && selectedEndDate.tagName != "NULL")
                     {
+                        removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                         selectedEndDate.style.background = "";
                         selectedEndDate.parentElement.style.background = "";
                         selectedEndDate.style.color = "";
@@ -2184,19 +2209,27 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                     break loop;
                 }
             }
-            else if (+div2.innerText == x && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
+            else if (+div2.innerText == x && (secondCalendar.contains(selectedEndDate) 
+                 ||  secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate)))
             {
-                debugger;
+                //debugger;
+                if (secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate))
+                {
+                    selectedEndDate.innerText = "1";
+                }
+
                 if (+selectedEndDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
                 {
+                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
 
                     break loop;
                 }
                 else
                 {
-                    if (selectedStartDate != selectedEndDate)
+                    if (selectedStartDate != selectedEndDate && selectedEndDate.tagName != "NULL")
                     {
+                        removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                         selectedEndDate.style.background = "";
                         selectedEndDate.parentElement.style.background = "";
                         selectedEndDate.style.color = "";
@@ -2208,13 +2241,11 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                     break loop;
                 }
             }
-            else if (!secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate))
+            else if (!firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate))
             {
-                debugger;
+                //debugger;
                 selectedEndDate = document.createElement("NULL");
                 selectedEndDate.innerText = x;
-
-                break loop;
             }
         }
     }
@@ -2234,7 +2265,7 @@ function validateMonthsDatesPosition()
     {
         x = sDate.getDate() - eDate.getDate();
         
-        if (x < 0 || x < 28)
+        if (x <= 0 || x < 28)
         {
             eDate.setDate(sDate.getDate() + 28);
             changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
