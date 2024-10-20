@@ -646,7 +646,11 @@ var selectedEndMonth = months[endDate.getMonth()];
 var selectedStartYear = startDate.getFullYear();
 var selectedEndYear = endDate.getFullYear();
 var previousMonthsSelectedStartDate = "";
+var previousMonthsSelectedStartMonth = "";
+var previousMonthsSelectedStartYear = "";
 var previousMonthsSelectedEndDate = "";
+var previousMonthsSelectedEndMonth = "";
+var previousMonthsSelectedEndYear = "";
 
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -821,7 +825,12 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                         selectedStartDate = div;
                         selectedStartDate.innerText = x;
 
-                        previousMonthsSelectedStartDate = selectedStartDate
+                        if (previousMonthsSelectedStartDate == "")
+                        {
+                            previousMonthsSelectedStartDate = selectedStartDate;
+                            previousMonthsSelectedStartMonth = selectedStartMonth;
+                            previousMonthsSelectedStartYear = selectedStartYear;
+                        }
                     }
                     else if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
                     &&  checkinMonth == months[month] && checkinYear == year)
@@ -933,7 +942,12 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                     selectedEndDate = div;
                     selectedEndDate.innerText = x;
 
-                    previousMonthsSelectedEndDate = selectedEndDate;
+                    if (previousMonthsSelectedEndDate == "")
+                    {
+                        previousMonthsSelectedEndDate = selectedEndDate;
+                        previousMonthsSelectedEndMonth = selectedEndMonth;
+                        previousMonthsSelectedEndYear = selectedEndYear;
+                    }
                 }
                 else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
                 &&  checkinMonth == months[nextMonth] && checkinYear == nextYear)
@@ -2150,12 +2164,12 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
 
             if (+div.innerText == x && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
             {
-                //debugger;
-                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                if (+selectedStartDate.innerText + 28 >= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                &&  x > selectedEndDate.innerText)
                 {
                     changeMonthsEndValuesCSS(td2, div2);
                 }
-                else 
+                else if (x > selectedEndDate.innerText)
                 {
                     changeMonthsEndValuesCSS(td, div);
                 }
@@ -2164,16 +2178,16 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
             }
             else if ((+div.innerText == x || +div2.innerText == x) && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
             {
-                // this one borked
-                //debugger;
-                if (+div.innerText == x && +selectedStartDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                if (+div.innerText == x && +selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                &&  x > selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td, div);
 
                     break loop;
                 }
-                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 >= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                     &&  x > selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2184,9 +2198,8 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
             else if (+div2.innerText == x && (firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate)
                  ||  firstCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)))
             {
-                //debugger;
-                if (+selectedStartDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate))
+                if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate) &&  x > selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2212,13 +2225,8 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
             else if (+div2.innerText == x && (secondCalendar.contains(selectedEndDate) 
                  ||  secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate)))
             {
-                //debugger;
-                if (secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate))
-                {
-                    selectedEndDate.innerText = "1";
-                }
-
-                if (+selectedEndDate.innerText + 28 < new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                &&  x > selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2241,9 +2249,9 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                     break loop;
                 }
             }
-            else if (!firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate))
+            else if (!firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)
+                 &&  selectedEndDate.tagName != "NULL")
             {
-                //debugger;
                 selectedEndDate = document.createElement("NULL");
                 selectedEndDate.innerText = x;
             }
@@ -2259,8 +2267,6 @@ function validateMonthsDatesPosition()
     let eDate = new Date(selectedEndYear, months.indexOf(selectedEndMonth), +selectedEndDate.innerText);
     let x = ""
 
-    // I LOVE debugger;
-    //debugger;
     if (sDate.getMonth() == eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
     {
         x = sDate.getDate() - eDate.getDate();
@@ -2298,19 +2304,6 @@ function validateMonthsDatesPosition()
             }
         }
     }
-
-    //selectedStartDate = 1;
-    //selectedStartMonth = 1;
-    //selectedStartYear = 1;
-
-
-    console.log(" ")
-    console.log(`sday   -   ${sDate.getDate()}`);
-    console.log(`smonth -   ${sDate.getMonth()}`);
-    console.log(`syear  -   ${sDate.getFullYear()}`);
-    console.log(`eday   -   ${eDate.getDate()}`);
-    console.log(`emonth -   ${eDate.getMonth()}`);
-    console.log(`eyear  -   ${eDate.getFullYear()}`);
 }
 
 getStupidCalendarDatesAgain.onclick = function(e)
@@ -2340,9 +2333,14 @@ getStupidCalendarDatesAgain.onclick = function(e)
         }
 
         startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(selectedStartMonth)]} ${selectedStartYear}`;
-
         validateMonthsDatesPosition();
+        endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(selectedEndMonth)]} ${selectedEndYear}`;
     }
+}
+
+function validationMonthsMinimalDaysDifference()
+{
+    //  block user from selecting lower than 28 days difference while selecting end date
 }
 
 getStupidCalendarDatesAgainAgain.onclick = function(e)
@@ -2689,23 +2687,28 @@ modalBackground.onclick = function()
     if (previousMonthsSelectedStartDate != "")
     {
         selectedStartDate = previousMonthsSelectedStartDate;
+        selectedStartMonth = previousMonthsSelectedStartMonth;
+        selectedStartYear = previousMonthsSelectedStartYear;
         try
         {
             let m = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             let y = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
             startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
-        }catch{} // i hate
+        }catch{} // i hate i know i can make check if statement
     }
 
     if (previousMonthsSelectedEndDate != "")
     {
         selectedEndDate = previousMonthsSelectedEndDate;
+        selectedEndMonth = previousMonthsSelectedEndMonth;
+        selectedEndYear = previousMonthsSelectedEndYear;
         try
         {
             let m = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             let y = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
             endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
-        }catch{} // try catch
+            
+        }catch{} // try catch but i dont want to
     }
 
     closeModal();
@@ -2823,7 +2826,9 @@ saveStartDateButton.onclick = function()
     whenInput.appendChild(document.createTextNode(" - "));
     whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
     whenStartDate.innerText = `${startDateValue} ${savedStartMonthsPMValue}`;
+    whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
 
+    correctCirclePosition();
     closeModal();
 }
 
