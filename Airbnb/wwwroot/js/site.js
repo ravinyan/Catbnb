@@ -807,6 +807,13 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
+            else if ((calendarId == monthsCalendar || calendarId == monthsCalendar3) && modalEndDate.style.display == "block"
+                 &&  month == currentMonth && year == currentYear && x <= endOfCurrentMonth)
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
             else
             {
                 td.className = "td_box";
@@ -1672,6 +1679,13 @@ function setWhenValues(dateStart, month, number)
         selectedStartDate.innerText = "1";
         selectedEndDate.innerText = "1";
 
+        previousMonthsSelectedStartDate = selectedStartDate;
+        previousMonthsSelectedStartMonth = selectedStartMonth;
+        previousMonthsSelectedStartYear = selectedStartYear;
+        previousMonthsSelectedEndDate = selectedEndDate;
+        previousMonthsSelectedEndMonth = selectedEndMonth;
+        previousMonthsSelectedEndYear = selectedEndYear;
+
         startDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
         endDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
     }
@@ -2338,9 +2352,43 @@ getStupidCalendarDatesAgain.onclick = function(e)
     }
 }
 
-function validationMonthsMinimalDaysDifference()
-{
+
     //  block user from selecting lower than 28 days difference while selecting end date
+monthsCalendar3.onmouseover = function(e)
+{
+    if (e.target.className == "box")
+    {
+        console.log("faq")
+    }
+}
+
+monthsCalendar3.onmouseout = function(e)
+{
+    if (e.target.className == "box")
+    {
+        console.log("unfaq")
+    }
+}
+
+monthsCalendar4.onmouseover = function(e)
+{
+    if (e.target.className == "box")
+    {
+        console.log("faq")
+    }
+}
+
+monthsCalendar4.onmouseout = function(e)
+{
+    if (e.target.className == "box")
+    {
+        console.log("unfaq")
+    }
+}
+
+function validationMonthsMinimalDaysDifference(e)
+{
+    
 }
 
 getStupidCalendarDatesAgainAgain.onclick = function(e)
