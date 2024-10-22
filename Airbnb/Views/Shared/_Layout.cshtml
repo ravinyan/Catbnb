@@ -9,12 +9,6 @@
     <link rel="stylesheet" href="~/Airbnb.styles.css" asp-append-version="true" />
 </head>
 <body>
-@*     <div>
-
-        <button id="ModalTest" type="button">
-            MODAL TEST
-        </button>
-    </div> *@
     <div style="position: sticky; top: 0px; width: 100%; height: 262px; z-index: 100">
         <header id="heder" class="border-bottom header">
             <div id="TopHeader" style="height: 161px; transition: 0.2s">
@@ -825,7 +819,7 @@
         </div>
     </div>
 
-    @* better modals coz they are mine modals *@
+    @* better modals coz they are mine modals + calendar stuff *@
     <div id="ModalStartDate" class="modal_window" style="display: none">
         <div class="modal_header">
             Choose start date
@@ -970,6 +964,9 @@
 
     <div id="ModalBackground" class="modal_background"></div>
     
+    <div id="InvalidDayPopup" class="invalid_day_popup shadow-lg">
+        28-night minimum
+    </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

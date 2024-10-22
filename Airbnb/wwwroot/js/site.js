@@ -2352,13 +2352,41 @@ getStupidCalendarDatesAgain.onclick = function(e)
     }
 }
 
+const invalidDayPopup = document.getElementById("InvalidDayPopup");
 
-    //  block user from selecting lower than 28 days difference while selecting end date
+function validationMonthsMinimalDaysDifference(e)
+{
+    let sDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), selectedStartDate.innerText);
+    let check = new Date(sDate);
+    try
+    {
+        let d = +e.target.innerText;
+        let m =  e.target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+        let y = +e.target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+        var newsDate = new Date(y, months.indexOf(m), d);
+    }catch{}
+
+    sDate.setDate(sDate.getDate() + 28);
+
+    if (sDate > newsDate)
+    {
+        if (check.getMonth() == newsDate.getMonth() && +e.target.innerText < +selectedStartDate.innerText)
+        {
+
+        }
+        else
+        {
+            e.target.after(invalidDayPopup);
+            invalidDayPopup.style.display = "block";
+        }
+    }
+}
+
 monthsCalendar3.onmouseover = function(e)
 {
     if (e.target.className == "box")
     {
-        console.log("faq")
+        validationMonthsMinimalDaysDifference(e);
     }
 }
 
@@ -2366,7 +2394,7 @@ monthsCalendar3.onmouseout = function(e)
 {
     if (e.target.className == "box")
     {
-        console.log("unfaq")
+        invalidDayPopup.style.display = "none";
     }
 }
 
@@ -2374,7 +2402,7 @@ monthsCalendar4.onmouseover = function(e)
 {
     if (e.target.className == "box")
     {
-        console.log("faq")
+        validationMonthsMinimalDaysDifference(e);
     }
 }
 
@@ -2382,18 +2410,13 @@ monthsCalendar4.onmouseout = function(e)
 {
     if (e.target.className == "box")
     {
-        console.log("unfaq")
+        invalidDayPopup.style.display = "none";
     }
-}
-
-function validationMonthsMinimalDaysDifference(e)
-{
-    
 }
 
 getStupidCalendarDatesAgainAgain.onclick = function(e)
 {
-    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
+    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover") && e.target.nextSibling != invalidDayPopup)
     {
         //  reset feedback
         if (selectedEndDate != "")
@@ -3029,3 +3052,10 @@ document.addEventListener("click", function(e)
         userMenuDropdown.style.display = "none";
     }
 })
+
+//tetstetening testing test 1 2 3 test
+
+
+
+
+
