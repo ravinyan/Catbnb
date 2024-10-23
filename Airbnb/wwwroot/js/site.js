@@ -651,6 +651,8 @@ var previousMonthsSelectedStartYear = "";
 var previousMonthsSelectedEndDate = "";
 var previousMonthsSelectedEndMonth = "";
 var previousMonthsSelectedEndYear = "";
+const modalStartDate = document.getElementById("ModalStartDate");
+const modalEndDate = document.getElementById("ModalEndDate");
 
 function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -814,6 +816,20 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
+            else if (modalEndDate.style.display == "block" && x < +selectedStartDate.innerText && month <= months.indexOf(selectedStartMonth)
+                 &&  year <= selectedStartYear)
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
+            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && month >= currentMonth
+                 &&  year == currentYear + 2 && ((x > +selectedStartDate.innerText && month == currentMonth) || month > currentMonth))
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
             else
             {
                 td.className = "td_box";
@@ -933,54 +949,71 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             var td = document.createElement("td");
             var div = document.createElement("div");
 
-            td.className = "td_box";
-
-            if (x > endOfNextMonth)
+            if (modalEndDate.style.display == "block" && x < +selectedStartDate.innerText && nextMonth <= months.indexOf(selectedStartMonth)
+                 &&  nextYear <= selectedStartYear)
             {
-                break;
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
+            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && nextMonth >= currentMonth 
+                 &&  nextYear == currentYear + 2 && ((x > +selectedStartDate.innerText && nextMonth == currentMonth) || nextMonth > currentMonth))
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";   
             }
             else
             {
-                if ((calendarId == monthsCalendar2 || calendarId == monthsCalendar4) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
-                {
-                    div.style.backgroundColor = "black";
-                    div.style.color = "white";
+                td.className = "td_box";
 
-                    selectedEndDate = div;
-                    selectedEndDate.innerText = x;
-
-                    if (previousMonthsSelectedEndDate == "")
-                    {
-                        previousMonthsSelectedEndDate = selectedEndDate;
-                        previousMonthsSelectedEndMonth = selectedEndMonth;
-                        previousMonthsSelectedEndYear = selectedEndYear;
-                    }
-                }
-                else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
-                &&  checkinMonth == months[nextMonth] && checkinYear == nextYear)
+                if (x > endOfNextMonth)
                 {
-                    div = checkinDate;
-                    div.style.backgroundColor = "black";
-                    div.style.color = "white";
-                    addedCheckinDate = true;
-                }
-                else if (checkoutDate != "" && addedCheckoutDate == false && x == checkoutDate.innerText 
-                     &&  checkoutMonth == months[nextMonth] && checkoutYear == nextYear)
-                {
-                    div = checkoutDate;
-                    div.style.backgroundColor = "black";
-                    div.style.color = "white";
-                    addedCheckoutDate = true;
+                    break;
                 }
                 else
                 {
-                    div.innerText = x;  
+                    if ((calendarId == monthsCalendar2 || calendarId == monthsCalendar4) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+
+                        selectedEndDate = div;
+                        selectedEndDate.innerText = x;
+
+                        if (previousMonthsSelectedEndDate == "")
+                        {
+                            previousMonthsSelectedEndDate = selectedEndDate;
+                            previousMonthsSelectedEndMonth = selectedEndMonth;
+                            previousMonthsSelectedEndYear = selectedEndYear;
+                        }
+                    }
+                    else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
+                    &&  checkinMonth == months[nextMonth] && checkinYear == nextYear)
+                    {
+                        div = checkinDate;
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        addedCheckinDate = true;
+                    }
+                    else if (checkoutDate != "" && addedCheckoutDate == false && x == checkoutDate.innerText 
+                         &&  checkoutMonth == months[nextMonth] && checkoutYear == nextYear)
+                    {
+                        div = checkoutDate;
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        addedCheckoutDate = true;
+                    }
+                    else
+                    {
+                        div.innerText = x;  
+                    }
                 }
+
+                keepShadowBetweenDates(nextMonth, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
+                div.className = "box";
             }
 
-            keepShadowBetweenDates(nextMonth, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
-    
-            div.className = "box";
             td.appendChild(div);
             tr.appendChild(td);
         }
@@ -1166,7 +1199,7 @@ getStupidCalendarDates.onclick = function(e)
         }
 
         //  validation
-        if ((+selectedCheckinDate.innerText > +selectedCheckoutDate.innerText) 
+        if ((+selectedCheckinDate.innerText >= +selectedCheckoutDate.innerText) 
         &&  (selectedCheckinMonth == selectedCheckoutMonth) && (selectedCheckinYear == selectedCheckoutYear)
         &&  (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
         {
@@ -2139,9 +2172,17 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
 
 function changeMonthsEndValuesCSS(td, div)
 {
-    selectedEndDate.style.background = "";
-    selectedEndDate.style.backgroundColor = "";
-    selectedEndDate.style.color = "";
+    if (selectedStartDate == selectedEndDate)
+    {
+
+    }
+    else
+    {
+        selectedEndDate.style.background = "";
+        selectedEndDate.style.backgroundColor = "";
+        selectedEndDate.style.color = "";
+    }
+    
     if (selectedEndDate.tagName != "NULL")
     {
         selectedEndDate.parentElement.style.background = "";
@@ -2176,14 +2217,14 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                 var div2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
             }catch{}
 
-            if (+div.innerText == x && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
+            if ((+div.innerText == x && +div.innerText != 1) && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
             {
-                if (+selectedStartDate.innerText + 28 >= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x > selectedEndDate.innerText)
+                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
+                &&  x > +selectedEndDate.innerText)
                 {
                     changeMonthsEndValuesCSS(td2, div2);
                 }
-                else if (x > selectedEndDate.innerText)
+                else if (x > +selectedEndDate.innerText)
                 {
                     changeMonthsEndValuesCSS(td, div);
                 }
@@ -2193,15 +2234,22 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
             else if ((+div.innerText == x || +div2.innerText == x) && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
             {
                 if (+div.innerText == x && +selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x > selectedEndDate.innerText)
+                &&  x >= +selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td, div);
 
                     break loop;
                 }
+                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                {
+                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
+                    changeMonthsEndValuesCSS(td2, div2);
+
+                    break loop;
+                }
                 else if (+div2.innerText == x && +selectedStartDate.innerText + 28 >= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                     &&  x > selectedEndDate.innerText)
+                     &&  x >= selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2468,7 +2516,7 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
 
         rightButtonClicked = false;
     
-        if (month == currentMonth && year == currentYear + 1)
+        if (month == currentMonth && year == currentYear + 2)
         {
             rightButton.style.cursor = "not-allowed";
             rightButton.style.color = "#dcdcdc";
@@ -2720,8 +2768,6 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
     }
 }
 
-const modalStartDate = document.getElementById("ModalStartDate");
-const modalEndDate = document.getElementById("ModalEndDate");
 const modalBackground = document.getElementById("ModalBackground");
 
 function closeModal()
@@ -2865,6 +2911,11 @@ function correctCirclePosition()
                     draggableCircle.style.cy = `30px`;
                     draggableCircle.style.cx = `175px`;
                     monthNumber.innerText = "12 Months";
+                    break;
+                default:
+                    draggableCircle.style.cy = `49.4263px`;
+                    draggableCircle.style.cx = `247.5px`;
+                    monthNumber.innerText = "1 Month";
                     break;
             }
 
