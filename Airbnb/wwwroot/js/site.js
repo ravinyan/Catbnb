@@ -635,7 +635,7 @@ const monthsCalendar = document.getElementById("MonthsCalendar");
 const monthsCalendar2 = document.getElementById("MonthsCalendar2");
 const monthsCalendar3 = document.getElementById("MonthsCalendar3");
 const monthsCalendar4 = document.getElementById("MonthsCalendar4");
-const startDate = new Date(year, month + 1, 1);
+var startDate = new Date(year, month + 1, 1);
 const endDate = new Date(year, month + 4, 1);
 var selectedStartDate = document.createElement(null);
 selectedStartDate.innerText = 1;
@@ -654,8 +654,92 @@ var previousMonthsSelectedEndYear = "";
 const modalStartDate = document.getElementById("ModalStartDate");
 const modalEndDate = document.getElementById("ModalEndDate");
 
-function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function keepShadowBetweenDates(cal, mont, x, td, div, yea, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
+    // if x == checkin/checkout date give half shadows
+    // if both same month == from checkin to checkout
+    // if checkin on first and checkout of second calendar == shadow inbetween
+    // if on both calendars there is no checkout date == shadow from checkin to last calendar date
+    // 
+    // 
+    //
+    
+    // i hate this
+    if (checkinDate != "" && checkoutDate != "")
+    {
+        //var firstCalendar = "";
+        //var secondCalendar = "";
+
+        //if (cal == calendar || cal == calendar2)
+        //{
+        //    firstCalendar = calendar;
+        //    secondCalendar = calendar2
+        //}
+        //else if (cal == monthsCalendar || cal == monthsCalendar2)
+        //{
+        //    firstCalendar = monthsCalendar;
+        //    secondCalendar = monthsCalendar2;
+        //}
+        //else if (cal == monthsCalendar3 || cal == monthsCalendar4)
+        //{
+        //    firstCalendar = monthsCalendar3;
+        //    secondCalendar = monthsCalendar4;
+        //}
+
+        //if (x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
+        //{
+        //    td.style.background = calendarShadowCheckinColor;
+        //}
+        //else if (x == +checkoutDate.innerText && mont == months.indexOf(checkoutMonth) && year == checkoutYear)
+        //{
+        //    td.style.background = calendarShadowCheckoutColor;
+        //}
+
+        //// if same calendar
+        //if ((months.indexOf(checkinMonth) == month && months.indexOf(checkoutMonth) == month && checkinYear == year && checkoutYear == year)
+        //||  (months.indexOf(checkinMonth) == nextMonth && months.indexOf(checkoutMonth) == nextMonth && checkinYear == nextYear && checkoutYear == nextYear)
+        //&&  x > +checkinDate.innerText && x < +checkoutDate.innerText)
+        //{
+        //    td.style.background = calendarShadowColor;
+        //    div.style.borderColor = calendarShadowColor; 
+        //}
+
+        //// if checkin on first AND checkout on second
+        //if (firstCalendar.contains(checkinDate) && secondCalendar.contains(checkoutDate))
+        //{
+        //    if (cal == firstCalendar && x > +checkinDate.innerText)
+        //    {
+        //        td.style.background = calendarShadowColor;
+        //        div.style.borderColor = calendarShadowColor;
+        //    }
+
+        //    if (cal == secondCalendar && x < +checkoutDate.innerText)
+        //    {
+        //        td.style.background = calendarShadowColor;
+        //        div.style.borderColor = calendarShadowColor;
+        //    }
+        //}
+
+        //// if checkin is forever alone
+        //if ((firstCalendar.contains(checkinDate) || secondCalendar.contains(checkinDate)) 
+        //&&  !firstCalendar.contains(checkoutDate) && !secondCalendar.contains(checkoutDate) 
+        //&&  x > +checkinDate.innerText)
+        //{
+        //    td.style.background = calendarShadowColor;
+        //    div.style.borderColor = calendarShadowColor;
+        //}
+
+        //// if checkout is forever alone
+        //if ((firstCalendar.contains(checkoutDate) && secondCalendar.contains(checkoutDate)) 
+        //&&  !firstCalendar.contains(checkinDate) || !secondCalendar.contains(checkinDate)
+        //&&  x < +checkoutDate.innerText)
+        //{
+        //    td.style.background = calendarShadowColor;
+        //    div.style.borderColor = calendarShadowColor;
+        //}
+    }
+
+    // to be removed from existence coz this code is garbage and im tired of it
     if (checkinDate != "" && checkoutDate != "")
     {
         if (x == +checkinDate.innerText && checkinMonth == months[month] && (checkinYear == year || checkinYear == nextYear))
@@ -675,7 +759,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor; 
         }
-      
+    
         if (months.indexOf(months[month]) == months.indexOf(checkinMonth) 
         &&  months.indexOf(months[month]) != months.indexOf(checkoutMonth)
         &&  x > +checkinDate.innerText && checkoutYear == year && checkinYear == year)
@@ -683,7 +767,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;   
         }
-      
+    
         if (months.indexOf(months[month]) != months.indexOf(checkinMonth) 
         &&  months.indexOf(months[month]) == months.indexOf(checkoutMonth)
         &&  x < +checkoutDate.innerText && checkoutYear == year && checkinYear == year)
@@ -691,7 +775,7 @@ function keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, ch
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;   
         }
-      
+    
         if (months.indexOf(months[month]) > months.indexOf(checkinMonth)
         &&  months.indexOf(months[month]) < months.indexOf(checkoutMonth)
         &&  checkoutYear == year && checkinYear == year)
@@ -816,8 +900,10 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if (modalEndDate.style.display == "block" && x < +selectedStartDate.innerText && month <= months.indexOf(selectedStartMonth)
-                 &&  year <= selectedStartYear)
+            else if (modalEndDate.style.display == "block" 
+                 &&  (x < +selectedStartDate.innerText && month == months.indexOf(selectedStartMonth) && year == selectedStartYear)
+                 ||  (month < months.indexOf(selectedStartMonth) && year == selectedStartYear)
+                 ||  (year < selectedStartYear))
             {
                 td.className = "td_box";
                 div.innerText = x;
@@ -877,7 +963,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                     }
                 }
 
-                keepShadowBetweenDates(month, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
+                keepShadowBetweenDates(calendarId, month, x, td, div, year, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
    
@@ -949,8 +1035,10 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             var td = document.createElement("td");
             var div = document.createElement("div");
 
-            if (modalEndDate.style.display == "block" && x < +selectedStartDate.innerText && nextMonth <= months.indexOf(selectedStartMonth)
-                 &&  nextYear <= selectedStartYear)
+            if (modalEndDate.style.display == "block"
+            &&  (x < +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) &&  nextYear == selectedStartYear)
+            ||  (nextMonth < months.indexOf(selectedStartMonth) && nextYear == selectedStartYear)
+            ||  (nextYear < selectedStartYear))
             {
                 td.className = "td_box";
                 div.innerText = x;
@@ -1010,7 +1098,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                     }
                 }
 
-                keepShadowBetweenDates(nextMonth, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
+                keepShadowBetweenDates(calendarId, nextMonth, x, td, div, nextYear, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
 
@@ -2219,12 +2307,11 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
 
             if ((+div.innerText == x && +div.innerText != 1) && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
             {
-                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x > +selectedEndDate.innerText)
+                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
                 {
                     changeMonthsEndValuesCSS(td2, div2);
                 }
-                else if (x > +selectedEndDate.innerText)
+                else if (x >= +selectedEndDate.innerText)
                 {
                     changeMonthsEndValuesCSS(td, div);
                 }
@@ -2261,7 +2348,7 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                  ||  firstCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)))
             {
                 if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate) &&  x > selectedEndDate.innerText)
+                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate) &&  x >= selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2288,7 +2375,7 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                  ||  secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate)))
             {
                 if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x > selectedEndDate.innerText)
+                &&  x >= selectedEndDate.innerText)
                 {
                     removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
                     changeMonthsEndValuesCSS(td2, div2);
@@ -2332,14 +2419,14 @@ function validateMonthsDatesPosition()
     if (sDate.getMonth() == eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
     {
         x = sDate.getDate() - eDate.getDate();
-        
-        if (x <= 0 || x < 28)
+
+        if (x >= -28 && x < 28)
         {
             eDate.setDate(sDate.getDate() + 28);
             changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
         }
     }
-    else if (sDate.getMonth() != eDate.getMonth())
+    else
     {
         if (sDate.getMonth() > eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
         {
@@ -2834,7 +2921,33 @@ modalBackground.onclick = function()
 const saveStartDateButton = document.getElementById("SaveMonthStartDate");
 const saveEndDateButton = document.getElementById("SaveMonthEndDate");
 
-function correctCirclePosition()
+function correctCirclePositionStartDate()
+{
+    //let cpch1 = "";
+
+    //cpch1 = new Date(selectedStartYear, months.indexOf(selectedStartMonth), selectedStartDate.innerText);
+    //cpch2 = new Date(cpch1);
+
+    if (months.indexOf(selectedStartMonth) > startDate.getMonth())
+    {
+        draggableCircle.style.cy = `49.4263px`;
+        draggableCircle.style.cx = `247.5px`;
+        monthNumber.innerText = "1 Month";
+
+        startDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), "1");
+    }
+    else if (months.indexOf(selectedStartMonth) < startDate.getMonth())
+    {
+        draggableCircle.style.cy = `49.4263px`;
+        draggableCircle.style.cx = `247.5px`;
+        monthNumber.innerText = "1 Month";
+
+        startDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), "1");
+    }
+    
+}
+
+function correctCirclePositionEndDate()
 {
     let cpch1 = "";
     let cpch2 = "";
@@ -2944,13 +3057,20 @@ saveStartDateButton.onclick = function()
         previousMonthsSelectedStartDate = "";
     }
 
+    if (previousMonthsSelectedEndDate != "")
+    {
+        previousMonthsSelectedEndDate = "";
+    }
+
     whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`));
     whenInput.appendChild(document.createTextNode(" - "));
     whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
     whenStartDate.innerText = `${startDateValue} ${savedStartMonthsPMValue}`;
     whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
 
-    correctCirclePosition();
+    //correctCirclePositionEndDate();
+    debugger;
+    correctCirclePositionStartDate();
     closeModal();
 }
 
@@ -2973,7 +3093,7 @@ saveEndDateButton.onclick = function()
     whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
     whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
 
-    correctCirclePosition();
+    correctCirclePositionEndDate();
     closeModal();
 }
 
