@@ -1033,7 +1033,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         div.innerText = x;  
                     }
                 }
-                debugger;
+
                 keepShadowBetweenDates(nextMonth, nextYear, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
@@ -2770,7 +2770,7 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
 
     rightButtonClicked = false;
 
-    if ((month == currentMonth && year == currentYear))
+    if (month == currentMonth && year == currentYear)
     {
         leftButton.style.cursor = "not-allowed";
         leftButton.style.color = "#dcdcdc";
@@ -2789,6 +2789,14 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
         rightButton.style.color = "";
         rightButton.style.background = "";
     }
+    
+    //debugger;
+    //if ((month >= currentMonth && year > currentYear) || (year > currentYear + 1))
+    //{
+    //    rightButton.style.cursor = "not-allowed";
+    //    rightButton.style.color = "#dcdcdc";
+    //    rightButton.style.background = "none";
+    //}
 }
 
 const modalBackground = document.getElementById("ModalBackground");
