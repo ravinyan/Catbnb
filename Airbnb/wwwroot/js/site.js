@@ -241,6 +241,7 @@ document.addEventListener('mousedown', function(e)
             datesDropdown.style.display = "none";
         }
         
+        onClickButtonUnfocus(whenButton);
         onClickButtonUnfocus(checkinButton);
     }
     //  CHECK OUT
@@ -257,6 +258,7 @@ document.addEventListener('mousedown', function(e)
             datesDropdown.style.display = "none";
         }
 
+        onClickButtonUnfocus(whenButton);
         onClickButtonUnfocus(checkoutButton);
     }
     //  WHEN
@@ -808,7 +810,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
 
             var td = document.createElement("td");
             var div = document.createElement("div");
-            
+
             if (x < day && (month == currentMonth && year == currentYear))
             {
                 td.className = "td_box";
@@ -831,8 +833,17 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
+            else if (modalEndDate.style.display == "block"
+                 &&  (x > +selectedStartDate.innerText && month == months.indexOf(selectedStartMonth) && year == selectedStartYear + 1
+                 ||  ((month > months.indexOf(selectedStartMonth) && year == selectedStartYear + 1)
+                 ||  (year == currentYear + 2))) && x <= endOfCurrentMonth)
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
             else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && month >= currentMonth
-                 &&  year == currentYear + 2 && ((x > +selectedStartDate.innerText && month == currentMonth) || month > currentMonth)
+                 &&  year == currentYear + 2 && ((x > 1 && month == currentMonth) || month > currentMonth)
                  &&  x <= endOfCurrentMonth)
             {
                 td.className = "td_box";
@@ -965,7 +976,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             var div = document.createElement("div");
 
             if (modalEndDate.style.display == "block"
-            &&  ((x < +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) &&  nextYear == selectedStartYear)
+            &&  ((x < +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) && nextYear == selectedStartYear)
             ||  (nextMonth < months.indexOf(selectedStartMonth) && nextYear == selectedStartYear)
             ||  (nextYear < selectedStartYear)) && x <= endOfNextMonth)
             {
@@ -973,8 +984,17 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                 div.innerText = x;
                 div.className = "box_past";
             }
+            else if (modalEndDate.style.display == "block"
+                 &&  (x > +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) && nextYear == selectedStartYear + 1
+                 ||  ((nextMonth > months.indexOf(selectedStartMonth) && nextYear == selectedStartYear + 1)
+                 ||  (nextYear == currentYear + 2))) && x <= endOfNextMonth)
+            {
+                td.className = "td_box";
+                div.innerText = x;
+                div.className = "box_past";
+            }
             else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && nextMonth >= currentMonth 
-                 &&  nextYear == currentYear + 2 && ((x > +selectedStartDate.innerText && nextMonth == currentMonth) || nextMonth > currentMonth)
+                 &&  nextYear == currentYear + 2 && ((x > 1 && nextMonth == currentMonth) || nextMonth > currentMonth)
                  &&  x <= endOfNextMonth)
             {
                 td.className = "td_box";
@@ -2789,14 +2809,6 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
         rightButton.style.color = "";
         rightButton.style.background = "";
     }
-    
-    //debugger;
-    //if ((month >= currentMonth && year > currentYear) || (year > currentYear + 1))
-    //{
-    //    rightButton.style.cursor = "not-allowed";
-    //    rightButton.style.color = "#dcdcdc";
-    //    rightButton.style.background = "none";
-    //}
 }
 
 const modalBackground = document.getElementById("ModalBackground");
@@ -2883,7 +2895,6 @@ function correctCirclePositionStartDate()
 
         startDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), "1");
     }
-    
 }
 
 function correctCirclePositionEndDate()
