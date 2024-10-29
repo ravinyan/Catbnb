@@ -178,7 +178,7 @@
                                                 <div class="fw-bold text-nowrap" style="background: none">
                                                     When
                                                 </div>
-                                                <div id="WhenInput" class="border-0 input"></div>
+                                                <div id="MonthsBlockWhenInput" class="border-0 input"></div>
                                             </div>
                                         </label>
                                     </div>
@@ -219,22 +219,16 @@
                                     @* DATES DROPDOWN *@
                                     <div id="CheckinDropdown" class="shadow dropdown_window" style="width: 100%; left: 0px">
                                         <div style="display: flex; justify-content: center">
-                                            <div style="background-color: #dedede; justify-content: center; display: flex; border-radius: 50px; align-items: center">
-                                                <div class="shadowe">
-                                                    <button id="DatesButton" type="button" class="btn" style="border-radius: 50px; margin: 5px; background-color: white">
-                                                        Dates
-                                                    </button>
-                                                </div>
-                                                <div class="shadowe">
-                                                    <button id="MonthsButton" type="button" class="btn" style="border-radius: 50px; margin-block-start: 5px; margin-block-end: 5px;">
-                                                        Months
-                                                    </button>
-                                                </div>
-                                                <div class="shadowe">
-                                                    <button id="FlexibleButton" type="button" class="btn" style="border-radius: 50px; margin: 5px;">
-                                                        Flexible
-                                                    </button>
-                                                </div>
+                                            <div style="background-color: #dedede; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-radius: 50px; width: 300px; height: 46px;">
+                                                <button id="DatesButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px; background-color: white">
+                                                    Dates
+                                                </button>
+                                                <button id="MonthsButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 0px; ">
+                                                    Months
+                                                </button>
+                                                <button id="FlexibleButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px;">
+                                                    Flexible
+                                                </button>
                                             </div>
                                         </div>
                                         @* dates block *@
@@ -308,7 +302,7 @@
                                                 </div>
                                                 <div style="display: flex; justify-content: center; align-items: center;">
                                                     <div class="months_block_BigScaryCircle">
-                                                        <div id="MonthsNumber" style="font-size: 50px; display: flex; justify-content: center; align-items: center; text-align: center; top: 100px; left: 100px; max-width: 150px; min-width: 150px; position: absolute">
+                                                        <div id="MonthsBlockMonthNumber" style="font-size: 50px; display: flex; justify-content: center; align-items: center; text-align: center; top: 100px; left: 100px; max-width: 150px; min-width: 150px; position: absolute">
                                                             3 Months
                                                         </div>
                                                         <div id="MonthsDot1" style="left: 232.5px; top: 34.4263px" class="months_circle_dot">O</div>
@@ -324,21 +318,21 @@
                                                         <div id="MonthsDot11" style="left: 87.5px; top: 34.4263px" class="months_circle_dot">O</div>
                                                         <div id="MonthsDot12" style="left: 160px; top: 15px" class="months_circle_dot">O</div>
                                                         @*click the circles to beat*@
-                                                        <svg id="MonthsCircleSVG" style="height: 350px; width: 350px;" xmlns="http://www.w3.org/2000/svg">
-                                                            <circle id="MonthsCircle" r="145" cx="50%" cy="50%" fill="none"></circle>
-                                                            <circle id="DraggableCircle" r="30" cx="320" cy="50%" fill="red" cursor="grab"></circle>
+                                                        <svg id="MonthsBlockCircleSVG" style="height: 350px; width: 350px;" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle id="MonthsBlockCircle" r="145" cx="50%" cy="50%" fill="none"></circle>
+                                                            <circle id="MonthsBlockDraggableCircle" r="30" cx="320" cy="50%" fill="red" cursor="grab"></circle>
                                                         </svg>
                                                     </div>
                                                 </div>
                                                 <div class="months_block_footer">
                                                     <div>
-                                                        <button id="WhenStartDate" type="button" class="when_buttons">
+                                                        <button id="MonthsBlockWhenStartDate" type="button" class="when_buttons">
 
                                                         </button>
                                                     </div>
                                                     <div style="padding: 0 5px;">to</div>
                                                     <div>
-                                                        <button id="WhenEndDate" type="button" class="when_buttons">
+                                                        <button id="MonthsBlockWhenEndDate" type="button" class="when_buttons">
 
                                                         </button>
                                                     </div>
@@ -347,7 +341,169 @@
                                         </div>
                                         @* flexible block *@
                                         <div id="FlexibleBlock" style="display: none">
-                                            quack
+                                            <div style="display: grid; padding-block-start: 30px; row-gap: 30px;">
+                                                <div style="">
+                                                    <div id="FlexibleBlockStay" style="display: flex; justify-content: center; font-size: 20px; font-weight: 600; padding: 15px 0px">
+                                                        Stay for a [placeholder]
+                                                    </div>
+                                                    <div style="display: flex; justify-content: center; column-gap: 10px; height: 40px;">
+                                                        <button id="FlexibleBlockWeekendButton" type="button" class="stay_button">
+                                                            Weekend
+                                                        </button>
+                                                        <button id="FlexibleBlockWeekButton" type="button" class="stay_button">
+                                                            Week
+                                                        </button>
+                                                        <button id="FlexibleBlockMonthButton" type="button" class="stay_button">
+                                                            Month
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div style="overflow: hidden">
+                                                    <div style="display: flex; width: 100%; justify-content: center; font-size: 20px; font-weight: 600">
+                                                        Go anytime
+                                                    </div>
+                                                    <div style="display: flex; padding-block-start: 20px; column-gap: 5px;">
+                                                        <button type="button" class="month_card">
+                                                            @* checked calendar
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                                            <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                                                            </svg>
+                                                            *@
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November2
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        @* testing delete later *@
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        <button type="button" class="month_card">
+                                                            <div style="display: flex; justify-content: center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px">
+                                                                November
+                                                            </div>
+                                                            <div style="display: flex; justify-content: center; margin-block-start: 3px; font-size: 16px;">
+                                                                2024
+                                                            </div>
+                                                        </button>
+                                                        @* testing delete later *@
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     @* WHO *@
@@ -820,25 +976,25 @@
     </div>
 
     @* better modals coz they are mine modals + calendar stuff *@
-    <div id="ModalStartDate" class="modal_window" style="display: none">
+    <div id="MonthsBlockModalStartDate" class="modal_window" style="display: none">
         <div class="modal_header">
             Choose start date
         </div>
         <div class="modal_body">
             <div class="shadowe" style="width: 100%; height: 0px">
-                <button id="MoveMonthsStartCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                <button id="MonthsBlockMoveStartCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
                         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                     </svg>
                 </button>
-                <button id="MoveMonthsStartCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                <button id="MonthsBlockMoveStartCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
                         <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                     </svg>
                 </button>
             </div>
-            <div id="StartMonthsCalendars" class="calendars">
-                <div id="MonthsCalendar" style="max-width: 375px; padding: 10px">
+            <div id="MonthsBlockStartCalendars" class="calendars">
+                <div id="MonthsBlockCalendarStartLeft" style="max-width: 375px; padding: 10px">
                     <ul class="days_list">
                         <li class="box">Mon</li>
                         <li class="box">Tue</li>
@@ -849,7 +1005,7 @@
                         <li class="box">Sun</li>
                     </ul>
                 </div>
-                <div id="MonthsCalendar2" style="max-width: 375px; padding: 10px">
+                <div id="MonthsBlockCalendarStartRight" style="max-width: 375px; padding: 10px">
                     <ul class="days_list">
                         <li class="box">Mon</li>
                         <li class="box">Tue</li>
@@ -863,53 +1019,53 @@
             </div>
             <div>
                 <div style="padding-block-end: 10px; display:flex; align-items: center; gap: 10px">
-                    <button id="MonthsStartExactDatesButton" type="button" class="PM">
+                    <button id="MonthsBlockStartExactDatesButton" type="button" class="PM">
                         Exact dates
                     </button>
-                    <button id="MonthsStartPM1Button" type="button" class="PM">
+                    <button id="MonthsBlockStartPM1Button" type="button" class="PM">
                         ± 1 day
                     </button>
-                    <button id="MonthsStartPM2Button" type="button" class="PM">
+                    <button id="MonthsBlockStartPM2Button" type="button" class="PM">
                         ± 2 days
                     </button>
-                    <button id="MonthsStartPM3Button" type="button" class="PM">
+                    <button id="MonthsBlockStartPM3Button" type="button" class="PM">
                         ± 3 days
                     </button>
-                    <button id="MonthsStartPM7Button" type="button" class="PM">
+                    <button id="MonthsBlockStartPM7Button" type="button" class="PM">
                         ± 7 days
                     </button>
-                    <button id="MonthsStartPM14Button" type="button" class="PM">
+                    <button id="MonthsBlockStartPM14Button" type="button" class="PM">
                         ± 14 days
                     </button>
                 </div>
             </div>
         </div>
         <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center;">
-            <button id="SaveMonthStartDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
+            <button id="MonthsBlockSaveStartDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
                 Save
             </button>
         </div>
     </div>
 
-    <div id="ModalEndDate" class="modal_window" style="display: none">
+    <div id="MonthsBlockModalEndDate" class="modal_window" style="display: none">
         <div class="modal_header">
             Choose end date
         </div>
         <div class="modal_body">
             <div class="shadowe" style="width: 100%; height: 0px">
-                <button id="MoveMonthsEndCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                <button id="MonthsBlockMoveEndCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
                         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                     </svg>
                 </button>
-                <button id="MoveMonthsEndCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                <button id="MonthsBlockMoveEndCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
                         <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                     </svg>
                 </button>
             </div>
-            <div id="EndMonthsCalendars" class="calendars">
-                <div id="MonthsCalendar3" style="max-width: 375px; padding: 10px">
+            <div id="MonthsBlockEndCalendars" class="calendars">
+                <div id="MonthsBlockCalendarEndLeft" style="max-width: 375px; padding: 10px">
                     <ul class="days_list">
                         <li class="box">Mon</li>
                         <li class="box">Tue</li>
@@ -920,7 +1076,7 @@
                         <li class="box">Sun</li>
                     </ul>
                 </div>
-                <div id="MonthsCalendar4" style="max-width: 375px; padding: 10px">
+                <div id="MonthsBlockCalendarEndRight" style="max-width: 375px; padding: 10px">
                     <ul class="days_list">
                         <li class="box">Mon</li>
                         <li class="box">Tue</li>
@@ -934,37 +1090,37 @@
             </div>
             <div>
                 <div style="padding-block-end: 10px; display:flex; align-items: center; gap: 10px">
-                    <button id="MonthsEndExactDatesButton" type="button" class="PM">
+                    <button id="MonthsBlockEndExactDatesButton" type="button" class="PM">
                         Exact dates
                     </button>
-                    <button id="MonthsEndPM1Button" type="button" class="PM">
+                    <button id="MonthsBlockEndPM1Button" type="button" class="PM">
                         ± 1 day
                     </button>
-                    <button id="MonthsEndPM2Button" type="button" class="PM">
+                    <button id="MonthsBlockEndPM2Button" type="button" class="PM">
                         ± 2 days
                     </button>
-                    <button id="MonthsEndPM3Button" type="button" class="PM">
+                    <button id="MonthsBlockEndPM3Button" type="button" class="PM">
                         ± 3 days
                     </button>
-                    <button id="MonthsEndPM7Button" type="button" class="PM">
+                    <button id="MonthsBlockEndPM7Button" type="button" class="PM">
                         ± 7 days
                     </button>
-                    <button id="MonthsEndPM14Button" type="button" class="PM">
+                    <button id="MonthsBlockEndPM14Button" type="button" class="PM">
                         ± 14 days
                     </button>
                 </div>
             </div>
         </div>
         <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center;">
-            <button id="SaveMonthEndDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
+            <button id="MonthsBlockSaveEndDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
                 Save
             </button>
         </div>
     </div>
 
-    <div id="ModalBackground" class="modal_background"></div>
+    <div id="MonthsBlockModalBackground" class="modal_background"></div>
     
-    <div id="InvalidDayPopup" class="invalid_day_popup shadow-lg">
+    <div id="MonthsBlockInvalidDayPopup" class="invalid_day_popup shadow-lg">
         28-night minimum
     </div>
 

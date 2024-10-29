@@ -212,7 +212,7 @@ function onClickButtonUnfocus(button)
 //  i feel like it better to have 1 event listener with >8 if statements than 8 event listeners with 8 if statements total
 document.addEventListener('mousedown', function(e) 
 {
-    if (e.target == imstupidsvg || e.target == imstupidpath || modalStartDate.style.display == "block" || modalEndDate.style.display == "block")
+    if (e.target == imstupidsvg || e.target == imstupidpath || monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block")
     {
         return;
     }
@@ -633,28 +633,33 @@ const calendarShadowColor = "#f0f0f0";
 const calendarShadowCheckinColor = "linear-gradient(to right, white 50%, #f0f0f0 50%)";
 const calendarShadowCheckoutColor = "linear-gradient(to right, #f0f0f0 50%, white 50%)";
 //  months calendar variables
-const monthsCalendar = document.getElementById("MonthsCalendar");
-const monthsCalendar2 = document.getElementById("MonthsCalendar2");
-const monthsCalendar3 = document.getElementById("MonthsCalendar3");
-const monthsCalendar4 = document.getElementById("MonthsCalendar4");
-var startDate = new Date(year, month + 1, 1);
-const endDate = new Date(year, month + 4, 1);
-var selectedStartDate = document.createElement(null);
-selectedStartDate.innerText = 1;
-var selectedEndDate = document.createElement(null);
-selectedEndDate.innerText = 1;
-var selectedStartMonth = months[startDate.getMonth()];
-var selectedEndMonth = months[endDate.getMonth()];
-var selectedStartYear = startDate.getFullYear();
-var selectedEndYear = endDate.getFullYear();
-var previousMonthsSelectedStartDate = "";
-var previousMonthsSelectedStartMonth = "";
-var previousMonthsSelectedStartYear = "";
-var previousMonthsSelectedEndDate = "";
-var previousMonthsSelectedEndMonth = "";
-var previousMonthsSelectedEndYear = "";
-const modalStartDate = document.getElementById("ModalStartDate");
-const modalEndDate = document.getElementById("ModalEndDate");
+const monthsBlockCalendarStartLeft = document.getElementById("MonthsBlockCalendarStartLeft");
+const monthsBlockCalendarStartRight = document.getElementById("MonthsBlockCalendarStartRight");
+const monthsBlockCalendarEndLeft = document.getElementById("MonthsBlockCalendarEndLeft");
+const monthsBlockCalendarEndRight = document.getElementById("MonthsBlockCalendarEndRight");
+
+var monthsBlockStartDate = new Date(year, month + 1, 1);
+const monthsBlockEndDate = new Date(year, month + 4, 1);
+
+var monthsBlockSelectedStartDate = document.createElement(null);
+monthsBlockSelectedStartDate.innerText = 1;
+var monthsBlockSelectedEndDate = document.createElement(null);
+monthsBlockSelectedEndDate.innerText = 1;
+
+var monthsBlockSelectedStartMonth = months[monthsBlockStartDate.getMonth()];
+var monthsBlockSelectedEndMonth = months[monthsBlockEndDate.getMonth()];
+var monthsBlockSelectedStartYear = monthsBlockStartDate.getFullYear();
+var monthsBlockSelectedEndYear = monthsBlockEndDate.getFullYear();
+
+var monthsBlockPreviousSelectedStartDate = "";
+var monthsBlockPreviousSelectedStartMonth = "";
+var monthsBlockPreviousSelectedStartYear = "";
+var monthsBlockPreviousSelectedEndDate = "";
+var monthsBlockPreviousSelectedEndMonth = "";
+var monthsBlockPreviousSelectedEndYear = "";
+
+const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStartDate");
+const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
 
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -817,32 +822,32 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if ((calendarId == monthsCalendar || calendarId == monthsCalendar3) && modalEndDate.style.display == "block"
+            else if ((calendarId == monthsBlockCalendarStartLeft || calendarId == monthsBlockCalendarEndLeft) && monthsBlockModalEndDate.style.display == "block"
                  &&  month == currentMonth && year == currentYear && x <= endOfCurrentMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if (modalEndDate.style.display == "block" 
-                 &&  ((x < +selectedStartDate.innerText && month == months.indexOf(selectedStartMonth) && year == selectedStartYear)
-                 ||  (month < months.indexOf(selectedStartMonth) && year == selectedStartYear)
-                 ||  (year < selectedStartYear)) && x <= endOfCurrentMonth)
+            else if (monthsBlockModalEndDate.style.display == "block" 
+                 &&  ((x < +monthsBlockSelectedStartDate.innerText && month == months.indexOf(monthsBlockSelectedStartMonth) && year == monthsBlockSelectedStartYear)
+                 ||  (month < months.indexOf(monthsBlockSelectedStartMonth) && year == monthsBlockSelectedStartYear)
+                 ||  (year < monthsBlockSelectedStartYear)) && x <= endOfCurrentMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if (modalEndDate.style.display == "block"
-                 &&  (x > +selectedStartDate.innerText && month == months.indexOf(selectedStartMonth) && year == selectedStartYear + 1
-                 ||  ((month > months.indexOf(selectedStartMonth) && year == selectedStartYear + 1)
+            else if (monthsBlockModalEndDate.style.display == "block"
+                 &&  (x > +monthsBlockSelectedStartDate.innerText && month == months.indexOf(monthsBlockSelectedStartMonth) && year == monthsBlockSelectedStartYear + 1
+                 ||  ((month > months.indexOf(monthsBlockSelectedStartMonth) && year == monthsBlockSelectedStartYear + 1)
                  ||  (year == currentYear + 2))) && x <= endOfCurrentMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && month >= currentMonth
+            else if ((monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block") && month >= currentMonth
                  &&  year == currentYear + 2 && ((x > 1 && month == currentMonth) || month > currentMonth)
                  &&  x <= endOfCurrentMonth)
             {
@@ -850,7 +855,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && year > currentYear + 2 && x <= endOfCurrentMonth)
+            else if ((monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block") && year > currentYear + 2 && x <= endOfCurrentMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
@@ -866,19 +871,19 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
-                    if ((calendarId == monthsCalendar || calendarId == monthsCalendar3) && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
+                    if ((calendarId == monthsBlockCalendarStartLeft || calendarId == monthsBlockCalendarEndLeft) && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
                     {
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                      
-                        selectedStartDate = div;
-                        selectedStartDate.innerText = x;
+                        monthsBlockSelectedStartDate = div;
+                        monthsBlockSelectedStartDate.innerText = x;
 
-                        if (previousMonthsSelectedStartDate == "")
+                        if (monthsBlockPreviousSelectedStartDate == "")
                         {
-                            previousMonthsSelectedStartDate = selectedStartDate;
-                            previousMonthsSelectedStartMonth = selectedStartMonth;
-                            previousMonthsSelectedStartYear = selectedStartYear;
+                            monthsBlockPreviousSelectedStartDate = monthsBlockSelectedStartDate;
+                            monthsBlockPreviousSelectedStartMonth = monthsBlockSelectedStartMonth;
+                            monthsBlockPreviousSelectedStartYear = monthsBlockSelectedStartYear;
                         }
                     }
                     else if (checkinDate != "" && addedCheckinDate == false && x == +checkinDate.innerText 
@@ -975,25 +980,25 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
             var td = document.createElement("td");
             var div = document.createElement("div");
 
-            if (modalEndDate.style.display == "block"
-            &&  ((x < +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) && nextYear == selectedStartYear)
-            ||  (nextMonth < months.indexOf(selectedStartMonth) && nextYear == selectedStartYear)
-            ||  (nextYear < selectedStartYear)) && x <= endOfNextMonth)
+            if (monthsBlockModalEndDate.style.display == "block"
+            &&  ((x < +monthsBlockSelectedStartDate.innerText && nextMonth == months.indexOf(monthsBlockSelectedStartMonth) && nextYear == monthsBlockSelectedStartYear)
+            ||  (nextMonth < months.indexOf(monthsBlockSelectedStartMonth) && nextYear == monthsBlockSelectedStartYear)
+            ||  (nextYear < monthsBlockSelectedStartYear)) && x <= endOfNextMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if (modalEndDate.style.display == "block"
-                 &&  (x > +selectedStartDate.innerText && nextMonth == months.indexOf(selectedStartMonth) && nextYear == selectedStartYear + 1
-                 ||  ((nextMonth > months.indexOf(selectedStartMonth) && nextYear == selectedStartYear + 1)
+            else if (monthsBlockModalEndDate.style.display == "block"
+                 &&  (x > +monthsBlockSelectedStartDate.innerText && nextMonth == months.indexOf(monthsBlockSelectedStartMonth) && nextYear == monthsBlockSelectedStartYear + 1
+                 ||  ((nextMonth > months.indexOf(monthsBlockSelectedStartMonth) && nextYear == monthsBlockSelectedStartYear + 1)
                  ||  (nextYear == currentYear + 2))) && x <= endOfNextMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
                 div.className = "box_past";
             }
-            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && nextMonth >= currentMonth 
+            else if ((monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block") && nextMonth >= currentMonth 
                  &&  nextYear == currentYear + 2 && ((x > 1 && nextMonth == currentMonth) || nextMonth > currentMonth)
                  &&  x <= endOfNextMonth)
             {
@@ -1001,7 +1006,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                 div.innerText = x;
                 div.className = "box_past";   
             }
-            else if ((modalStartDate.style.display == "block" || modalEndDate.style.display == "block") && nextYear > currentYear + 2 && x <= endOfNextMonth)
+            else if ((monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block") && nextYear > currentYear + 2 && x <= endOfNextMonth)
             {
                 td.className = "td_box";
                 div.innerText = x;
@@ -1017,19 +1022,19 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                 }
                 else
                 {
-                    if ((calendarId == monthsCalendar2 || calendarId == monthsCalendar4) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
+                    if ((calendarId == monthsBlockCalendarStartRight || calendarId == monthsBlockCalendarEndRight) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
                     {
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
 
-                        selectedEndDate = div;
-                        selectedEndDate.innerText = x;
+                        monthsBlockSelectedEndDate = div;
+                        monthsBlockSelectedEndDate.innerText = x;
 
-                        if (previousMonthsSelectedEndDate == "")
+                        if (monthsBlockPreviousSelectedEndDate == "")
                         {
-                            previousMonthsSelectedEndDate = selectedEndDate;
-                            previousMonthsSelectedEndMonth = selectedEndMonth;
-                            previousMonthsSelectedEndYear = selectedEndYear;
+                            monthsBlockPreviousSelectedEndDate = monthsBlockSelectedEndDate;
+                            monthsBlockPreviousSelectedEndMonth = monthsBlockSelectedEndMonth;
+                            monthsBlockPreviousSelectedEndYear = monthsBlockSelectedEndYear;
                         }
                     }
                     else if (checkinDate != "" && addedCheckinDate == false && x == checkinDate.innerText 
@@ -1164,7 +1169,7 @@ const getStupidCalendarDates = document.getElementById("DatesCalendars");
 
 function calendarValidationCSS(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
-    removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate);
+    removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate);
 
     selectedCheckinDate.style.background = "";
     selectedCheckinDate.style.color = "";
@@ -1199,7 +1204,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
 
-            removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckinDate = document.createElement(null);     
         }
         else if (selectedCheckoutDate.tagName != "NULL" && checkoutButton.style.backgroundColor == "white")
@@ -1207,7 +1212,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
-            removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
             selectedCheckoutDate = document.createElement(null); 
         }
 
@@ -1220,7 +1225,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-           correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+           correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
         else if (selectedCheckoutDate.tagName == "NULL" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1230,7 +1235,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctMonthsDatesShadow(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
 
         if (checkinButton.style.backgroundColor == "white")
@@ -1283,7 +1288,7 @@ clearCalendarFormInputButton.onclick = function()
     checkinFormInput.value = "";
     checkoutFormInput.value = "";
 
-    removeMonthsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+    removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
 
     selectedCheckinDate.style.background = "";
     selectedCheckinDate.style.color = "";
@@ -1580,7 +1585,7 @@ function calendarRemoveShadow(e, firstCalendar, secondCalendar, checkinDate, che
 
         if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
         {
-            removeMonthsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate);
         }
     }
 }
@@ -1715,76 +1720,76 @@ calendarPM14Button.onclick = function(e)
 //    ^Y
 //    |    
 //    ----> X
-const draggableCircle = document.getElementById("DraggableCircle");
-const monthsCircleSVG = document.getElementById("MonthsCircleSVG");
-const monthsCircle = document.getElementById("MonthsCircle");
-const monthNumber = document.getElementById("MonthsNumber");
-const whenStartDate = document.getElementById("WhenStartDate");
-const whenEndDate = document.getElementById("WhenEndDate");
-const whenInput = document.getElementById("WhenInput");
-var degrees = "";
-var startDateValue = "";
-var endDateValue = "";
-var savedStartMonthsPMValue = "";
-var savedEndMonthsPMValue = "";
+const monthsBlockDraggableCircle = document.getElementById("MonthsBlockDraggableCircle");
+const monthsBlockCircleSVG = document.getElementById("MonthsBlockCircleSVG");
+const monthsBlockCircle = document.getElementById("MonthsBlockCircle");
+const monthsBlockMonthNumber = document.getElementById("MonthsBlockMonthNumber");
+const monthsBlockWhenStartDate = document.getElementById("MonthsBlockWhenStartDate");
+const monthsBlockWhenEndDate = document.getElementById("MonthsBlockWhenEndDate");
+const monthsBlockWhenInput = document.getElementById("MonthsBlockWhenInput");
+var monthsBlockDegrees = "";
+var monthsBlockStartDateValue = "";
+var monthsBlockEndDateValue = "";
+var monthsBlockSavedStartPMValue = "";
+var monthsBlockSavedEndPMValue = "";
 
-function setWhenValues(dateStart, month, number)
+function monthsBlockSetWhenValues(dateStart, month, number)
 {
-    if (monthNumber.innerText == month)
+    if (monthsBlockMonthNumber.innerText == month)
     {
 
     }
     else
     {
-        whenInput.innerText = "";
+        monthsBlockWhenInput.innerText = "";
 
         var s = new Date(dateStart);
         var e = new Date(dateStart);
 
         e.setMonth(e.getMonth() + number);
 
-        whenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()} ${savedStartMonthsPMValue}`;
-        whenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()} ${savedEndMonthsPMValue}`;
+        monthsBlockWhenStartDate.innerText = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()} ${monthsBlockSavedStartPMValue}`;
+        monthsBlockWhenEndDate.innerText = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()} ${monthsBlockSavedEndPMValue}`;
         
-        whenInput.appendChild(document.createTextNode(`${whenStartDate.innerText}`));
-        whenInput.appendChild(document.createTextNode(" - "));
-        whenInput.appendChild(document.createTextNode(`${whenEndDate.innerText}`));
+        monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockWhenStartDate.innerText}`));
+        monthsBlockWhenInput.appendChild(document.createTextNode(" - "));
+        monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockWhenEndDate.innerText}`));
 
-        selectedEndMonth = months[e.getMonth()];
-        selectedEndYear = e.getFullYear();
+        monthsBlockSelectedEndMonth = months[e.getMonth()];
+        monthsBlockSelectedEndYear = e.getFullYear();
 
-        selectedStartDate.innerText = "1";
-        selectedEndDate.innerText = "1";
+        monthsBlockSelectedStartDate.innerText = "1";
+        monthsBlockSelectedEndDate.innerText = "1";
 
-        previousMonthsSelectedStartDate = selectedStartDate;
-        previousMonthsSelectedStartMonth = selectedStartMonth;
-        previousMonthsSelectedStartYear = selectedStartYear;
-        previousMonthsSelectedEndDate = selectedEndDate;
-        previousMonthsSelectedEndMonth = selectedEndMonth;
-        previousMonthsSelectedEndYear = selectedEndYear;
+        monthsBlockPreviousSelectedStartDate = monthsBlockSelectedStartDate;
+        monthsBlockPreviousSelectedStartMonth = monthsBlockSelectedStartMonth;
+        monthsBlockPreviousSelectedStartYear = monthsBlockSelectedStartYear;
+        monthsBlockPreviousSelectedEndDate = monthsBlockSelectedEndDate;
+        monthsBlockPreviousSelectedEndMonth = monthsBlockSelectedEndMonth;
+        monthsBlockPreviousSelectedEndYear = monthsBlockSelectedEndYear;
 
-        startDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
-        endDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
+        monthsBlockStartDateValue = `${s.getDate()} ${monthsAbbreviations[s.getMonth()]} ${s.getFullYear()}`;
+        monthsBlockEndDateValue = `${e.getDate()} ${monthsAbbreviations[e.getMonth()]} ${e.getFullYear()}`;
     }
 
-    monthNumber.innerText = month;
+    monthsBlockMonthNumber.innerText = month;
 }
 
-if (whenInput.innerText == "")
+if (monthsBlockWhenInput.innerText == "")
 {
-    setWhenValues(startDate, "3 Months", 3)
+    monthsBlockSetWhenValues(monthsBlockStartDate, "3 Months", 3)
 }
 
-function dragCircleCSS()
+function monthsBlockDragCircleCSS()
 {
-    draggableCircle.onmouseup = function()
+    monthsBlockDraggableCircle.onmouseup = function()
     {
-        draggableCircle.style.cursor = "grab";
+        monthsBlockDraggableCircle.style.cursor = "grab";
     }
 
-    draggableCircle.onmousedown = function()
+    monthsBlockDraggableCircle.onmousedown = function()
     {
-        draggableCircle.style.cursor = "grabbing";
+        monthsBlockDraggableCircle.style.cursor = "grabbing";
         document.body.style.cursor = "grabbing";
         document.body.style.userSelect = "none";
     }
@@ -1792,66 +1797,66 @@ function dragCircleCSS()
     document.onmouseup = function(e)
     {
         document.body.style.cursor = "default";
-        draggableCircle.style.cursor = "grab";
+        monthsBlockDraggableCircle.style.cursor = "grab";
 
         //  snap to middle point of chosen month
         switch (true)
         {
-            case degrees == "":
+            case monthsBlockDegrees == "":
                 break;
-            case degrees > -75 && degrees < -45:
-                draggableCircle.style.cy = `49.4263px`;
-                draggableCircle.style.cx = `247.5px`;
+            case monthsBlockDegrees > -75 && monthsBlockDegrees < -45:
+                monthsBlockDraggableCircle.style.cy = `49.4263px`;
+                monthsBlockDraggableCircle.style.cx = `247.5px`;
                 break;
-            case degrees > -45 && degrees < -15:
-                draggableCircle.style.cy = `102.5px`;
-                draggableCircle.style.cx = `300.5736px`;
+            case monthsBlockDegrees > -45 && monthsBlockDegrees < -15:
+                monthsBlockDraggableCircle.style.cy = `102.5px`;
+                monthsBlockDraggableCircle.style.cx = `300.5736px`;
                 break;
-            case degrees > -15 && degrees < 15:
-                draggableCircle.style.cy = `175px`;
-                draggableCircle.style.cx = `320px`;
+            case monthsBlockDegrees > -15 && monthsBlockDegrees < 15:
+                monthsBlockDraggableCircle.style.cy = `175px`;
+                monthsBlockDraggableCircle.style.cx = `320px`;
                 break;
-            case degrees > 15 && degrees < 45:
-                draggableCircle.style.cy = `247.5px`;
-                draggableCircle.style.cx = `300.5736px`;
+            case monthsBlockDegrees > 15 && monthsBlockDegrees < 45:
+                monthsBlockDraggableCircle.style.cy = `247.5px`;
+                monthsBlockDraggableCircle.style.cx = `300.5736px`;
                 break;
-            case degrees > 45 && degrees < 75:
-                draggableCircle.style.cy = `300.5736px`;
-                draggableCircle.style.cx = `247.5px`;
+            case monthsBlockDegrees > 45 && monthsBlockDegrees < 75:
+                monthsBlockDraggableCircle.style.cy = `300.5736px`;
+                monthsBlockDraggableCircle.style.cx = `247.5px`;
                 break;
-            case degrees > 75 && degrees < 105:
-                draggableCircle.style.cy = `320px`;
-                draggableCircle.style.cx = `175px`;
+            case monthsBlockDegrees > 75 && monthsBlockDegrees < 105:
+                monthsBlockDraggableCircle.style.cy = `320px`;
+                monthsBlockDraggableCircle.style.cx = `175px`;
                 break;
-            case degrees > 105 && degrees < 135:
-                draggableCircle.style.cy = `300.5736px`;
-                draggableCircle.style.cx = `102.5px`;
+            case monthsBlockDegrees > 105 && monthsBlockDegrees < 135:
+                monthsBlockDraggableCircle.style.cy = `300.5736px`;
+                monthsBlockDraggableCircle.style.cx = `102.5px`;
                 break;
-            case degrees > 135 && degrees < 165:
-                draggableCircle.style.cy = `247.5px`;
-                draggableCircle.style.cx = `49.4263px`;
+            case monthsBlockDegrees > 135 && monthsBlockDegrees < 165:
+                monthsBlockDraggableCircle.style.cy = `247.5px`;
+                monthsBlockDraggableCircle.style.cx = `49.4263px`;
                 break;
-            case degrees < -165 || degrees > 165:
-                draggableCircle.style.cy = `175px`;
-                draggableCircle.style.cx = `30px`;
+            case monthsBlockDegrees < -165 || monthsBlockDegrees > 165:
+                monthsBlockDraggableCircle.style.cy = `175px`;
+                monthsBlockDraggableCircle.style.cx = `30px`;
                 break;
-            case degrees > -165 && degrees < -135:
-                draggableCircle.style.cy = `102.5px`;
-                draggableCircle.style.cx = `49.4263px`;
+            case monthsBlockDegrees > -165 && monthsBlockDegrees < -135:
+                monthsBlockDraggableCircle.style.cy = `102.5px`;
+                monthsBlockDraggableCircle.style.cx = `49.4263px`;
                 break;
-            case degrees > -135 && degrees < -105:
-                draggableCircle.style.cy = `49.4263px`;
-                draggableCircle.style.cx = `102.5px`;
+            case monthsBlockDegrees > -135 && monthsBlockDegrees < -105:
+                monthsBlockDraggableCircle.style.cy = `49.4263px`;
+                monthsBlockDraggableCircle.style.cx = `102.5px`;
                 break;
-            case degrees > -105 && degrees < -75:
-                draggableCircle.style.cy = `30px`;
-                draggableCircle.style.cx = `175px`;
+            case monthsBlockDegrees > -105 && monthsBlockDegrees < -75:
+                monthsBlockDraggableCircle.style.cy = `30px`;
+                monthsBlockDraggableCircle.style.cx = `175px`;
                 break;
         }
     }
 }
 
-function moveCircle()
+function monthsBlockMoveCircle()
 {
     document.onmousemove = function(e)
     {
@@ -1859,12 +1864,12 @@ function moveCircle()
         {
             let posY = e.clientY;
             let posX = e.clientX;
-            const centreSVGTop = parseInt(monthsCircleSVG.style.height) / 2;
-            const centreSVGLeft = parseInt(monthsCircleSVG.style.width) / 2;
+            const centreSVGTop = parseInt(monthsBlockCircleSVG.style.height) / 2;
+            const centreSVGLeft = parseInt(monthsBlockCircleSVG.style.width) / 2;
 
-            const absoluteTop = monthsCircle.getBoundingClientRect().top;
-            const absoluteLeft = monthsCircle.getBoundingClientRect().left;
-            const monthsCircleRadius = monthsCircle.getBoundingClientRect().width / 2;
+            const absoluteTop = monthsBlockCircle.getBoundingClientRect().top;
+            const absoluteLeft = monthsBlockCircle.getBoundingClientRect().left;
+            const monthsCircleRadius = monthsBlockCircle.getBoundingClientRect().width / 2;
 
             let relativeMouseY = posY - absoluteTop - monthsCircleRadius;
             let relativeMouseX = posX - absoluteLeft - monthsCircleRadius;
@@ -1878,175 +1883,175 @@ function moveCircle()
             }
             else
             {
-                draggableCircle.style.cy = `${newY}`;
-                draggableCircle.style.cx = `${newX}`;
-                degrees = angle * (180/Math.PI);
+                monthsBlockDraggableCircle.style.cy = `${newY}`;
+                monthsBlockDraggableCircle.style.cx = `${newX}`;
+                monthsBlockDegrees = angle * (180/Math.PI);
             }
 
             switch (true)
             {
-                case degrees > -75 && degrees < -45:
-                    setWhenValues(startDate, "1 Month", 1);
+                case monthsBlockDegrees > -75 && monthsBlockDegrees < -45:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "1 Month", 1);
                     break;
-                case degrees > -45 && degrees < -15:
-                    setWhenValues(startDate, "2 Months", 2);
+                case monthsBlockDegrees > -45 && monthsBlockDegrees < -15:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "2 Months", 2);
                     break;
-                case degrees > -15 && degrees < 15:
-                    setWhenValues(startDate, "3 Months", 3);
+                case monthsBlockDegrees > -15 && monthsBlockDegrees < 15:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "3 Months", 3);
                     break;
-                case degrees > 15 && degrees < 45:
-                    setWhenValues(startDate, "4 Months", 4);
+                case monthsBlockDegrees > 15 && monthsBlockDegrees < 45:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "4 Months", 4);
                     break;
-                case degrees > 45 && degrees < 75:
-                    setWhenValues(startDate, "5 Months", 5);
+                case monthsBlockDegrees > 45 && monthsBlockDegrees < 75:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "5 Months", 5);
                     break;
-                case degrees > 75 && degrees < 105:
-                    setWhenValues(startDate, "6 Months", 6);
+                case monthsBlockDegrees > 75 && monthsBlockDegrees < 105:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "6 Months", 6);
                     break;
-                case degrees > 105 && degrees < 135:
-                    setWhenValues(startDate, "7 Months", 7);
+                case monthsBlockDegrees > 105 && monthsBlockDegrees < 135:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "7 Months", 7);
                     break;
-                case degrees > 135 && degrees < 165:
-                    setWhenValues(startDate, "8 Months", 8);
+                case monthsBlockDegrees > 135 && monthsBlockDegrees < 165:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "8 Months", 8);
                     break;
-                case degrees < -165 || degrees > 165:
-                    setWhenValues(startDate, "9 Months", 9);
+                case monthsBlockDegrees < -165 || monthsBlockDegrees > 165:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "9 Months", 9);
                     break;
-                case degrees > -165 && degrees < -135:
-                    setWhenValues(startDate, "10 Months", 10);
+                case monthsBlockDegrees > -165 && monthsBlockDegrees < -135:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "10 Months", 10);
                     break;
-                case degrees > -135 && degrees < -105:
-                    setWhenValues(startDate, "11 Months", 11);
+                case monthsBlockDegrees > -135 && monthsBlockDegrees < -105:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "11 Months", 11);
                     break;
-                case degrees > -105 && degrees < -75:
-                    setWhenValues(startDate, "12 Months", 12);
+                case monthsBlockDegrees > -105 && monthsBlockDegrees < -75:
+                    monthsBlockSetWhenValues(monthsBlockStartDate, "12 Months", 12);
                     break;
             }
         }
     }   
 }
 
-moveCircle();
-dragCircleCSS();
+monthsBlockMoveCircle();
+monthsBlockDragCircleCSS();
 
-const monthsStartExactDatesButton = document.getElementById("MonthsStartExactDatesButton");
-const monthsStartPM1Button = document.getElementById("MonthsStartPM1Button");
-const monthsStartPM2Button = document.getElementById("MonthsStartPM2Button");
-const monthsStartPM3Button = document.getElementById("MonthsStartPM3Button");
-const monthsStartPM7Button = document.getElementById("MonthsStartPM7Button");
-const monthsStartPM14Button = document.getElementById("MonthsStartPM14Button");
+const monthsBlockStartExactDatesButton = document.getElementById("MonthsBlockStartExactDatesButton");
+const monthsBlockStartPM1Button = document.getElementById("MonthsBlockStartPM1Button");
+const monthsBlockStartPM2Button = document.getElementById("MonthsBlockStartPM2Button");
+const monthsBlockStartPM3Button = document.getElementById("MonthsBlockStartPM3Button");
+const monthsBlockStartPM7Button = document.getElementById("MonthsBlockStartPM7Button");
+const monthsBlockStartPM14Button = document.getElementById("MonthsBlockStartPM14Button");
 
-const monthsEndExactDatesButton = document.getElementById("MonthsEndExactDatesButton");
-const monthsEndPM1Button = document.getElementById("MonthsEndPM1Button");
-const monthsEndPM2Button = document.getElementById("MonthsEndPM2Button");
-const monthsEndPM3Button = document.getElementById("MonthsEndPM3Button");
-const monthsEndPM7Button = document.getElementById("MonthsEndPM7Button");
-const monthsEndPM14Button = document.getElementById("MonthsEndPM14Button");
+const monthsBlockEndExactDatesButton = document.getElementById("MonthsBlockEndExactDatesButton");
+const monthsBlockEndPM1Button = document.getElementById("MonthsBlockEndPM1Button");
+const monthsBlockEndPM2Button = document.getElementById("MonthsBlockEndPM2Button");
+const monthsBlockEndPM3Button = document.getElementById("MonthsBlockEndPM3Button");
+const monthsBlockEndPM7Button = document.getElementById("MonthsBlockEndPM7Button");
+const monthsBlockEndPM14Button = document.getElementById("MonthsBlockEndPM14Button");
 
-var startMonthsPMValue = "";
-var endMonthsPMValue = "";
-monthsStartExactDatesButton.style.borderColor = "black";
-monthsStartExactDatesButton.style.background = "#f0f0f0";
-monthsEndExactDatesButton.style.borderColor = "black";
-monthsEndExactDatesButton.style.background = "#f0f0f0";
-var previousMonthsStartPMElement = monthsStartExactDatesButton;
-var previousMonthsEndPMElement = monthsEndExactDatesButton;
+var monthsBlockStartPMValue = "";
+var monthsBlockEndPMValue = "";
+monthsBlockStartExactDatesButton.style.borderColor = "black";
+monthsBlockStartExactDatesButton.style.background = "#f0f0f0";
+monthsBlockEndExactDatesButton.style.borderColor = "black";
+monthsBlockEndExactDatesButton.style.background = "#f0f0f0";
+var monthsBlockPreviousStartPMElement = monthsBlockStartExactDatesButton;
+var monthsBlockPreviousEndPMElement = monthsBlockEndExactDatesButton;
 
-function addMonthsPMValueStart(value, element)
+function monthsBlockAddPMValueStart(value, element)
 {
-    previousMonthsStartPMElement.style.borderColor = "";
-    previousMonthsStartPMElement.style.background = "";
-    startMonthsPMValue = "";
+    monthsBlockPreviousStartPMElement.style.borderColor = "";
+    monthsBlockPreviousStartPMElement.style.background = "";
+    monthsBlockStartPMValue = "";
 
     element.style.borderColor = "black";
     element.style.background = "#f0f0f0";
-    startMonthsPMValue = value;
+    monthsBlockStartPMValue = value;
 
-    previousMonthsStartPMElement = element;
+    monthsBlockPreviousStartPMElement = element;
 }
 
-function addMonthsPMValueEnd(value, element)
+function monthsBlockAddPMValueEnd(value, element)
 {
-    previousMonthsEndPMElement.style.borderColor = "";
-    previousMonthsEndPMElement.style.background = "";
-    endMonthsPMValue = "";
+    monthsBlockPreviousEndPMElement.style.borderColor = "";
+    monthsBlockPreviousEndPMElement.style.background = "";
+    monthsBlockEndPMValue = "";
 
     element.style.borderColor = "black";
     element.style.background = "#f0f0f0";
-    endMonthsPMValue = value;
+    monthsBlockEndPMValue = value;
 
-    previousMonthsEndPMElement = element;
+    monthsBlockPreviousEndPMElement = element;
 }
 
-monthsStartExactDatesButton.onclick = function(e)
+monthsBlockStartExactDatesButton.onclick = function(e)
 {
-    addMonthsPMValueStart("", e.target);
+    monthsBlockAddPMValueStart("", e.target);
 }
 
-monthsStartPM1Button.onclick = function(e)
+monthsBlockStartPM1Button.onclick = function(e)
 {
-    addMonthsPMValueStart("±1", e.target);
+    monthsBlockAddPMValueStart("±1", e.target);
 }
 
-monthsStartPM2Button.onclick = function(e)
+monthsBlockStartPM2Button.onclick = function(e)
 {
-    addMonthsPMValueStart("±2", e.target);
+    monthsBlockAddPMValueStart("±2", e.target);
 }
 
-monthsStartPM3Button.onclick = function(e)
+monthsBlockStartPM3Button.onclick = function(e)
 {
-    addMonthsPMValueStart("±3", e.target);
+    monthsBlockAddPMValueStart("±3", e.target);
 }
 
-monthsStartPM7Button.onclick = function(e)
+monthsBlockStartPM7Button.onclick = function(e)
 {
-    addMonthsPMValueStart("±7", e.target);
+    monthsBlockAddPMValueStart("±7", e.target);
 }
 
-monthsStartPM14Button.onclick = function(e)
+monthsBlockStartPM14Button.onclick = function(e)
 {
-    addMonthsPMValueStart("±14", e.target);
+    monthsBlockAddPMValueStart("±14", e.target);
 }
 
-monthsEndExactDatesButton.onclick = function(e)
+monthsBlockEndExactDatesButton.onclick = function(e)
 {
-    addMonthsPMValueEnd("", e.target);
+    monthsBlockAddPMValueEnd("", e.target);
 }
 
-monthsEndPM1Button.onclick = function(e)
+monthsBlockEndPM1Button.onclick = function(e)
 {
-    addMonthsPMValueEnd("±1", e.target);
+    monthsBlockAddPMValueEnd("±1", e.target);
 }
 
-monthsEndPM2Button.onclick = function(e)
+monthsBlockEndPM2Button.onclick = function(e)
 {
-    addMonthsPMValueEnd("±2", e.target);
+    monthsBlockAddPMValueEnd("±2", e.target);
 }
 
-monthsEndPM3Button.onclick = function(e)
+monthsBlockEndPM3Button.onclick = function(e)
 {
-    addMonthsPMValueEnd("±3", e.target);
+    monthsBlockAddPMValueEnd("±3", e.target);
 }
 
-monthsEndPM7Button.onclick = function(e)
+monthsBlockEndPM7Button.onclick = function(e)
 {
-    addMonthsPMValueEnd("±7", e.target);
+    monthsBlockAddPMValueEnd("±7", e.target);
 }
 
-monthsEndPM14Button.onclick = function(e)
+monthsBlockEndPM14Button.onclick = function(e)
 {
-    addMonthsPMValueEnd("±14", e.target);
+    monthsBlockAddPMValueEnd("±14", e.target);
 }
 
-const moveMonthsStartCalendarsLeft = document.getElementById("MoveMonthsStartCalendarsLeft");
-const moveMonthsStartCalendarsRight = document.getElementById("MoveMonthsStartCalendarsRight");
-const moveMonthsEndCalendarsLeft = document.getElementById("MoveMonthsEndCalendarsLeft");
-const moveMonthsEndCalendarsRight = document.getElementById("MoveMonthsEndCalendarsRight");
+const monthsBlockMoveStartCalendarsLeft = document.getElementById("MonthsBlockMoveStartCalendarsLeft");
+const monthsBlockMoveStartCalendarsRight = document.getElementById("MonthsBlockMoveStartCalendarsRight");
+const monthsBlockMoveEndCalendarsLeft = document.getElementById("MonthsBlockMoveEndCalendarsLeft");
+const monthsBlockMoveEndCalendarsRight = document.getElementById("MonthsBlockMoveEndCalendarsRight");
 
-const getStupidCalendarDatesAgain = document.getElementById("StartMonthsCalendars");
-const getStupidCalendarDatesAgainAgain = document.getElementById("EndMonthsCalendars");
+const getStupidCalendarDatesAgain = document.getElementById("MonthsBlockStartCalendars");
+const getStupidCalendarDatesAgainAgain = document.getElementById("MonthsBlockEndCalendars");
 
-function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
+function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
     for (i = 0; i < 6; i++)
     {
@@ -2081,7 +2086,7 @@ function removeMonthsShadows(firstCalendar, secondCalendar, checkinDate, checkou
     }
 }
 
-function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, checkoutDate)
+function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
     loop:
     for (i = 0; i < 6; i++)
@@ -2214,35 +2219,35 @@ function correctMonthsDatesShadow(firstCalendar, secondCalendar, checkinDate, ch
     }
 }
 
-function changeMonthsEndValuesCSS(td, div)
+function monthsBlockChangeEndValuesCSS(td, div)
 {
-    if (selectedStartDate == selectedEndDate)
+    if (monthsBlockSelectedStartDate == monthsBlockSelectedEndDate)
     {
 
     }
     else
     {
-        selectedEndDate.style.background = "";
-        selectedEndDate.style.backgroundColor = "";
-        selectedEndDate.style.color = "";
+        monthsBlockSelectedEndDate.style.background = "";
+        monthsBlockSelectedEndDate.style.backgroundColor = "";
+        monthsBlockSelectedEndDate.style.color = "";
     }
     
-    if (selectedEndDate.tagName != "NULL")
+    if (monthsBlockSelectedEndDate.tagName != "NULL")
     {
-        selectedEndDate.parentElement.style.background = "";
+        monthsBlockSelectedEndDate.parentElement.style.background = "";
     }
     
     div.style.backgroundColor = "black";
     div.style.color = "white";
     td.style.background = calendarShadowCheckoutColor;
-    selectedEndDate = div;
+    monthsBlockSelectedEndDate = div;
 }
 
-function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
+function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
 {
     let x = eDate.getDate();
-    selectedEndMonth = months[eDate.getMonth()];
-    selectedEndYear = eDate.getFullYear();
+    monthsBlockSelectedEndMonth = months[eDate.getMonth()];
+    monthsBlockSelectedEndYear = eDate.getFullYear();
 
     loop:
     for (i = 0; i < 6; i++)
@@ -2261,115 +2266,115 @@ function changeMonthsEndValues(firstCalendar, secondCalendar, eDate)
                 var div2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
             }catch{}
 
-            if ((+div.innerText == x && +div.innerText != 1) && firstCalendar.contains(selectedStartDate) && firstCalendar.contains(selectedEndDate))
+            if ((+div.innerText == x && +div.innerText != 1) && firstCalendar.contains(monthsBlockSelectedStartDate) && firstCalendar.contains(monthsBlockSelectedEndDate))
             {
-                if (+selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                if (+monthsBlockSelectedStartDate.innerText + 28 > new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate())
                 {
-                    changeMonthsEndValuesCSS(td2, div2);
+                    monthsBlockChangeEndValuesCSS(td2, div2);
                 }
-                else if (x >= +selectedEndDate.innerText)
+                else if (x >= +monthsBlockSelectedEndDate.innerText)
                 {
-                    changeMonthsEndValuesCSS(td, div);
+                    monthsBlockChangeEndValuesCSS(td, div);
                 }
 
                 break loop;
             }
-            else if ((+div.innerText == x || +div2.innerText == x) && firstCalendar.contains(selectedStartDate) && !secondCalendar.contains(selectedEndDate))
+            else if ((+div.innerText == x || +div2.innerText == x) && firstCalendar.contains(monthsBlockSelectedStartDate) && !secondCalendar.contains(monthsBlockSelectedEndDate))
             {
-                if (+div.innerText == x && +selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x >= +selectedEndDate.innerText)
+                if (+div.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
+                &&  x >= +monthsBlockSelectedEndDate.innerText)
                 {
-                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                    changeMonthsEndValuesCSS(td, div);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    monthsBlockChangeEndValuesCSS(td, div);
 
                     break loop;
                 }
-                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 > new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate())
+                else if (+div2.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 > new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate())
                 {
-                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                    changeMonthsEndValuesCSS(td2, div2);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
                 }
-                else if (+div2.innerText == x && +selectedStartDate.innerText + 28 >= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                     &&  x >= selectedEndDate.innerText)
+                else if (+div2.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 >= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
+                     &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                    changeMonthsEndValuesCSS(td2, div2);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
                 }
             }
-            else if (+div2.innerText == x && (firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate)
-                 ||  firstCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)))
+            else if (+div2.innerText == x && (firstCalendar.contains(monthsBlockSelectedStartDate) && secondCalendar.contains(monthsBlockSelectedEndDate)
+                 ||  firstCalendar.contains(monthsBlockSelectedEndDate) && secondCalendar.contains(monthsBlockSelectedStartDate)))
             {
-                if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                ||  firstCalendar.contains(selectedStartDate) && secondCalendar.contains(selectedEndDate) &&  x >= selectedEndDate.innerText)
+                if (+monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
+                ||  firstCalendar.contains(monthsBlockSelectedStartDate) && secondCalendar.contains(monthsBlockSelectedEndDate) &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                    changeMonthsEndValuesCSS(td2, div2);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
                 }
                 else
                 {
-                    if (selectedStartDate != selectedEndDate && selectedEndDate.tagName != "NULL")
+                    if (monthsBlockSelectedStartDate != monthsBlockSelectedEndDate && monthsBlockSelectedEndDate.tagName != "NULL")
                     {
-                        removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                        selectedEndDate.style.background = "";
-                        selectedEndDate.parentElement.style.background = "";
-                        selectedEndDate.style.color = "";
+                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                        monthsBlockSelectedEndDate.style.background = "";
+                        monthsBlockSelectedEndDate.parentElement.style.background = "";
+                        monthsBlockSelectedEndDate.style.color = "";
                     }
                     
-                    selectedEndDate = document.createElement("NULL");
-                    selectedEndDate.innerText = div2.innerText;
+                    monthsBlockSelectedEndDate = document.createElement("NULL");
+                    monthsBlockSelectedEndDate.innerText = div2.innerText;
 
                     break loop;
                 }
             }
-            else if (+div2.innerText == x && (secondCalendar.contains(selectedEndDate) 
-                 ||  secondCalendar.contains(selectedStartDate) && !firstCalendar.contains(selectedEndDate)))
+            else if (+div2.innerText == x && (secondCalendar.contains(monthsBlockSelectedEndDate) 
+                 ||  secondCalendar.contains(monthsBlockSelectedStartDate) && !firstCalendar.contains(monthsBlockSelectedEndDate)))
             {
-                if (+selectedStartDate.innerText + 28 <= new Date(selectedStartYear, months.indexOf(selectedStartMonth) + 1, 0).getDate()
-                &&  x >= selectedEndDate.innerText)
+                if (+monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
+                &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                    changeMonthsEndValuesCSS(td2, div2);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
                 }
                 else
                 {
-                    if (selectedStartDate != selectedEndDate && selectedEndDate.tagName != "NULL")
+                    if (monthsBlockSelectedStartDate != monthsBlockSelectedEndDate && monthsBlockSelectedEndDate.tagName != "NULL")
                     {
-                        removeMonthsShadows(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
-                        selectedEndDate.style.background = "";
-                        selectedEndDate.parentElement.style.background = "";
-                        selectedEndDate.style.color = "";
+                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                        monthsBlockSelectedEndDate.style.background = "";
+                        monthsBlockSelectedEndDate.parentElement.style.background = "";
+                        monthsBlockSelectedEndDate.style.color = "";
                     }
                     
-                    selectedEndDate = document.createElement("NULL");
-                    selectedEndDate.innerText = div2.innerText;
+                    monthsBlockSelectedEndDate = document.createElement("NULL");
+                    monthsBlockSelectedEndDate.innerText = div2.innerText;
 
                     break loop;
                 }
             }
-            else if (!firstCalendar.contains(selectedEndDate) && !secondCalendar.contains(selectedEndDate) && secondCalendar.contains(selectedStartDate)
-                 &&  selectedEndDate.tagName != "NULL")
+            else if (!firstCalendar.contains(monthsBlockSelectedEndDate) && !secondCalendar.contains(monthsBlockSelectedEndDate) && secondCalendar.contains(monthsBlockSelectedStartDate)
+                 &&  monthsBlockSelectedEndDate.tagName != "NULL")
             {
-                selectedEndDate = document.createElement("NULL");
-                selectedEndDate.innerText = x;
+                monthsBlockSelectedEndDate = document.createElement("NULL");
+                monthsBlockSelectedEndDate.innerText = x;
             }
         }
     }
 
-    correctMonthsDatesShadow(firstCalendar, secondCalendar, selectedStartDate, selectedEndDate);
+    correctCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
 }
 
-function validateMonthsDatesPosition()
+function monthsBlockValidateDatesPosition()
 {
-    let sDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), +selectedStartDate.innerText);
-    let eDate = new Date(selectedEndYear, months.indexOf(selectedEndMonth), +selectedEndDate.innerText);
+    let sDate = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), +monthsBlockSelectedStartDate.innerText);
+    let eDate = new Date(monthsBlockSelectedEndYear, months.indexOf(monthsBlockSelectedEndMonth), +monthsBlockSelectedEndDate.innerText);
     let x = ""
 
     if (sDate.getMonth() == eDate.getMonth() && sDate.getFullYear() == eDate.getFullYear())
@@ -2379,7 +2384,7 @@ function validateMonthsDatesPosition()
         if (x >= -28 && x < 28)
         {
             eDate.setDate(sDate.getDate() + 28);
-            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
+            monthsBlockChangeEndValues(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, eDate);
         }
     }
     else
@@ -2388,13 +2393,13 @@ function validateMonthsDatesPosition()
         {
             eDate = new Date(sDate);
             eDate.setDate(eDate.getDate() + 28);
-            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
+            monthsBlockChangeEndValues(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, eDate);
         }
         else if (sDate.getFullYear() > eDate.getFullYear())
         {
             eDate = new Date(sDate);
             eDate.setDate(eDate.getDate() + 28);
-            changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
+            monthsBlockChangeEndValues(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, eDate);
         }
         else if (sDate.getMonth() + 1 == eDate.getMonth())
         {
@@ -2405,7 +2410,7 @@ function validateMonthsDatesPosition()
             {
                 eDate = new Date(sDate);
                 eDate.setDate(sDate.getDate() + 28);
-                changeMonthsEndValues(monthsCalendar, monthsCalendar2, eDate);
+                monthsBlockChangeEndValues(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, eDate);
             }
         }
     }
@@ -2416,38 +2421,38 @@ getStupidCalendarDatesAgain.onclick = function(e)
     if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover"))
     {
         //  reset feedback
-        if (selectedStartDate != "")
+        if (monthsBlockSelectedStartDate != "")
         {
-            selectedStartDate.style.background = "";
-            selectedStartDate.style.color = "";
+            monthsBlockSelectedStartDate.style.background = "";
+            monthsBlockSelectedStartDate.style.color = "";
 
-            removeMonthsShadows(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
-            selectedStartDate = "";     
+            removeCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+            monthsBlockSelectedStartDate = "";     
         }
 
         //  apply feedback
-        if (selectedStartDate == "")
+        if (monthsBlockSelectedStartDate == "")
         {
-            selectedStartDate = e.target;
-            selectedStartDate.style.background = "black";
-            selectedStartDate.style.color = "white";
-            selectedStartMonth = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
-            selectedStartYear = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockSelectedStartDate = e.target;
+            monthsBlockSelectedStartDate.style.background = "black";
+            monthsBlockSelectedStartDate.style.color = "white";
+            monthsBlockSelectedStartMonth = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            monthsBlockSelectedStartYear = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
             
-            correctMonthsDatesShadow(monthsCalendar, monthsCalendar2, selectedStartDate, selectedEndDate);
+            correctCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
         }
 
-        startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(selectedStartMonth)]} ${selectedStartYear}`;
-        validateMonthsDatesPosition();
-        endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(selectedEndMonth)]} ${selectedEndYear}`;
+        monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedStartMonth)]} ${monthsBlockSelectedStartYear}`;
+        monthsBlockValidateDatesPosition();
+        monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedEndMonth)]} ${monthsBlockSelectedEndYear}`;
     }
 }
 
-const invalidDayPopup = document.getElementById("InvalidDayPopup");
+const monthsBlockInvalidDayPopup = document.getElementById("MonthsBlockInvalidDayPopup");
 
-function validationMonthsMinimalDaysDifference(e)
+function monthsBlockValidateMinimalDaysDifference(e)
 {
-    let sDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), selectedStartDate.innerText);
+    let sDate = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), monthsBlockSelectedStartDate.innerText);
     let check = new Date(sDate);
     try
     {
@@ -2461,77 +2466,77 @@ function validationMonthsMinimalDaysDifference(e)
 
     if (sDate > newsDate)
     {
-        if (check.getMonth() == newsDate.getMonth() && +e.target.innerText < +selectedStartDate.innerText)
+        if (check.getMonth() == newsDate.getMonth() && +e.target.innerText < +monthsBlockSelectedStartDate.innerText)
         {
 
         }
         else
         {
-            e.target.after(invalidDayPopup);
-            invalidDayPopup.style.display = "block";
+            e.target.after(monthsBlockInvalidDayPopup);
+            monthsBlockInvalidDayPopup.style.display = "block";
         }
     }
 }
 
-monthsCalendar3.onmouseover = function(e)
+monthsBlockCalendarEndLeft.onmouseover = function(e)
 {
     if (e.target.className == "box")
     {
-        validationMonthsMinimalDaysDifference(e);
+        monthsBlockValidateMinimalDaysDifference(e);
     }
 }
 
-monthsCalendar3.onmouseout = function(e)
+monthsBlockCalendarEndLeft.onmouseout = function(e)
 {
     if (e.target.className == "box")
     {
-        invalidDayPopup.style.display = "none";
+        monthsBlockInvalidDayPopup.style.display = "none";
     }
 }
 
-monthsCalendar4.onmouseover = function(e)
+monthsBlockCalendarEndRight.onmouseover = function(e)
 {
     if (e.target.className == "box")
     {
-        validationMonthsMinimalDaysDifference(e);
+        monthsBlockValidateMinimalDaysDifference(e);
     }
 }
 
-monthsCalendar4.onmouseout = function(e)
+monthsBlockCalendarEndRight.onmouseout = function(e)
 {
     if (e.target.className == "box")
     {
-        invalidDayPopup.style.display = "none";
+        monthsBlockInvalidDayPopup.style.display = "none";
     }
 }
 
 getStupidCalendarDatesAgainAgain.onclick = function(e)
 {
-    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover") && e.target.nextSibling != invalidDayPopup)
+    if (e.target.children.length == 0 && (e.target.className == "box" || e.target.className == "box box_new_hover") && e.target.nextSibling != monthsBlockInvalidDayPopup)
     {
         //  reset feedback
-        if (selectedEndDate != "")
+        if (monthsBlockSelectedEndDate != "")
         {
-            selectedEndDate.style.background = "";
-            selectedEndDate.style.color = "";
+            monthsBlockSelectedEndDate.style.background = "";
+            monthsBlockSelectedEndDate.style.color = "";
         
-            removeMonthsShadows(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
-            selectedEndDate = "";     
+            removeCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+            monthsBlockSelectedEndDate = "";     
         }
         
         //  apply feedback
-        if (selectedEndDate == "")
+        if (monthsBlockSelectedEndDate == "")
         {
-            selectedEndDate = e.target;
-            selectedEndDate.style.background = "black";
-            selectedEndDate.style.color = "white";
-            selectedEndMonth = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
-            selectedEndYear = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockSelectedEndDate = e.target;
+            monthsBlockSelectedEndDate.style.background = "black";
+            monthsBlockSelectedEndDate.style.color = "white";
+            monthsBlockSelectedEndMonth = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            monthsBlockSelectedEndYear = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
         
-           correctMonthsDatesShadow(monthsCalendar3, monthsCalendar4, selectedStartDate, selectedEndDate);
+           correctCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
         }
 
-        endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(selectedEndMonth)]} ${selectedEndYear}`; 
+        monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedEndMonth)]} ${monthsBlockSelectedEndYear}`; 
     }
 }
 
@@ -2554,8 +2559,8 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
     
         rightButtonClicked = true;
 
-        createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-        createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+        createCalendarMonth(firstCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear);
+        createCalendarMonth2(secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear); 
 
         rightButtonClicked = false;
     
@@ -2593,8 +2598,8 @@ function moveMonthsCalendarsLeft(rightButton, leftButton, firstCalendar, secondC
     
         leftButtonClicked = true;
 
-        createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-        createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+        createCalendarMonth(firstCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear);
+        createCalendarMonth2(secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear); 
 
         leftButtonClicked = false;
     
@@ -2613,139 +2618,139 @@ function moveMonthsCalendarsLeft(rightButton, leftButton, firstCalendar, secondC
     } 
 }
 
-moveMonthsStartCalendarsRight.onclick = function()
+monthsBlockMoveStartCalendarsRight.onclick = function()
 {
-    moveMonthsCalendendarsRight(moveMonthsStartCalendarsRight, moveMonthsStartCalendarsLeft, monthsCalendar, monthsCalendar2);
+    moveMonthsCalendendarsRight(monthsBlockMoveStartCalendarsRight, monthsBlockMoveStartCalendarsLeft, monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight);
 }
 
-moveMonthsStartCalendarsLeft.onclick = function()
+monthsBlockMoveStartCalendarsLeft.onclick = function()
 {
-    moveMonthsCalendarsLeft(moveMonthsStartCalendarsRight, moveMonthsStartCalendarsLeft, monthsCalendar, monthsCalendar2);
+    moveMonthsCalendarsLeft(monthsBlockMoveStartCalendarsRight, monthsBlockMoveStartCalendarsLeft, monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight);
 }
 
-moveMonthsEndCalendarsRight.onclick = function()
+monthsBlockMoveEndCalendarsRight.onclick = function()
 {
-    moveMonthsCalendendarsRight(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
+    moveMonthsCalendendarsRight(monthsBlockMoveEndCalendarsRight, monthsBlockMoveEndCalendarsLeft, monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight);
 }
 
-moveMonthsEndCalendarsLeft.onclick = function()
+monthsBlockMoveEndCalendarsLeft.onclick = function()
 {
-    moveMonthsCalendarsLeft(moveMonthsEndCalendarsRight, moveMonthsEndCalendarsLeft, monthsCalendar3, monthsCalendar4);
+    moveMonthsCalendarsLeft(monthsBlockMoveEndCalendarsRight, monthsBlockMoveEndCalendarsLeft, monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight);
 }
 
-function rememberStartButtonClickedCSS(PMAmout)
+function monthsBlockRememberStartButtonClickedCSS(PMAmout)
 {
     if (PMAmout == "")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartExactDatesButton.style.borderColor = "black";
-        monthsStartExactDatesButton.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartExactDatesButton;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartExactDatesButton.style.borderColor = "black";
+        monthsBlockStartExactDatesButton.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartExactDatesButton;
     }
     else if (PMAmout == "±1")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartPM1Button.style.borderColor = "black";
-        monthsStartPM1Button.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartPM1Button;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartPM1Button.style.borderColor = "black";
+        monthsBlockStartPM1Button.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartPM1Button;
     }
     else if (PMAmout == "±2")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartPM2Button.style.borderColor = "black";
-        monthsStartPM2Button.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartPM2Button;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartPM2Button.style.borderColor = "black";
+        monthsBlockStartPM2Button.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartPM2Button;
     }
     else if (PMAmout == "±3")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartPM3Button.style.borderColor = "black";
-        monthsStartPM3Button.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartPM3Button;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartPM3Button.style.borderColor = "black";
+        monthsBlockStartPM3Button.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartPM3Button;
     }
     else if (PMAmout == "±7")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartPM7Button.style.borderColor = "black";
-        monthsStartPM7Button.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartPM7Button;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartPM7Button.style.borderColor = "black";
+        monthsBlockStartPM7Button.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartPM7Button;
     }
     else if (PMAmout == "±14")
     {
-        previousMonthsStartPMElement.style.borderColor = "";
-        previousMonthsStartPMElement.style.background = "";
-        monthsStartPM14Button.style.borderColor = "black";
-        monthsStartPM14Button.style.background = "#f0f0f0";
-        previousMonthsStartPMElement = monthsStartPM14Button;
+        monthsBlockPreviousStartPMElement.style.borderColor = "";
+        monthsBlockPreviousStartPMElement.style.background = "";
+        monthsBlockStartPM14Button.style.borderColor = "black";
+        monthsBlockStartPM14Button.style.background = "#f0f0f0";
+        monthsBlockPreviousStartPMElement = monthsBlockStartPM14Button;
     }
 }
 
-function rememberEndButtonClickedCSS(PMAmout)
+function monthsBlockRememberEndButtonClickedCSS(PMAmout)
 {
     if (PMAmout == "")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndExactDatesButton.style.borderColor = "black";
-        monthsEndExactDatesButton.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndExactDatesButton;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndExactDatesButton.style.borderColor = "black";
+        monthsBlockEndExactDatesButton.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndExactDatesButton;
     }
     else if (PMAmout == "±1")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndPM1Button.style.borderColor = "black";
-        monthsEndPM1Button.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndPM1Button;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndPM1Button.style.borderColor = "black";
+        monthsBlockEndPM1Button.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndPM1Button;
     }
     else if (PMAmout == "±2")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndPM2Button.style.borderColor = "black";
-        monthsEndPM2Button.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndPM2Button;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndPM2Button.style.borderColor = "black";
+        monthsBlockEndPM2Button.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndPM2Button;
     }
     else if (PMAmout == "±3")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndPM3Button.style.borderColor = "black";
-        monthsEndPM3Button.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndPM3Button;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndPM3Button.style.borderColor = "black";
+        monthsBlockEndPM3Button.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndPM3Button;
     }
     else if (PMAmout == "±7")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndPM7Button.style.borderColor = "black";
-        monthsEndPM7Button.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndPM7Button;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndPM7Button.style.borderColor = "black";
+        monthsBlockEndPM7Button.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndPM7Button;
     }
     else if (PMAmout == "±14")
     {
-        previousMonthsEndPMElement.style.borderColor = "";
-        previousMonthsEndPMElement.style.background = "";
-        monthsEndPM14Button.style.borderColor = "black";
-        monthsEndPM14Button.style.background = "#f0f0f0";
-        previousMonthsEndPMElement = monthsEndPM14Button;
+        monthsBlockPreviousEndPMElement.style.borderColor = "";
+        monthsBlockPreviousEndPMElement.style.background = "";
+        monthsBlockEndPM14Button.style.borderColor = "black";
+        monthsBlockEndPM14Button.style.background = "#f0f0f0";
+        monthsBlockPreviousEndPMElement = monthsBlockEndPM14Button;
     }
 }
 
-function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton, rightButton)
+function monthsBlockInitializeCalendars(e, firstCalendar, secondCalendar, leftButton, rightButton)
 {
-    rememberStartButtonClickedCSS(savedStartMonthsPMValue);
-    rememberEndButtonClickedCSS(savedEndMonthsPMValue);
+    monthsBlockRememberStartButtonClickedCSS(monthsBlockSavedStartPMValue);
+    monthsBlockRememberEndButtonClickedCSS(monthsBlockSavedEndPMValue);
 
-    if (e.target == whenStartDate)
+    if (e.target == monthsBlockWhenStartDate)
     {
-        month = months.indexOf(selectedStartMonth) - 1;
-        year = selectedStartYear;
+        month = months.indexOf(monthsBlockSelectedStartMonth) - 1;
+        year = monthsBlockSelectedStartYear;
 
         if (month >= 11)
         {
@@ -2753,19 +2758,19 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
             year = currentYear + 1;
         }
     }
-    else if (e.target == whenEndDate)
+    else if (e.target == monthsBlockWhenEndDate)
     {
-        month = months.indexOf(selectedEndMonth) - 2;
+        month = months.indexOf(monthsBlockSelectedEndMonth) - 2;
 
         if (month == -2)
         {
             month = 10;
-            year = selectedStartYear;
-            nextYear = selectedEndYear;
+            year = monthsBlockSelectedStartYear;
+            nextYear = monthsBlockSelectedEndYear;
         }
         else
         {
-            year = selectedEndYear;
+            year = monthsBlockSelectedEndYear;
             nextYear = year;
         } 
     }
@@ -2785,8 +2790,8 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
 
     rightButtonClicked = true;
 
-    createCalendarMonth(firstCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-    createCalendarMonth2(secondCalendar, selectedStartDate, selectedEndDate, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+    createCalendarMonth(firstCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear);
+    createCalendarMonth2(secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, monthsBlockSelectedStartMonth, monthsBlockSelectedEndMonth, monthsBlockSelectedStartYear, monthsBlockSelectedEndYear);
 
     rightButtonClicked = false;
 
@@ -2811,99 +2816,99 @@ function initializeMonthsCalendars(e, firstCalendar, secondCalendar, leftButton,
     }
 }
 
-const modalBackground = document.getElementById("ModalBackground");
+const monthsBlockModalBackground = document.getElementById("MonthsBlockModalBackground");
 
-function closeModal()
+function monthsBlockCloseModal()
 {
-    modalBackground.style.display = "none";
-    modalStartDate.style.display = "none";
-    modalEndDate.style.display = "none";
+    monthsBlockModalBackground.style.display = "none";
+    monthsBlockModalStartDate.style.display = "none";
+    monthsBlockModalEndDate.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
 }
 
-function openModal(modal)
+function monthsBlockOpenModal(modal)
 {
     modal.style.display = "block";
-    modalBackground.style.display = "block";
+    monthsBlockModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
 
-whenStartDate.onclick = function(e)
+monthsBlockWhenStartDate.onclick = function(e)
 {
-    openModal(modalStartDate);
-    initializeMonthsCalendars(e, monthsCalendar, monthsCalendar2, moveMonthsStartCalendarsLeft, moveMonthsStartCalendarsRight);
+    monthsBlockOpenModal(monthsBlockModalStartDate);
+    monthsBlockInitializeCalendars(e, monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockMoveStartCalendarsLeft, monthsBlockMoveStartCalendarsRight);
 }
 
-whenEndDate.onclick = function(e)
+monthsBlockWhenEndDate.onclick = function(e)
 {
-    openModal(modalEndDate);
-    initializeMonthsCalendars(e, monthsCalendar3, monthsCalendar4, moveMonthsEndCalendarsLeft, moveMonthsEndCalendarsRight);
+    monthsBlockOpenModal(monthsBlockModalEndDate);
+    monthsBlockInitializeCalendars(e, monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockMoveEndCalendarsLeft, monthsBlockMoveEndCalendarsRight);
 }
 
-modalBackground.onclick = function()
+monthsBlockModalBackground.onclick = function()
 {
-    if (previousMonthsSelectedStartDate != "")
+    if (monthsBlockPreviousSelectedStartDate != "")
     {
-        selectedStartDate = previousMonthsSelectedStartDate;
-        selectedStartMonth = previousMonthsSelectedStartMonth;
-        selectedStartYear = previousMonthsSelectedStartYear;
+        monthsBlockSelectedStartDate = monthsBlockPreviousSelectedStartDate;
+        monthsBlockSelectedStartMonth = monthsBlockPreviousSelectedStartMonth;
+        monthsBlockSelectedStartYear = monthsBlockPreviousSelectedStartYear;
         try
         {
-            let m = selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
-            let y = +selectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-            startDateValue = `${selectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+            let m = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
         }catch{} // i hate i know i can make check if statement
     }
 
-    if (previousMonthsSelectedEndDate != "")
+    if (monthsBlockPreviousSelectedEndDate != "")
     {
-        selectedEndDate = previousMonthsSelectedEndDate;
-        selectedEndMonth = previousMonthsSelectedEndMonth;
-        selectedEndYear = previousMonthsSelectedEndYear;
+        monthsBlockSelectedEndDate = monthsBlockPreviousSelectedEndDate;
+        monthsBlockSelectedEndMonth = monthsBlockPreviousSelectedEndMonth;
+        monthsBlockSelectedEndYear = monthsBlockPreviousSelectedEndYear;
         try
         {
-            let m = selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
-            let y = +selectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
-            endDateValue = `${selectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+            let m = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
             
         }catch{} // try catch but i dont want to
     }
 
-    closeModal();
+    monthsBlockCloseModal();
 }
 
-const saveStartDateButton = document.getElementById("SaveMonthStartDate");
-const saveEndDateButton = document.getElementById("SaveMonthEndDate");
+const monthsBlockSaveStartDateButton = document.getElementById("MonthsBlockSaveStartDate");
+const monthsBlockSaveEndDateButton = document.getElementById("MonthsBlockSaveEndDate");
 
-function correctCirclePositionStartDate()
+function monthsBlockCorrectCirclePositionStartDate()
 {
-    if (months.indexOf(selectedStartMonth) > startDate.getMonth())
+    if (months.indexOf(monthsBlockSelectedStartMonth) > monthsBlockStartDate.getMonth())
     {
-        draggableCircle.style.cy = `49.4263px`;
-        draggableCircle.style.cx = `247.5px`;
-        monthNumber.innerText = "1 Month";
+        monthsBlockDraggableCircle.style.cy = `49.4263px`;
+        monthsBlockDraggableCircle.style.cx = `247.5px`;
+        monthsBlockMonthNumber.innerText = "1 Month";
 
-        startDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), "1");
+        monthsBlockStartDate = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), "1");
     }
-    else if (months.indexOf(selectedStartMonth) < startDate.getMonth())
+    else if (months.indexOf(monthsBlockSelectedStartMonth) < monthsBlockStartDate.getMonth())
     {
-        draggableCircle.style.cy = `49.4263px`;
-        draggableCircle.style.cx = `247.5px`;
-        monthNumber.innerText = "1 Month";
+        monthsBlockDraggableCircle.style.cy = `49.4263px`;
+        monthsBlockDraggableCircle.style.cx = `247.5px`;
+        monthsBlockMonthNumber.innerText = "1 Month";
 
-        startDate = new Date(selectedStartYear, months.indexOf(selectedStartMonth), "1");
+        monthsBlockStartDate = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), "1");
     }
 }
 
-function correctCirclePositionEndDate()
+function monthsBlockCorrectCirclePositionEndDate()
 {
     let cpch1 = "";
     let cpch2 = "";
 
-    cpch1 = new Date(selectedEndYear, months.indexOf(selectedEndMonth), selectedEndDate.innerText);
-    cpch2 = new Date(startDate);
+    cpch1 = new Date(monthsBlockSelectedEndYear, months.indexOf(monthsBlockSelectedEndMonth), monthsBlockSelectedEndDate.innerText);
+    cpch2 = new Date(monthsBlockStartDate);
 
     loop:
     for (i = 0; i <= 12; i++)
@@ -2916,135 +2921,133 @@ function correctCirclePositionEndDate()
             switch (true)
             {
                 case i == 1:
-                    draggableCircle.style.cy = `49.4263px`;
-                    draggableCircle.style.cx = `247.5px`;
-                    monthNumber.innerText = "1 Month";
+                    monthsBlockDraggableCircle.style.cy = `49.4263px`;
+                    monthsBlockDraggableCircle.style.cx = `247.5px`;
+                    monthsBlockMonthNumber.innerText = "1 Month";
                     break;
                 case i == 2:
-                    draggableCircle.style.cy = `102.5px`;
-                    draggableCircle.style.cx = `300.5736px`;
-                    monthNumber.innerText = "2 Months";
+                    monthsBlockDraggableCircle.style.cy = `102.5px`;
+                    monthsBlockDraggableCircle.style.cx = `300.5736px`;
+                    monthsBlockMonthNumber.innerText = "2 Months";
                     break;
                 case i == 3:
-                    draggableCircle.style.cy = `175px`;
-                    draggableCircle.style.cx = `320px`;
-                    monthNumber.innerText = "3 Months";
+                    monthsBlockDraggableCircle.style.cy = `175px`;
+                    monthsBlockDraggableCircle.style.cx = `320px`;
+                    monthsBlockMonthNumber.innerText = "3 Months";
                     break;
                 case i == 4:
-                    draggableCircle.style.cy = `247.5px`;
-                    draggableCircle.style.cx = `300.5736px`;
-                    monthNumber.innerText = "4 Months";
+                    monthsBlockDraggableCircle.style.cy = `247.5px`;
+                    monthsBlockDraggableCircle.style.cx = `300.5736px`;
+                    monthsBlockMonthNumber.innerText = "4 Months";
                     break;
                 case i == 5:
-                    draggableCircle.style.cy = `300.5736px`;
-                    draggableCircle.style.cx = `247.5px`;
-                    monthNumber.innerText = "5 Months";
+                    monthsBlockDraggableCircle.style.cy = `300.5736px`;
+                    monthsBlockDraggableCircle.style.cx = `247.5px`;
+                    monthsBlockMonthNumber.innerText = "5 Months";
                     break;
                 case i == 6:
-                    draggableCircle.style.cy = `320px`;
-                    draggableCircle.style.cx = `175px`;
-                    monthNumber.innerText = "6 Months";
+                    monthsBlockDraggableCircle.style.cy = `320px`;
+                    monthsBlockDraggableCircle.style.cx = `175px`;
+                    monthsBlockMonthNumber.innerText = "6 Months";
                     break;
                 case i == 7:
-                    draggableCircle.style.cy = `300.5736px`;
-                    draggableCircle.style.cx = `102.5px`;
-                    monthNumber.innerText = "7 Months";
+                    monthsBlockDraggableCircle.style.cy = `300.5736px`;
+                    monthsBlockDraggableCircle.style.cx = `102.5px`;
+                    monthsBlockMonthNumber.innerText = "7 Months";
                     break;
                 case i == 8:
-                    draggableCircle.style.cy = `247.5px`;
-                    draggableCircle.style.cx = `49.4263px`;
-                    monthNumber.innerText = "8 Months";
+                    monthsBlockDraggableCircle.style.cy = `247.5px`;
+                    monthsBlockDraggableCircle.style.cx = `49.4263px`;
+                    monthsBlockMonthNumber.innerText = "8 Months";
                     break;
                 case i == 9:
-                    draggableCircle.style.cy = `175px`;
-                    draggableCircle.style.cx = `30px`;
-                    monthNumber.innerText = "9 Months";
+                    monthsBlockDraggableCircle.style.cy = `175px`;
+                    monthsBlockDraggableCircle.style.cx = `30px`;
+                    monthsBlockMonthNumber.innerText = "9 Months";
                     break;
                 case i == 10:
-                    draggableCircle.style.cy = `102.5px`;
-                    draggableCircle.style.cx = `49.4263px`;
-                    monthNumber.innerText = "10 Months";
+                    monthsBlockDraggableCircle.style.cy = `102.5px`;
+                    monthsBlockDraggableCircle.style.cx = `49.4263px`;
+                    monthsBlockMonthNumber.innerText = "10 Months";
                     break;
                 case i == 11:
-                    draggableCircle.style.cy = `49.4263px`;
-                    draggableCircle.style.cx = `102.5px`;
-                    monthNumber.innerText = "11 Months";
+                    monthsBlockDraggableCircle.style.cy = `49.4263px`;
+                    monthsBlockDraggableCircle.style.cx = `102.5px`;
+                    monthsBlockMonthNumber.innerText = "11 Months";
                     break;
                 case i == 12:
-                    draggableCircle.style.cy = `30px`;
-                    draggableCircle.style.cx = `175px`;
-                    monthNumber.innerText = "12 Months";
+                    monthsBlockDraggableCircle.style.cy = `30px`;
+                    monthsBlockDraggableCircle.style.cx = `175px`;
+                    monthsBlockMonthNumber.innerText = "12 Months";
                     break;
                 default:
-                    draggableCircle.style.cy = `49.4263px`;
-                    draggableCircle.style.cx = `247.5px`;
-                    monthNumber.innerText = "1 Month";
+                    monthsBlockDraggableCircle.style.cy = `49.4263px`;
+                    monthsBlockDraggableCircle.style.cx = `247.5px`;
+                    monthsBlockMonthNumber.innerText = "1 Month";
                     break;
             }
 
-            degrees = "";
+            monthsBlockDegrees = "";
             break loop;
         }
         else
         {
-            cpch1 = new Date(selectedEndYear, months.indexOf(selectedEndMonth), selectedEndDate.innerText);
-            cpch2 = new Date(startDate);
+            cpch1 = new Date(monthsBlockSelectedEndYear, months.indexOf(monthsBlockSelectedEndMonth), monthsBlockSelectedEndDate.innerText);
+            cpch2 = new Date(monthsBlockStartDate);
         }
     }
 }
 
-saveStartDateButton.onclick = function()
+monthsBlockSaveStartDateButton.onclick = function()
 {
-    savedStartMonthsPMValue = startMonthsPMValue;
+    monthsBlockSavedStartPMValue = monthsBlockStartPMValue;
 
-    if (whenInput.innerText != "")
+    if (monthsBlockWhenInput.innerText != "")
     {
-        whenInput.innerText = "";
+        monthsBlockWhenInput.innerText = "";
     }
 
-    if (previousMonthsSelectedStartDate != "")
+    if (monthsBlockPreviousSelectedStartDate != "")
     {
-        previousMonthsSelectedStartDate = "";
+        monthsBlockPreviousSelectedStartDate = "";
     }
 
-    if (previousMonthsSelectedEndDate != "")
+    if (monthsBlockPreviousSelectedEndDate != "")
     {
-        previousMonthsSelectedEndDate = "";
+        monthsBlockPreviousSelectedEndDate = "";
     }
 
-    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`));
-    whenInput.appendChild(document.createTextNode(" - "));
-    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
-    whenStartDate.innerText = `${startDateValue} ${savedStartMonthsPMValue}`;
-    whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockStartDateValue} ${monthsBlockSavedStartPMValue}`));
+    monthsBlockWhenInput.appendChild(document.createTextNode(" - "));
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`));
+    monthsBlockWhenStartDate.innerText = `${monthsBlockStartDateValue} ${monthsBlockSavedStartPMValue}`;
+    monthsBlockWhenEndDate.innerText = `${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`;
 
-    //correctCirclePositionEndDate();
-    debugger;
-    correctCirclePositionStartDate();
-    closeModal();
+    monthsBlockCorrectCirclePositionStartDate();
+    monthsBlockCloseModal();
 }
 
-saveEndDateButton.onclick = function()
+monthsBlockSaveEndDateButton.onclick = function()
 {
-    savedEndMonthsPMValue = endMonthsPMValue;
+    monthsBlockSavedEndPMValue = monthsBlockEndPMValue;
     
-    if (whenInput.innerText != "")
+    if (monthsBlockWhenInput.innerText != "")
     {
-        whenInput.innerText = "";
+        monthsBlockWhenInput.innerText = "";
     }
 
-    if (previousMonthsSelectedEndDate != "")
+    if (monthsBlockPreviousSelectedEndDate != "")
     {
-        previousMonthsSelectedEndDate = "";
+        monthsBlockPreviousSelectedEndDate = "";
     }
 
-    whenInput.appendChild(document.createTextNode(`${startDateValue} ${savedStartMonthsPMValue}`));
-    whenInput.appendChild(document.createTextNode(" - "));
-    whenInput.appendChild(document.createTextNode(`${endDateValue} ${savedEndMonthsPMValue}`));
-    whenEndDate.innerText = `${endDateValue} ${savedEndMonthsPMValue}`;
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockStartDateValue} ${monthsBlockSavedStartPMValue}`));
+    monthsBlockWhenInput.appendChild(document.createTextNode(" - "));
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`));
+    monthsBlockWhenEndDate.innerText = `${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`;
 
-    correctCirclePositionEndDate();
-    closeModal();
+    monthsBlockCorrectCirclePositionEndDate();
+    monthsBlockCloseModal();
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -3134,6 +3137,26 @@ flexibleButton.onclick = function()
     datesButton.style.backgroundColor = "";
     monthsButton.style.backgroundColor = "";
 }
+
+/*--------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------FLEXIBLE BLOCK----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+const flexibleBlockWeekendButton = document.getElementById("FlexibleBlockWeekendButton")
+const flexibleBlockWeekButton = document.getElementById("FlexibleBlockWeekButton")
+const flexibleBlockMonthButton = document.getElementById("FlexibleBlockMonthButton")
+const flexibleBlockStay = document.getElementById("FlexibleBlockStay")
+
+function flexibleBlockSelectStay(button)
+{
+    button.onclick = function()
+    {
+        flexibleBlockStay.innerText = `Stay for a ${button.innerText.toLowerCase()}`;
+    }
+}
+
+flexibleBlockSelectStay(flexibleBlockWeekendButton);
+flexibleBlockSelectStay(flexibleBlockWeekButton);
+flexibleBlockSelectStay(flexibleBlockMonthButton);
 
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
 const searchButton = document.getElementById("SearchButton");
