@@ -209,7 +209,6 @@ function onClickButtonUnfocus(button)
     button.style.boxShadow = "";
 }
 
-//  i feel like it better to have 1 event listener with >8 if statements than 8 event listeners with 8 if statements total
 document.addEventListener('mousedown', function(e) 
 {
     if (e.target == imstupidsvg || e.target == imstupidpath || monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block")
@@ -441,6 +440,20 @@ const incrementPetCountButton = document.getElementById("IncreasePetCount");
 
 const formGuestsInput = document.getElementById("GuestsInput");
 
+const adultsCountExperiences = document.getElementById("AdultsCountExperiences");
+const decrementAdultCountButtonExperiences = document.getElementById("DecreaseAdultCountExperiences");
+const incrementAdultCountButtonExperiences = document.getElementById("IncreaseAdultCountExperiences");
+
+const childrenCountExperiences = document.getElementById("ChildrenCountExperiences");
+const decrementChildCountButtonExperiences = document.getElementById("DecreaseChildCountExperiences");
+const incrementChildCountButtonExperiences = document.getElementById("IncreaseChildCountExperiences");
+
+const infantsCountExperiences = document.getElementById("InfantsCountExperiences");
+const decrementInfantCountButtonExperiences = document.getElementById("DecreaseInfantCountExperiences");
+const incrementInfantCountButtonExperiences = document.getElementById("IncreaseInfantCountExperiences");
+
+const formGuestsInputExperiences = document.getElementById("GuestsInputExperiences");
+
 function changeGuestsValue()
 {
     let guestCount  = +adultsCount.innerText + +childrenCount.innerText > 1 
@@ -463,6 +476,23 @@ function changeGuestsValue()
                     : "";
 
     formGuestsInput.value = `${guestCount}${infantCount}${petCount}`;
+}
+
+function changeGuestsValueExperiences()
+{
+    let guestCount  = +adultsCountExperiences.innerText + +childrenCountExperiences.innerText > 1 
+                    ? `${+adultsCountExperiences.innerText + +childrenCountExperiences.innerText} guests`
+                    : +adultsCountExperiences.innerText + +childrenCountExperiences.innerText != 0 
+                    ? `${+adultsCountExperiences.innerText + +childrenCountExperiences.innerText} guest`
+                    : "";
+
+    let infantCount = infantsCountExperiences.innerText > 1
+                    ? `, ${infantsCountExperiences.innerText} infants` 
+                    : infantsCountExperiences.innerText != 0
+                    ? `, ${infantsCountExperiences.innerText} infant`
+                    : "";
+
+    formGuestsInputExperiences.value = `${guestCount}${infantCount}`;
 }
 
 function changeButtonIncrease(entity)
@@ -592,10 +622,113 @@ function changeNumber(entity, increment, decrement)
     }
 }
 
+function changeNumberExperiences(entity, increment, decrement) 
+{
+    increment.onclick = function()
+    {
+        if (increment.style.cursor == "pointer")
+        {
+            entity.innerText ++;
+
+            if ((childrenCountExperiences.innerText > 0 || infantsCountExperiences.innerText > 0) && adultsCountExperiences.innerText <= 1)
+            {
+                if (adultsCountExperiences.innerText == 0)
+                {
+                    adultsCountExperiences.innerText ++;
+                }
+                else
+                {
+                    decrementAdultCountButtonExperiences.style.cursor = "not-allowed";
+
+                    changeButtonIncrease(decrementAdultCountButtonExperiences);
+                } 
+            }
+
+            changeGuestsValueExperiences();
+
+            decrement.style.cursor = "pointer";
+
+            var decr = decrement.classList;
+            decr.add("guest_button_color");
+
+            if ((+adultsCountExperiences.innerText + +childrenCountExperiences.innerText) == 16)
+            {
+                incrementAdultCountButtonExperiences.style.cursor = "not-allowed";
+                incrementChildCountButtonExperiences.style.cursor = "not-allowed"; 
+
+                changeButtonIncrease(incrementAdultCountButtonExperiences);
+                changeButtonIncrease(incrementChildCountButtonExperiences);
+            }
+
+            if (infantsCountExperiences.innerText == 5)
+            {
+                incrementInfantCountButtonExperiences.style.cursor = "not-allowed";
+
+                changeButtonIncrease(incrementInfantCountButtonExperiences);
+            }
+        }
+    }
+
+    decrement.onclick = function()
+    {
+        if (decrement.style.cursor == "pointer")
+        {
+            entity.innerText --;
+
+            if ((childrenCountExperiences.innerText == 0 && infantsCountExperiences.innerText == 0) && adultsCountExperiences.innerText >= 1)
+            {
+                decrementAdultCountButtonExperiences.style.cursor = "pointer";
+
+                changeButtonDecrease(decrementAdultCountButtonExperiences);
+            }
+
+            if ((childrenCountExperiences.innerText > 0 || infantsCountExperiences.innerText > 0) && adultsCountExperiences.innerText == 1)
+            {
+                decrementAdultCountButtonExperiences.style.cursor = "not-allowed";
+
+                changeButtonIncrease(decrementAdultCountButtonExperiences);
+            }
+
+            changeGuestsValueExperiences();
+
+            var decr = decrement.classList;
+            if (entity.innerText == 0)
+            {
+                decr.remove("guest_button_color");
+            }  
+
+            if ((+adultsCountExperiences.innerText + +childrenCountExperiences.innerText) < 16)
+            {
+                incrementAdultCountButtonExperiences.style.cursor = "pointer";
+                incrementChildCountButtonExperiences.style.cursor = "pointer";
+
+                changeButtonDecrease(incrementAdultCountButtonExperiences);
+                changeButtonDecrease(incrementChildCountButtonExperiences);
+            }
+
+            if (infantsCountExperiences.innerText < 5)
+            {
+                incrementInfantCountButtonExperiences.style.cursor = "pointer";
+
+                changeButtonDecrease(incrementInfantCountButtonExperiences);
+            }
+
+            if (entity.innerText == 0)
+            {
+                decrement.style.cursor = "not-allowed";
+            }
+        }     
+    }
+}
+
 changeNumber(adultsCount, incrementAdultCountButton, decrementAdultCountButton);
 changeNumber(childrenCount, incrementChildCountButton, decrementChildCountButton);
 changeNumber(infantsCount, incrementInfantCountButton, decrementInfantCountButton);
 changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
+
+changeNumberExperiences(adultsCountExperiences, incrementAdultCountButtonExperiences, decrementAdultCountButtonExperiences);
+changeNumberExperiences(childrenCountExperiences, incrementChildCountButtonExperiences, decrementChildCountButtonExperiences);
+changeNumberExperiences(infantsCountExperiences, incrementInfantCountButtonExperiences, decrementInfantCountButtonExperiences);
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
@@ -603,6 +736,8 @@ changeNumber(petsCount, incrementPetCountButton, decrementPetCountButton);
 
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
+const calendarExperiences = document.getElementById("CalendarExperiences");
+const calendar2Experiences = document.getElementById("Calendar2Experiences");
 
 var date = new Date();
 var day = date.getDate();   // 1-31 days and then
@@ -1078,10 +1213,16 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
+createCalendarMonth(calendarExperiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+createCalendarMonth2(calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
 const moveCalendarRight = document.getElementById("MoveCalendarsRight");
 const datesButton = document.getElementById("DatesButton");
+
+const moveCalendarLeftExperiences = document.getElementById("MoveCalendarsLeftExperiences");
+const moveCalendarRightExperiences = document.getElementById("MoveCalendarsRightExperiences");
 
 function moveCalendarsLeft(moveButton, firstCalendar, secondCalendar)
 {
@@ -1157,6 +1298,16 @@ moveCalendarLeft.onclick = function()
 moveCalendarRight.onclick = function()
 {
     moveCalendarsRight(moveCalendarRight, moveCalendarLeft, calendar, calendar2);
+}
+
+moveCalendarLeftExperiences.onclick = function()
+{
+    moveCalendarsLeft(moveCalendarLeftExperiences, calendarExperiences, calendar2Experiences)
+}
+
+moveCalendarRightExperiences.onclick = function()
+{
+    moveCalendarsRight(moveCalendarRightExperiences, moveCalendarLeftExperiences, calendarExperiences, calendar2Experiences)
 }
 
 //  ------------------------ CALENDAR FORM INPUT ------------------------
@@ -1609,6 +1760,71 @@ calendar2.addEventListener("mouseout", function(e)
 {
     calendarRemoveShadow(e, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
 })
+
+// ---------------------------- Experiences calendar ---------------------------
+// please end my misery i hate calendars i thought i was done with them i hate this
+const getCalendarsDateExperiences = document.getElementById("DatesCalendarsExperiences");
+const dateInputExperiences = document.getElementById("DateInputExperiences");
+var alternateDates = true;
+var dateInputStart = "";
+var dateInputEnd = "";
+
+getCalendarsDateExperiences.onclick = function(e)
+{
+    if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+    {
+        debugger;
+        if (selectedCheckinDate.tagName != "NULL" && alternateDates == true)
+        {
+            selectedCheckinDate.style.background = "";
+            selectedCheckinDate.style.color = "";
+
+            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            selectedCheckinDate = document.createElement(null);   
+        }
+        else if (selectedCheckoutDate.tagName != "NULL" && alternateDates == false)
+        {
+            selectedCheckoutDate.style.background = "";
+            selectedCheckoutDate.style.color = "";
+
+            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            selectedCheckoutDate = document.createElement(null);
+        }
+
+        if (selectedCheckinDate.tagName == "NULL" && alternateDates == true)
+        {
+            selectedCheckinDate = e.target;
+            selectedCheckinDate.style.background = "black";
+            selectedCheckinDate.style.color = "white";
+            selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+            correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            dateInputStart = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear}`;
+            alternateDates = false;
+        }
+        else if (selectedCheckoutDate.tagName == "NULL" && alternateDates == false)
+        {
+            selectedCheckoutDate = e.target;
+            selectedCheckoutDate.style.background = "black";
+            selectedCheckoutDate.style.color = "white";
+            selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
+            selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+
+            correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            dateInputEnd = ` - ${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]} ${selectedCheckoutYear}`;
+            alternateDates = true;
+        }
+
+        dateInputExperiences.value = `${dateInputStart}${dateInputEnd}`;
+
+        if (dateInputExperiences.value != "")
+        {
+            clearCalendarFormInputButton.style.display = "block";
+        }
+    }
+}
+
 
 //  ------------------------ (+-) DATES OPTIONS BUTTONS ------------------------
 //  PM stands for Pure Memory coz im arcaea player and this is the only acceptable acronym even tho it means Plus Minus here.....

@@ -711,25 +711,25 @@
                                                     <div class="fw-bold text-nowrap" style="background: none">
                                                         Add dates
                                                     </div>
-                                                    <input class="border-0 input" type="search" placeholder="Add dates" />
+                                                    <input id="DateInputExperiences" class="border-0 input" type="search" placeholder="Add dates" />
                                                 </div>
                                             </label>
                                             @* popup modal thingy *@
                                             <div id="DatesDropdownExperiences" class="shadow dropdown_window" style="width: 100%; left: 0px">
                                                 <div class="shadowe" style="width: 100%; height: 0px">
-                                                    <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                                                    <button id="MoveCalendarsLeftExperiences" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
                                                             <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                                                         </svg>
                                                     </button>
-                                                    <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                                                    <button id="MoveCalendarsRightExperiences" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
                                                             <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <div class="calendars">
-                                                    <div id="Calendar" style="max-width: 375px; padding: 10px">
+                                                <div id="DatesCalendarsExperiences" class="calendars">
+                                                    <div id="CalendarExperiences" style="max-width: 375px; padding: 10px">
                                                         <ul class="days_list">
                                                             @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
                                                             <li class="box">Mon</li>
@@ -741,7 +741,7 @@
                                                             <li class="box">Sun</li>
                                                         </ul>
                                                     </div>
-                                                    <div id="Calendar2" style="max-width: 375px; padding: 10px">
+                                                    <div id="Calendar2Experiences" style="max-width: 375px; padding: 10px">
                                                         <ul class="days_list">
                                                             @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
                                                             <li class="box">Mon</li>
@@ -792,13 +792,13 @@
                                                         </div>
                                                     </section>
                                                     <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
-                                                        <button id="DecreaseAdultCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                        <button id="DecreaseAdultCountExperiences" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
                                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
                                                             </svg>
                                                         </button>
-                                                        <div id="AdultsCount"> 0 </div>
-                                                        <button id="IncreaseAdultCount" type="button" class="guest_button_increase guest_button_color " style="cursor: pointer">
+                                                        <div id="AdultsCountExperiences"> 0 </div>
+                                                        <button id="IncreaseAdultCountExperiences" type="button" class="guest_button_increase guest_button_color " style="cursor: pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
                                                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                                                             </svg>
@@ -815,13 +815,13 @@
                                                         </div>
                                                     </section>
                                                     <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
-                                                        <button id="DecreaseChildCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                        <button id="DecreaseChildCountExperiences" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
                                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
                                                             </svg>
                                                         </button>
-                                                        <div id="ChildrenCount"> 0 </div>
-                                                        <button id="IncreaseChildCount" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
+                                                        <div id="ChildrenCountExperiences"> 0 </div>
+                                                        <button id="IncreaseChildCountExperiences" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
                                                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                                                             </svg>
@@ -838,13 +838,13 @@
                                                         </div>
                                                     </section>
                                                     <div style="width: 100px; display: flex; justify-items: center; justify-content: space-between">
-                                                        <button id="DecreaseInfantCount" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
+                                                        <button id="DecreaseInfantCountExperiences" type="button" class="guest_button_decrease" style="cursor: not-allowed;">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash border-0" viewBox="0 0 16 16">
                                                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
                                                             </svg>
                                                         </button>
-                                                        <div id="InfantsCount"> 0 </div>
-                                                        <button id="IncreaseInfantCount" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
+                                                        <div id="InfantsCountExperiences"> 0 </div>
+                                                        <button id="IncreaseInfantCountExperiences" type="button" class="guest_button_increase guest_button_color" style="cursor: pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus border-0" viewBox="0 0 16 16">
                                                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                                                             </svg>
