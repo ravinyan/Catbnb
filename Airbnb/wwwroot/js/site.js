@@ -71,14 +71,11 @@ function headerScaling()
         document.getElementById("MiniForm").style.display = "none";
         document.getElementById("StaysMenuButtons").style.display = "block";
 
-
-        document.getElementById("StaysMenuForm").style.display = "block";
-
-        if (staysMenuButton.style.textShadow == "0px 0px 1px black")
+        if (staysMenuButton.style.textShadow == "black 0px 0px 1px")
         {
             document.getElementById("StaysMenuForm").style.display = "block";
         }
-        else if (experiencesMenuButton.style.textShadow == "0px 0px 1px black")
+        else if (experiencesMenuButton.style.textShadow == "black 0px 0px 1px")
         {
             document.getElementById("ExperiencesMenuForm").style.display = "block";
         } 
@@ -733,7 +730,6 @@ changeNumberExperiences(infantsCountExperiences, incrementInfantCountButtonExper
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------CHECK IN/CHECK OUT CALENDAR---------------------------------------------
 --------------------------------------------------ALSO WHEN CALENDARS-------------------------------------------------*/
-
 const calendar = document.getElementById("Calendar");
 const calendar2 = document.getElementById("Calendar2");
 const calendarExperiences = document.getElementById("CalendarExperiences");
@@ -799,7 +795,7 @@ const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     // i give up fixing this
-    if (checkinDate != "" && checkoutDate != "")
+    if (checkinDate.tagName != "NULL" && checkoutDate.tagName != "NULL")
     {
         if (x == +checkinDate.innerText && checkinMonth == months[month] && checkinYear == year)
         {
@@ -1213,8 +1209,10 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
-createCalendarMonth(calendarExperiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
-createCalendarMonth2(calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+staysMenuButton.addEventListener("click", function()
+{
+    initializeDatesCalendars(calendar, calendar2);
+})
 
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
@@ -1376,7 +1374,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-           correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
         }
         else if (selectedCheckoutDate.tagName == "NULL" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1720,8 +1718,9 @@ function calendarAddShadow(e, calendar, checkinDate, checkoutDate, checkinMonth,
     if ((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") && e.target.children.length == 0 && e.target.className == "box")
     {
         e.target.classList.add("box_new_hover");
-    
-        if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+
+        if (checkinDate.tagName == "NULL" && (checkinButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white")
+        ||  checkoutDate.tagName == "NULL" && (checkoutButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white"))
         {
             applyShadowBetweenDates(calendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
         }
@@ -1763,17 +1762,57 @@ calendar2.addEventListener("mouseout", function(e)
 
 // ---------------------------- Experiences calendar ---------------------------
 // please end my misery i hate calendars i thought i was done with them i hate this
+function initializeDatesExperiencesCalendars(firstCalendar, secondCalendar)
+{
+    month = currentMonth - 1;
+    year = currentYear;
+   
+    const monthNames = document.querySelectorAll(".month_name");
+    const tables = document.querySelectorAll(".nothing");
+   
+    monthNames.forEach(function(e)
+    {
+        e.remove();
+    });
+   
+    tables.forEach(function(e)
+    {
+        e.remove();
+    });
+
+    rightButtonClicked = true;
+
+    createCalendarMonth(firstCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+
+    rightButtonClicked = false;  
+}
+
+datesButtonExperiences.addEventListener("click", function() 
+{
+    initializeDatesExperiencesCalendars(calendarExperiences, calendar2Experiences);
+})
+
+experiencesMenuButton.addEventListener("click", function()
+{
+    dateInputExperiences.value = checkoutFormInput.value == "" ? `${checkinFormInput.value}` 
+                               : `${checkinFormInput.value} - ${checkoutFormInput.value}`
+})
+
+function datesCSSValitation()
+{
+    selectedCheckoutDate.style.background = "";
+    selectedCheckoutDate.style.color = "";
+}
+
 const getCalendarsDateExperiences = document.getElementById("DatesCalendarsExperiences");
 const dateInputExperiences = document.getElementById("DateInputExperiences");
 var alternateDates = true;
-var dateInputStart = "";
-var dateInputEnd = "";
 
 getCalendarsDateExperiences.onclick = function(e)
 {
     if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
     {
-        debugger;
         if (selectedCheckinDate.tagName != "NULL" && alternateDates == true)
         {
             selectedCheckinDate.style.background = "";
@@ -1799,8 +1838,12 @@ getCalendarsDateExperiences.onclick = function(e)
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
-            dateInputStart = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear}`;
+            if (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+            {
+                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            }
+            
+            checkinFormInput.value = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear}`;
             alternateDates = false;
         }
         else if (selectedCheckoutDate.tagName == "NULL" && alternateDates == false)
@@ -1811,13 +1854,35 @@ getCalendarsDateExperiences.onclick = function(e)
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
-            dateInputEnd = ` - ${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]} ${selectedCheckoutYear}`;
+            if (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+            {
+                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            }
+
+            checkoutFormInput.value = `${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]} ${selectedCheckoutYear}`;
             alternateDates = true;
         }
 
-        dateInputExperiences.value = `${dateInputStart}${dateInputEnd}`;
-
+        dateInputExperiences.value = checkoutFormInput.value == "" ? `${checkinFormInput.value}` 
+                                   : `${checkinFormInput.value} - ${checkoutFormInput.value}`
+        
+        //  validation
+        if ((+selectedCheckinDate.innerText >= +selectedCheckoutDate.innerText) 
+        &&  (selectedCheckinMonth == selectedCheckoutMonth) && (selectedCheckinYear == selectedCheckoutYear)
+        &&  (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
+        {
+            datesCSSValitation();
+        }
+        else if (months.indexOf(selectedCheckinMonth) > months.indexOf(selectedCheckoutMonth)
+             &&  (selectedCheckinYear == selectedCheckoutYear ) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        {
+            datesCSSValitation();
+        }
+        else if ((selectedCheckinYear > selectedCheckoutYear) && (checkinFormInput.value != "" && checkoutFormInput.value != ""))
+        {
+            datesCSSValitation();
+        }
+        
         if (dateInputExperiences.value != "")
         {
             clearCalendarFormInputButton.style.display = "block";
@@ -1825,6 +1890,25 @@ getCalendarsDateExperiences.onclick = function(e)
     }
 }
 
+calendarExperiences.addEventListener("mouseover", function(e)
+{
+    calendarAddShadow(e, calendarExperiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+})
+
+calendarExperiences.addEventListener("mouseout", function(e)
+{
+    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+})
+
+calendar2Experiences.addEventListener("mouseover", function(e)
+{
+    calendarAddShadow(e, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+})
+
+calendar2Experiences.addEventListener("mouseout", function(e)
+{
+    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+})
 
 //  ------------------------ (+-) DATES OPTIONS BUTTONS ------------------------
 //  PM stands for Pure Memory coz im arcaea player and this is the only acceptable acronym even tho it means Plus Minus here.....
@@ -2320,8 +2404,9 @@ function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, che
                 var divBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
                 var tdBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
             }catch{} //  pizza
-
-            if (firstCalendar == calendar && secondCalendar == calendar2 && checkoutDate.tagName == "NULL")
+            
+            if (firstCalendar == calendar && secondCalendar == calendar2 
+            &&  (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL"))
             {
                 break loop;
             }
