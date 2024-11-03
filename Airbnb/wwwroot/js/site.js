@@ -62,6 +62,7 @@ function headerScaling()
         onClickButtonUnfocus(checkoutButton);
         onClickButtonUnfocus(whoButton);
         onClickButtonUnfocus(whenButton);
+        onClickButtonUnfocus(flexibleBlockWhenButton);
     }
     else 
     {
@@ -189,6 +190,7 @@ const whoButtonExperiences = document.getElementById("WhoButtonExperiences");
 const whoDropdownExperiences = document.getElementById("WhoDropdownExperiences");
 
 const whenButton = document.getElementById("WhenButton");
+const flexibleBlockWhenButton = document.getElementById("FlexibleBlockWhenButton");
 
 const form = document.querySelector(".form_container");
 const formExperiences = document.querySelector(".form_container2");
@@ -238,6 +240,7 @@ document.addEventListener('mousedown', function(e)
         }
         
         onClickButtonUnfocus(whenButton);
+        onClickButtonUnfocus(flexibleBlockWhenButton);
         onClickButtonUnfocus(checkinButton);
     }
     //  CHECK OUT
@@ -255,9 +258,10 @@ document.addEventListener('mousedown', function(e)
         }
 
         onClickButtonUnfocus(whenButton);
+        onClickButtonUnfocus(flexibleBlockWhenButton);
         onClickButtonUnfocus(checkoutButton);
     }
-    //  WHEN
+    //  WHEN BUT MONTHS BLOCK
     else if (!datesDropdown.contains(e.target) && !whenButton.contains(e.target)
          &&   datesDropdown.style.display == "block" && whenButton.style.backgroundColor == "white")
     {
@@ -268,6 +272,18 @@ document.addEventListener('mousedown', function(e)
 
         datesDropdown.style.display = "none";
         onClickButtonUnfocus(whenButton);
+    }
+    //  WHEN BUT FLEXIBLE BLOCK
+    else if (!datesDropdown.contains(e.target) && !flexibleBlockWhenButton.contains(e.target)
+         &&   datesDropdown.style.display == "block" && flexibleBlockWhenButton.style.backgroundColor == "white")
+    {
+        if (!form.contains(e.target))
+        {
+            form.style.backgroundColor = "";
+        }
+
+        datesDropdown.style.display = "none";
+        onClickButtonUnfocus(flexibleBlockWhenButton);
     }
     //  WHO
     else if (!whoDropdown.contains(e.target) && !whoButton.contains(e.target) && whoDropdown.style.display == "block") 
@@ -344,6 +360,7 @@ openWindow(checkinButton, datesDropdown);
 openWindow(checkoutButton, datesDropdown);
 openWindow(whoButton, whoDropdown);
 openWindow(whenButton, datesDropdown);
+openWindow(flexibleBlockWhenButton, datesDropdown);
 
 openWindow(whereButtonExperiences, whereDropdownExperiences);
 openWindow(datesButtonExperiences, datesDropdownExperiences);
@@ -1823,19 +1840,41 @@ experiencesMenuButton.addEventListener("click", function()
 
 function datesCSSValitation()
 {
-    selectedCheckoutDate.style.background = "";
-    selectedCheckoutDate.style.color = "";
-    checkoutFormInput.value = "";
-
-    removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
-
-    try
+    if (alternateDates == false)
     {
-        selectedCheckoutDate.parentElement.style.background = "";
-    }
-    catch{}
+        selectedCheckoutDate.style.background = "";
+        selectedCheckoutDate.style.color = "";
+        checkoutFormInput.value = "";
 
-    selectedCheckoutDate = document.createElement(null);
+        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+
+        try
+        {
+            selectedCheckoutDate.parentElement.style.background = "";
+        }
+        catch{}
+
+        selectedCheckoutDate = document.createElement(null);
+    }
+    else if (alternateDates == true)
+    {
+        selectedCheckinDate.style.background = "";
+        selectedCheckinDate.style.color = "";
+        checkoutFormInput.value = "";
+
+        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+
+        try
+        {
+            selectedCheckinDate.parentElement.style.background = "";
+        }
+        catch{}
+        
+        selectedCheckinDate = selectedCheckoutDate;
+        checkinFormInput.value = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear}`;
+        selectedCheckoutDate = document.createElement(null);
+        alternateDates = false;
+    }
 }
 
 const getCalendarsDateExperiences = document.getElementById("DatesCalendarsExperiences");
@@ -3384,6 +3423,98 @@ monthsBlockSaveEndDateButton.onclick = function()
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------FLEXIBLE BLOCK----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+const flexibleBlockWhenFormMenu = document.getElementById("FlexibleBlockWhenFormMenu");
+const flexibleBlockWhenInput = document.getElementById("FlexibleBlockWhenInput");
+
+const flexibleBlockWeekendButton = document.getElementById("FlexibleBlockWeekendButton");
+const flexibleBlockWeekButton = document.getElementById("FlexibleBlockWeekButton");
+const flexibleBlockMonthButton = document.getElementById("FlexibleBlockMonthButton");
+const flexibleBlockStay = document.getElementById("FlexibleBlockStay");
+var flexibleBlockInputText = "";
+
+flexibleBlockStay.innerText = "Stay for a week";
+flexibleBlockWeekButton.style.borderColor = "black";
+flexibleBlockWhenInput.innerText = "Any week";
+
+function flexibleBlockSelectStay(button, b2, b3)
+{
+    button.onclick = function()
+    {
+        flexibleBlockStay.innerText = `Stay for a ${button.innerText.toLowerCase()}`;
+        flexibleBlockWhenInput.innerText = `Any ${button.innerText.toLowerCase()}`;
+        button.style.borderColor = "black";
+        b2.style.borderColor = "#dddddd";
+        b3.style.borderColor = "#dddddd";
+    }
+}
+
+flexibleBlockSelectStay(flexibleBlockWeekendButton, flexibleBlockWeekButton, flexibleBlockMonthButton);
+flexibleBlockSelectStay(flexibleBlockWeekButton, flexibleBlockWeekendButton, flexibleBlockMonthButton);
+flexibleBlockSelectStay(flexibleBlockMonthButton, flexibleBlockWeekendButton, flexibleBlockWeekButton);
+
+// ok carousel for month cards... oh well
+const flexibleBlockMonthCardCarousel = document.getElementById("FlexibleBlockMonthCardCarousel");
+const flexibleBlockMonthCard = document.getElementById("FlexibleBlockMonthCard");
+const flexbibleBlockMonthCardCarouselLeftButton = document.getElementById("FlexbibleBlockMonthCardCarouselLeftButton");
+const flexbibleBlockMonthCardCarouselRightButton = document.getElementById("FlexbibleBlockMonthCardCarouselRightButton");
+
+/*
+@* checked calendar svg
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+<path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+</svg>
+
+<div id="FlexibleBlockMonthCardCarousel" style="display: flex; padding-block-start: 20px; column-gap: 5px;">
+ <button type="button" class="month_card">
+     <div class="month_card_calendarSVG">
+         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+         </svg>
+     </div>
+     <div class="month_card_month">
+         November2
+     </div>
+     <div class="month_card_year">
+         2024
+     </div>
+ </button>
+*/
+
+function flexibleBlockCarousel()
+{
+    for (i = 0; i < 12; i++)
+    {
+        let monthCard = document.createElement("button");
+        let cardCalendarSVG = document.createElement("div");
+        let cardMonth = document.createElement("div");
+        let cardYear = document.createElement("div");
+        
+        monthCard.setAttribute("type", "button");
+        monthCard.className = "month_card";
+        cardCalendarSVG.className = "month_card_calendarSVG";
+        cardMonth.className = "month_card_month";
+        cardYear.className = "month_card_year";
+        
+        cardCalendarSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                     </svg>`;
+        cardMonth.innerText = months[new Date(currentYear, currentMonth + i, "1").getMonth()];
+        cardYear.innerText = new Date(currentYear, currentMonth + i, "1").getFullYear();
+
+        monthCard.appendChild(cardCalendarSVG);
+        monthCard.appendChild(cardMonth);
+        monthCard.appendChild(cardYear);
+
+        flexibleBlockMonthCardCarousel.appendChild(monthCard);
+    }
+}
+
+flexibleBlockCarousel();
+
+/*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 const flexibleButton = document.getElementById("FlexibleButton");
@@ -3433,7 +3564,9 @@ datesButton.onclick = function()
 
     checkinFormMenu.style.display = "flex";
     whenFormMenu.style.display = "none";
+    flexibleBlockWhenFormMenu.style.display = "none";
     onClickButtonUnfocus(whenButton);
+    onClickButtonUnfocus(flexibleBlockWhenButton);
     onClickButtonUnfocus(checkoutButton);
     onClickButtonFocus(checkinButton);
 
@@ -3450,10 +3583,16 @@ monthsButton.onclick = function()
 
     checkinFormMenu.style.display = "none";
     whenFormMenu.style.display = "flex";
+    flexibleBlockWhenFormMenu.style.display = "none";
     onClickButtonFocus(whenButton);
 
     datesButton.style.backgroundColor = "";
     flexibleButton.style.backgroundColor = "";
+
+    monthsBlockWhenInput.innerText = "";
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockStartDateValue} ${monthsBlockSavedStartPMValue}`));
+    monthsBlockWhenInput.appendChild(document.createTextNode(" - "));
+    monthsBlockWhenInput.appendChild(document.createTextNode(`${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`));
 }
 
 flexibleButton.onclick = function()
@@ -3464,32 +3603,14 @@ flexibleButton.onclick = function()
     flexibleBlock.style.display = "block";
 
     checkinFormMenu.style.display = "none";
-    whenFormMenu.style.display = "flex";
-    onClickButtonFocus(whenButton);
+    whenFormMenu.style.display = "none";
+    flexibleBlockWhenFormMenu.style.display = "flex";
+    onClickButtonFocus(flexibleBlockWhenButton);
 
     datesButton.style.backgroundColor = "";
     monthsButton.style.backgroundColor = "";
+
 }
-
-/*--------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------FLEXIBLE BLOCK----------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------*/
-const flexibleBlockWeekendButton = document.getElementById("FlexibleBlockWeekendButton")
-const flexibleBlockWeekButton = document.getElementById("FlexibleBlockWeekButton")
-const flexibleBlockMonthButton = document.getElementById("FlexibleBlockMonthButton")
-const flexibleBlockStay = document.getElementById("FlexibleBlockStay")
-
-function flexibleBlockSelectStay(button)
-{
-    button.onclick = function()
-    {
-        flexibleBlockStay.innerText = `Stay for a ${button.innerText.toLowerCase()}`;
-    }
-}
-
-flexibleBlockSelectStay(flexibleBlockWeekendButton);
-flexibleBlockSelectStay(flexibleBlockWeekButton);
-flexibleBlockSelectStay(flexibleBlockMonthButton);
 
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days
 const searchButton = document.getElementById("SearchButton");

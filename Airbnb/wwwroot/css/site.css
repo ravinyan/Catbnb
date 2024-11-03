@@ -560,24 +560,45 @@ button.month_card {
     border-radius: 10px;
     border: 1px solid #dddddd;
     background: white;
-    height: 140px;
-    width: 130px;
+    min-height: 140px;
+    min-width: 108px;
 }
 
     button.month_card:hover {
         border: 1px solid black;
     }
 
+div.month_card_calendarSVG {
+    display: flex;
+    justify-content: center;
+}
 
-    /*loginababababa*/
-    button.login_dropdown_button {
-        display: flex;
-        background: none;
-        border: none;
-        padding: 13px 10px;
-        width: 100%;
-        font-size: 14px;
-    }
+div.month_card_month {
+    display: flex;
+    justify-content: center;
+    margin-block-start: 3px;
+    font-size: 16px;
+}
+
+div.month_card_year {
+    display: flex;
+    justify-content: center;
+    margin-block-start: 3px;
+    font-size: 16px;
+}
+
+
+
+
+/*loginababababa*/
+button.login_dropdown_button {
+    display: flex;
+    background: none;
+    border: none;
+    padding: 13px 10px;
+    width: 100%;
+    font-size: 14px;
+}
 
 /* -------------------------------------- SCROLL MENU CLASSES -------------------------------------- */
 div.scroll_bar {
