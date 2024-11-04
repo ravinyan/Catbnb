@@ -271,6 +271,7 @@ document.addEventListener('mousedown', function(e)
         }
 
         datesDropdown.style.display = "none";
+        onClickButtonUnfocus(flexibleBlockWhenButton);
         onClickButtonUnfocus(whenButton);
     }
     //  WHEN BUT FLEXIBLE BLOCK
@@ -3436,6 +3437,7 @@ var flexibleBlockInputText = "";
 
 flexibleBlockStay.innerText = "Stay for a week";
 flexibleBlockWeekButton.style.borderColor = "black";
+flexibleBlockWeekButton.style.background = "#F0F0F0";
 flexibleBlockWhenInput.innerText = "Any week";
 
 function flexibleBlockSelectStay(button, b2, b3)
@@ -3445,8 +3447,11 @@ function flexibleBlockSelectStay(button, b2, b3)
         flexibleBlockStay.innerText = `Stay for a ${button.innerText.toLowerCase()}`;
         flexibleBlockWhenInput.innerText = `Any ${button.innerText.toLowerCase()}`;
         button.style.borderColor = "black";
+        button.style.background = "#F0F0F0";
         b2.style.borderColor = "#dddddd";
+        b2.style.background = "";
         b3.style.borderColor = "#dddddd";
+        b3.style.background = "";
     }
 }
 
@@ -3460,38 +3465,17 @@ const flexibleBlockMonthCard = document.getElementById("FlexibleBlockMonthCard")
 const flexbibleBlockMonthCardCarouselLeftButton = document.getElementById("FlexbibleBlockMonthCardCarouselLeftButton");
 const flexbibleBlockMonthCardCarouselRightButton = document.getElementById("FlexbibleBlockMonthCardCarouselRightButton");
 
-/*
-@* checked calendar svg
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
-<path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
-<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-</svg>
-
-<div id="FlexibleBlockMonthCardCarousel" style="display: flex; padding-block-start: 20px; column-gap: 5px;">
- <button type="button" class="month_card">
-     <div class="month_card_calendarSVG">
-         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-         </svg>
-     </div>
-     <div class="month_card_month">
-         November2
-     </div>
-     <div class="month_card_year">
-         2024
-     </div>
- </button>
-*/
-
-function flexibleBlockCarousel()
+function flexibleBlockCreateMonthCards()
 {
     for (i = 0; i < 12; i++)
     {
+        let cardBox = document.createElement("div");
         let monthCard = document.createElement("button");
         let cardCalendarSVG = document.createElement("div");
         let cardMonth = document.createElement("div");
         let cardYear = document.createElement("div");
         
+        cardBox.className = "month_card_box";
         monthCard.setAttribute("type", "button");
         monthCard.className = "month_card";
         cardCalendarSVG.className = "month_card_calendarSVG";
@@ -3508,11 +3492,122 @@ function flexibleBlockCarousel()
         monthCard.appendChild(cardMonth);
         monthCard.appendChild(cardYear);
 
-        flexibleBlockMonthCardCarousel.appendChild(monthCard);
+        cardBox.appendChild(monthCard)
+
+        flexibleBlockMonthCardCarousel.appendChild(cardBox);
     }
 }
 
-flexibleBlockCarousel();
+flexibleBlockCreateMonthCards();
+
+const flexibleBlockGetMonthCards = document.getElementsByClassName("month_card");
+const flexibleBlockGoText = document.getElementById("FlexibleBlockGo");
+var cardArray = [];
+
+flexibleBlockGoText.innerText = "Go anytime"
+
+// yes i know bubblesort sucks i dont give a shit this array is smaller than my brain it doesnt matter
+function flexibleBlockSortCards(array)
+{
+    var swapping = true;
+    var end = array.length;
+    
+    while (swapping == true)
+    {
+        swapping = false;
+    
+        for (i = 1; i < end; i++)
+        {
+            if (array[i - 1] > array[i])
+            {
+                var x = array[i];
+                array[i] = array[i - 1];
+                array[i - 1] = x;
+    
+                swapping = true;
+            }
+        }
+    
+        end -= 1;
+    }
+
+    return array;
+}
+
+function flexibleBlockMonthCardSelectionCSS(e)
+{
+    for (i = 0; i <= 11; i++)
+    {
+        if (flexibleBlockGetMonthCards[i].contains(e.target))
+        {
+            if (flexibleBlockGetMonthCards[i].style.borderColor != "black")
+            {
+                flexibleBlockGetMonthCards[i].style.borderColor = "black";
+                flexibleBlockGetMonthCards[i].childNodes[0].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                                                            <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                                                                        </svg>`;
+                
+                if (cardArray.includes(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).getTime()))
+                {
+
+                }
+                else
+                {
+                    cardArray.push(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1));
+                }
+            }
+            else if (flexibleBlockGetMonthCards[i].style.borderColor == "black")
+            {
+                flexibleBlockGetMonthCards[i].style.borderColor = "";
+                flexibleBlockGetMonthCards[i].childNodes[0].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                                                        </svg>`;
+
+                for (j = 0; j <= 12; j++)
+                {
+                    if (cardArray[j] == new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).toString())
+                    {
+                        // 1h of trying to make it work and it just doesnt work... stupid language imagine working lol
+                        // IT WAS FUCKING S[P]LICE AND NOT SLICE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
+                        cardArray.splice(1, 1);
+                        break;
+                    }
+                }
+            }
+
+            break;
+        }
+    }
+
+    cardArray = flexibleBlockSortCards(cardArray);
+    
+    if (cardArray.length == 1)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}`;
+    }
+    else if (cardArray.length == 2)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}`;
+    }
+    else if (cardArray.length == 3)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}`;
+    }
+    else if (cardArray.length == 4)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}, ${months[cardArray[3].getMonth()]}`;
+    }
+    else if (cardArray.length > 4)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}, ${months[cardArray[3].getMonth()]}...`;
+    }
+}
+
+flexibleBlockMonthCardCarousel.addEventListener("click", function(e)
+{
+    flexibleBlockMonthCardSelectionCSS(e);
+});
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
@@ -3609,7 +3704,6 @@ flexibleButton.onclick = function()
 
     datesButton.style.backgroundColor = "";
     monthsButton.style.backgroundColor = "";
-
 }
 
 // SEARCH BUTTON testing or whatever it wont do anything really for next few days

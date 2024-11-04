@@ -556,16 +556,26 @@ button.stay_button {
         border: 1px solid black;
     }
 
+div.month_card_box {
+    min-height: 140px;
+    min-width: 108px;
+}
+
 button.month_card {
     border-radius: 10px;
     border: 1px solid #dddddd;
     background: white;
     min-height: 140px;
     min-width: 108px;
+    transition: 0.1s;
 }
 
     button.month_card:hover {
         border: 1px solid black;
+    }
+
+    button.month_card:active {
+        transform: scale(0.9, 0.9); 
     }
 
 div.month_card_calendarSVG {
