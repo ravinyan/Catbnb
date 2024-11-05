@@ -95,7 +95,11 @@ const scrollMenu = document.getElementById("ScrollMenu");
 
 buttonLeft.style.display = "none"; 
 scrollMenu.scrollLeft == 0;
-
+//  WHEN WORKING ON THIS AGAIN
+//  CHANGE SCROLL MENU TO USE scrollTo() LIKE WITH flexbibleBlockMonthCardCarouselRightButton
+//  I WONT CHANGE IT NOW COZ I WILL GET CONFUSED LATER
+//  AND WASTE MORE TIME COZ IM STUPID
+//  THANK YOU PAST ME
 buttonLeft.onclick = function()
 {
     scrollMenu.scrollLeft -= window.innerWidth - 320;
@@ -3459,7 +3463,6 @@ flexibleBlockSelectStay(flexibleBlockWeekendButton, flexibleBlockWeekButton, fle
 flexibleBlockSelectStay(flexibleBlockWeekButton, flexibleBlockWeekendButton, flexibleBlockMonthButton);
 flexibleBlockSelectStay(flexibleBlockMonthButton, flexibleBlockWeekendButton, flexibleBlockWeekButton);
 
-// ok carousel for month cards... oh well
 const flexibleBlockMonthCardCarousel = document.getElementById("FlexibleBlockMonthCardCarousel");
 const flexibleBlockMonthCard = document.getElementById("FlexibleBlockMonthCard");
 const flexbibleBlockMonthCardCarouselLeftButton = document.getElementById("FlexbibleBlockMonthCardCarouselLeftButton");
@@ -3534,7 +3537,7 @@ function flexibleBlockSortCards(array)
     return array;
 }
 
-function flexibleBlockMonthCardSelectionCSS(e)
+function flexibleBlockMonthCardSelection(e)
 {
     for (i = 0; i <= 11; i++)
     {
@@ -3554,7 +3557,7 @@ function flexibleBlockMonthCardSelectionCSS(e)
                 }
                 else
                 {
-                    cardArray.push(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1));
+                    cardArray.push(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).getTime());
                 }
             }
             else if (flexibleBlockGetMonthCards[i].style.borderColor == "black")
@@ -3566,11 +3569,10 @@ function flexibleBlockMonthCardSelectionCSS(e)
 
                 for (j = 0; j <= 12; j++)
                 {
-                    if (cardArray[j] == new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).toString())
+                    if (cardArray.includes(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).getTime()))
                     {
-                        // 1h of trying to make it work and it just doesnt work... stupid language imagine working lol
-                        // IT WAS FUCKING S[P]LICE AND NOT SLICE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
-                        cardArray.splice(1, 1);
+                        let index = cardArray.indexOf(new Date(flexibleBlockGetMonthCards[i].childNodes[2].innerText, months.indexOf(flexibleBlockGetMonthCards[i].childNodes[1].innerText), 1).getTime())
+                        cardArray.splice(index, 1);
                         break;
                     }
                 }
@@ -3581,33 +3583,84 @@ function flexibleBlockMonthCardSelectionCSS(e)
     }
 
     cardArray = flexibleBlockSortCards(cardArray);
-    
-    if (cardArray.length == 1)
+
+    if (cardArray.length == 0)
     {
-        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}`;
+        flexibleBlockGoText.innerText = `Go anytime`;
+    }
+    else if (cardArray.length == 1)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}`;
     }
     else if (cardArray.length == 2)
     {
-        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}`;
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}`;
     }
     else if (cardArray.length == 3)
     {
-        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}`;
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}`;
     }
     else if (cardArray.length == 4)
     {
-        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}, ${months[cardArray[3].getMonth()]}`;
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}`;
     }
     else if (cardArray.length > 4)
     {
-        flexibleBlockGoText.innerText = `Go in ${months[cardArray[0].getMonth()]}, ${months[cardArray[1].getMonth()]}, ${months[cardArray[2].getMonth()]}, ${months[cardArray[3].getMonth()]}...`;
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}...`;
     }
 }
 
 flexibleBlockMonthCardCarousel.addEventListener("click", function(e)
 {
-    flexibleBlockMonthCardSelectionCSS(e);
+    flexibleBlockMonthCardSelection(e);
 });
+
+
+//  50 pages of stack overflow were useless to make it scroll nicely... 
+//  thank you MDN docs for being good and helpful in this case even tho it was trial and error to see what works and how it works
+var scrollValueRight = 0;
+
+flexbibleBlockMonthCardCarouselLeftButton.onclick = function()
+{
+    if (scrollValueRight == 678)
+    {
+        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight -= 339 ,0);
+    }
+    else if (scrollValueRight > 0)
+    {
+        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight -= 226 ,0);
+    }
+
+    if (scrollValueRight <= 0)
+    {
+        flexbibleBlockMonthCardCarouselLeftButton.style.display = "none";
+    }
+    else if (scrollValueRight < 678)
+    {
+        flexbibleBlockMonthCardCarouselRightButton.style.display = "flex";
+    }
+}
+
+flexbibleBlockMonthCardCarouselRightButton.onclick = function()
+{
+    if (scrollValueRight < 0)
+    {
+        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight += 339, 0);
+    }
+    else if (scrollValueRight < 678)
+    {
+        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight += 226, 0);
+    }
+
+    if (scrollValueRight == 678 || scrollValueRight == 565)
+    {
+        flexbibleBlockMonthCardCarouselRightButton.style.display = "none";
+    }
+    else if (scrollValueRight > 0)
+    {
+        flexbibleBlockMonthCardCarouselLeftButton.style.display = "flex";
+    }
+}
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------
