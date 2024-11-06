@@ -92,35 +92,75 @@ function headerScaling()
 const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
 const scrollMenu = document.getElementById("ScrollMenu");
+const scrollMenuCards = ["Icons", "Lakefront", "Cabins", "Amazing Views", "Top of the world", "Design", "Amazing pools", "Beachfront", 
+                         "Tiny homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
+                         "Domes", "Off-the-grid", "Camping", "Rooms", "National parks", "Castles", "Luxe", "Vineyards", "Islands", 
+                         "Top cities", "Caves", "Historical homes", "Barns", "Earth homes", "Play", "Containers", "A-frames", 
+                         "Bed & breakfasts", "New", "Chef's kitchens", "Towers", "ski-in/out", "Creative spaces", "Yurts", "Arctic", 
+                         "Desert", "Windmils", "Trulli", "Cycladic homes", "Adapted", "Casas particulares", "Grand pianos", "Dammusi",
+                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's huts", "Beach", "Lake"]
 
-buttonLeft.style.display = "none"; 
-scrollMenu.scrollLeft == 0;
-//  WHEN WORKING ON THIS AGAIN
-//  CHANGE SCROLL MENU TO USE scrollTo() LIKE WITH flexbibleBlockMonthCardCarouselRightButton
-//  I WONT CHANGE IT NOW COZ I WILL GET CONFUSED LATER
-//  AND WASTE MORE TIME COZ IM STUPID
-//  THANK YOU PAST ME
-buttonLeft.onclick = function()
+function generateScrollMenuCards(array)
 {
-    scrollMenu.scrollLeft -= window.innerWidth - 320;
-    buttonRight.style.display = "block"; 
-
-    if (scrollMenu.scrollLeft <= window.innerWidth)
+    for (i = 0; i < array.length; i++)
     {
-        buttonLeft.style.display = "none";
+        let divBox = document.createElement("div");
+        let aRef = document.createElement("a");
+
+        divBox.className = "";
+        aRef.setAttribute("href", `#${array[i]}`);
+        aRef.className = "";
+        aRef.innerText = `${array[i]}`;
+
+        divBox.appendChild(aRef);
+
+        scrollMenu.appendChild(divBox);
     }
 }
 
-buttonRight.onclick = function()
-{
-    scrollMenu.scrollLeft += window.innerWidth - 320;
-    buttonLeft.style.display = "block";
+generateScrollMenuCards(scrollMenuCards);
 
-    if (scrollMenu.scrollLeft >= scrollMenu.scrollWidth - window.innerWidth)
+//  done it now coz i want to chill with stuff coz having headache... 
+//  learning so much stuff about programming and my brain is overloaded with information for months lol
+function categoriesMenu()
+{
+    var scrollValue = 0;
+    var scrollChange = 0;
+
+    buttonLeft.onclick = function()
     {
-        buttonRight.style.display = "none";
+        scrollChange = Math.floor(scrollMenu.offsetWidth / 1.35);
+        scrollMenu.scrollTo(scrollValue -= scrollChange, 0);
+
+        if (scrollValue < 3700)
+        {
+            buttonRight.style.display = "flex";
+        }
+
+        if (scrollValue <= 0)
+        {
+            buttonLeft.style.display = "none";
+        }
+    }
+    
+    buttonRight.onclick = function()
+    {
+        scrollChange = Math.floor(scrollMenu.offsetWidth / 1.35);
+        scrollMenu.scrollTo(scrollValue += scrollChange, 0);
+    
+        if (scrollValue >= 3700)
+        {
+            buttonRight.style.display = "none";
+        }
+
+        if (scrollValue > 0)
+        {
+            buttonLeft.style.display = "flex";
+        }
     }
 }
+
+categoriesMenu();
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
@@ -3437,19 +3477,35 @@ const flexibleBlockWeekendButton = document.getElementById("FlexibleBlockWeekend
 const flexibleBlockWeekButton = document.getElementById("FlexibleBlockWeekButton");
 const flexibleBlockMonthButton = document.getElementById("FlexibleBlockMonthButton");
 const flexibleBlockStay = document.getElementById("FlexibleBlockStay");
-var flexibleBlockInputText = "";
+var flexibleBlockStayInnerText = "";
+
+const flexibleBlockGetMonthCards = document.getElementsByClassName("month_card");
+const flexibleBlockGoText = document.getElementById("FlexibleBlockGo");
+flexibleBlockGoText.innerText = "Go anytime"
+var cardArray = [];
 
 flexibleBlockStay.innerText = "Stay for a week";
 flexibleBlockWeekButton.style.borderColor = "black";
 flexibleBlockWeekButton.style.background = "#F0F0F0";
 flexibleBlockWhenInput.innerText = "Any week";
+flexibleBlockStayInnerText = "Week";
 
 function flexibleBlockSelectStay(button, b2, b3)
 {
     button.onclick = function()
     {
         flexibleBlockStay.innerText = `Stay for a ${button.innerText.toLowerCase()}`;
-        flexibleBlockWhenInput.innerText = `Any ${button.innerText.toLowerCase()}`;
+        flexibleBlockStayInnerText = button.innerText;
+
+        if (cardArray.length == 0)
+        {
+            flexibleBlockWhenInput.innerText = `Any ${button.innerText.toLowerCase()}`;
+        }
+        else if (cardArray.length > 0)
+        {
+            flexibleBlockAddMonthCardTextValues()
+        }
+
         button.style.borderColor = "black";
         button.style.background = "#F0F0F0";
         b2.style.borderColor = "#dddddd";
@@ -3463,10 +3519,10 @@ flexibleBlockSelectStay(flexibleBlockWeekendButton, flexibleBlockWeekButton, fle
 flexibleBlockSelectStay(flexibleBlockWeekButton, flexibleBlockWeekendButton, flexibleBlockMonthButton);
 flexibleBlockSelectStay(flexibleBlockMonthButton, flexibleBlockWeekendButton, flexibleBlockWeekButton);
 
-const flexibleBlockMonthCardCarousel = document.getElementById("FlexibleBlockMonthCardCarousel");
+const flexibleBlockMonthCardMenu = document.getElementById("FlexibleBlockMonthCardMenu");
 const flexibleBlockMonthCard = document.getElementById("FlexibleBlockMonthCard");
-const flexbibleBlockMonthCardCarouselLeftButton = document.getElementById("FlexbibleBlockMonthCardCarouselLeftButton");
-const flexbibleBlockMonthCardCarouselRightButton = document.getElementById("FlexbibleBlockMonthCardCarouselRightButton");
+const flexbibleBlockMonthCardMenuLeftButton = document.getElementById("FlexbibleBlockMonthCardMenuLeftButton");
+const flexbibleBlockMonthCardMenuRightButton = document.getElementById("FlexbibleBlockMonthCardMenuRightButton");
 
 function flexibleBlockCreateMonthCards()
 {
@@ -3497,19 +3553,12 @@ function flexibleBlockCreateMonthCards()
 
         cardBox.appendChild(monthCard)
 
-        flexibleBlockMonthCardCarousel.appendChild(cardBox);
+        flexibleBlockMonthCardMenu.appendChild(cardBox);
     }
 }
 
 flexibleBlockCreateMonthCards();
 
-const flexibleBlockGetMonthCards = document.getElementsByClassName("month_card");
-const flexibleBlockGoText = document.getElementById("FlexibleBlockGo");
-var cardArray = [];
-
-flexibleBlockGoText.innerText = "Go anytime"
-
-// yes i know bubblesort sucks i dont give a shit this array is smaller than my brain it doesnt matter
 function flexibleBlockSortCards(array)
 {
     var swapping = true;
@@ -3535,6 +3584,42 @@ function flexibleBlockSortCards(array)
     }
 
     return array;
+}
+
+function flexibleBlockAddMonthCardTextValues()
+{
+    cardArray = flexibleBlockSortCards(cardArray);
+
+    if (cardArray.length == 0)
+    {
+        flexibleBlockGoText.innerText = `Go anytime`;
+        flexibleBlockWhenInput.innerText = `Any ${flexibleBlockStayInnerText.toLowerCase()}`;
+    }
+    else if (cardArray.length == 1)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}`;
+        flexibleBlockWhenInput.innerText = `${flexibleBlockStayInnerText} in ${months[new Date(cardArray[0]).getMonth()]}`;
+    }
+    else if (cardArray.length == 2)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}`;
+        flexibleBlockWhenInput.innerText = `${flexibleBlockStayInnerText} in ${monthsAbbreviations[new Date(cardArray[0]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[1]).getMonth()]}`;
+    }
+    else if (cardArray.length == 3)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}`;
+        flexibleBlockWhenInput.innerText = `${flexibleBlockStayInnerText} in ${monthsAbbreviations[new Date(cardArray[0]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[1]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[2]).getMonth()]}`;
+    }
+    else if (cardArray.length == 4)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}`;
+        flexibleBlockWhenInput.innerText = `${flexibleBlockStayInnerText} in ${monthsAbbreviations[new Date(cardArray[0]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[1]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[2]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[3]).getMonth()]}`;
+    }
+    else if (cardArray.length > 4)
+    {
+        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}...`;
+        flexibleBlockWhenInput.innerText = `${flexibleBlockStayInnerText} in ${monthsAbbreviations[new Date(cardArray[0]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[1]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[2]).getMonth()]}, ${monthsAbbreviations[new Date(cardArray[3]).getMonth()]}...`;
+    }
 }
 
 function flexibleBlockMonthCardSelection(e)
@@ -3582,85 +3667,62 @@ function flexibleBlockMonthCardSelection(e)
         }
     }
 
-    cardArray = flexibleBlockSortCards(cardArray);
-
-    if (cardArray.length == 0)
-    {
-        flexibleBlockGoText.innerText = `Go anytime`;
-    }
-    else if (cardArray.length == 1)
-    {
-        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}`;
-    }
-    else if (cardArray.length == 2)
-    {
-        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}`;
-    }
-    else if (cardArray.length == 3)
-    {
-        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}`;
-    }
-    else if (cardArray.length == 4)
-    {
-        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}`;
-    }
-    else if (cardArray.length > 4)
-    {
-        flexibleBlockGoText.innerText = `Go in ${months[new Date(cardArray[0]).getMonth()]}, ${months[new Date(cardArray[1]).getMonth()]}, ${months[new Date(cardArray[2]).getMonth()]}, ${months[new Date(cardArray[3]).getMonth()]}...`;
-    }
+    flexibleBlockAddMonthCardTextValues();
 }
 
-flexibleBlockMonthCardCarousel.addEventListener("click", function(e)
+flexibleBlockMonthCardMenu.addEventListener("click", function(e)
 {
     flexibleBlockMonthCardSelection(e);
 });
 
-
-//  50 pages of stack overflow were useless to make it scroll nicely... 
-//  thank you MDN docs for being good and helpful in this case even tho it was trial and error to see what works and how it works
-var scrollValueRight = 0;
-
-flexbibleBlockMonthCardCarouselLeftButton.onclick = function()
+function flexibleBlockMonthCardMenuControl()
 {
-    if (scrollValueRight == 678)
-    {
-        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight -= 339 ,0);
-    }
-    else if (scrollValueRight > 0)
-    {
-        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight -= 226 ,0);
-    }
+    var scrollValue = 0;
 
-    if (scrollValueRight <= 0)
+    flexbibleBlockMonthCardMenuLeftButton.onclick = function()
     {
-        flexbibleBlockMonthCardCarouselLeftButton.style.display = "none";
+        if (scrollValue == 678)
+        {
+            flexibleBlockMonthCardMenu.scrollTo(scrollValue -= 339 ,0);
+        }
+        else if (scrollValue > 0)
+        {
+            flexibleBlockMonthCardMenu.scrollTo(scrollValue -= 226 ,0);
+        }
+    
+        if (scrollValue <= 0)
+        {
+            flexbibleBlockMonthCardMenuLeftButton.style.display = "none";
+        }
+        else if (scrollValue < 678)
+        {
+            flexbibleBlockMonthCardMenuRightButton.style.display = "flex";
+        }
     }
-    else if (scrollValueRight < 678)
+    
+    flexbibleBlockMonthCardMenuRightButton.onclick = function()
     {
-        flexbibleBlockMonthCardCarouselRightButton.style.display = "flex";
+        if (scrollValue < 0)
+        {
+            flexibleBlockMonthCardMenu.scrollTo(scrollValue += 339, 0);
+        }
+        else if (scrollValue < 678)
+        {
+            flexibleBlockMonthCardMenu.scrollTo(scrollValue += 226, 0);
+        }
+    
+        if (scrollValue == 678 || scrollValue == 565)
+        {
+            flexbibleBlockMonthCardMenuRightButton.style.display = "none";
+        }
+        else if (scrollValue > 0)
+        {
+            flexbibleBlockMonthCardMenuLeftButton.style.display = "flex";
+        }
     }
 }
 
-flexbibleBlockMonthCardCarouselRightButton.onclick = function()
-{
-    if (scrollValueRight < 0)
-    {
-        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight += 339, 0);
-    }
-    else if (scrollValueRight < 678)
-    {
-        flexibleBlockMonthCardCarousel.scrollTo(scrollValueRight += 226, 0);
-    }
-
-    if (scrollValueRight == 678 || scrollValueRight == 565)
-    {
-        flexbibleBlockMonthCardCarouselRightButton.style.display = "none";
-    }
-    else if (scrollValueRight > 0)
-    {
-        flexbibleBlockMonthCardCarouselLeftButton.style.display = "flex";
-    }
-}
+flexibleBlockMonthCardMenuControl();
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------CHECK IN/CHECK OUT TIME OPTIONS-------------------------------------------

@@ -542,6 +542,7 @@ div.invalid_day_popup {
     text-align: center;
     border-radius: 3px;
 }
+
 /*flexible month block in calendar stuff*/
 button.stay_button {
     border-radius: 50px;
@@ -597,6 +598,48 @@ div.month_card_year {
     font-size: 16px;
 }
 
+div.card_menu {
+    display: flex;
+    padding-block-start: 20px;
+    column-gap: 5px;
+    align-items: center;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+button.month_card_left_button {
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #dddddd;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+    display: none;
+    justify-content: center;
+}
+
+    button.month_card_left_button:hover {
+        border: 1px solid black;
+    }
+
+button.month_card_right_button {
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #dddddd;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+    button.month_card_right_button:hover {
+        border: 1px solid black;
+    }
 
 
 
@@ -625,6 +668,39 @@ div.scroll_bar {
     top: 162px;
 }
 
+button.scroll_menu_button_left {
+    background: white;
+    border-radius: 50px;
+    border: 1px solid #dddddd;
+    width: 32px;
+    height: 32px;
+    display: none;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+}
+
+    button.scroll_menu_button_left:hover {
+        border: 1px solid black;
+    }
+
+button.scroll_menu_button_right {
+    background: white;
+    border-radius: 50px;
+    border: 1px solid #dddddd;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 165px;
+    z-index: 2;
+}
+
+    button.scroll_menu_button_right:hover {
+        border: 1px solid black;
+    }
+
 div.scrollmenu {
     display: flex;
     align-items: center;
@@ -637,13 +713,15 @@ div.scrollmenu {
 }
 
     div.scrollmenu a {
+        opacity: 0.65;
         color: black;
         text-align: center;
         text-decoration: none;
+        user-select: none;
     }
 
         div.scrollmenu a:hover {
-            font-weight: bold;
+            opacity: 1;
         }
 
 button.filter {
