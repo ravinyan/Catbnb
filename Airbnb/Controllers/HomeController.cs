@@ -4,7 +4,8 @@ using System.Diagnostics;
 
 namespace Airbnb.Controllers
 {
-	public class HomeController : Controller
+    [Route("/[action]")]
+    public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
 
@@ -13,7 +14,14 @@ namespace Airbnb.Controllers
 			_logger = logger;
 		}
 
-		public IActionResult Index()
+        [Route("~/")]
+		[Route("/home")]
+        public IActionResult Index()
+		{
+			return View();
+		}
+
+		public IActionResult Test()
 		{
 			return View();
 		}

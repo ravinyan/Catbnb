@@ -3861,8 +3861,63 @@ document.addEventListener("click", function(e)
 })
 
 //tetstetening testing test 1 2 3 test
+// maybe useful? https://css-tricks.com/snippets/javascript/get-url-variables/
+//               https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+// /test?banana=pizza42&pineapple=lol
+const queryKey = new Proxy(new URLSearchParams(window.location.search), 
+{
+    get: (key, value) => key.get(value)
+});
+//  referrence how airbnb does their stuff... there is a lof ot that
+//  i should have uh:
+//  array with all keys
+//  read all values from all keys
+//  somehow it will read URI and sort stuff on webpage (might have idea how to do it)
+//  i will just do some of it coz i dont have time to thing of another thing to work on and start working on it
+//  
+//  i think it will need to be ordered as: 
+//  things that are always selected > things optional that might not be in URI query string
+//  tab_id, type_of_stay[homes,experiences], monthly_start_date, monthly_end_date, monthly_length, flexible_trip_length,
+//  > checkin, checkout, flex_date[+- dates], monthly_flex_date[+- dates], adults, children, infants, pets, flexible_trip_months,
+var URIkeysArray = []
+//  i dont understand what does this mean why there is []
+//                          refinement_paths[]=/homes
+var a = decodeURIComponent("refinement_paths%5B%5D=%2Fhomes")
+console.log(a)
+// ?tab_id=home_tab
+// &refinement_paths%5B%5D=%2Fhomes
+// &search_mode=flex_destinations_search
+// &flexible_trip_lengths%5B%5D=one_week
+// &location_search=MIN_MAP_BOUNDS
+// &monthly_start_date=2024-12-01
+// &monthly_length=3
+// &monthly_end_date=2025-03-01
+// &disable_auto_translation=true
+// &price_filter_input_type=0
+// &channel=EXPLORE
+// &date_picker_type=calendar
+// &checkin=2024-11-07
+// &checkout=2024-12-09
+// $adults=1
+// &children=1
+// &infants=1
+// &pets=1
+// &category_tag=Tag%3A7765
+// &search_type=category_change
+var keyArray = []
 
+var arr = ["banana", "pineapple"]
+var arrV = [queryKey[arr[0]], queryKey[arr[1]]]
 
+for (i = 0; i < arrV.length; i++)
+{
+    console.log(arrV[i]);
+}
 
+//  FINAL BOSS 
+function generateQueryStringURI()
+{
 
+}
+//console.log(value)
 
