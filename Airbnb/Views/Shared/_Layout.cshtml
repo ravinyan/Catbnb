@@ -57,7 +57,7 @@
                                 <a class="text-decoration-none href_button" style="color: black" asp-area="" asp-controller="Home" asp-action="Index">Airbnb your home</a>
                             </div>
                             <div class="shadowe">
-                                <button id="GlobeIcon" type="button" class="btn button globe_button" data-bs-toggle="modal" data-bs-target="#ModalSettings">
+                                <button id="GlobeIcon" type="button" class="btn button globe_button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
                                         <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z" />
                                     </svg>
@@ -791,21 +791,14 @@
         </div>
     </footer>
 
-    @* MODAL *@
-    <div id="ModalSettings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
-            <div class="modal-content" style="border-radius:10px;">
-                <partial name="Modal" />
-            </div>
-        </div>
-    </div>
+
 
     @* better modals coz they are mine modals + calendar stuff *@
     <div id="MonthsBlockModalStartDate" class="modal_window" style="display: none">
-        <div class="modal_header">
+        <div class="modal_header" style="display: flex; justify-content: center; padding: 10px;">
             Choose start date
         </div>
-        <div class="modal_body">
+        <div class="modal_body" style="padding: 10px;">
             <div class="shadowe" style="width: 100%; height: 0px">
                 <button id="MonthsBlockMoveStartCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
@@ -865,7 +858,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center;">
+        <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center; padding: 10px; display: flex; justify-content: end;">
             <button id="MonthsBlockSaveStartDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
                 Save
             </button>
@@ -873,10 +866,10 @@
     </div>
 
     <div id="MonthsBlockModalEndDate" class="modal_window" style="display: none">
-        <div class="modal_header">
+        <div class="modal_header" style="display: flex; justify-content: center; padding: 10px;">
             Choose end date
         </div>
-        <div class="modal_body">
+        <div class="modal_body" style="padding: 10px;">
             <div class="shadowe" style="width: 100%; height: 0px">
                 <button id="MonthsBlockMoveEndCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
@@ -936,7 +929,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center;">
+        <div class="modal_footer" style="border-top: 1px solid #ebebeb; width: 100%; align-self: center; padding: 10px; display: flex; justify-content: end;">
             <button id="MonthsBlockSaveEndDate" type="button" style="width: 110px; height: 45px; border-radius: 10px; background: black; color: white; align-items: center; display: flex; justify-content: center">
                 Save
             </button>
@@ -948,6 +941,256 @@
     <div id="MonthsBlockInvalidDayPopup" class="invalid_day_popup shadow-lg">
         28-night minimum
     </div>
+
+    @* currencies/language modal *@
+    <div id="LanguageRegionCurrencyModal" class="modal_window" style="display: none">
+        <div class="modal_header" style="padding: 0px 10px; border: 0.5px solid #dddddd">
+            <div class="shadowe" style="display: flex">
+                <button id="ModalLanguageAndRegionButton" type="button" class="btn button" style="margin: 5px; width: 190px;">
+                    Language and region
+                </button>
+                <button id="ModalCurrenciesButton" type="button" class="btn button" style="margin: 5px">
+                    Currency
+                </button>
+            </div>
+        </div>
+        <div class="modal_body" style="padding: 10px;">
+            <div id="LanguageAndRegion">
+                <div style="position: relative">
+                    <div style="display: flex; justify-content: center; width: 325px">
+                        <img src="~/img/Aldentge.webp" width="500px" />
+                        <div style="position: absolute; -webkit-text-stroke: 0.7px white; font-size: 20px; font-weight: 900">
+                            languages fear me, currencies fear me, regions turn their eyes away from me, as i walk, no translator dare make a sound in my presence
+                            <br /> i am alone on this barren earth
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Currencies" style="display: none">
+                <div style="position: relative">
+                    <div style="display: flex; justify-content: center; width: 325px; justify-content: end">
+                        <img src="~/img/Aldentge.webp" width="500px" />
+                        <div style="position: absolute; -webkit-text-stroke: 0.7px white; font-size: 20px; font-weight: 900">
+                            languages fear me, currencies fear me, regions turn their eyes away from me, as i walk, no translator dare make a sound in my presence
+                            <br /> i am alone on this barren earth
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="LanguageRegionCurrencyModalBackground" class="modal_background"></div>
+
+    @* filter modal *@
+    <div id="FilterButtonModal" class="modal_window_s" style="display: none">
+        <div class="modal_header" style="padding: 10px 10px; border-block-end: 0.5px solid #dddddd">
+            Filters
+        </div>
+        <div class="modal_body">
+            <div class="filter_button_box">
+                <div style="padding-block-end: 20px; font-size: 20px; font-weight: 600">
+                    Type of place
+                </div>
+                <div style="display: grid; grid-auto-flow: column; border-radius: 20px; border: 0.5px solid #dddddd; height: 50px;">
+                    <div style="padding: 5px; display:flex; justify-content:space-between">
+                        <button class="type_of_place_button" >
+                            a
+                        </button>
+                        <button class="type_of_place_button" >
+                            a
+                        </button>
+                        <button class="type_of_place_button" >
+                            a
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div style="padding-block-end: 5px; font-size: 20px; font-weight: 600">
+                    Price range
+                </div>
+                <div style="padding-block-end: 15px; font-size: 14px; font-weight: 500">
+                    Nightly prices including fees and taxes
+                </div>
+                <div>
+                    buttons
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div style="padding-block-end: 20px; font-size: 20px; font-weight: 600">
+                    Rooms and beds
+                </div>
+                <div class="rooms_and_beds">
+                    <div class="rooms_and_beds_text_box">
+                        Bedrooms
+                    </div>
+                    <div class="rooms_and_beds_button_box">
+                        <button class="rooms_and_beds_minus_button">
+                            -
+                        </button>
+                        <div style="padding: 0px 20px;"> Any </div>
+                        <button class="rooms_and_beds_plus_button">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="rooms_and_beds">
+                    <div class="rooms_and_beds_text_box">
+                        Beds
+                    </div>
+                    <div class="rooms_and_beds_button_box">
+                        <button class="rooms_and_beds_minus_button">
+                            -
+                        </button>
+                        <div style="padding: 0px 20px;"> Any </div>
+                        <button class="rooms_and_beds_plus_button">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="rooms_and_beds">
+                    <div class="rooms_and_beds_text_box">
+                        Bathrooms
+                    </div>
+                    <div class="rooms_and_beds_button_box">
+                        <button class="rooms_and_beds_minus_button">
+                            -
+                        </button>
+                        <div style="padding: 0px 20px;"> Any </div>
+                        <button class="rooms_and_beds_plus_button">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div style="padding-block-end: 20px; font-size: 20px; font-weight: 600">
+                    Amenities
+                </div>
+                @* show less info *@
+                <div>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wifi" viewBox="0 0 16 16">
+                            <path d="M15.384 6.115a.485.485 0 0 0-.047-.736A12.44 12.44 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.52.52 0 0 0 .668.05A11.45 11.45 0 0 1 8 4c2.507 0 4.827.802 6.716 2.164.205.148.49.13.668-.049" />
+                            <path d="M13.229 8.271a.482.482 0 0 0-.063-.745A9.46 9.46 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.576 1.336c.206.132.48.108.653-.065m-2.183 2.183c.226-.226.185-.605-.1-.75A6.5 6.5 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.407.19.611.09A5.5 5.5 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.61-.091zM9.06 12.44c.196-.196.198-.52-.04-.66A2 2 0 0 0 8 11.5a2 2 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .707 0l.707-.707z" />
+                        </svg>
+                        Wifi
+                    </button>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="60" fill="currentColor" class="bi bi-snow" viewBox="0 0 64 64">
+                            <path d="M16,0c-8.837,0 -16,7.163 -16,16l0,187.643c0,7.328 0.667,13.595 2,18.802c1.333,5.207 2.917,9.305 4.75,12.294c1.833,2.989 4.5,5.641 8,7.955c3.5,2.314 6.583,3.953 9.25,4.917c2.667,0.965 6.542,2.266 11.625,3.905c2.399,0.774 5.771,1.515 8.997,2.224c1.163,0.256 2.306,0.507 3.378,0.754l0,225.506c0,17.673 14.327,32 32,32c17.673,0 32,-14.327 32,-32l0,-225.506c1.072,-0.247 2.215,-0.499 3.377,-0.754c3.227,-0.709 6.599,-1.45 8.998,-2.224c5.083,-1.639 8.958,-2.94 11.625,-3.905c2.667,-0.964 5.75,-2.603 9.25,-4.917c3.5,-2.314 6.167,-4.966 8,-7.955c1.833,-2.989 3.417,-7.087 4.75,-12.294c1.333,-5.207 2,-11.474 2,-18.802l0,-187.643c0,-8.837 -7.163,-16 -16,-16c-8.837,0 -16,7.163 -16,16l0,128c0,8.837 -7.163,16 -16,16c-8.837,0 -16,-7.163 -16,-16l0,-128c0,-8.837 -7.163,-16 -16,-16c-8.837,0 -16,7.163 -16,16l0,128c0,8.837 -7.163,16 -16,16c-8.837,0 -16,-7.163 -16,-16l0,-128c0,-8.837 -7.163,-16 -16,-16Zm304,18.286l0,267.143c0,0.458 -0.007,0.913 -0.022,1.364c0.015,0.4 0.022,0.803 0.022,1.207l0,192c0,17.673 -14.327,32 -32,32c-17.673,0 -32,-14.327 -32,-32l0,-160l-69.266,0c-2.41,0 -4.449,-0.952 -6.118,-2.857c-3.523,-3.619 -3.377,-8.286 0.887,-32.286c0.741,-4.762 2.178,-14.428 4.31,-29c2.133,-14.571 4.126,-28.19 5.98,-40.857c1.854,-12.667 4.449,-28.048 7.787,-46.143c3.337,-18.095 6.767,-34.428 10.29,-49c3.522,-14.571 7.926,-29.619 13.21,-45.143c5.284,-15.523 10.8,-28.476 16.547,-38.857c5.748,-10.381 12.515,-18.952 20.302,-25.714c7.787,-6.762 15.945,-10.143 24.473,-10.143l17.799,0c4.821,0 8.992,1.81 12.515,5.429c3.523,3.619 5.284,7.904 5.284,12.857Z" />
+                        </svg>
+                        Kitchen
+                    </button>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-snow" viewBox="0 0 32 32">
+                            <path d="m30 0v32h-28v-32zm-2 2h-24v28h24zm-12 7c4.9705627 0 9 4.0294373 9 9s-4.0294373 9-9 9-9-4.0294373-9-9 4.0294373-9 9-9zm1.6191294 9.2041076-.9139027.5450178c-.0774325.0451433-.1491358.0859889-.2204777.1255279-2.1296572 1.1802953-4.2113688 1.457414-7.32039095.6348714.68925461 3.1405744 3.48802385 5.4904753 6.83564195 5.4904753 3.7325437 0 6.7827633-2.9213766 6.9888958-6.6023667-2.2389342-1.3114944-3.5669567-1.2221884-5.3697664-.1935257zm-1.6191294-7.2041076c-3.6612267 0-6.66595424 2.8108067-6.97398042 6.3922177 2.99655382.911043 4.68252672.7344381 6.48923142-.266871l.8778954-.5212828c2.1249867-1.2674765 3.9589824-1.6019284 6.3207164-.5859062-.8526236-2.9004507-3.5359347-5.0181577-6.7138628-5.0181577zm9-6v2h-4v-2z" />
+                        </svg>
+                        Washer
+                    </button>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-snow" viewBox="0 0 16 16">
+                            <path d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793V8.866l-3.4 1.963-.496 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.884-.237a.5.5 0 1 1 .26-.966l1.848.495L7 8 3.6 6.037l-1.85.495a.5.5 0 0 1-.258-.966l.883-.237-1.12-.646a.5.5 0 1 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849L7.5 7.134V3.207L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 1 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v3.927l3.4-1.963.496-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495L9 8l3.4 1.963 1.849-.495a.5.5 0 0 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-3.4-1.963v3.927l1.353 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5z" />
+                        </svg>
+                        Dryer
+                    </button>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-snow" viewBox="0 0 16 16">
+                            <path d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793V8.866l-3.4 1.963-.496 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.884-.237a.5.5 0 1 1 .26-.966l1.848.495L7 8 3.6 6.037l-1.85.495a.5.5 0 0 1-.258-.966l.883-.237-1.12-.646a.5.5 0 1 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849L7.5 7.134V3.207L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 1 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v3.927l3.4-1.963.496-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495L9 8l3.4 1.963 1.849-.495a.5.5 0 0 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-3.4-1.963v3.927l1.353 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5z" />
+                        </svg>
+                        Air conditioning
+                    </button>
+                    <button class="amenities_button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-sun" viewBox="0 0 16 16">
+                            <path d="M5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585A1.5 1.5 0 0 1 5 12.5" />
+                            <path d="M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1m5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5m4.243 1.757a.5.5 0 0 1 0 .707l-.707.708a.5.5 0 1 1-.708-.708l.708-.707a.5.5 0 0 1 .707 0M8 5.5a.5.5 0 0 1 .5-.5 3 3 0 1 1 0 6 .5.5 0 0 1 0-1 2 2 0 0 0 0-4 .5.5 0 0 1-.5-.5M12.5 8a.5.5 0 0 1 .5-.5h1a.5.5 0 1 1 0 1h-1a.5.5 0 0 1-.5-.5m-1.172 2.828a.5.5 0 0 1 .708 0l.707.708a.5.5 0 0 1-.707.707l-.708-.707a.5.5 0 0 1 0-.708M8.5 12a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5" />
+                        </svg>
+                        Heating
+                    </button>
+                </div>
+                @* show show more info *@
+                <div style="display: none">
+                    <div>
+                        <div>
+                            Essentials
+                        </div>
+                        <div>
+                            buttons
+                        </div>
+                        <div>
+                            Features
+                        </div>
+                        <div>
+                            buttons
+                        </div>
+                        <div>
+                            Location
+                        </div>
+                        <div>
+                            buttons
+                        </div>
+                        <div>
+                            Safe
+                        </div>
+                        <div>
+                            buttons
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div>
+                    Booking options
+                </div>
+                <div>
+                    buttons
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div>
+                    Standout stays
+                </div>
+                <div>
+                    buttons
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div>
+                    Property type
+                </div>
+                <div>
+                    dropdown
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div>
+                    Accessibility features
+                </div>
+                <div>
+                    dropdown
+                </div>
+            </div>
+            <div class="filter_button_box">
+                <div>
+                    Host language
+                </div>
+                <div>
+                    dropdown
+                </div>
+            </div>
+        </div>
+        <div class="modal_footer">
+            <button>
+                Clear All
+            </button>
+            <button>
+                Show X places
+            </button>
+        </div>
+    </div>
+
+    <div id="FilterButtonModalBackground" class="modal_background"></div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

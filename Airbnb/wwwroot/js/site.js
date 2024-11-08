@@ -87,7 +87,7 @@ function headerScaling()
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
---------------------------------------------------SCROLL MENU BUTTONS-------------------------------------------------
+---------------------------------------------SCROLL MENU BUTTONS + FILTER---------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
@@ -120,8 +120,6 @@ function generateScrollMenuCards(array)
 
 generateScrollMenuCards(scrollMenuCards);
 
-//  done it now coz i want to chill with stuff coz having headache... 
-//  learning so much stuff about programming and my brain is overloaded with information for months lol
 function categoriesMenu()
 {
     var scrollValue = 0;
@@ -162,6 +160,22 @@ function categoriesMenu()
 
 categoriesMenu();
 
+const filterButton = document.getElementById("FilterButton");
+const filterButtonModal = document.getElementById("FilterButtonModal");
+const filterButtonModalBackground = document.getElementById("FilterButtonModalBackground");
+
+filterButton.onclick = function()
+{
+    filterButtonModal.style.display = "block";
+    filterButtonModalBackground.style.display = "block";
+}
+
+filterButtonModalBackground.onclick = function()
+{
+    filterButtonModal.style.display = "none";
+    filterButtonModalBackground.style.display = "none";
+}
+
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
@@ -193,20 +207,39 @@ experiencesMenuButton.onclick = function()
 /*--------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------LANGUAGE AND CURRENCIES MODAL--------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
+const globeIcon = document.getElementById("GlobeIcon");
+const languageRegionCurrencyModal = document.getElementById("LanguageRegionCurrencyModal");
+const languageRegionCurrencyModalBackground = document.getElementById("LanguageRegionCurrencyModalBackground");
 const languagesButton = document.getElementById("ModalLanguageAndRegionButton");
 const currenciesButton = document.getElementById("ModalCurrenciesButton");
 
 const languages = document.getElementById("LanguageAndRegion");
 const currencies = document.getElementById("Currencies");
 
+globeIcon.onclick = function()
+{
+    languageRegionCurrencyModal.style.display = "block";
+    languageRegionCurrencyModalBackground.style.display = "block";
+}
+
+languageRegionCurrencyModalBackground.onclick = function()
+{
+    languageRegionCurrencyModalBackground.style.display = "none";
+    languageRegionCurrencyModal.style.display = "none";
+}
+
 languagesButton.onclick = function()
 {
+    languagesButton.style.fontWeight = "600";
+    currenciesButton.style.fontWeight = "";
     languages.style.display = "block";
     currencies.style.display = "none";
 }
 
 currenciesButton.onclick = function()
 {
+    languagesButton.style.fontWeight = "";
+    currenciesButton.style.fontWeight = "600";
     currencies.style.display = "block";
     languages.style.display = "none";
 }

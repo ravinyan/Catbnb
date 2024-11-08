@@ -466,6 +466,24 @@ div.modal_window {
     max-height: calc(100vh - 130px);
 }
 
+div.modal_window_s {
+    display: none;
+    position: absolute;
+    width: 600px;
+    height: 450px;
+    left: calc(50% - 300px);
+    top: 70px;
+    background: white;
+    z-index: 1000;
+    animation: openModal 0.2s;
+    opacity: 1;
+    border-radius: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    max-height: calc(100vh - 130px);
+}
+
 div.modal_background {
     position: fixed;
     left: 0px;
@@ -483,27 +501,19 @@ div.modal_background {
 
 div.modal_header {
     width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
+    height: auto;
     font-size: 22px;
     font-weight: 600;
-    padding: 15px;
 }
 
 div.modal_body {
     width: 100%;
     height: auto;
-    padding: 15px;
 }
 
 div.modal_footer {
     width: 100%;
-    height: 20%;
-    padding: 15px;
-    display: flex;
-    justify-content: end;
-    align-items: center;
+    height: auto;
 }
 
 /*this is cool wtf*/
@@ -728,4 +738,66 @@ button.filter {
     min-width: 100px;
     min-height: 50px;
     border-radius: 15px;
+}
+
+/* idk */
+div.filter_button_box {
+    border-block-end: 0.5px solid #dddddd;
+    padding: 25px;
+}
+
+button.type_of_place_button {
+    border: none;
+    border-radius: 10px;
+    background: white;
+    padding: 5px;
+    border:1px solid white;
+    width: 33%;
+}
+
+div.rooms_and_beds {
+    display: flex;
+    padding: 10px 0px;
+}
+
+div.rooms_and_beds_text_box {
+    display: flex;
+    width: 80%;
+}
+
+div.rooms_and_beds_button_box {
+    display: flex;
+}
+
+button.rooms_and_beds_plus_button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #dddddd;
+    display: flex;
+    justify-content: center;
+}
+
+    button.rooms_and_beds_plus_button:hover {
+        border: 1px solid black;
+    }
+
+button.rooms_and_beds_minus_button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #dddddd;
+    display: flex;
+    justify-content: center;
+}
+
+    button.rooms_and_beds_minus_button:hover {
+        border: 1px solid black;
+    }
+
+button.amenities_button {
+    height: 50px;
+    
 }
