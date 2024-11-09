@@ -176,6 +176,96 @@ filterButtonModalBackground.onclick = function()
     filterButtonModalBackground.style.display = "none";
 }
 
+//  type of place
+const filterButtonAnyType = document.getElementById("FilterButtonAnyType");
+const filterButtonRoom = document.getElementById("FilterButtonRoom");
+const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome");
+
+//  price range
+
+//  rooms and beds
+const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
+const filterButtonIncrementBedrooms = document.getElementById("FilterButtonIncrementBedrooms");
+const filterButtonBedroomsCount = document.getElementById("FilterButtonBedroomsCount");
+      
+const filterButtonDecrementBeds = document.getElementById("FilterButtonDecrementBeds");
+const filterButtonIncrementBeds = document.getElementById("FilterButtonIncrementBeds");
+const filterButtonBedsCount = document.getElementById("FilterButtonBedsCount");
+      
+const filterButtonDecrementBathrooms = document.getElementById("FilterButtonDecrementBathrooms");
+const filterButtonIncrementBathrooms = document.getElementById("FilterButtonIncrementBathrooms");
+const filterButtonBathroomsCount = document.getElementById("FilterButtonBathroomsCount");
+
+//  amenities
+const filterModalAmenitiesMore = document.getElementById("FilterModalAmenitiesMore");
+const filterModalAmenitiesLess = document.getElementById("FilterModalAmenitiesLess");
+const filterModalShowMoreAmenities = document.getElementById("FilterModalShowMoreAmenities");
+const filterModalShowLessAmenities = document.getElementById("FilterModalShowLessAmenities");
+
+filterModalShowMoreAmenities.onclick = function()
+{
+    filterModalAmenitiesLess.style.display = "none";
+    filterModalAmenitiesMore.style.display = "block";
+}
+
+filterModalShowLessAmenities.onclick = function()
+{
+    filterModalAmenitiesMore.style.display = "none";
+    filterModalAmenitiesLess.style.display = "block";
+}
+
+//  booking options
+
+//  standout stays
+const filterButtonStandoutStays = document.getElementById("FilterButtonStandoutStays");
+
+//  property type / accessibility features / host language
+const filterButtonPropertyTypeDropdown = document.getElementById("FilterButtonPropertyTypeDropdown");
+const filterButtonPropertyTypeDropdownMenu = document.getElementById("FilterButtonPropertyTypeDropdownMenu");
+
+const filterButtonAccessibilityFeaturesDropdown = document.getElementById("FilterButtonAccessibilityFeaturesDropdown");
+const filterButtonAccessibilityFeaturesDropdownMenu = document.getElementById("FilterButtonAccessibilityFeaturesDropdownMenu");
+
+const filterButtonHostLanguageDropdown = document.getElementById("FilterButtonHostLanguageDropdown");
+const filterButtonHostLanguageDropdownMenu = document.getElementById("FilterButtonHostLanguageDropdownMenu");
+
+var alternatePropertyDropdown = true;
+var alternateAccessibilityDropdown = true;
+var alternateHostDropdown = true;
+
+function filterButtonOpenDropdown(dropdown, menu, alternator)
+{
+    dropdown.onclick = function()
+    {
+        if (alternator == true)
+        {
+            dropdown.childNodes[3].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                                                </svg>`
+            
+            menu.style.display = "block";
+            alternator = false;
+        }
+        else if (alternator == false)
+        {
+            dropdown.childNodes[3].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                                </svg>`
+            
+            menu.style.display = "none";
+            alternator = true;
+        }
+    }
+}
+
+filterButtonOpenDropdown(filterButtonPropertyTypeDropdown, filterButtonPropertyTypeDropdownMenu, alternatePropertyDropdown);
+filterButtonOpenDropdown(filterButtonAccessibilityFeaturesDropdown, filterButtonAccessibilityFeaturesDropdownMenu, alternateAccessibilityDropdown);
+filterButtonOpenDropdown(filterButtonHostLanguageDropdown, filterButtonHostLanguageDropdownMenu, alternateHostDropdown);
+
+// last thingy footer
+const filterButtonClearAll = document.getElementById("FilterButtonClearAll"); 
+const filterButtonShowPlaces = document.getElementById("FilterButtonShowPlaces"); 
+
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/

@@ -740,10 +740,16 @@ button.filter {
     border-radius: 15px;
 }
 
-/* idk */
+/* filter modal */
 div.filter_button_box {
     border-block-end: 0.5px solid #dddddd;
     padding: 25px;
+}
+
+div.filter_section_title {
+    padding-block-end: 20px;
+    font-size: 21px;
+    font-weight: 600;
 }
 
 button.type_of_place_button {
@@ -753,7 +759,12 @@ button.type_of_place_button {
     padding: 5px;
     border:1px solid white;
     width: 33%;
+    font-size: 14px;
 }
+
+    button.type_of_place_button:hover {
+        background: #E8E8E8;
+    }
 
 div.rooms_and_beds {
     display: flex;
@@ -797,7 +808,69 @@ button.rooms_and_beds_minus_button {
         border: 1px solid black;
     }
 
+div.amenities_title {
+    margin-block-start: 20px;
+    padding-block-end: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
 button.amenities_button {
     height: 50px;
-    
+    background: white;
+    border-radius: 50px;
+    border: 1px solid #dddddd;
+    margin-block-end: 10px;
+    margin-inline-end: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0px 14px;
 }
+
+    button.amenities_button:hover {
+        border: 1px solid black;
+    }
+
+div.amenities_button_text {
+    font-size: 14px;
+}
+
+button.standout_stays_button {
+    height: 100px;
+    width: 250px;
+    background: white;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+    button.standout_stays_button:hover {
+        border: 1px solid black;
+    }
+
+button.filter_clear_button {
+    background: white;
+    border: none;
+    border-radius: 10px;
+}
+
+    button.filter_clear_button:hover {
+        background: #E8E8E8;
+    }
+
+button.filter_show_places_button {
+    background: #2f2f2f;
+    border: 1px solid #2f2f2f;
+    width: auto;
+    color: white;
+    height: 50px;
+    border-radius: 10px;
+}
+
+    button.filter_show_places_button:hover {
+        background: black;
+    }
+
+
+
