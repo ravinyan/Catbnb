@@ -187,11 +187,9 @@ const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome")
 const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
 const filterButtonIncrementBedrooms = document.getElementById("FilterButtonIncrementBedrooms");
 const filterButtonBedroomsCount = document.getElementById("FilterButtonBedroomsCount");
-      
 const filterButtonDecrementBeds = document.getElementById("FilterButtonDecrementBeds");
 const filterButtonIncrementBeds = document.getElementById("FilterButtonIncrementBeds");
 const filterButtonBedsCount = document.getElementById("FilterButtonBedsCount");
-      
 const filterButtonDecrementBathrooms = document.getElementById("FilterButtonDecrementBathrooms");
 const filterButtonIncrementBathrooms = document.getElementById("FilterButtonIncrementBathrooms");
 const filterButtonBathroomsCount = document.getElementById("FilterButtonBathroomsCount");
@@ -201,25 +199,107 @@ const filterModalAmenitiesMore = document.getElementById("FilterModalAmenitiesMo
 const filterModalAmenitiesLess = document.getElementById("FilterModalAmenitiesLess");
 const filterModalShowMoreAmenities = document.getElementById("FilterModalShowMoreAmenities");
 const filterModalShowLessAmenities = document.getElementById("FilterModalShowLessAmenities");
+const filterButtonAmenitiesEssentialsTitle = document.getElementById("FilterButtonAmenitiesEssentialsTitle");
 
 filterModalShowMoreAmenities.onclick = function()
 {
-    filterModalAmenitiesLess.style.display = "none";
+    filterModalShowMoreAmenities.style.display = "none";
+    filterButtonAmenitiesEssentialsTitle.style.display = "block";
     filterModalAmenitiesMore.style.display = "block";
 }
 
 filterModalShowLessAmenities.onclick = function()
 {
+    filterModalShowMoreAmenities.style.display = "block";
+    filterButtonAmenitiesEssentialsTitle.style.display = "none";
     filterModalAmenitiesMore.style.display = "none";
-    filterModalAmenitiesLess.style.display = "block";
 }
 
+// amenities buttons... lots of them!
+const filterButtonAmenitiesWifi = document.getElementById("FilterButtonAmenitiesWifi");
+const filterButtonAmenitiesKitchen = document.getElementById("FilterButtonAmenitiesKitchen");
+const filterButtonAmenitiesWasher = document.getElementById("FilterButtonAmenitiesWasher");
+const filterButtonAmenitiesDryer = document.getElementById("FilterButtonAmenitiesDryer");
+const filterButtonAmenitiesAirConditioning = document.getElementById("FilterButtonAmenitiesAirConditioning");
+const filterButtonAmenitiesHeating = document.getElementById("FilterButtonAmenitiesHeating");
+const filterButtonAmenitiesDedicatedWorkspace = document.getElementById("FilterButtonAmenitiesDedicatedWorkspace");
+const filterButtonAmenitiesTV = document.getElementById("FilterButtonAmenitiesTV");
+const filterButtonAmenitiesHairDryer = document.getElementById("FilterButtonAmenitiesHairDryer");
+const filterButtonAmenitiesIron = document.getElementById("FilterButtonAmenitiesIron");
+const filterButtonAmenitiesPool = document.getElementById("FilterButtonAmenitiesPool");
+const filterButtonAmenitiesHotTub = document.getElementById("FilterButtonAmenitiesHotTub");
+const filterButtonAmenitiesFreeParking = document.getElementById("FilterButtonAmenitiesFreeParking");
+const filterButtonAmenitiesEVCharger = document.getElementById("FilterButtonAmenitiesEVCharger");
+const filterButtonAmenitiesCrib = document.getElementById("FilterButtonAmenitiesCrib");
+const filterButtonAmenitiesKingBed = document.getElementById("FilterButtonAmenitiesKingBed");
+const filterButtonAmenitiesGym = document.getElementById("FilterButtonAmenitiesGym");
+const filterButtonAmenitiesBBQGrill = document.getElementById("FilterButtonAmenitiesBBQGrill");
+const filterButtonAmenitiesBreakfast = document.getElementById("FilterButtonAmenitiesBreakfast");
+const filterButtonAmenitiesIndoorFireplace = document.getElementById("FilterButtonAmenitiesIndoorFireplace");
+const filterButtonAmenitiesSmokingAllowed = document.getElementById("FilterButtonAmenitiesSmokingAllowed");
+const filterButtonAmenitiesBeachfront = document.getElementById("FilterButtonAmenitiesBeachfront");
+const filterButtonAmenitiesWaterfront = document.getElementById("FilterButtonAmenitiesWaterfront");
+const filterButtonAmenitiesSkiInSkiOut = document.getElementById("FilterButtonAmenitiesSkiInSkiOut");
+const filterButtonAmenitiesSmokeAlarm = document.getElementById("FilterButtonAmenitiesSmokeAlarm");
+const filterButtonAmenitiesCarbonMonoxideAlarm = document.getElementById("FilterButtonAmenitiesCarbonMonoxideAlarm");
+
+filterButtonAmenitiesWifi.onclick = function()
+{
+    console.log("bop the snot")
+}
+
+
 //  booking options
+const FilterButtonBookingInstantBook = document.getElementById("FilterButtonBookingInstantBook");
+const FilterButtonBookingSelfCheckin = document.getElementById("FilterButtonBookingSelfCheckin");
+const FilterButtonBookingAllowPets = document.getElementById("FilterButtonBookingAllowPets");
 
 //  standout stays
 const filterButtonStandoutStays = document.getElementById("FilterButtonStandoutStays");
 
-//  property type / accessibility features / host language
+//  property type
+const FilterButtonPropertyTypeHouse = document.getElementById("FilterButtonPropertyTypeHouse");
+const FilterButtonPropertyTypeApartment = document.getElementById("FilterButtonPropertyTypeApartment");
+const FilterButtonPropertyTypeGuesthouse = document.getElementById("FilterButtonPropertyTypeGuesthouse");
+const FilterButtonPropertyTypeHotel = document.getElementById("FilterButtonPropertyTypeHotel");
+
+//  accessibility features
+//const q = document.getElementById("");
+//const w = document.getElementById("");
+//const e = document.getElementById("");
+//const r = document.getElementById("");
+//const t = document.getElementById("");
+//const y = document.getElementById("");
+//const u = document.getElementById("");
+//const i = document.getElementById("");
+//const o = document.getElementById("");
+//const p = document.getElementById("");
+//const a = document.getElementById("");
+//const s = document.getElementById("");
+//const d = document.getElementById("");
+
+const lole = document.getElementById("lole");
+
+console.log(lole.checked)
+
+lole.onclick = function()
+{
+    if (lole.checked == true)
+    {
+        lole.parentElement.style.background = "black";
+        lole.parentElement.style.border = "1px solid black";
+    }
+    else if (lole.checked == false)
+    {
+        lole.parentElement.style.background = "white";
+        lole.parentElement.style.border = "1px solid #dddddd";
+    }
+    
+    console.log(lole.checked)
+}
+//  host language
+
+//  property type / accessibility features / host language dropdowns
 const filterButtonPropertyTypeDropdown = document.getElementById("FilterButtonPropertyTypeDropdown");
 const filterButtonPropertyTypeDropdownMenu = document.getElementById("FilterButtonPropertyTypeDropdownMenu");
 
@@ -4005,8 +4085,8 @@ const queryKey = new Proxy(new URLSearchParams(window.location.search),
 var URIkeysArray = []
 //  i dont understand what does this mean why there is []
 //                          refinement_paths[]=/homes
-var a = decodeURIComponent("refinement_paths%5B%5D=%2Fhomes")
-console.log(a)
+var testingbananaman = decodeURIComponent("refinement_paths%5B%5D=%2Fhomes")
+console.log(testingbananaman)
 // ?tab_id=home_tab
 // &refinement_paths%5B%5D=%2Fhomes
 // &search_mode=flex_destinations_search

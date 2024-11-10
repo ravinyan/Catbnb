@@ -872,5 +872,37 @@ button.filter_show_places_button {
         background: black;
     }
 
+div.filter_checkbox_section_title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-block-start: 20px;
+    padding: 5px 0px;
+}
+
+div.filter_checkbox_box {
+    display: flex;
+    padding: 8px 0px;
+    align-items: center;
+}
+
+label.filter_checkbox_box {
+    display: flex;
+    padding: 8px 0px;
+    align-items: center;
+}
+
+
+span.filter_checkbox {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #dddddd;
+    margin-inline-end: 8px;
+    border-radius: 5px;
+}
+
+    span.filter_checkbox:hover {
+        border: 1px solid black;
+    }
+
 
 
