@@ -250,53 +250,199 @@ filterButtonAmenitiesWifi.onclick = function()
 
 
 //  booking options
-const FilterButtonBookingInstantBook = document.getElementById("FilterButtonBookingInstantBook");
-const FilterButtonBookingSelfCheckin = document.getElementById("FilterButtonBookingSelfCheckin");
-const FilterButtonBookingAllowPets = document.getElementById("FilterButtonBookingAllowPets");
+const filterButtonBookingInstantBook = document.getElementById("FilterButtonBookingInstantBook");
+const filterButtonBookingSelfCheckin = document.getElementById("FilterButtonBookingSelfCheckin");
+const filterButtonBookingAllowPets = document.getElementById("FilterButtonBookingAllowPets");
 
 //  standout stays
 const filterButtonStandoutStays = document.getElementById("FilterButtonStandoutStays");
 
 //  property type
-const FilterButtonPropertyTypeHouse = document.getElementById("FilterButtonPropertyTypeHouse");
-const FilterButtonPropertyTypeApartment = document.getElementById("FilterButtonPropertyTypeApartment");
-const FilterButtonPropertyTypeGuesthouse = document.getElementById("FilterButtonPropertyTypeGuesthouse");
-const FilterButtonPropertyTypeHotel = document.getElementById("FilterButtonPropertyTypeHotel");
+const filterButtonPropertyTypeHouse = document.getElementById("FilterButtonPropertyTypeHouse");
+const filterButtonPropertyTypeApartment = document.getElementById("FilterButtonPropertyTypeApartment");
+const filterButtonPropertyTypeGuesthouse = document.getElementById("FilterButtonPropertyTypeGuesthouse");
+const filterButtonPropertyTypeHotel = document.getElementById("FilterButtonPropertyTypeHotel");
 
 //  accessibility features
-//const q = document.getElementById("");
-//const w = document.getElementById("");
-//const e = document.getElementById("");
-//const r = document.getElementById("");
-//const t = document.getElementById("");
-//const y = document.getElementById("");
-//const u = document.getElementById("");
-//const i = document.getElementById("");
-//const o = document.getElementById("");
-//const p = document.getElementById("");
-//const a = document.getElementById("");
-//const s = document.getElementById("");
-//const d = document.getElementById("");
+const filterButtonAccessibilityFeaturesGuest1 = document.getElementById("FilterButtonAccessibilityFeaturesGuest1");
+const filterButtonAccessibilityFeaturesGuest2 = document.getElementById("FilterButtonAccessibilityFeaturesGuest2");
+const filterButtonAccessibilityFeaturesGuest3 = document.getElementById("FilterButtonAccessibilityFeaturesGuest3");
+const filterButtonAccessibilityFeaturesGuest4 = document.getElementById("FilterButtonAccessibilityFeaturesGuest4");
+const filterButtonAccessibilityFeaturesBedroom1 = document.getElementById("FilterButtonAccessibilityFeaturesBedroom1");
+const filterButtonAccessibilityFeaturesBedroom2 = document.getElementById("FilterButtonAccessibilityFeaturesBedroom2");
+const filterButtonAccessibilityFeaturesBathroom1 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom1");
+const filterButtonAccessibilityFeaturesBathroom2 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom2");
+const filterButtonAccessibilityFeaturesBathroom3 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom3");
+const filterButtonAccessibilityFeaturesBathroom4 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom4");
+const filterButtonAccessibilityFeaturesBathroom5 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom5");
+const filterButtonAccessibilityFeaturesBathroom6 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom6");
+const filterButtonAccessibilityFeaturesAdaptiveEquipment1 = document.getElementById("FilterButtonAccessibilityFeaturesAdaptiveEquipment1");
 
-const lole = document.getElementById("lole");
-
-console.log(lole.checked)
-
-lole.onclick = function()
+function filterButtonAccessibilityCheckboxes(checkbox)
 {
-    if (lole.checked == true)
+    checkbox.onclick = function()
     {
-        lole.parentElement.style.background = "black";
-        lole.parentElement.style.border = "1px solid black";
-    }
-    else if (lole.checked == false)
-    {
-        lole.parentElement.style.background = "white";
-        lole.parentElement.style.border = "1px solid #dddddd";
-    }
+        if (checkbox.checked == true)
+        {
+            checkbox.parentElement.childNodes[3].style.background = "black";
+            checkbox.parentElement.childNodes[3].childNodes[1].style.display = "block"
+        }
+        else if (checkbox.checked == false)
+        {
+            checkbox.parentElement.childNodes[3].style.background = "white";
+            checkbox.parentElement.childNodes[3].childNodes[1].style.display = "none"
+        }
     
-    console.log(lole.checked)
+        console.log(
+`\n1GU. ${filterButtonAccessibilityFeaturesGuest1.checked}
+2GU. ${filterButtonAccessibilityFeaturesGuest2.checked}
+3GU. ${filterButtonAccessibilityFeaturesGuest3.checked}
+4GU. ${filterButtonAccessibilityFeaturesGuest4.checked}
+1BD. ${filterButtonAccessibilityFeaturesBedroom1.checked}
+2BD. ${filterButtonAccessibilityFeaturesBedroom2.checked}
+1BT. ${filterButtonAccessibilityFeaturesBathroom1.checked}
+2BT. ${filterButtonAccessibilityFeaturesBathroom2.checked}
+3BT. ${filterButtonAccessibilityFeaturesBathroom3.checked}
+4BT. ${filterButtonAccessibilityFeaturesBathroom4.checked}
+5BT. ${filterButtonAccessibilityFeaturesBathroom5.checked}
+6BT. ${filterButtonAccessibilityFeaturesBathroom6.checked}
+1AQ. ${filterButtonAccessibilityFeaturesAdaptiveEquipment1.checked}`)
+    }
 }
+
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest1);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest2);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest3);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest4);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBedroom1);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBedroom2);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom1);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom2);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom3);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom4);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom5);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom6);
+filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesAdaptiveEquipment1);
+
+//  host language oh boi thats a lot of ids LMAO
+const filterButtonHostLanguageChinese = document.getElementById("FilterButtonHostLanguageChinese");
+const filterButtonHostLanguageEnglish = document.getElementById("FilterButtonHostLanguageEnglish");
+const filterButtonHostLanguageFrench = document.getElementById("FilterButtonHostLanguageFrench");
+const filterButtonHostLanguageGerman = document.getElementById("FilterButtonHostLanguageGerman");
+const filterButtonHostLanguageItalian = document.getElementById("FilterButtonHostLanguageItalian");
+const filterButtonHostLanguageJapanese = document.getElementById("FilterButtonHostLanguageJapanese");
+const filterButtonHostLanguageKorean = document.getElementById("FilterButtonHostLanguageKorean");
+const filterButtonHostLanguagePortuguese = document.getElementById("FilterButtonHostLanguagePortuguese");
+const filterButtonHostLanguageRussian = document.getElementById("FilterButtonHostLanguageRussian");
+const filterButtonHostLanguageSpanish = document.getElementById("FilterButtonHostLanguageSpanish");
+const filterButtonHostLanguageArabic = document.getElementById("FilterButtonHostLanguageArabic");
+const filterButtonHostLanguageCroatian = document.getElementById("FilterButtonHostLanguageCroatian");
+const filterButtonHostLanguageCzech = document.getElementById("FilterButtonHostLanguageCzech");
+const filterButtonHostLanguageDanish = document.getElementById("FilterButtonHostLanguageDanish");
+const filterButtonHostLanguageDutch = document.getElementById("FilterButtonHostLanguageDutch");
+const filterButtonHostLanguageGreek = document.getElementById("FilterButtonHostLanguageGreek");
+const filterButtonHostLanguageHindi = document.getElementById("FilterButtonHostLanguageHindi");
+const filterButtonHostLanguageHungarian = document.getElementById("FilterButtonHostLanguageHungarian");
+const filterButtonHostLanguageIndonesian = document.getElementById("FilterButtonHostLanguageIndonesian");
+const filterButtonHostLanguageNorwegian = document.getElementById("FilterButtonHostLanguageNorwegian");
+const filterButtonHostLanguagePolish = document.getElementById("FilterButtonHostLanguagePolish");
+const filterButtonHostLanguageSwedish = document.getElementById("FilterButtonHostLanguageSwedish");
+const filterButtonHostLanguageTurkish = document.getElementById("FilterButtonHostLanguageTurkish");
+const filterButtonHostLanguageBelarusian = document.getElementById("FilterButtonHostLanguageBelarusian");
+const filterButtonHostLanguageBosnian = document.getElementById("FilterButtonHostLanguageBosnian");
+const filterButtonHostLanguageLatvian = document.getElementById("FilterButtonHostLanguageLatvian");
+const filterButtonHostLanguageLithuanian = document.getElementById("FilterButtonHostLanguageLithuanian");
+const filterButtonHostLanguagePunjabi = document.getElementById("FilterButtonHostLanguagePunjabi");
+const filterButtonHostLanguageRomanian = document.getElementById("FilterButtonHostLanguageRomanian");
+const filterButtonHostLanguageSerbian = document.getElementById("FilterButtonHostLanguageSerbian");
+const filterButtonHostLanguageSlovakian = document.getElementById("FilterButtonHostLanguageSlovakian");
+const filterButtonHostLanguageUkrainian = document.getElementById("FilterButtonHostLanguageUkrainian");
+
+function filterButtonHostLanguageCheckboxes(checkbox)
+{
+    checkbox.onclick = function()
+    {
+       if (checkbox.checked == true)
+       {
+           checkbox.parentElement.childNodes[3].style.background = "black";
+           checkbox.parentElement.childNodes[3].childNodes[1].style.display = "block"
+       }
+       else if (checkbox.checked == false)
+       {
+           checkbox.parentElement.childNodes[3].style.background = "white";
+           checkbox.parentElement.childNodes[3].childNodes[1].style.display = "none"
+       }
+       
+        console.log(
+`\n1Chinese    . ${filterButtonHostLanguageChinese.checked}
+2English    . ${filterButtonHostLanguageEnglish.checked}
+3French     . ${filterButtonHostLanguageFrench.checked}
+4German     . ${filterButtonHostLanguageGerman.checked}
+5Italian    . ${filterButtonHostLanguageItalian.checked}
+6Japanese   . ${filterButtonHostLanguageJapanese.checked}
+7Korean     . ${filterButtonHostLanguageKorean.checked}
+8Portuguese . ${filterButtonHostLanguagePortuguese.checked}
+9Russian    . ${filterButtonHostLanguageRussian.checked}
+10Spanish   . ${filterButtonHostLanguageSpanish.checked}
+11Arabic    . ${filterButtonHostLanguageArabic.checked}
+12Croatian  . ${filterButtonHostLanguageCroatian.checked}
+13Czech     . ${filterButtonHostLanguageCzech.checked}
+14Danish    . ${filterButtonHostLanguageDanish.checked}
+15Dutch     . ${filterButtonHostLanguageDutch.checked}
+16Greek     . ${filterButtonHostLanguageGreek.checked}
+17Hindi     . ${filterButtonHostLanguageHindi.checked}
+18Hungarian . ${filterButtonHostLanguageHungarian.checked}
+19Indonesian. ${filterButtonHostLanguageIndonesian.checked}
+20Norwegian . ${filterButtonHostLanguageNorwegian.checked}
+21Polish    . ${filterButtonHostLanguagePolish.checked}
+22Swedish   . ${filterButtonHostLanguageSwedish.checked}
+23Turkish   . ${filterButtonHostLanguageTurkish.checked}
+24Belarusian. ${filterButtonHostLanguageBelarusian.checked}
+25Bosnian   . ${filterButtonHostLanguageBosnian.checked}
+26Latvian   . ${filterButtonHostLanguageLatvian.checked}
+27Lithuanian. ${filterButtonHostLanguageLithuanian.checked}
+28Punjabi   . ${filterButtonHostLanguagePunjabi.checked}
+29Romanian  . ${filterButtonHostLanguageRomanian.checked}
+30Serbian   . ${filterButtonHostLanguageSerbian.checked}
+31Slovakian . ${filterButtonHostLanguageSlovakian.checked}
+32Ukrainian . ${filterButtonHostLanguageUkrainian.checked}`)
+
+    }
+}
+
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageChinese);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageEnglish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageFrench);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageGerman);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageItalian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageJapanese);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageKorean);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePortuguese);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageRussian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSpanish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageArabic);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageCroatian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageCzech);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageDanish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageDutch);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageGreek);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageHindi);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageHungarian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageIndonesian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageNorwegian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePolish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSwedish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageTurkish);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageBelarusian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageBosnian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageLatvian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageLithuanian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePunjabi);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageRomanian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSerbian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSlovakian);
+filterButtonHostLanguageCheckboxes(filterButtonHostLanguageUkrainian);
+
 //  host language
 
 //  property type / accessibility features / host language dropdowns

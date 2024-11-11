@@ -879,30 +879,40 @@ div.filter_checkbox_section_title {
     padding: 5px 0px;
 }
 
-div.filter_checkbox_box {
-    display: flex;
-    padding: 8px 0px;
-    align-items: center;
-}
-
 label.filter_checkbox_box {
     display: flex;
     padding: 8px 0px;
     align-items: center;
 }
 
-
-span.filter_checkbox {
-    width: 24px;
-    height: 24px;
-    border: 1px solid #dddddd;
-    margin-inline-end: 8px;
-    border-radius: 5px;
+input.checkbox_input {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    padding: 0px;
+    border: 0px;
+    
 }
 
-    span.filter_checkbox:hover {
-        border: 1px solid black;
-    }
+span.checkbox_box {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 5px
+}
 
+.i_hate_checkboxes + [data-checkbox] {
+    border-radius: 5px;
+    border: 1px solid #dddddd;
+    border-color: #dddddd;
+}
 
+.i_hate_checkboxes:hover + [data-checkbox] {
+    border-color: black;
+}
 
+span.checkbox_description {
+    padding-inline-start: 10px;
+}
