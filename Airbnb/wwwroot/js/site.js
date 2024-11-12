@@ -168,12 +168,16 @@ filterButton.onclick = function()
 {
     filterButtonModal.style.display = "block";
     filterButtonModalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
 }
 
 filterButtonModalBackground.onclick = function()
 {
     filterButtonModal.style.display = "none";
     filterButtonModalBackground.style.display = "none";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
 }
 
 //  type of place
@@ -182,6 +186,28 @@ const filterButtonRoom = document.getElementById("FilterButtonRoom");
 const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome");
 
 //  price range
+//const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
+const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
+
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+let text = ctx.measureText(filterButtonMaximumPriceInput.value);
+
+filterButtonMaximumPriceInput.addEventListener("input", function()
+{
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        let text = ctx.measureText(filterButtonMaximumPriceInput.value);
+        let text2 = ctx.measureText("60000+");
+        console.log(Math.floor(text.width + 20) + 1)
+        text.width = text.width + 1;
+        //filterButtonMaximumPriceInput.style.width = (Math.ceil(+text.width + 10)) + "px";
+        //debugger
+        this.style.width = (+text.width) + 'px';
+})
+
+
 
 //  rooms and beds
 const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
@@ -536,12 +562,16 @@ globeIcon.onclick = function()
 {
     languageRegionCurrencyModal.style.display = "block";
     languageRegionCurrencyModalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
 }
 
 languageRegionCurrencyModalBackground.onclick = function()
 {
     languageRegionCurrencyModalBackground.style.display = "none";
     languageRegionCurrencyModal.style.display = "none";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
 }
 
 languagesButton.onclick = function()

@@ -916,3 +916,33 @@ span.checkbox_box {
 span.checkbox_description {
     padding-inline-start: 10px;
 }
+
+div.price_text {
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+}
+
+div.price_range_box {
+    border-radius: 50px;
+    border: 1px solid #dddddd;
+    font-size: 14px;
+    min-width: 80px;
+    padding: 10px;
+    display: inline-block;
+}
+
+input.price_input {
+    border: none;
+    outline: none;
+    width: 40px;
+    padding: 0px;
+    text-align: left;
+}
+
+
+
+
+
+
+
