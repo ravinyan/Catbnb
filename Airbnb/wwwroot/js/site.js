@@ -186,28 +186,57 @@ const filterButtonRoom = document.getElementById("FilterButtonRoom");
 const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome");
 
 //  price range
-//const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
+const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
 const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
 
-const canvas = document.createElement("canvas");
-const ctx = canvas.getContext("2d");
-let text = ctx.measureText(filterButtonMaximumPriceInput.value);
+//  STACK OVERFLOW MY BELOVED
+function getTextWidth(text, font) 
+{
+    // re-use canvas object for better performance <-- thank you stack overflow dude for this insight i will probably never use it tho
+    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    const context = canvas.getContext("2d");
+    context.font = font;
+    const metrics = context.measureText(text);
+
+    return metrics.width;
+}
+
+function getCssStyle(e, CSSstyle) 
+{
+    return window.getComputedStyle(e, null).getPropertyValue(CSSstyle);
+}
+
+function getCanvasFont(e) 
+{
+    const fontWeight = getCssStyle(e, 'font-weight') || 'normal';
+    const fontSize = getCssStyle(e, 'font-size') || '16px';
+    const fontFamily = getCssStyle(e, 'font-family') || 'Times New Roman';
+    
+    return `${fontWeight} ${fontSize} ${fontFamily}`;
+}
+
+filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
+filterButtonMinimumPriceInput.style.width = getTextWidth(filterButtonMinimumPriceInput.value, getCanvasFont(filterButtonMinimumPriceInput)) + "px";
+
+filterButtonMinimumPriceInput.addEventListener("input", function()
+{
+    filterButtonMinimumPriceInput.style.width = getTextWidth(filterButtonMinimumPriceInput.value, getCanvasFont(filterButtonMinimumPriceInput)) + "px";
+})
 
 filterButtonMaximumPriceInput.addEventListener("input", function()
 {
-
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        let text = ctx.measureText(filterButtonMaximumPriceInput.value);
-        let text2 = ctx.measureText("60000+");
-        console.log(Math.floor(text.width + 20) + 1)
-        text.width = text.width + 1;
-        //filterButtonMaximumPriceInput.style.width = (Math.ceil(+text.width + 10)) + "px";
-        //debugger
-        this.style.width = (+text.width) + 'px';
+    filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 })
 
+//  sliderr im so dead inside and exhausted and head hurst and sleepy and why am i even studying im dumb
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
 
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
 
 //  rooms and beds
 const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
