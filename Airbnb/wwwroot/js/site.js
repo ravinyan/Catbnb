@@ -189,6 +189,10 @@ const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome")
 const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
 const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
 
+const filterButtonSliderMinimumPrice = document.getElementById("FilterButtonSliderMinimumPrice");
+const filterButtonSliderMaximumPrice = document.getElementById("FilterButtonSliderMaximumPrice");
+const filterButtonPriceRangeBox = document.getElementById("FilterButtonPriceRangeBox");
+
 //  STACK OVERFLOW MY BELOVED
 function getTextWidth(text, font) 
 {
@@ -228,15 +232,42 @@ filterButtonMaximumPriceInput.addEventListener("input", function()
     filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 })
 
-//  sliderr im so dead inside and exhausted and head hurst and sleepy and why am i even studying im dumb
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  output.innerHTML = this.value;
+function FilterButtonFindClosestPriceSlider(e)
+{
+    console.log(e.offsetX)
+    
 }
+
+filterButtonPriceRangeBox.onclick = function(e)
+{
+
+}
+
+filterButtonSliderMinimumPrice.addEventListener("input", function()
+{
+    if (+filterButtonSliderMinimumPrice.value >= +filterButtonSliderMaximumPrice.value)
+    {
+        filterButtonSliderMinimumPrice.value = filterButtonSliderMaximumPrice.value;
+        filterButtonMinimumPriceInput.value = filterButtonSliderMaximumPrice.value;
+    }
+    else if (+filterButtonSliderMinimumPrice.value < +filterButtonSliderMaximumPrice.value)
+    {
+        filterButtonMinimumPriceInput.value = filterButtonSliderMinimumPrice.value;
+    }
+})
+
+filterButtonSliderMaximumPrice.addEventListener("input", function()
+{
+    if (+filterButtonSliderMaximumPrice.value <= +filterButtonSliderMinimumPrice.value)
+    {
+        filterButtonSliderMaximumPrice.value = filterButtonSliderMinimumPrice.value;
+        filterButtonMaximumPriceInput.value = filterButtonSliderMinimumPrice.value;
+    }
+    else if (+filterButtonSliderMaximumPrice.value > +filterButtonSliderMinimumPrice.value)
+    {
+        filterButtonMaximumPriceInput.value = filterButtonSliderMaximumPrice.value;
+    }
+})
 
 //  rooms and beds
 const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
@@ -2435,7 +2466,6 @@ calendar2Experiences.addEventListener("mouseout", function(e)
 })
 
 //  ------------------------ (+-) DATES OPTIONS BUTTONS ------------------------
-//  PM stands for Pure Memory coz im arcaea player and this is the only acceptable acronym even tho it means Plus Minus here.....
 const calendarExactDatesButton = document.getElementById("CalendarExactDatesButton");
 const calendarPM1Button = document.getElementById("CalendarPM1Button");
 const calendarPM2Button = document.getElementById("CalendarPM2Button");
