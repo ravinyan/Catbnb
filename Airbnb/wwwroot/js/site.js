@@ -189,8 +189,8 @@ const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome")
 const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
 const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
 
-const filterButtonSliderMinimumPrice = document.getElementById("FilterButtonSliderMinimumPrice");
-const filterButtonSliderMaximumPrice = document.getElementById("FilterButtonSliderMaximumPrice");
+const filterButtonMinimumPriceSlider = document.getElementById("FilterButtonSliderMinimumPrice");
+const filterButtonMaximumPriceSlider = document.getElementById("FilterButtonSliderMaximumPrice");
 const filterButtonPriceRangeBox = document.getElementById("FilterButtonPriceRangeBox");
 
 //  STACK OVERFLOW MY BELOVED
@@ -219,8 +219,8 @@ function getCanvasFont(e)
     return `${fontWeight} ${fontSize} ${fontFamily}`;
 }
 
-filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 filterButtonMinimumPriceInput.style.width = getTextWidth(filterButtonMinimumPriceInput.value, getCanvasFont(filterButtonMinimumPriceInput)) + "px";
+filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 
 filterButtonMinimumPriceInput.addEventListener("input", function()
 {
@@ -232,40 +232,63 @@ filterButtonMaximumPriceInput.addEventListener("input", function()
     filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 })
 
-function FilterButtonFindClosestPriceSlider(e)
-{
-    console.log(e.offsetX)
-    
-}
+//  so much debugging... so much googling... so much headache... im freeeeeeeeeeeeee
+var filterButtonInputMousePosition = "";
+var filterButtonInputMiddlePoint = "";
 
-filterButtonPriceRangeBox.onclick = function(e)
+filterButtonPriceRangeBox.addEventListener("mousemove", function(e)
 {
+    var x = (e.offsetX / e.target.clientWidth) * parseInt(filterButtonMaximumPriceSlider.max, 10);
 
-}
-
-filterButtonSliderMinimumPrice.addEventListener("input", function()
-{
-    if (+filterButtonSliderMinimumPrice.value >= +filterButtonSliderMaximumPrice.value)
+    if (!isNaN(x))
     {
-        filterButtonSliderMinimumPrice.value = filterButtonSliderMaximumPrice.value;
-        filterButtonMinimumPriceInput.value = filterButtonSliderMaximumPrice.value;
+        filterButtonInputMousePosition = +x.toFixed();
     }
-    else if (+filterButtonSliderMinimumPrice.value < +filterButtonSliderMaximumPrice.value)
+
+    filterButtonInputMiddlePoint = 
+
+    filterButtonInputMiddlePoint = (+filterButtonMaximumPriceSlider.value + +filterButtonMinimumPriceSlider.value)/ 2;
+})
+
+filterButtonPriceRangeBox.addEventListener("mousedown", function()
+{
+    if ((filterButtonInputMousePosition > +filterButtonInputMiddlePoint || filterButtonInputMousePosition > +filterButtonMaximumPriceSlider.value)
+    &&  filterButtonInputMousePosition > +filterButtonMinimumPriceSlider.value)
     {
-        filterButtonMinimumPriceInput.value = filterButtonSliderMinimumPrice.value;
+        filterButtonMaximumPriceSlider.value = filterButtonInputMousePosition;
+        filterButtonMaximumPriceInput.value = filterButtonMaximumPriceSlider.value;
+    }
+    else if ((filterButtonInputMousePosition < +filterButtonInputMiddlePoint || filterButtonInputMousePosition < +filterButtonMinimumPriceSlider.value)
+         &&   filterButtonInputMousePosition < filterButtonMaximumPriceSlider.value)
+    {
+        filterButtonMinimumPriceSlider.value = filterButtonInputMousePosition;
+        filterButtonMinimumPriceInput.value = filterButtonMinimumPriceSlider.value;
     }
 })
 
-filterButtonSliderMaximumPrice.addEventListener("input", function()
+filterButtonMinimumPriceSlider.addEventListener("input", function()
 {
-    if (+filterButtonSliderMaximumPrice.value <= +filterButtonSliderMinimumPrice.value)
+    if (+filterButtonMinimumPriceSlider.value >= +filterButtonMaximumPriceSlider.value)
     {
-        filterButtonSliderMaximumPrice.value = filterButtonSliderMinimumPrice.value;
-        filterButtonMaximumPriceInput.value = filterButtonSliderMinimumPrice.value;
+        filterButtonMinimumPriceSlider.value = filterButtonMaximumPriceSlider.value;
+        filterButtonMinimumPriceInput.value = filterButtonMaximumPriceSlider.value;
     }
-    else if (+filterButtonSliderMaximumPrice.value > +filterButtonSliderMinimumPrice.value)
+    else if (+filterButtonMinimumPriceSlider.value < +filterButtonMaximumPriceSlider.value)
     {
-        filterButtonMaximumPriceInput.value = filterButtonSliderMaximumPrice.value;
+        filterButtonMinimumPriceInput.value = filterButtonMinimumPriceSlider.value;
+    }
+})
+
+filterButtonMaximumPriceSlider.addEventListener("input", function()
+{
+    if (+filterButtonMaximumPriceSlider.value <= +filterButtonMinimumPriceSlider.value)
+    {
+        filterButtonMaximumPriceSlider.value = filterButtonMinimumPriceSlider.value;
+        filterButtonMaximumPriceInput.value = filterButtonMinimumPriceSlider.value;
+    }
+    else if (+filterButtonMaximumPriceSlider.value > +filterButtonMinimumPriceSlider.value)
+    {
+        filterButtonMaximumPriceInput.value = filterButtonMaximumPriceSlider.value;
     }
 })
 

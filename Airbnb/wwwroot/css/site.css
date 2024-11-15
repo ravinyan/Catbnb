@@ -955,8 +955,11 @@ input.price_input {
     -webkit-transition: .2s;
     transition: opacity .2s;
     border-radius: 10px;
-    z-index: 500;
+    pointer-events: none;
 }
+   /* .slider_min:hover {
+        background: #00ffff;
+    }*/
 
     .slider_min::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -969,6 +972,7 @@ input.price_input {
         z-index: 500;
         opacity: 0.5;
         position: relative;
+        pointer-events: all;
     }
     .slider_min::-webkit-slider-thumb:hover {
         opacity: 1;
@@ -983,7 +987,13 @@ input.price_input {
     -webkit-transition: .2s;
     transition: opacity .2s;
     border-radius: 10px;
+    pointer-events: none;
 }
+
+    /*.slider_max:hover {
+        background: #ff0000;
+    }*/
+
     .slider_max::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
@@ -994,6 +1004,7 @@ input.price_input {
         border-radius: 50px;
         opacity: 0.5;
         position: relative;
+        pointer-events: all;
     }
 
     .slider_max::-webkit-slider-thumb:hover {
@@ -1004,7 +1015,7 @@ div.my_head_exploded {
     position: absolute;
     right: 0px;
     left: 0px;
-    top: 8px;
+    top: 0px;
 }
 
 
