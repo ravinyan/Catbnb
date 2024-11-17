@@ -780,33 +780,33 @@ div.rooms_and_beds_button_box {
     display: flex;
 }
 
-button.rooms_and_beds_plus_button {
+button.rooms_and_beds_enabled_button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: white;
+    border: 1px solid #8f8f8f;
+    color: #8f8f8f;
+    display: flex;
+    justify-content: center;
+}
+
+    button.rooms_and_beds_enabled_button:hover {
+        border: 1px solid black;
+        color: black;
+    }
+
+button.rooms_and_beds_disabled_button {
     width: 32px;
     height: 32px;
     border-radius: 50px;
     background: white;
     border: 1px solid #dddddd;
+    color: #dddddd;
     display: flex;
     justify-content: center;
+    cursor: not-allowed;
 }
-
-    button.rooms_and_beds_plus_button:hover {
-        border: 1px solid black;
-    }
-
-button.rooms_and_beds_minus_button {
-    width: 32px;
-    height: 32px;
-    border-radius: 50px;
-    background: white;
-    border: 1px solid #dddddd;
-    display: flex;
-    justify-content: center;
-}
-
-    button.rooms_and_beds_minus_button:hover {
-        border: 1px solid black;
-    }
 
 div.amenities_title {
     margin-block-start: 20px;

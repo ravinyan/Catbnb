@@ -185,6 +185,27 @@ const filterButtonAnyType = document.getElementById("FilterButtonAnyType");
 const filterButtonRoom = document.getElementById("FilterButtonRoom");
 const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome");
 
+filterButtonAnyType.style.border = "1px solid black";
+filterButtonAnyType.style.background = "#E8E8E8";
+
+function filterButtonSelectTypeOfPlace(button, button2, button3)
+{
+    button.onclick = function()
+    {
+        button.style.border = "1px solid black";
+        button2.style.border = "";
+        button3.style.border = "";
+
+        button.style.background = "#E8E8E8";
+        button2.style.background = "";
+        button3.style.background = "";
+    }
+}
+
+filterButtonSelectTypeOfPlace(filterButtonAnyType, filterButtonRoom, filterButtonEntireHome);
+filterButtonSelectTypeOfPlace(filterButtonRoom, filterButtonAnyType, filterButtonEntireHome);
+filterButtonSelectTypeOfPlace(filterButtonEntireHome, filterButtonAnyType, filterButtonRoom);
+
 //  price range
 const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
 const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
@@ -193,7 +214,6 @@ const filterButtonMinimumPriceSlider = document.getElementById("FilterButtonSlid
 const filterButtonMaximumPriceSlider = document.getElementById("FilterButtonSliderMaximumPrice");
 const filterButtonPriceRangeBox = document.getElementById("FilterButtonPriceRangeBox");
 
-//  STACK OVERFLOW MY BELOVED
 function getTextWidth(text, font) 
 {
     // re-use canvas object for better performance <-- thank you stack overflow dude for this insight i will probably never use it tho
@@ -232,7 +252,6 @@ filterButtonMaximumPriceInput.addEventListener("input", function()
     filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
 })
 
-//  so much debugging... so much googling... so much headache... im freeeeeeeeeeeeee
 var filterButtonInputMousePosition = "";
 var filterButtonInputMiddlePoint = "";
 
@@ -293,15 +312,63 @@ filterButtonMaximumPriceSlider.addEventListener("input", function()
 })
 
 //  rooms and beds
-const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
 const filterButtonIncrementBedrooms = document.getElementById("FilterButtonIncrementBedrooms");
+const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
 const filterButtonBedroomsCount = document.getElementById("FilterButtonBedroomsCount");
-const filterButtonDecrementBeds = document.getElementById("FilterButtonDecrementBeds");
+
 const filterButtonIncrementBeds = document.getElementById("FilterButtonIncrementBeds");
+const filterButtonDecrementBeds = document.getElementById("FilterButtonDecrementBeds");
 const filterButtonBedsCount = document.getElementById("FilterButtonBedsCount");
-const filterButtonDecrementBathrooms = document.getElementById("FilterButtonDecrementBathrooms");
+
 const filterButtonIncrementBathrooms = document.getElementById("FilterButtonIncrementBathrooms");
+const filterButtonDecrementBathrooms = document.getElementById("FilterButtonDecrementBathrooms");
 const filterButtonBathroomsCount = document.getElementById("FilterButtonBathroomsCount");
+
+function filterButtonChangeRoomAndBedsValues(increment, decrement, counter)
+{
+    increment.onclick = function()
+    {
+        if (counter.innerText == "Any")
+        {
+            counter.innerText = 1;
+            decrement.classList = "rooms_and_beds_enabled_button";
+        }
+        else if (+counter.innerText < 8)
+        {
+            counter.innerText ++;
+
+            if (+counter.innerText == 8)
+            {
+                increment.classList = "rooms_and_beds_disabled_button";
+            }
+        }
+    }
+
+    decrement.onclick = function()
+    {
+        if (counter.innerText == "Any")
+        {
+        }
+        else if (+counter.innerText > 1)
+        {
+            counter.innerText -= 1;
+
+            if (+counter.innerText == 7)
+            {
+                increment.classList = "rooms_and_beds_enabled_button";
+            }
+        }
+        else if (+counter.innerText == 1)
+        {
+            counter.innerText = "Any";
+            decrement.classList = "rooms_and_beds_disabled_button";
+        }
+    }
+}
+
+filterButtonChangeRoomAndBedsValues(filterButtonIncrementBedrooms, filterButtonDecrementBedrooms, filterButtonBedroomsCount);
+filterButtonChangeRoomAndBedsValues(filterButtonIncrementBeds, filterButtonDecrementBeds, filterButtonBedsCount);
+filterButtonChangeRoomAndBedsValues(filterButtonIncrementBathrooms, filterButtonDecrementBathrooms, filterButtonBathroomsCount);
 
 //  amenities
 const filterModalAmenitiesMore = document.getElementById("FilterModalAmenitiesMore");
@@ -356,7 +423,6 @@ filterButtonAmenitiesWifi.onclick = function()
 {
     console.log("bop the snot")
 }
-
 
 //  booking options
 const filterButtonBookingInstantBook = document.getElementById("FilterButtonBookingInstantBook");
