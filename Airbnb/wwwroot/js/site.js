@@ -87,38 +87,40 @@ function headerScaling()
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
----------------------------------------------SCROLL MENU BUTTONS + FILTER---------------------------------------------
+--------------------------------------------------SCROLL MENU BUTTONS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
 const scrollMenu = document.getElementById("ScrollMenu");
-const scrollMenuCards = ["Icons", "Lakefront", "Cabins", "Amazing Views", "Top of the world", "Design", "Amazing pools", "Beachfront", 
-                         "Tiny homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
-                         "Domes", "Off-the-grid", "Camping", "Rooms", "National parks", "Castles", "Luxe", "Vineyards", "Islands", 
-                         "Top cities", "Caves", "Historical homes", "Barns", "Earth homes", "Play", "Containers", "A-frames", 
-                         "Bed & breakfasts", "New", "Chef's kitchens", "Towers", "ski-in/out", "Creative spaces", "Yurts", "Arctic", 
-                         "Desert", "Windmils", "Trulli", "Cycladic homes", "Adapted", "Casas particulares", "Grand pianos", "Dammusi",
-                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's huts", "Beach", "Lake"]
 
-function generateScrollMenuCards(array)
-{
-    for (i = 0; i < array.length; i++)
-    {
-        let divBox = document.createElement("div");
-        let aRef = document.createElement("a");
+//  i just realized this is useless oh well
+//const scrollMenuCards = ["Icons", "Lakefront", "Cabins", "Amazing Views", "Top of the world", "Design", "Amazing pools", "Beachfront", 
+//                         "Tiny homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
+//                         "Domes", "Off-the-grid", "Camping", "Rooms", "National parks", "Castles", "Luxe", "Vineyards", "Islands", 
+//                         "Top cities", "Caves", "Historical homes", "Barns", "Earth homes", "Play", "Containers", "A-frames", 
+//                         "Bed & breakfasts", "New", "Chef's kitchens", "Towers", "ski-in/out", "Creative spaces", "Yurts", "Arctic", 
+//                         "Desert", "Windmils", "Trulli", "Cycladic homes", "Adapted", "Casas particulares", "Grand pianos", "Dammusi",
+//                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's huts", "Beach", "Lake"]
 
-        divBox.className = "";
-        aRef.setAttribute("href", `#${array[i]}`);
-        aRef.className = "";
-        aRef.innerText = `${array[i]}`;
+//function generateScrollMenuCards(array)
+//{
+//    for (i = 0; i < array.length; i++)
+//    {
+//        let divBox = document.createElement("div");
+//        let aRef = document.createElement("a");
 
-        divBox.appendChild(aRef);
+//        divBox.className = "";
+//        aRef.setAttribute("href", `?category=${array[i]}`);
+//        aRef.className = "";
+//        aRef.innerText = `${array[i]}`;
 
-        scrollMenu.appendChild(divBox);
-    }
-}
+//        divBox.appendChild(aRef);
 
-generateScrollMenuCards(scrollMenuCards);
+//        scrollMenu.appendChild(divBox);
+//    }
+//}
+
+//generateScrollMenuCards(scrollMenuCards);
 
 function categoriesMenu()
 {
@@ -160,35 +162,38 @@ function categoriesMenu()
 
 categoriesMenu();
 
+/*--------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------FILTER MODAL-----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const filterButton = document.getElementById("FilterButton");
-const filterButtonModal = document.getElementById("FilterButtonModal");
-const filterButtonModalBackground = document.getElementById("FilterButtonModalBackground");
+const filterModal = document.getElementById("FilterModal");
+const filterModalBackground = document.getElementById("FilterModalBackground");
 
 filterButton.onclick = function()
 {
-    filterButtonModal.style.display = "block";
-    filterButtonModalBackground.style.display = "block";
+    filterModal.style.display = "block";
+    filterModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
 
-filterButtonModalBackground.onclick = function()
+filterModalBackground.onclick = function()
 {
-    filterButtonModal.style.display = "none";
-    filterButtonModalBackground.style.display = "none";
+    filterModal.style.display = "none";
+    filterModalBackground.style.display = "none";
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
 }
 
 //  type of place
-const filterButtonAnyType = document.getElementById("FilterButtonAnyType");
-const filterButtonRoom = document.getElementById("FilterButtonRoom");
-const filterButtonEntireHome = document.getElementById("FilterButtonEntireHome");
+const filterModalAnyType = document.getElementById("FilterModalAnyType");
+const filterModalRoom = document.getElementById("FilterModalRoom");
+const filterModalEntireHome = document.getElementById("FilterModalEntireHome");
 
-filterButtonAnyType.style.border = "1px solid black";
-filterButtonAnyType.style.background = "#E8E8E8";
+filterModalAnyType.style.border = "1px solid black";
+filterModalAnyType.style.background = "#E8E8E8";
 
-function filterButtonSelectTypeOfPlace(button, button2, button3)
+function filterModalSelectTypeOfPlace(button, button2, button3)
 {
     button.onclick = function()
     {
@@ -202,17 +207,17 @@ function filterButtonSelectTypeOfPlace(button, button2, button3)
     }
 }
 
-filterButtonSelectTypeOfPlace(filterButtonAnyType, filterButtonRoom, filterButtonEntireHome);
-filterButtonSelectTypeOfPlace(filterButtonRoom, filterButtonAnyType, filterButtonEntireHome);
-filterButtonSelectTypeOfPlace(filterButtonEntireHome, filterButtonAnyType, filterButtonRoom);
+filterModalSelectTypeOfPlace(filterModalAnyType, filterModalRoom, filterModalEntireHome);
+filterModalSelectTypeOfPlace(filterModalRoom, filterModalAnyType, filterModalEntireHome);
+filterModalSelectTypeOfPlace(filterModalEntireHome, filterModalAnyType, filterModalRoom);
 
 //  price range
-const filterButtonMinimumPriceInput = document.getElementById("FilterButtonMinimumPriceInput");
-const filterButtonMaximumPriceInput = document.getElementById("FilterButtonMaximumPriceInput");
+const filterModalMinimumPriceInput = document.getElementById("FilterModalMinimumPriceInput");
+const filterModalMaximumPriceInput = document.getElementById("FilterModalMaximumPriceInput");
 
-const filterButtonMinimumPriceSlider = document.getElementById("FilterButtonSliderMinimumPrice");
-const filterButtonMaximumPriceSlider = document.getElementById("FilterButtonSliderMaximumPrice");
-const filterButtonPriceRangeBox = document.getElementById("FilterButtonPriceRangeBox");
+const filterModalMinimumPriceSlider = document.getElementById("FilterModalSliderMinimumPrice");
+const filterModalMaximumPriceSlider = document.getElementById("FilterModalSliderMaximumPrice");
+const filterModalPriceRangeBox = document.getElementById("FilterModalPriceRangeBox");
 
 function getTextWidth(text, font) 
 {
@@ -239,92 +244,92 @@ function getCanvasFont(e)
     return `${fontWeight} ${fontSize} ${fontFamily}`;
 }
 
-filterButtonMinimumPriceInput.style.width = getTextWidth(filterButtonMinimumPriceInput.value, getCanvasFont(filterButtonMinimumPriceInput)) + "px";
-filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
+filterModalMinimumPriceInput.style.width = getTextWidth(filterModalMinimumPriceInput.value, getCanvasFont(filterModalMinimumPriceInput)) + "px";
+filterModalMaximumPriceInput.style.width = getTextWidth(filterModalMaximumPriceInput.value, getCanvasFont(filterModalMaximumPriceInput)) + "px";
 
-filterButtonMinimumPriceInput.addEventListener("input", function()
+filterModalMinimumPriceInput.addEventListener("input", function()
 {
-    filterButtonMinimumPriceInput.style.width = getTextWidth(filterButtonMinimumPriceInput.value, getCanvasFont(filterButtonMinimumPriceInput)) + "px";
+    filterModalMinimumPriceInput.style.width = getTextWidth(filterModalMinimumPriceInput.value, getCanvasFont(filterModalMinimumPriceInput)) + "px";
 })
 
-filterButtonMaximumPriceInput.addEventListener("input", function()
+filterModalMaximumPriceInput.addEventListener("input", function()
 {
-    filterButtonMaximumPriceInput.style.width = getTextWidth(filterButtonMaximumPriceInput.value, getCanvasFont(filterButtonMaximumPriceInput)) + "px";
+    filterModalMaximumPriceInput.style.width = getTextWidth(filterModalMaximumPriceInput.value, getCanvasFont(filterModalMaximumPriceInput)) + "px";
 })
 
-var filterButtonInputMousePosition = "";
-var filterButtonInputMiddlePoint = "";
+var filterModalInputMousePosition = "";
+var filterModalInputMiddlePoint = "";
 
-filterButtonPriceRangeBox.addEventListener("mousemove", function(e)
+filterModalPriceRangeBox.addEventListener("mousemove", function(e)
 {
-    var x = (e.offsetX / e.target.clientWidth) * parseInt(filterButtonMaximumPriceSlider.max, 10);
+    var x = (e.offsetX / e.target.clientWidth) * parseInt(filterModalMaximumPriceSlider.max, 10);
 
     if (!isNaN(x))
     {
-        filterButtonInputMousePosition = +x.toFixed();
+        filterModalInputMousePosition = +x.toFixed();
     }
 
-    filterButtonInputMiddlePoint = 
+    filterModalInputMiddlePoint = 
 
-    filterButtonInputMiddlePoint = (+filterButtonMaximumPriceSlider.value + +filterButtonMinimumPriceSlider.value)/ 2;
+    filterModalInputMiddlePoint = (+filterModalMaximumPriceSlider.value + +filterModalMinimumPriceSlider.value)/ 2;
 })
 
-filterButtonPriceRangeBox.addEventListener("mousedown", function()
+filterModalPriceRangeBox.addEventListener("mousedown", function()
 {
-    if ((filterButtonInputMousePosition > +filterButtonInputMiddlePoint || filterButtonInputMousePosition > +filterButtonMaximumPriceSlider.value)
-    &&  filterButtonInputMousePosition > +filterButtonMinimumPriceSlider.value)
+    if ((filterModalInputMousePosition > +filterModalInputMiddlePoint || filterModalInputMousePosition > +filterModalMaximumPriceSlider.value)
+    &&  filterModalInputMousePosition > +filterModalMinimumPriceSlider.value)
     {
-        filterButtonMaximumPriceSlider.value = filterButtonInputMousePosition;
-        filterButtonMaximumPriceInput.value = filterButtonMaximumPriceSlider.value;
+        filterModalMaximumPriceSlider.value = filterModalInputMousePosition;
+        filterModalMaximumPriceInput.value = filterModalMaximumPriceSlider.value;
     }
-    else if ((filterButtonInputMousePosition < +filterButtonInputMiddlePoint || filterButtonInputMousePosition < +filterButtonMinimumPriceSlider.value)
-         &&   filterButtonInputMousePosition < filterButtonMaximumPriceSlider.value)
+    else if ((filterModalInputMousePosition < +filterModalInputMiddlePoint || filterModalInputMousePosition < +filterModalMinimumPriceSlider.value)
+         &&   filterModalInputMousePosition < filterModalMaximumPriceSlider.value)
     {
-        filterButtonMinimumPriceSlider.value = filterButtonInputMousePosition;
-        filterButtonMinimumPriceInput.value = filterButtonMinimumPriceSlider.value;
-    }
-})
-
-filterButtonMinimumPriceSlider.addEventListener("input", function()
-{
-    if (+filterButtonMinimumPriceSlider.value >= +filterButtonMaximumPriceSlider.value)
-    {
-        filterButtonMinimumPriceSlider.value = filterButtonMaximumPriceSlider.value;
-        filterButtonMinimumPriceInput.value = filterButtonMaximumPriceSlider.value;
-    }
-    else if (+filterButtonMinimumPriceSlider.value < +filterButtonMaximumPriceSlider.value)
-    {
-        filterButtonMinimumPriceInput.value = filterButtonMinimumPriceSlider.value;
+        filterModalMinimumPriceSlider.value = filterModalInputMousePosition;
+        filterModalMinimumPriceInput.value = filterModalMinimumPriceSlider.value;
     }
 })
 
-filterButtonMaximumPriceSlider.addEventListener("input", function()
+filterModalMinimumPriceSlider.addEventListener("input", function()
 {
-    if (+filterButtonMaximumPriceSlider.value <= +filterButtonMinimumPriceSlider.value)
+    if (+filterModalMinimumPriceSlider.value >= +filterModalMaximumPriceSlider.value)
     {
-        filterButtonMaximumPriceSlider.value = filterButtonMinimumPriceSlider.value;
-        filterButtonMaximumPriceInput.value = filterButtonMinimumPriceSlider.value;
+        filterModalMinimumPriceSlider.value = filterModalMaximumPriceSlider.value;
+        filterModalMinimumPriceInput.value = filterModalMaximumPriceSlider.value;
     }
-    else if (+filterButtonMaximumPriceSlider.value > +filterButtonMinimumPriceSlider.value)
+    else if (+filterModalMinimumPriceSlider.value < +filterModalMaximumPriceSlider.value)
     {
-        filterButtonMaximumPriceInput.value = filterButtonMaximumPriceSlider.value;
+        filterModalMinimumPriceInput.value = filterModalMinimumPriceSlider.value;
+    }
+})
+
+filterModalMaximumPriceSlider.addEventListener("input", function()
+{
+    if (+filterModalMaximumPriceSlider.value <= +filterModalMinimumPriceSlider.value)
+    {
+        filterModalMaximumPriceSlider.value = filterModalMinimumPriceSlider.value;
+        filterModalMaximumPriceInput.value = filterModalMinimumPriceSlider.value;
+    }
+    else if (+filterModalMaximumPriceSlider.value > +filterModalMinimumPriceSlider.value)
+    {
+        filterModalMaximumPriceInput.value = filterModalMaximumPriceSlider.value;
     }
 })
 
 //  rooms and beds
-const filterButtonIncrementBedrooms = document.getElementById("FilterButtonIncrementBedrooms");
-const filterButtonDecrementBedrooms = document.getElementById("FilterButtonDecrementBedrooms");
-const filterButtonBedroomsCount = document.getElementById("FilterButtonBedroomsCount");
+const filterModalIncrementBedrooms = document.getElementById("FilterModalIncrementBedrooms");
+const filterModalDecrementBedrooms = document.getElementById("FilterModalDecrementBedrooms");
+const filterModalBedroomsCount = document.getElementById("FilterModalBedroomsCount");
 
-const filterButtonIncrementBeds = document.getElementById("FilterButtonIncrementBeds");
-const filterButtonDecrementBeds = document.getElementById("FilterButtonDecrementBeds");
-const filterButtonBedsCount = document.getElementById("FilterButtonBedsCount");
+const filterModalIncrementBeds = document.getElementById("FilterModalIncrementBeds");
+const filterModalDecrementBeds = document.getElementById("FilterModalDecrementBeds");
+const filterModalBedsCount = document.getElementById("FilterModalBedsCount");
 
-const filterButtonIncrementBathrooms = document.getElementById("FilterButtonIncrementBathrooms");
-const filterButtonDecrementBathrooms = document.getElementById("FilterButtonDecrementBathrooms");
-const filterButtonBathroomsCount = document.getElementById("FilterButtonBathroomsCount");
+const filterModalIncrementBathrooms = document.getElementById("FilterModalIncrementBathrooms");
+const filterModalDecrementBathrooms = document.getElementById("FilterModalDecrementBathrooms");
+const filterModalBathroomsCount = document.getElementById("FilterModalBathroomsCount");
 
-function filterButtonChangeRoomAndBedsValues(increment, decrement, counter)
+function filterModalChangeRoomAndBedsValues(increment, decrement, counter)
 {
     increment.onclick = function()
     {
@@ -366,275 +371,179 @@ function filterButtonChangeRoomAndBedsValues(increment, decrement, counter)
     }
 }
 
-filterButtonChangeRoomAndBedsValues(filterButtonIncrementBedrooms, filterButtonDecrementBedrooms, filterButtonBedroomsCount);
-filterButtonChangeRoomAndBedsValues(filterButtonIncrementBeds, filterButtonDecrementBeds, filterButtonBedsCount);
-filterButtonChangeRoomAndBedsValues(filterButtonIncrementBathrooms, filterButtonDecrementBathrooms, filterButtonBathroomsCount);
+filterModalChangeRoomAndBedsValues(filterModalIncrementBedrooms, filterModalDecrementBedrooms, filterModalBedroomsCount);
+filterModalChangeRoomAndBedsValues(filterModalIncrementBeds, filterModalDecrementBeds, filterModalBedsCount);
+filterModalChangeRoomAndBedsValues(filterModalIncrementBathrooms, filterModalDecrementBathrooms, filterModalBathroomsCount);
 
-//  amenities
+//  amenities menu work
 const filterModalAmenitiesMore = document.getElementById("FilterModalAmenitiesMore");
 const filterModalAmenitiesLess = document.getElementById("FilterModalAmenitiesLess");
 const filterModalShowMoreAmenities = document.getElementById("FilterModalShowMoreAmenities");
 const filterModalShowLessAmenities = document.getElementById("FilterModalShowLessAmenities");
-const filterButtonAmenitiesEssentialsTitle = document.getElementById("FilterButtonAmenitiesEssentialsTitle");
+const filterModalAmenitiesEssentialsTitle = document.getElementById("FilterModalAmenitiesEssentialsTitle");
 
 filterModalShowMoreAmenities.onclick = function()
 {
     filterModalShowMoreAmenities.style.display = "none";
-    filterButtonAmenitiesEssentialsTitle.style.display = "block";
+    filterModalAmenitiesEssentialsTitle.style.display = "block";
     filterModalAmenitiesMore.style.display = "block";
 }
 
 filterModalShowLessAmenities.onclick = function()
 {
     filterModalShowMoreAmenities.style.display = "block";
-    filterButtonAmenitiesEssentialsTitle.style.display = "none";
+    filterModalAmenitiesEssentialsTitle.style.display = "none";
     filterModalAmenitiesMore.style.display = "none";
 }
 
-// amenities buttons... lots of them!
-const filterButtonAmenitiesWifi = document.getElementById("FilterButtonAmenitiesWifi");
-const filterButtonAmenitiesKitchen = document.getElementById("FilterButtonAmenitiesKitchen");
-const filterButtonAmenitiesWasher = document.getElementById("FilterButtonAmenitiesWasher");
-const filterButtonAmenitiesDryer = document.getElementById("FilterButtonAmenitiesDryer");
-const filterButtonAmenitiesAirConditioning = document.getElementById("FilterButtonAmenitiesAirConditioning");
-const filterButtonAmenitiesHeating = document.getElementById("FilterButtonAmenitiesHeating");
-const filterButtonAmenitiesDedicatedWorkspace = document.getElementById("FilterButtonAmenitiesDedicatedWorkspace");
-const filterButtonAmenitiesTV = document.getElementById("FilterButtonAmenitiesTV");
-const filterButtonAmenitiesHairDryer = document.getElementById("FilterButtonAmenitiesHairDryer");
-const filterButtonAmenitiesIron = document.getElementById("FilterButtonAmenitiesIron");
-const filterButtonAmenitiesPool = document.getElementById("FilterButtonAmenitiesPool");
-const filterButtonAmenitiesHotTub = document.getElementById("FilterButtonAmenitiesHotTub");
-const filterButtonAmenitiesFreeParking = document.getElementById("FilterButtonAmenitiesFreeParking");
-const filterButtonAmenitiesEVCharger = document.getElementById("FilterButtonAmenitiesEVCharger");
-const filterButtonAmenitiesCrib = document.getElementById("FilterButtonAmenitiesCrib");
-const filterButtonAmenitiesKingBed = document.getElementById("FilterButtonAmenitiesKingBed");
-const filterButtonAmenitiesGym = document.getElementById("FilterButtonAmenitiesGym");
-const filterButtonAmenitiesBBQGrill = document.getElementById("FilterButtonAmenitiesBBQGrill");
-const filterButtonAmenitiesBreakfast = document.getElementById("FilterButtonAmenitiesBreakfast");
-const filterButtonAmenitiesIndoorFireplace = document.getElementById("FilterButtonAmenitiesIndoorFireplace");
-const filterButtonAmenitiesSmokingAllowed = document.getElementById("FilterButtonAmenitiesSmokingAllowed");
-const filterButtonAmenitiesBeachfront = document.getElementById("FilterButtonAmenitiesBeachfront");
-const filterButtonAmenitiesWaterfront = document.getElementById("FilterButtonAmenitiesWaterfront");
-const filterButtonAmenitiesSkiInSkiOut = document.getElementById("FilterButtonAmenitiesSkiInSkiOut");
-const filterButtonAmenitiesSmokeAlarm = document.getElementById("FilterButtonAmenitiesSmokeAlarm");
-const filterButtonAmenitiesCarbonMonoxideAlarm = document.getElementById("FilterButtonAmenitiesCarbonMonoxideAlarm");
-
-filterButtonAmenitiesWifi.onclick = function()
+// amenities buttons refactored edition
+document.getElementById("FilterModalAmenitiesButtonsParent").addEventListener("click", function(e) 
 {
-    console.log("bop the snot")
-}
+    let button = e.target.closest("button")
 
-//  booking options
-const filterButtonBookingInstantBook = document.getElementById("FilterButtonBookingInstantBook");
-const filterButtonBookingSelfCheckin = document.getElementById("FilterButtonBookingSelfCheckin");
-const filterButtonBookingAllowPets = document.getElementById("FilterButtonBookingAllowPets");
-
-//  standout stays
-const filterButtonStandoutStays = document.getElementById("FilterButtonStandoutStays");
-
-//  property type
-const filterButtonPropertyTypeHouse = document.getElementById("FilterButtonPropertyTypeHouse");
-const filterButtonPropertyTypeApartment = document.getElementById("FilterButtonPropertyTypeApartment");
-const filterButtonPropertyTypeGuesthouse = document.getElementById("FilterButtonPropertyTypeGuesthouse");
-const filterButtonPropertyTypeHotel = document.getElementById("FilterButtonPropertyTypeHotel");
-
-//  accessibility features
-const filterButtonAccessibilityFeaturesGuest1 = document.getElementById("FilterButtonAccessibilityFeaturesGuest1");
-const filterButtonAccessibilityFeaturesGuest2 = document.getElementById("FilterButtonAccessibilityFeaturesGuest2");
-const filterButtonAccessibilityFeaturesGuest3 = document.getElementById("FilterButtonAccessibilityFeaturesGuest3");
-const filterButtonAccessibilityFeaturesGuest4 = document.getElementById("FilterButtonAccessibilityFeaturesGuest4");
-const filterButtonAccessibilityFeaturesBedroom1 = document.getElementById("FilterButtonAccessibilityFeaturesBedroom1");
-const filterButtonAccessibilityFeaturesBedroom2 = document.getElementById("FilterButtonAccessibilityFeaturesBedroom2");
-const filterButtonAccessibilityFeaturesBathroom1 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom1");
-const filterButtonAccessibilityFeaturesBathroom2 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom2");
-const filterButtonAccessibilityFeaturesBathroom3 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom3");
-const filterButtonAccessibilityFeaturesBathroom4 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom4");
-const filterButtonAccessibilityFeaturesBathroom5 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom5");
-const filterButtonAccessibilityFeaturesBathroom6 = document.getElementById("FilterButtonAccessibilityFeaturesBathroom6");
-const filterButtonAccessibilityFeaturesAdaptiveEquipment1 = document.getElementById("FilterButtonAccessibilityFeaturesAdaptiveEquipment1");
-
-function filterButtonAccessibilityCheckboxes(checkbox)
-{
-    checkbox.onclick = function()
+    if (button && button.className == "amenities_button")
     {
-        if (checkbox.checked == true)
+        if (button.style.background == "rgb(232, 232, 232)")
         {
-            checkbox.parentElement.childNodes[3].style.background = "black";
-            checkbox.parentElement.childNodes[3].childNodes[1].style.display = "block"
+            button.style.background = "";
+            button.style.border = "";
         }
-        else if (checkbox.checked == false)
+        else if (button.style.background == "")
         {
-            checkbox.parentElement.childNodes[3].style.background = "white";
-            checkbox.parentElement.childNodes[3].childNodes[1].style.display = "none"
+            button.style.background = "#E8E8E8";
+            button.style.border = "1px solid black";
         }
+    }
+});
+
+//  booking options refactored edition
+document.getElementById("FilterModalBookingButtonsParent").addEventListener("click", function(e) 
+{
+    let button = e.target.closest("button")
+
+    if (button && button.className == "amenities_button")
+    {
+        if (button.style.background == "rgb(232, 232, 232)")
+        {
+            button.style.background = "";
+            button.style.border = "";
+        }
+        else if (button.style.background == "")
+        {
+            button.style.background = "#E8E8E8";
+            button.style.border = "1px solid black";
+        }
+    }
+});
+
+//  standout stays not refactored edition... sad
+const filterModalStandoutStays = document.getElementById("FilterModalStandoutStays");
     
-        console.log(
-`\n1GU. ${filterButtonAccessibilityFeaturesGuest1.checked}
-2GU. ${filterButtonAccessibilityFeaturesGuest2.checked}
-3GU. ${filterButtonAccessibilityFeaturesGuest3.checked}
-4GU. ${filterButtonAccessibilityFeaturesGuest4.checked}
-1BD. ${filterButtonAccessibilityFeaturesBedroom1.checked}
-2BD. ${filterButtonAccessibilityFeaturesBedroom2.checked}
-1BT. ${filterButtonAccessibilityFeaturesBathroom1.checked}
-2BT. ${filterButtonAccessibilityFeaturesBathroom2.checked}
-3BT. ${filterButtonAccessibilityFeaturesBathroom3.checked}
-4BT. ${filterButtonAccessibilityFeaturesBathroom4.checked}
-5BT. ${filterButtonAccessibilityFeaturesBathroom5.checked}
-6BT. ${filterButtonAccessibilityFeaturesBathroom6.checked}
-1AQ. ${filterButtonAccessibilityFeaturesAdaptiveEquipment1.checked}`)
-    }
-}
-
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest1);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest2);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest3);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesGuest4);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBedroom1);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBedroom2);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom1);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom2);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom3);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom4);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom5);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesBathroom6);
-filterButtonAccessibilityCheckboxes(filterButtonAccessibilityFeaturesAdaptiveEquipment1);
-
-//  host language oh boi thats a lot of ids LMAO
-const filterButtonHostLanguageChinese = document.getElementById("FilterButtonHostLanguageChinese");
-const filterButtonHostLanguageEnglish = document.getElementById("FilterButtonHostLanguageEnglish");
-const filterButtonHostLanguageFrench = document.getElementById("FilterButtonHostLanguageFrench");
-const filterButtonHostLanguageGerman = document.getElementById("FilterButtonHostLanguageGerman");
-const filterButtonHostLanguageItalian = document.getElementById("FilterButtonHostLanguageItalian");
-const filterButtonHostLanguageJapanese = document.getElementById("FilterButtonHostLanguageJapanese");
-const filterButtonHostLanguageKorean = document.getElementById("FilterButtonHostLanguageKorean");
-const filterButtonHostLanguagePortuguese = document.getElementById("FilterButtonHostLanguagePortuguese");
-const filterButtonHostLanguageRussian = document.getElementById("FilterButtonHostLanguageRussian");
-const filterButtonHostLanguageSpanish = document.getElementById("FilterButtonHostLanguageSpanish");
-const filterButtonHostLanguageArabic = document.getElementById("FilterButtonHostLanguageArabic");
-const filterButtonHostLanguageCroatian = document.getElementById("FilterButtonHostLanguageCroatian");
-const filterButtonHostLanguageCzech = document.getElementById("FilterButtonHostLanguageCzech");
-const filterButtonHostLanguageDanish = document.getElementById("FilterButtonHostLanguageDanish");
-const filterButtonHostLanguageDutch = document.getElementById("FilterButtonHostLanguageDutch");
-const filterButtonHostLanguageGreek = document.getElementById("FilterButtonHostLanguageGreek");
-const filterButtonHostLanguageHindi = document.getElementById("FilterButtonHostLanguageHindi");
-const filterButtonHostLanguageHungarian = document.getElementById("FilterButtonHostLanguageHungarian");
-const filterButtonHostLanguageIndonesian = document.getElementById("FilterButtonHostLanguageIndonesian");
-const filterButtonHostLanguageNorwegian = document.getElementById("FilterButtonHostLanguageNorwegian");
-const filterButtonHostLanguagePolish = document.getElementById("FilterButtonHostLanguagePolish");
-const filterButtonHostLanguageSwedish = document.getElementById("FilterButtonHostLanguageSwedish");
-const filterButtonHostLanguageTurkish = document.getElementById("FilterButtonHostLanguageTurkish");
-const filterButtonHostLanguageBelarusian = document.getElementById("FilterButtonHostLanguageBelarusian");
-const filterButtonHostLanguageBosnian = document.getElementById("FilterButtonHostLanguageBosnian");
-const filterButtonHostLanguageLatvian = document.getElementById("FilterButtonHostLanguageLatvian");
-const filterButtonHostLanguageLithuanian = document.getElementById("FilterButtonHostLanguageLithuanian");
-const filterButtonHostLanguagePunjabi = document.getElementById("FilterButtonHostLanguagePunjabi");
-const filterButtonHostLanguageRomanian = document.getElementById("FilterButtonHostLanguageRomanian");
-const filterButtonHostLanguageSerbian = document.getElementById("FilterButtonHostLanguageSerbian");
-const filterButtonHostLanguageSlovakian = document.getElementById("FilterButtonHostLanguageSlovakian");
-const filterButtonHostLanguageUkrainian = document.getElementById("FilterButtonHostLanguageUkrainian");
-
-function filterButtonHostLanguageCheckboxes(checkbox)
+filterModalStandoutStays.onclick = function()
 {
-    checkbox.onclick = function()
+    if (filterModalStandoutStays.style.background == "rgb(232, 232, 232)")
     {
-       if (checkbox.checked == true)
-       {
-           checkbox.parentElement.childNodes[3].style.background = "black";
-           checkbox.parentElement.childNodes[3].childNodes[1].style.display = "block"
-       }
-       else if (checkbox.checked == false)
-       {
-           checkbox.parentElement.childNodes[3].style.background = "white";
-           checkbox.parentElement.childNodes[3].childNodes[1].style.display = "none"
-       }
-       
-        console.log(
-`\n1Chinese    . ${filterButtonHostLanguageChinese.checked}
-2English    . ${filterButtonHostLanguageEnglish.checked}
-3French     . ${filterButtonHostLanguageFrench.checked}
-4German     . ${filterButtonHostLanguageGerman.checked}
-5Italian    . ${filterButtonHostLanguageItalian.checked}
-6Japanese   . ${filterButtonHostLanguageJapanese.checked}
-7Korean     . ${filterButtonHostLanguageKorean.checked}
-8Portuguese . ${filterButtonHostLanguagePortuguese.checked}
-9Russian    . ${filterButtonHostLanguageRussian.checked}
-10Spanish   . ${filterButtonHostLanguageSpanish.checked}
-11Arabic    . ${filterButtonHostLanguageArabic.checked}
-12Croatian  . ${filterButtonHostLanguageCroatian.checked}
-13Czech     . ${filterButtonHostLanguageCzech.checked}
-14Danish    . ${filterButtonHostLanguageDanish.checked}
-15Dutch     . ${filterButtonHostLanguageDutch.checked}
-16Greek     . ${filterButtonHostLanguageGreek.checked}
-17Hindi     . ${filterButtonHostLanguageHindi.checked}
-18Hungarian . ${filterButtonHostLanguageHungarian.checked}
-19Indonesian. ${filterButtonHostLanguageIndonesian.checked}
-20Norwegian . ${filterButtonHostLanguageNorwegian.checked}
-21Polish    . ${filterButtonHostLanguagePolish.checked}
-22Swedish   . ${filterButtonHostLanguageSwedish.checked}
-23Turkish   . ${filterButtonHostLanguageTurkish.checked}
-24Belarusian. ${filterButtonHostLanguageBelarusian.checked}
-25Bosnian   . ${filterButtonHostLanguageBosnian.checked}
-26Latvian   . ${filterButtonHostLanguageLatvian.checked}
-27Lithuanian. ${filterButtonHostLanguageLithuanian.checked}
-28Punjabi   . ${filterButtonHostLanguagePunjabi.checked}
-29Romanian  . ${filterButtonHostLanguageRomanian.checked}
-30Serbian   . ${filterButtonHostLanguageSerbian.checked}
-31Slovakian . ${filterButtonHostLanguageSlovakian.checked}
-32Ukrainian . ${filterButtonHostLanguageUkrainian.checked}`)
-
+        filterModalStandoutStays.style.background = "";
+        filterModalStandoutStays.style.border = "";
+    }
+    else if (filterModalStandoutStays.style.background == "")
+    {
+        filterModalStandoutStays.style.background = "#E8E8E8";
+        filterModalStandoutStays.style.border = "1px solid black";
     }
 }
 
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageChinese);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageEnglish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageFrench);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageGerman);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageItalian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageJapanese);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageKorean);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePortuguese);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageRussian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSpanish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageArabic);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageCroatian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageCzech);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageDanish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageDutch);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageGreek);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageHindi);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageHungarian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageIndonesian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageNorwegian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePolish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSwedish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageTurkish);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageBelarusian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageBosnian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageLatvian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageLithuanian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguagePunjabi);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageRomanian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSerbian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageSlovakian);
-filterButtonHostLanguageCheckboxes(filterButtonHostLanguageUkrainian);
+//  property type refactored edition
+document.getElementById("FilterModalPropertyTypeDropdownMenu").addEventListener("click", function(e)
+{
+    let button = e.target.closest("button");
 
-//  host language
+    if (button && button.className == "amenities_button")
+    {
+        if (button.style.background == "rgb(232, 232, 232)")
+        {
+            button.style.background = "";
+            button.style.border = "";
+        }
+        else if (button.style.background == "")
+        {
+            button.style.background = "#E8E8E8";
+            button.style.border = "1px solid black";
+        }
+    }
+})
+
+//  accessibility features refactored edition
+document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu").addEventListener("click", function(e)
+{
+    let label = e.target.closest("label");
+    let input = label.childNodes[1].childNodes[1];
+
+    if (input && input.className == "i_hate_checkboxes checkbox_input")
+    {
+        input.onclick = function()
+        {
+            if (input.checked == true)
+            {
+                input.parentElement.childNodes[3].style.background = "black";
+                input.parentElement.childNodes[3].childNodes[1].style.display = "block";
+
+                console.log("\n", input.id, input.checked)
+            }
+            else if (input.checked == false)
+            {
+                input.parentElement.childNodes[3].style.background = "white";
+                input.parentElement.childNodes[3].childNodes[1].style.display = "none";
+
+                console.log("\n", input.id, input.checked)
+            }
+        }
+    }
+})
+
+//  host language refactored edition
+document.getElementById("FilterModalHostLanguageDropdownMenu").addEventListener("click", function(e)
+{
+    let label = e.target.closest("label");
+    let input = label.childNodes[1].childNodes[1];
+
+    if (input && input.className == "i_hate_checkboxes checkbox_input")
+    {
+        input.onclick = function()
+        {
+            if (input.checked == true)
+            {
+                input.parentElement.childNodes[3].style.background = "black";
+                input.parentElement.childNodes[3].childNodes[1].style.display = "block";
+
+                console.log("\n", input.id, input.checked)
+            }
+            else if (input.checked == false)
+            {
+                input.parentElement.childNodes[3].style.background = "white";
+                input.parentElement.childNodes[3].childNodes[1].style.display = "none";
+
+                console.log("\n", input.id, input.checked)
+            }
+        }
+    }
+})
 
 //  property type / accessibility features / host language dropdowns
-const filterButtonPropertyTypeDropdown = document.getElementById("FilterButtonPropertyTypeDropdown");
-const filterButtonPropertyTypeDropdownMenu = document.getElementById("FilterButtonPropertyTypeDropdownMenu");
+const filterModalPropertyTypeDropdown = document.getElementById("FilterModalPropertyTypeDropdown");
+const filterModalPropertyTypeDropdownMenu = document.getElementById("FilterModalPropertyTypeDropdownMenu");
 
-const filterButtonAccessibilityFeaturesDropdown = document.getElementById("FilterButtonAccessibilityFeaturesDropdown");
-const filterButtonAccessibilityFeaturesDropdownMenu = document.getElementById("FilterButtonAccessibilityFeaturesDropdownMenu");
+const filterModalAccessibilityFeaturesDropdown = document.getElementById("FilterModalAccessibilityFeaturesDropdown");
+const filterModalAccessibilityFeaturesDropdownMenu = document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu");
 
-const filterButtonHostLanguageDropdown = document.getElementById("FilterButtonHostLanguageDropdown");
-const filterButtonHostLanguageDropdownMenu = document.getElementById("FilterButtonHostLanguageDropdownMenu");
+const filterModalHostLanguageDropdown = document.getElementById("FilterModalHostLanguageDropdown");
+const filterModalHostLanguageDropdownMenu = document.getElementById("FilterModalHostLanguageDropdownMenu");
 
 var alternatePropertyDropdown = true;
 var alternateAccessibilityDropdown = true;
 var alternateHostDropdown = true;
 
-function filterButtonOpenDropdown(dropdown, menu, alternator)
+function filterModalOpenDropdown(dropdown, menu, alternator)
 {
     dropdown.onclick = function()
     {
@@ -659,13 +568,44 @@ function filterButtonOpenDropdown(dropdown, menu, alternator)
     }
 }
 
-filterButtonOpenDropdown(filterButtonPropertyTypeDropdown, filterButtonPropertyTypeDropdownMenu, alternatePropertyDropdown);
-filterButtonOpenDropdown(filterButtonAccessibilityFeaturesDropdown, filterButtonAccessibilityFeaturesDropdownMenu, alternateAccessibilityDropdown);
-filterButtonOpenDropdown(filterButtonHostLanguageDropdown, filterButtonHostLanguageDropdownMenu, alternateHostDropdown);
+filterModalOpenDropdown(filterModalPropertyTypeDropdown, filterModalPropertyTypeDropdownMenu, alternatePropertyDropdown);
+filterModalOpenDropdown(filterModalAccessibilityFeaturesDropdown, filterModalAccessibilityFeaturesDropdownMenu, alternateAccessibilityDropdown);
+filterModalOpenDropdown(filterModalHostLanguageDropdown, filterModalHostLanguageDropdownMenu, alternateHostDropdown);
 
 // last thingy footer
-const filterButtonClearAll = document.getElementById("FilterButtonClearAll"); 
-const filterButtonShowPlaces = document.getElementById("FilterButtonShowPlaces"); 
+const filterModalClearAll = document.getElementById("FilterModalClearAll"); 
+const filterModalShowPlaces = document.getElementById("FilterModalShowPlaces");
+
+//  real last thing the url generator thing? dont know how to call it and dont care its url uri something blablabla
+
+const params = new Proxy(new URLSearchParams(window.location.search), 
+{
+    get: (key, value) => key.get(value)
+});
+
+const displayText1 = document.getElementById("DisplayText1")
+const displayText2 = document.getElementById("DisplayText2")
+const displayText3 = document.getElementById("DisplayText3")
+
+if (window.location.search == "?category=Lakefront")
+{
+    displayText1.style.display = "block";
+    displayText2.style.display = "none";
+    displayText3.style.display = "none";
+}
+else if (window.location.search == "?category=Amazing%20Views")
+{
+    displayText1.style.display = "none";
+    displayText2.style.display = "block";
+    displayText3.style.display = "none";
+}
+else if (window.location.search == "?category=Design")
+{
+    displayText1.style.display = "none";
+    displayText2.style.display = "none";
+    displayText3.style.display = "block";
+}
+
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
