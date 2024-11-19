@@ -93,35 +93,6 @@ const buttonLeft = document.getElementById("ScrollLeft");
 const buttonRight = document.getElementById("ScrollRight");
 const scrollMenu = document.getElementById("ScrollMenu");
 
-//  i just realized this is useless oh well
-//const scrollMenuCards = ["Icons", "Lakefront", "Cabins", "Amazing Views", "Top of the world", "Design", "Amazing pools", "Beachfront", 
-//                         "Tiny homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
-//                         "Domes", "Off-the-grid", "Camping", "Rooms", "National parks", "Castles", "Luxe", "Vineyards", "Islands", 
-//                         "Top cities", "Caves", "Historical homes", "Barns", "Earth homes", "Play", "Containers", "A-frames", 
-//                         "Bed & breakfasts", "New", "Chef's kitchens", "Towers", "ski-in/out", "Creative spaces", "Yurts", "Arctic", 
-//                         "Desert", "Windmils", "Trulli", "Cycladic homes", "Adapted", "Casas particulares", "Grand pianos", "Dammusi",
-//                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's huts", "Beach", "Lake"]
-
-//function generateScrollMenuCards(array)
-//{
-//    for (i = 0; i < array.length; i++)
-//    {
-//        let divBox = document.createElement("div");
-//        let aRef = document.createElement("a");
-
-//        divBox.className = "";
-//        aRef.setAttribute("href", `?category=${array[i]}`);
-//        aRef.className = "";
-//        aRef.innerText = `${array[i]}`;
-
-//        divBox.appendChild(aRef);
-
-//        scrollMenu.appendChild(divBox);
-//    }
-//}
-
-//generateScrollMenuCards(scrollMenuCards);
-
 function categoriesMenu()
 {
     var scrollValue = 0;
@@ -386,7 +357,7 @@ filterModalShowMoreAmenities.onclick = function()
 {
     filterModalShowMoreAmenities.style.display = "none";
     filterModalAmenitiesEssentialsTitle.style.display = "block";
-    filterModalAmenitiesMore.style.display = "block";
+    filterModalAmenitiesMore.style.display = "flex";
 }
 
 filterModalShowLessAmenities.onclick = function()
@@ -477,8 +448,14 @@ document.getElementById("FilterModalPropertyTypeDropdownMenu").addEventListener(
 document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu").addEventListener("click", function(e)
 {
     let label = e.target.closest("label");
-    let input = label.childNodes[1].childNodes[1];
+    let input = "";
 
+    try 
+    {
+        input = label.childNodes[1].childNodes[1];
+    }
+    catch{}
+    
     if (input && input.className == "i_hate_checkboxes checkbox_input")
     {
         input.onclick = function()
@@ -505,7 +482,13 @@ document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu").addEvent
 document.getElementById("FilterModalHostLanguageDropdownMenu").addEventListener("click", function(e)
 {
     let label = e.target.closest("label");
-    let input = label.childNodes[1].childNodes[1];
+    let input = "";
+
+    try 
+    {
+        input = label.childNodes[1].childNodes[1];
+    }
+    catch{}
 
     if (input && input.className == "i_hate_checkboxes checkbox_input")
     {
