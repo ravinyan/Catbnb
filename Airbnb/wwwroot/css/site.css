@@ -941,7 +941,6 @@ input.price_input {
     text-align: left;
 }
 
-
 .slidecontainer {
     width: 100%;
 }
@@ -957,9 +956,6 @@ input.price_input {
     border-radius: 10px;
     pointer-events: none;
 }
-   /* .slider_min:hover {
-        background: #00ffff;
-    }*/
 
     .slider_min::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -974,6 +970,7 @@ input.price_input {
         position: relative;
         pointer-events: all;
     }
+
     .slider_min::-webkit-slider-thumb:hover {
         opacity: 1;
     }
@@ -990,9 +987,7 @@ input.price_input {
     pointer-events: none;
 }
 
-    /*.slider_max:hover {
-        background: #ff0000;
-    }*/
+
 
     .slider_max::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -1018,6 +1013,114 @@ div.my_head_exploded {
     top: 0px;
 }
 
+/* CAT CARD CLASSES */
 
+div.cat_card {
+    height: auto;
+    width: 240px;
+}
 
+/* image box stuff */
 
+div.cat_card_image_box {
+    height: 250px;
+    width: 240px;
+}
+
+button.cat_card_guest_favourite_button {
+    border: 1px solid white;
+    background: white;
+    border-radius: 50px;
+    width: 130px;
+    font-weight: 600;
+}
+
+div.cat_card_buttons_box {
+    display: grid;
+    flex: 1 0;
+    align-items: center;
+    grid-template-columns: auto;
+}
+
+button.cat_card_R_button {
+    position: absolute;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: white;
+    justify-content: center;
+    right: 15px;
+    z-index: 1;
+}
+
+button.cat_card_L_button {
+    position: absolute;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: white;
+    justify-content: center;
+    left: 15px;
+    z-index: 1;
+}
+
+div.cat_card_dots_box_parent {
+    display: grid;
+    flex: 1 0;
+    grid-template-columns: auto;
+    align-items: end;
+    justify-items: center;
+    color: white;
+}
+
+div.cat_card_dots_box {
+    position: absolute;
+    z-index: 1;
+}
+
+span.cat_card_dot {
+    height: 7px;
+    width: 7px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* info box stuff */
+
+div.cat_card_info_box {
+    display: grid;
+}
+
+div.cat_card_info_header {
+    display: inline-flex;
+    justify-content: space-between;
+
+}
+
+div.cat_card_stars_box {
+    display: inline-flex;
+    align-items: center;
+}
+
+span.cat_card_stars_rating {
+    margin-inline-start: 5px;
+}
+
+div.cat_card_info_box_country {
+    font-weight: 700;
+}
+
+div.cat_card_info_box_middle {
+    color: #7e7e7e;
+}
+
+div.cat_card_info_box_price_box {
+    margin-block-start: 5px
+}
+
+span.cat_card_price {
+    font-weight: bold;
+}
