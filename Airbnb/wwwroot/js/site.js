@@ -20,13 +20,13 @@ logo.onclick = function()
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------HEADER SCALING----------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-window.onscroll = function() { headerScaling() };
+window.onscroll = function() 
+{
+       headerScaling() 
+};
 
 function headerScaling() 
 {
-    var butt = document.getElementById("StaysMenuButtons").innerHTML;
-    var butter = document.getElementById("StaysMenuForm").innerHTML;
-
     if (document.documentElement.scrollTop > 1 || document.body.scrollTop > 1)
     {
         //  if scrolled down
@@ -35,16 +35,12 @@ function headerScaling()
         document.getElementById("MiniForm").style.display = "block";
         document.getElementById("StaysMenuButtons").style.display = "none";
 
-
         document.getElementById("StaysMenuForm").style.display = "none";
         document.getElementById("ExperiencesMenuForm").style.display = "none";
-
 
         document.getElementById("ScrollDiv").style.top = "80px";
         document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
 
-        
-        document.getElementById("heder").style.height = "";
         document.getElementById("GreyBackground").style.display = "none";
 
         //  resetting css for stuff
@@ -589,7 +585,6 @@ else if (window.location.search == "?category=Design")
     displayText3.style.display = "block";
 }
 
-
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
@@ -877,7 +872,8 @@ window.onclick = function()
         {
             document.getElementById("GreyBackground").style.display = "none";
 
-            document.getElementById("heder").style.height = "";
+            document.getElementById("TopHeader").style.height = "80px";
+            document.getElementById("ScrollDiv").style.zIndex = "";
             
             document.getElementById("MiniForm").style.display = "block";
             document.getElementById("StaysMenuButtons").style.display = "none";
@@ -886,12 +882,11 @@ window.onclick = function()
     }
 }
 
+//  make this stuff open the header things one day maybe 
 anywhereButton.onclick = function()
 {
-     document.getElementById("heder").style.position = "absolute";
-     document.getElementById("heder").style.top = "0px";
-     document.getElementById("heder").style.zIndex = "1";
-     document.getElementById("heder").style.height = "161px";
+     document.getElementById("TopHeader").style.height = "161px";
+     document.getElementById("ScrollDiv").style.zIndex = "-1";
    
      document.getElementById("MiniForm").style.display = "none";
      document.getElementById("StaysMenuButtons").style.display = "block";
@@ -902,10 +897,8 @@ anywhereButton.onclick = function()
 
 anyWeekButton.onclick = function()
 {
-     document.getElementById("heder").style.position = "absolute";
-     document.getElementById("heder").style.top = "0px";
-     document.getElementById("heder").style.zIndex = "1";
-     document.getElementById("heder").style.height = "161px";
+     document.getElementById("TopHeader").style.height = "161px";
+     document.getElementById("ScrollDiv").style.zIndex = "-1";
 
      document.getElementById("MiniForm").style.display = "none";
      document.getElementById("StaysMenuButtons").style.display = "block";
@@ -916,11 +909,9 @@ anyWeekButton.onclick = function()
 
 addGuestsButton.onclick = function()
 {
-     document.getElementById("heder").style.position = "absolute";
-     document.getElementById("heder").style.top = "0px";
-     document.getElementById("heder").style.zIndex = "1";
-     document.getElementById("heder").style.height = "161px";
-   
+     document.getElementById("TopHeader").style.height = "161px";
+     document.getElementById("ScrollDiv").style.zIndex = "-1";
+
      document.getElementById("MiniForm").style.display = "none";
      document.getElementById("StaysMenuButtons").style.display = "block";
      document.getElementById("StaysMenuForm").style.display = "block";

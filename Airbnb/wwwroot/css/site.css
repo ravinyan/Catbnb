@@ -38,15 +38,26 @@ div.nav_bar_shadow :hover {
 
 /* -------------------------------------- HEADER CLASSES -------------------------------------- */
 header.header {
-    background-color: white;
-    width: 100vw;
+    position: sticky;
+    top: 0px;
+    z-index: 100;
+    height: 80px;
+    background: white
+}
+
+div.size_changing_header {
+    z-index: 100;
+    transition: 0.2s;
+    position: relative;
+    border-block-end: 1px solid #dddddd;
+    height: 161px;
+    background: white
 }
 
 div.header_div {
     align-items: center;
     display: flex;
-    padding-inline-start: 40px;
-    padding-inline-end: 58px;
+    padding: 0px 40px;
     height: 80px;
 }
 
@@ -103,8 +114,7 @@ form.form {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-inline-end: 68px;
-    padding-inline-start: 50px;
+    padding: 0px 50px;
 }
 
 div.form_border {
@@ -672,10 +682,10 @@ div.scroll_bar {
     align-items: center;
     display: flex;
     grid-column-gap: 30px;
-    width: 100vw;
-    padding-inline-start: 40px;
-    padding-inline-end: 58px;
+    width: 100%;
+    padding: 0px 40px;
     top: 162px;
+    z-index: 100;
 }
 
 button.scroll_menu_button_left {
@@ -1027,12 +1037,28 @@ div.cat_card_image_box {
     width: 240px;
 }
 
-button.cat_card_guest_favourite_button {
+div.cat_card_guest_favourite_button {
     border: 1px solid white;
     background: white;
     border-radius: 50px;
     width: 130px;
     font-weight: 600;
+    text-align: center;
+    z-index: 1;
+    position: absolute;
+}
+
+div.test {
+    display: flex;
+    flex-flow: column;
+    width: 240px;
+    height: calc(100% - 10px);
+}
+
+div.cat_card_favourite_box {
+    display: grid;
+    flex: 1 0;
+    grid-template-columns: auto auto;
 }
 
 div.cat_card_buttons_box {
@@ -1092,12 +1118,12 @@ span.cat_card_dot {
 
 div.cat_card_info_box {
     display: grid;
+    position: relative;
 }
 
 div.cat_card_info_header {
     display: inline-flex;
     justify-content: space-between;
-
 }
 
 div.cat_card_stars_box {
