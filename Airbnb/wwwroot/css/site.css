@@ -1026,15 +1026,15 @@ div.my_head_exploded {
 /* CAT CARD CLASSES */
 
 div.cat_card {
-    height: auto;
-    width: 240px;
+    height: 200px;
+    min-width: 180px;
+    position: relative;
 }
 
 /* image box stuff */
-
 div.cat_card_image_box {
-    height: 250px;
-    width: 240px;
+    height: 100%;
+    width: 100%;
 }
 
 div.cat_card_guest_favourite_button {
@@ -1048,10 +1048,19 @@ div.cat_card_guest_favourite_button {
     position: absolute;
 }
 
-div.test {
+div.cat_card_on_image_elements_box {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0px 10px;
+    padding-block-start: 10px;
+}
+
+div.cat_card_on_image_elements_box2 {
     display: flex;
     flex-flow: column;
-    width: 240px;
+    width: 100%;
     height: calc(100% - 10px);
 }
 
@@ -1059,6 +1068,16 @@ div.cat_card_favourite_box {
     display: grid;
     flex: 1 0;
     grid-template-columns: auto auto;
+}
+
+div.cat_card_heart_box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+div.cat_card_heart_box2 {
+    z-index: 1;
+    position: absolute;
 }
 
 div.cat_card_buttons_box {
@@ -1112,6 +1131,23 @@ span.cat_card_dot {
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
+}
+
+div.cat_card_image_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+a.cat_card_href {
+    width: 100%; 
+    height: 100%;
+}
+
+img.cat_card_image {
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 /* info box stuff */

@@ -582,7 +582,7 @@ else if (window.location.search == "?category=Design")
 {
     displayText1.style.display = "none";
     displayText2.style.display = "none";
-    displayText3.style.display = "block";
+    displayText3.style.display = "grid";
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -4350,9 +4350,9 @@ var keyArray = []
 var arr = ["banana", "pineapple"]
 var arrV = [queryKey[arr[0]], queryKey[arr[1]]]
 
-for (i = 0; i < arrV.length; i++)
+for (imDumbo = 0; imDumbo < arrV.length; imDumbo++)
 {
-    console.log(arrV[i]);
+    console.log(arrV[imDumbo]);
 }
 
 //  FINAL BOSS 
@@ -4361,4 +4361,195 @@ function generateQueryStringURI()
 
 }
 //console.log(value)
+
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+
+function thisIsJustConceptOnHowItCouldWork()
+{
+    // get id from database
+    let catCard = document.createElement("DIV");
+    /*catCard.id = document.getElementById(); // the id*/
+    catCard.className = "cat_card";
+
+    let imageBox = document.createElement("DIV");
+    imageBox.className = "cat_card_image_box";
+
+    let imageElementsOuterBox = document.createElement("DIV");
+    imageElementsOuterBox.className = "cat_card_on_image_elements_box";
+
+    let imageElementsInnerBox = document.createElement("DIV");
+    imageElementsInnerBox.className = "cat_card_on_image_elements_box2";
+
+    let favouriteBox = document.createElement("DIV");
+    favouriteBox.className  = "cat_card_favourite_box";
+
+    let favouriteEmptyDiv = document.createElement("DIV");
+    let favouriteLabel = document.createElement("DIV");
+    favouriteLabel.className = "cat_card_guest_favourite_button";
+    favouriteLabel.innerText = "Guest favourite";
+
+    favouriteEmptyDiv.appendChild(favouriteLabel);
+    
+    let heartSVGOuterBox = document.createElement("DIV");
+    heartSVGOuterBox.className = "cat_card_heart_box";
+
+    let heartSVGInnerBox = document.createElement("DIV");
+    heartSVGInnerBox.className = "cat_card_heart_box2";
+    heartSVGInnerBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="stroke: white" width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                                      <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+                                  </svg>`;
+
+    heartSVGOuterBox.appendChild(heartSVGInnerBox);
+
+    favouriteBox.appendChild(favouriteEmptyDiv);
+    favouriteBox.appendChild(heartSVGOuterBox);
+
+    let controlButtons = document.createElement("DIV");
+    controlButtons.className = "cat_card_buttons_box";
+
+    let controlbuttonLeft = document.createElement("BUTTON");
+    controlbuttonLeft.className = "cat_card_L_button";
+
+    let controlbuttonRight = document.createElement("BUTTON");
+    controlbuttonRight.className = "cat_card_R_button";
+    
+    controlButtons.appendChild(controlbuttonLeft);
+    controlButtons.appendChild(controlbuttonRight);
+
+    let imageDotsParent = document.createElement("DIV");
+    imageDotsParent.className = "cat_card_dots_box_parent";
+
+    let imageDotsBox = document.createElement("DIV");
+    imageDotsBox.className = "cat_card_dots_box";
+
+    for (i = 1; i < 6; i++)
+    {
+        let dot = document.createElement("SPAN");
+        
+        if (i == 1)
+        {
+            dot.className = "cat_card_dot";
+            dot.style.background = "white";
+        } 
+        else if (i == 5)
+        {
+            dot.className = "cat_card_dot";
+        }
+        else
+        {
+            dot.className = "cat_card_dot";
+            dot.style.transform = "scale(66%, 66%)";
+        }
+
+        imageDotsBox.appendChild(dot);
+    }
+
+    imageDotsParent.appendChild(imageDotsBox);
+
+    imageElementsInnerBox.appendChild(favouriteBox);
+    imageElementsInnerBox.appendChild(controlButtons);
+    imageElementsInnerBox.appendChild(imageDotsParent);
+
+    imageElementsOuterBox.appendChild(imageElementsInnerBox);
+    imageBox.appendChild(imageElementsOuterBox);
+
+    let imageElements = document.createElement("DIV");
+    imageElements.className = "cat_card_image_container";
+
+    let imageHref = document.createElement("A");
+    imageHref.className = "cat_card_href";
+    imageHref.href = "https://localhost:7027/test";
+    
+    let pictureTag = document.createElement("PICTURE");
+
+    let image = document.createElement("IMG");
+    image.className = "cat_card_image";
+    // db thing
+    image.src = "https://images.unsplash.com/photo-1548595224-8c7ae4e20bf6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+    pictureTag.appendChild(image);
+    imageHref.appendChild(pictureTag);
+    imageElements.appendChild(imageHref);
+
+    imageBox.appendChild(imageElementsOuterBox);
+    imageBox.appendChild(imageElements);
+
+    let infoBox = document.createElement("DIV");
+    infoBox.className = "cat_card_info_box";
+
+    let cityInfo = document.createElement("DIV");
+    cityInfo.className = "cat_card_info_header";
+
+    let cityBox = document.createElement("DIV");
+    cityBox.className = "cat_card_info_box_country";
+    cityBox.innerText = "DB info";
+
+    let starRatingBox = document.createElement("DIV");
+    starRatingBox.className = "cat_card_stars_box";
+    starRatingBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                                   <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path>
+                               </svg>`;
+
+    let starRating = document.createElement("SPAN")
+    starRating.className = "cat_card_stars_rating";
+    starRating.innerText = "6";
+
+    starRatingBox.appendChild(starRating);
+
+    cityInfo.appendChild(cityBox);
+    cityInfo.appendChild(starRatingBox);
+
+    let locationInfo = document.createElement("DIV");
+    locationInfo.className = "cat_card_info_box_middle";
+    locationInfo.innerText = "DB info";
+
+    let dateInfo = document.createElement("DIV");
+    dateInfo.className = "cat_card_info_box_middle";
+    dateInfo.innerText = "DB info";
+
+    let priceInfo = document.createElement("DIV");
+    priceInfo.className = "cat_card_info_box_price_box";
+
+    let nightPrice = document.createElement("SPAN");
+    nightPrice.className = "cat_card_price";
+    nightPrice.innerText = "DB info ";
+
+    let nightText = document.createElement("SPAN");
+    nightText.innerText = "night";
+
+    priceInfo.appendChild(nightPrice);
+    priceInfo.appendChild(nightText);
+
+    infoBox.appendChild(cityInfo);
+    infoBox.appendChild(locationInfo);
+    infoBox.appendChild(dateInfo);
+    infoBox.appendChild(priceInfo);
+
+    // end
+    catCard.appendChild(imageBox);
+    catCard.appendChild(infoBox);
+
+    DisplayText3.appendChild(catCard);
+}
+
+
+function operationKillTheBrowser()
+{
+    // 500 in 100ms not bad i think
+    var start = performance.now();
+    for (k = 0; k < 500; k++)
+    {
+        thisIsJustConceptOnHowItCouldWork();
+    }
+    var end = performance.now();
+    var timeTaken = end - start;
+
+    console.log(timeTaken)
+}
+
+
+operationKillTheBrowser()
+
 
