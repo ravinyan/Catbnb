@@ -1024,10 +1024,45 @@ div.my_head_exploded {
 }
 
 /* CAT CARD CLASSES */
+@media(min-width: 550px) {
+    div.grid_thing {
+        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 950px) {
+    div.grid_thing {
+        gap: 20px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media(min-width: 1128px) {
+    div.grid_thing {
+        gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media(min-width: 1640px) {
+    div.grid_thing {
+        gap: 20px;
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media(min-width: 1880px) {
+    div.grid_thing {
+        gap: 20px;
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
 
 div.cat_card {
-    height: 200px;
-    min-width: 180px;
+    height: 100%;
+    width: 100%;
     position: relative;
 }
 

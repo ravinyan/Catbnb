@@ -568,14 +568,14 @@ const displayText3 = document.getElementById("DisplayText3")
 
 if (window.location.search == "?category=Lakefront")
 {
-    displayText1.style.display = "block";
+    displayText1.style.display = "grid";
     displayText2.style.display = "none";
     displayText3.style.display = "none";
 }
 else if (window.location.search == "?category=Amazing%20Views")
 {
     displayText1.style.display = "none";
-    displayText2.style.display = "block";
+    displayText2.style.display = "grid";
     displayText3.style.display = "none";
 }
 else if (window.location.search == "?category=Design")
@@ -4539,7 +4539,7 @@ function operationKillTheBrowser()
 {
     // 500 in 100ms not bad i think
     var start = performance.now();
-    for (k = 0; k < 500; k++)
+    for (k = 0; k < 10; k++)
     {
         thisIsJustConceptOnHowItCouldWork();
     }

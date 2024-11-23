@@ -2,10 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="DisplayText1" style="padding-inline-start: 40px; padding-inline-end: 40px; display: none">
-    THIS IS BOB!
+<div id="DisplayText1">
+    <div class="grid auto-fill">
+        <div> 1</div>
+        <div> 2</div>
+    </div>
+    <div class="grid auto-fit">
+        <div> 1</div>
+        <div> 2</div>
+    </div>
 </div>
-
+@* https://www.quackit.com/html/html_editors/scratchpad/?example=/css/grid/tutorial/create_a_responsive_grid_auto-fill_vs_auto-fit *@
 @* there are days when you hate css... and there are days where you REALLY hate css... i REALLY hate css today *@
 <div id="DisplayText2" style="padding-inline-start: 40px; padding-inline-end: 40px; display: none">
     THIS IS BOBBER! and card for... cats! soon!
@@ -93,8 +100,8 @@
     </div>
 </div>
 
-<div id="DisplayText3" style="display: grid; grid-template-columns: auto auto auto; width: 100%; height: 100%">
-    
+<div id="DisplayText3" class="grid_thing">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     @* <a>
         <div style="display: none">
             <picture>
