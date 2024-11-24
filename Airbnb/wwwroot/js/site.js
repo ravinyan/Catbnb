@@ -568,7 +568,7 @@ const displayText3 = document.getElementById("DisplayText3")
 
 if (window.location.search == "?category=Lakefront")
 {
-    displayText1.style.display = "grid";
+    displayText1.style.display = "flex";
     displayText2.style.display = "none";
     displayText3.style.display = "none";
 }
@@ -582,7 +582,7 @@ else if (window.location.search == "?category=Design")
 {
     displayText1.style.display = "none";
     displayText2.style.display = "none";
-    displayText3.style.display = "grid";
+    displayText3.style.display = "flex";
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -4467,7 +4467,7 @@ function thisIsJustConceptOnHowItCouldWork()
     let image = document.createElement("IMG");
     image.className = "cat_card_image";
     // db thing
-    image.src = "https://images.unsplash.com/photo-1548595224-8c7ae4e20bf6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    image.src = "https://plus.unsplash.com/premium_photo-1677545183884-421157b2da02?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
     pictureTag.appendChild(image);
     imageHref.appendChild(pictureTag);
