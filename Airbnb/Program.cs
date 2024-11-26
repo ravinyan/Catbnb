@@ -1,9 +1,23 @@
+using Airbnb.DBContext;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CatCardContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CatCardDatabaseContext")
+    ?? throw new InvalidOperationException("Connection string 'CatCardDatabaseContext' not found")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.InitializeSeedData(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

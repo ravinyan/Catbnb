@@ -4366,11 +4366,11 @@ function generateQueryStringURI()
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 
-function thisIsJustConceptOnHowItCouldWork()
+function thisIsJustConceptOnHowItCouldWork(id)
 {
     // get id from database
     let catCard = document.createElement("DIV");
-    /*catCard.id = document.getElementById(); // the id*/
+    catCard.id = `CatCard-${id}`; // the id*/
     catCard.className = "cat_card";
 
     let imageBox = document.createElement("DIV");
@@ -4436,11 +4436,11 @@ function thisIsJustConceptOnHowItCouldWork()
         else if (i == 5)
         {
             dot.className = "cat_card_dot";
+            dot.style.transform = "scale(66%, 66%)";
         }
         else
         {
             dot.className = "cat_card_dot";
-            dot.style.transform = "scale(66%, 66%)";
         }
 
         imageDotsBox.appendChild(dot);
@@ -4460,14 +4460,14 @@ function thisIsJustConceptOnHowItCouldWork()
 
     let imageHref = document.createElement("A");
     imageHref.className = "cat_card_href";
-    imageHref.href = "https://localhost:7027/test";
+    imageHref.href = `https://localhost:7027/Rooms/${id}`;
     
     let pictureTag = document.createElement("PICTURE");
 
     let image = document.createElement("IMG");
     image.className = "cat_card_image";
     // db thing
-    image.src = "https://plus.unsplash.com/premium_photo-1677545183884-421157b2da02?q=80&w=1080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    image.src = "https://cdn.7tv.app/emote/01HBVADK180003KFD14YHJ4PRZ/4x.webp";
 
     pictureTag.appendChild(image);
     imageHref.appendChild(pictureTag);
@@ -4541,7 +4541,7 @@ function operationKillTheBrowser()
     var start = performance.now();
     for (k = 0; k < 10; k++)
     {
-        thisIsJustConceptOnHowItCouldWork();
+        thisIsJustConceptOnHowItCouldWork(k);
     }
     var end = performance.now();
     var timeTaken = end - start;

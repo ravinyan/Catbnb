@@ -2,13 +2,15 @@
 
 namespace Airbnb.Models
 {
-	public class Category
+	public class AmenitiesModel
 	{
 		public int Id { get; set; }
 
-		[MaxLength(25)]
+		[MaxLength(60)]
+		[Required]
 		public string Name { get; set; } = string.Empty;
 
-		public ICollection<PlaceOfStay>? PlacesOfStay { get; set; }
-	}
+        public int CatCardId { get; set; }
+        public CatCardModel? CatCard { get; set; }
+    }
 }

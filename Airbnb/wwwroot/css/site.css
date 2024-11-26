@@ -1189,14 +1189,16 @@ div.cat_card_dots_box_parent {
 div.cat_card_dots_box {
     position: absolute;
     z-index: 1;
+    margin-block-end: 6px;
 }
 
 span.cat_card_dot {
-    height: 7px;
-    width: 7px;
+    height: 6px;
+    width: 6px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
+    margin: 0px 3px;
 }
 
 div.cat_card_image_container {
