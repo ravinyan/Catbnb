@@ -2,7 +2,7 @@
 
 namespace Airbnb.Models
 {
-    public class CatCardImagesModel
+    public class CatCardImages
     {
         public int Id { get; set; }
 
@@ -10,6 +10,6 @@ namespace Airbnb.Models
         public string Url { get; set; } = string.Empty;
 
         public int CatCardId { get; set; }
-        public CatCardModel? CatCard { get; set; }
+        public CatCard? CatCard { get; set; }
     }
 }

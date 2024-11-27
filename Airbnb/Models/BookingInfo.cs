@@ -2,7 +2,7 @@
 
 namespace Airbnb.Models
 {
-    public class BookingInfoModel
+    public class BookingInfo
     {
         public int Id { get; set; }
 
@@ -42,9 +42,9 @@ namespace Airbnb.Models
         public bool InfantsAllowed { get; set; } = false;
 
         public int ReviewId { get; set; }
-        public ReviewsModel? Reviews { get; set; }
+        public Reviews? Reviews { get; set; }
 
         public int CatCardId { get; set; }
-        public CatCardModel? CatCard { get; set; }
+        public CatCard? CatCard { get; set; }
     }
 }

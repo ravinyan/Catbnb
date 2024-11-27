@@ -2,12 +2,12 @@
 
 namespace Airbnb.Models
 {
-    public class ReviewsModel
+    public class Reviews
     {
         public int Id { get; set; }
 
         [Required]
-        public UserModel User { get; set; } = new UserModel();
+        public User User { get; set; } = new User();
 
         [Required]
         public string Review { get; set; } = string.Empty;

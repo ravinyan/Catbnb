@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Airbnb.Models
 {
-	public class AmenitiesModel
+	public class Amenities
 	{
 		public int Id { get; set; }
 
@@ -10,7 +11,6 @@ namespace Airbnb.Models
 		[Required]
 		public string Name { get; set; } = string.Empty;
 
-        public int CatCardId { get; set; }
-        public CatCardModel? CatCard { get; set; }
+        public ICollection<CatCard>? CatCards { get; set; }
     }
 }
