@@ -4467,7 +4467,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
     let image = document.createElement("IMG");
     image.className = "cat_card_image";
     // db thing
-    image.src = "https://cdn.7tv.app/emote/01HBVADK180003KFD14YHJ4PRZ/4x.webp";
+    image.src = "https://cdn.discordapp.com/attachments/941441413567103077/1311610366446272574/image.png?ex=67497bd7&is=67482a57&hm=ab7a8e7883b438d89f9e43f11cb0b4d640ed149e2c32167e7cd508801b746eac&";
 
     pictureTag.appendChild(image);
     imageHref.appendChild(pictureTag);
