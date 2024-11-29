@@ -44,7 +44,6 @@ namespace Airbnb.Models
         //public int ReviewId { get; set; }
         //public Reviews? Reviews { get; set; }
 
-        public int CatCardId { get; set; }
         public CatCard? CatCard { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Airbnb.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.Net;
 
 namespace Airbnb.DBContext
 {
@@ -76,7 +74,7 @@ namespace Airbnb.DBContext
                     hostId++;
                 }
 
-                catCardsList.Add(new CatCard { Id = i, HostId = hostId });
+                catCardsList.Add(new CatCard { Id = i, HostId = hostId, BookingInfoId = i});
             }
 
             return catCardsList;
@@ -108,7 +106,6 @@ namespace Airbnb.DBContext
                     MaxNumberOfGuests = rng.Next(1, 16),
                     PetsAllowed = TrueOrFalse[rng.Next(1, 2)],
                     InfantsAllowed = TrueOrFalse[rng.Next(0, 1)],
-                    CatCardId = i,
                 });
             }
 
@@ -120,11 +117,12 @@ namespace Airbnb.DBContext
             List<CatCardImages> imagesList = new List<CatCardImages>();
             Random rng = new Random();
 
-            string[] urlImages = ["https://cdn.discordapp.com/attachments/941441413567103077/1311662254747291648/image1.png?ex=6749ac2b&is=67485aab&hm=7f471107e5462ebb5a14418f9ff0dc306c17309954443b8f9588eafbad67efe5&",
-                                  "https://cdn.discordapp.com/attachments/941441413567103077/1311662427833761802/image2.png?ex=6749ac54&is=67485ad4&hm=4204bdef83d9a25dd4deea0879dac21849ff28da5e1aacbccb0d92feece5b2fa&",
-                                  "https://cdn.discordapp.com/attachments/941441413567103077/1311662603797401610/image3.png?ex=6749ac7e&is=67485afe&hm=c3ef12a5dc8c62fd33c6424f8cf507395a96d1a9b7c1b735732dc148fa497813&",
-                                  "https://cdn.discordapp.com/attachments/941441413567103077/1311664784764178493/image4.png?ex=6749ae86&is=67485d06&hm=9003e456fa1746edbb7a610730f958b4678718c80e92c97a0892dd8edefea68d&",
-                                  "https://cdn.discordapp.com/attachments/941441413567103077/1311664736982798377/image5.png?ex=6749ae7a&is=67485cfa&hm=f2c0a8d27681a3f8532165e0c5debecc2e8a214a65af194467581f9185a70438&"];
+            // i would use links but i can just do that instead... that way at least links will never die
+            string[] urlImages = ["/img/img1.png",
+                                  "/img/img2.png",
+                                  "/img/img3.png",
+                                  "/img/img4.png",
+                                  "/img/img5.png"];
 
             for (int i = 1; i <= 610; i++)
             {
@@ -146,10 +144,6 @@ namespace Airbnb.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 61 categories 61 users 
-            // 1 user will have 10 cards for each category
-            // every card will have random 5 amenities
-            // 610 cards
             List<Amenities> amenitiesList = GenerateAmenities();
             modelBuilder.Entity<Amenities>().HasData(amenitiesList);
 
@@ -166,31 +160,29 @@ namespace Airbnb.DBContext
             modelBuilder.Entity<CatCardImages>().HasData(imagesList);
 
 
-
-
-            //  connections
             modelBuilder.Entity<User>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(u => u.Host);
 
-            //modelBuilder.Entity<CatCardModel>()
-            //    .HasMany(i => i.Images)
-            //    .WithOne(cc => cc.CatCard);
+            modelBuilder.Entity<CatCard>()
+                .HasMany(a => a.Amenities)
+                .WithMany(cc => cc.CatCards)
+                .UsingEntity(cca => cca.HasData(new[]
+                {
+                    new { CatCardsId = 1, AmenitiesId = 1 },
+                    new { CatCardsId = 1, AmenitiesId = 2 },
+                    new { CatCardsId = 1, AmenitiesId = 3 },
+                    new { CatCardsId = 1, AmenitiesId = 4 },
+                    new { CatCardsId = 1, AmenitiesId = 5 },
+                }));
 
-            //modelBuilder.Entity<CatCard>()
-            //    .HasOne(a => a.Host)
-            //    .WithMany(cc => cc.CatCards);
+            modelBuilder.Entity<CatCard>()
+                .HasMany(i => i.Images)
+                .WithOne(cc => cc.CatCard);
 
-            //modelBuilder.Entity<CatCard>()
-            //    .HasMany(a => a.Amenities)
-            //    .WithMany(cc => cc.CatCards);
-
-            //modelBuilder.Entity<CatCardModel>()
-            //   .HasOne(bi => bi.BookingInfo)
-            //   .WithOne(cc => cc.CatCard);
-
-            //modelBuilder.Entity<CatCardAmenitiesModel>()
-            //    .HasKey(k => new { k.CatCardId, k.AmenitiesId });
+            modelBuilder.Entity<BookingInfo>()
+                .HasOne(cc => cc.CatCard)
+                .WithOne(bi => bi.BookingInfo);
         }
 
         public DbSet<CatCard> CatCards { get; set; }

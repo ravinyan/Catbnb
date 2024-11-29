@@ -4366,6 +4366,28 @@ function generateQueryStringURI()
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 
+fetch("api/CatCard").then(function(response)
+{
+    return response.json();
+}).then(function(json)
+{
+    //console.log(JSON.stringify(json));
+
+})
+
+fetch(`api/CatCard/602`).then(function(response)
+{
+    return response.json();
+}).then(function(json)
+{
+    var bookingInfoId = json.bookingInfoId;
+    var hostId = json.hostId;
+    var id = json.id;
+
+    console.log(`\n id - ${id}, bi - ${bookingInfoId}, hi - ${hostId}`)
+    console.log(json)
+})
+
 function thisIsJustConceptOnHowItCouldWork(id)
 {
     // get id from database
@@ -4467,7 +4489,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
     let image = document.createElement("IMG");
     image.className = "cat_card_image";
     // db thing
-    image.src = "https://cdn.discordapp.com/attachments/941441413567103077/1311610366446272574/image.png?ex=67497bd7&is=67482a57&hm=ab7a8e7883b438d89f9e43f11cb0b4d640ed149e2c32167e7cd508801b746eac&";
+    image.src = "/img/img5.png";
 
     pictureTag.appendChild(image);
     imageHref.appendChild(pictureTag);
