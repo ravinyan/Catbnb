@@ -16,7 +16,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    SeedData.InitializeSeedData(services);
+    DBReset.InitializeSeedData(services);
 }
 
 // Configure the HTTP request pipeline.

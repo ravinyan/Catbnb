@@ -575,7 +575,7 @@ if (window.location.search == "?category=Lakefront")
 else if (window.location.search == "?category=Amazing%20Views")
 {
     displayText1.style.display = "none";
-    displayText2.style.display = "grid";
+    displayText2.style.display = "flex";
     displayText3.style.display = "none";
 }
 else if (window.location.search == "?category=Design")
@@ -4433,9 +4433,15 @@ function thisIsJustConceptOnHowItCouldWork(id)
 
     let controlbuttonLeft = document.createElement("BUTTON");
     controlbuttonLeft.className = "cat_card_L_button";
+    controlbuttonLeft.innerHTML = `<svg b-ugywe7wap2="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="-1 0 16 16">
+                                       <path b-ugywe7wap2="" d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"></path>
+                                   </svg>`;
 
     let controlbuttonRight = document.createElement("BUTTON");
     controlbuttonRight.className = "cat_card_R_button";
+    controlbuttonRight.innerHTML = `<svg b-ugywe7wap2="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16">
+                                        <path b-ugywe7wap2="" d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"></path>
+                                    </svg>`;
     
     controlButtons.appendChild(controlbuttonLeft);
     controlButtons.appendChild(controlbuttonRight);
@@ -4556,6 +4562,61 @@ function thisIsJustConceptOnHowItCouldWork(id)
     DisplayText3.appendChild(catCard);
 }
 
+var numba = 1;
+
+function catCardShowButtonsCarousel(catCardId, numberOfImages)
+{
+    try
+    {
+        //debugger;
+        var buttonL = catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[3].childNodes[1];
+        var buttonR = catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[3].childNodes[2];
+    }catch{}
+
+    catCardId.addEventListener("mouseover", function()
+    {
+       buttonL.style.opacity = "1";
+       buttonR.style.opacity = "1";
+
+    });
+
+    catCardId.addEventListener("mouseout", function()
+    {
+       buttonL.style.opacity = "0";
+       buttonR.style.opacity = "0";
+    });
+
+    buttonR.addEventListener("click", function()
+    {
+        if (numba < (2 * numberOfImages) - 1)
+        {
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href";
+
+            numba += 2
+
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href_active";
+
+            // little dots css box
+            console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
+        }
+    });
+
+    buttonL.addEventListener("click", function()
+    {
+        if (numba > 1)
+        {
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href";
+
+            numba -= 2
+
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href_active";
+        }
+    });
+}
+
+var cc = document.getElementById("CatCard-0");
+
+catCardShowButtonsCarousel(cc, 9);
 
 function operationKillTheBrowser()
 {

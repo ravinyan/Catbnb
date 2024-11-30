@@ -661,8 +661,6 @@ button.month_card_right_button {
         border: 1px solid black;
     }
 
-
-
 /*loginababababa*/
 button.login_dropdown_button {
     display: flex;
@@ -1093,13 +1091,13 @@ div.grid_but_with_flex_boxes_coz_i_HATE_grid_scaling_stuff_coz_i_dont_understand
     }
 }
 
-
 /* image box stuff */
 div.cat_card_image_box {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
+    border-radius: 10px;
 }
 
 div.cat_card_guest_favourite_button {
@@ -1160,11 +1158,19 @@ button.cat_card_R_button {
     width: 32px;
     height: 32px;
     border-radius: 50px;
-    background: white;
+    background: #d9d9d9;
     justify-content: center;
     right: 15px;
     z-index: 1;
+    align-items: center;
+    transition: 0.2s;
+    opacity: 0;
+    border: 1px solid #dddddd;
 }
+
+    button.cat_card_R_button:hover {
+        background: white;
+    }
 
 button.cat_card_L_button {
     position: absolute;
@@ -1172,11 +1178,19 @@ button.cat_card_L_button {
     width: 32px;
     height: 32px;
     border-radius: 50px;
-    background: white;
+    background: #d9d9d9;
     justify-content: center;
     left: 15px;
     z-index: 1;
+    align-items: center;
+    transition: 0.2s;
+    opacity: 0;
+    border: 1px solid #dddddd;
 }
+
+    button.cat_card_L_button:hover {
+        background: white;
+    }
 
 div.cat_card_dots_box_parent {
     display: flex;
@@ -1204,13 +1218,46 @@ span.cat_card_dot {
 div.cat_card_image_container {
     position: relative;
     width: 100%;
-    display: block;
+    overflow: hidden;
 }
 
 a.cat_card_href {
+    position: relative;
+    display: none;
+    float: left;
     width: 100%;
-    display: block;
+    margin-right: -100%;
+    transition: transform .6s ease-in-out;
 }
+
+a.cat_card_href_active {
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    transition: transform .6s ease-in-out;
+}
+/*
+@keyframes animate_slides_in {
+    0% {
+        left: 800px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes animate_slides_out {
+    0% {
+        right: 0px;
+    }
+
+    100% {
+        right: 800px;
+    }
+}*/
 
 img.cat_card_image {
     position: relative;
@@ -1220,6 +1267,7 @@ img.cat_card_image {
     width: 100%;
     overflow: hidden;
     align-items: stretch;
+    border-radius: 20px;
 }
 
 /* info box stuff */

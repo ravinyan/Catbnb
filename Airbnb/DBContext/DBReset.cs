@@ -2,7 +2,7 @@
 
 namespace Airbnb.DBContext
 {
-    public class SeedData
+    public class DBReset
     {
         public static void InitializeSeedData(IServiceProvider serviceProvider)
         {
