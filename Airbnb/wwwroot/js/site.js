@@ -4489,6 +4489,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
     let imageHref = document.createElement("A");
     imageHref.className = "cat_card_href";
     imageHref.href = `https://localhost:7027/Rooms/${id}`;
+    imageHref.dataset.active = true;
     
     let pictureTag = document.createElement("PICTURE");
 
@@ -4563,16 +4564,11 @@ function thisIsJustConceptOnHowItCouldWork(id)
 }
 
 var numba = 1;
+var buttonL = document.querySelector(".cat_card_L_button");
+var buttonR = document.querySelector(".cat_card_R_button");
 
-function catCardShowButtonsCarousel(catCardId, numberOfImages)
+function catCardShowButtonsCarousel(catCardId, buttonL, buttonR)
 {
-    try
-    {
-        //debugger;
-        var buttonL = catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[3].childNodes[1];
-        var buttonR = catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[3].childNodes[2];
-    }catch{}
-
     catCardId.addEventListener("mouseover", function()
     {
        buttonL.style.opacity = "1";
@@ -4585,38 +4581,42 @@ function catCardShowButtonsCarousel(catCardId, numberOfImages)
        buttonL.style.opacity = "0";
        buttonR.style.opacity = "0";
     });
+}
+
+function catCardMoveCarousel(catCardId, buttonL, buttonR, numberOfImages)
+{
+    
+    buttonL.addEventListener("click", function()
+    {
+        if (numba > 1)
+        {
+            delete catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active;
+
+            numba -= 2
+
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active = true;
+        }
+    });
 
     buttonR.addEventListener("click", function()
     {
         if (numba < (2 * numberOfImages) - 1)
         {
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href";
+            delete catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active;
 
             numba += 2
 
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href_active";
-
+            catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active = true;
             // little dots css box
             console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
-        }
-    });
-
-    buttonL.addEventListener("click", function()
-    {
-        if (numba > 1)
-        {
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href";
-
-            numba -= 2
-
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].className = "cat_card_href_active";
         }
     });
 }
 
 var cc = document.getElementById("CatCard-0");
 
-catCardShowButtonsCarousel(cc, 9);
+catCardShowButtonsCarousel(cc, buttonL, buttonR);
+catCardMoveCarousel(cc, buttonL, buttonR, 9);
 
 function operationKillTheBrowser()
 {
