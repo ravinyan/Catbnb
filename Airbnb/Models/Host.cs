@@ -2,7 +2,7 @@
 
 namespace Airbnb.Models
 {
-    public class User
+    public class Host
     {
         public int Id { get; set; }
 

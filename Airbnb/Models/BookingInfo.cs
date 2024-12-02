@@ -20,6 +20,12 @@ namespace Airbnb.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
+        public string ShortDescription { get; set; } = string.Empty;
+
+        [Required]
+        public string DateAvaiable { get; set; } = string.Empty;
+
+        [Required]
         [Range(1, 16)]
         public int NumberOfBedrooms { get; set; } = 1;
 

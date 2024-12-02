@@ -1235,8 +1235,8 @@ a.cat_card_href {
         width: 100%;
         z-index: 1;
         opacity: 1;
-        transition: 0.2s opacity ease-in-out;
-        transition-delay: 0s;
+        /*transition: 0.1s opacity ease-in-out;*/
+        transition-delay: 0ms;
     }
 
 img.cat_card_image {

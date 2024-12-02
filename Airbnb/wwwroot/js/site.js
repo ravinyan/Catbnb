@@ -4365,34 +4365,12 @@ function generateQueryStringURI()
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
+// this should be the last thing to render on page to not block ui and other stuff from rendering
 
-fetch("api/CatCard").then(function(response)
+function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
 {
-    return response.json();
-}).then(function(json)
-{
-    //console.log(JSON.stringify(json));
-
-})
-
-fetch(`api/CatCard/602`).then(function(response)
-{
-    return response.json();
-}).then(function(json)
-{
-    var bookingInfoId = json.bookingInfoId;
-    var hostId = json.hostId;
-    var id = json.id;
-
-    console.log(`\n id - ${id}, bi - ${bookingInfoId}, hi - ${hostId}`)
-    console.log(json)
-})
-
-function thisIsJustConceptOnHowItCouldWork(id)
-{
-    // get id from database
     let catCard = document.createElement("DIV");
-    catCard.id = `CatCard-${id}`; // the id*/
+    catCard.id = `CatCard-${id}`;
     catCard.className = "cat_card";
 
     let imageBox = document.createElement("DIV");
@@ -4495,8 +4473,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
 
     let image = document.createElement("IMG");
     image.className = "cat_card_image";
-    // db thing
-    image.src = "/img/img5.png";
+    image.src = `${images.url}`;
 
     pictureTag.appendChild(image);
     imageHref.appendChild(pictureTag);
@@ -4513,7 +4490,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
 
     let cityBox = document.createElement("DIV");
     cityBox.className = "cat_card_info_box_country";
-    cityBox.innerText = "DB info";
+    cityBox.innerText = `${booking.city}, ${booking.country}`;
 
     let starRatingBox = document.createElement("DIV");
     starRatingBox.className = "cat_card_stars_box";
@@ -4530,20 +4507,20 @@ function thisIsJustConceptOnHowItCouldWork(id)
     cityInfo.appendChild(cityBox);
     cityInfo.appendChild(starRatingBox);
 
-    let locationInfo = document.createElement("DIV");
-    locationInfo.className = "cat_card_info_box_middle";
-    locationInfo.innerText = "DB info";
+    let shortDescr = document.createElement("DIV");
+    shortDescr.className = "cat_card_info_box_middle";
+    shortDescr.innerText = `${booking.shortDescription}`;
 
     let dateInfo = document.createElement("DIV");
     dateInfo.className = "cat_card_info_box_middle";
-    dateInfo.innerText = "DB info";
+    dateInfo.innerText = `${booking.dateAvaiable}`;
 
     let priceInfo = document.createElement("DIV");
     priceInfo.className = "cat_card_info_box_price_box";
 
     let nightPrice = document.createElement("SPAN");
     nightPrice.className = "cat_card_price";
-    nightPrice.innerText = "DB info ";
+    nightPrice.innerText = `${booking.basePrice}$ `;
 
     let nightText = document.createElement("SPAN");
     nightText.innerText = "night";
@@ -4552,7 +4529,7 @@ function thisIsJustConceptOnHowItCouldWork(id)
     priceInfo.appendChild(nightText);
 
     infoBox.appendChild(cityInfo);
-    infoBox.appendChild(locationInfo);
+    infoBox.appendChild(shortDescr);
     infoBox.appendChild(dateInfo);
     infoBox.appendChild(priceInfo);
 
@@ -4563,69 +4540,59 @@ function thisIsJustConceptOnHowItCouldWork(id)
     DisplayText3.appendChild(catCard);
 }
 
-var numba = 1;
-var buttonL = document.querySelector(".cat_card_L_button");
-var buttonR = document.querySelector(".cat_card_R_button");
-
-function catCardShowButtonsCarousel(catCardId, buttonL, buttonR)
-{
-    catCardId.addEventListener("mouseover", function()
-    {
-       buttonL.style.opacity = "1";
-       buttonR.style.opacity = "1";
-
-    });
-
-    catCardId.addEventListener("mouseout", function()
-    {
-       buttonL.style.opacity = "0";
-       buttonR.style.opacity = "0";
-    });
-}
 
 function catCardMoveCarousel(catCardId, buttonL, buttonR, numberOfImages)
 {
-    
+    let catCardButtons = catCardId.querySelectorAll(".cat_card_href");
+    let buttonIndex = 0;
+
     buttonL.addEventListener("click", function()
     {
-        if (numba > 1)
+        if (buttonIndex > 0)
         {
-            delete catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active;
+            buttonIndex --;
 
-            numba -= 2
-
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active = true;
+            delete catCardButtons[buttonIndex + 1].dataset.active;
+            catCardButtons[buttonIndex].dataset.active = true;
         }
     });
 
     buttonR.addEventListener("click", function()
     {
-        if (numba < (2 * numberOfImages) - 1)
+        if (buttonIndex < catCardButtons.length - 1)
         {
-            delete catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active;
+            buttonIndex ++;
 
-            numba += 2
+            delete catCardButtons[buttonIndex - 1].dataset.active;
+            catCardButtons[buttonIndex].dataset.active = true;
 
-            catCardId.childNodes[1].childNodes[3].childNodes[numba].dataset.active = true;
             // little dots css box
             console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
         }
     });
 }
 
-var cc = document.getElementById("CatCard-0");
-
-catCardShowButtonsCarousel(cc, buttonL, buttonR);
-catCardMoveCarousel(cc, buttonL, buttonR, 9);
-
-function operationKillTheBrowser()
+async function operationKillTheBrowser()
 {
-    // 500 in 100ms not bad i think
     var start = performance.now();
-    for (k = 0; k < 10; k++)
+
+    for (id = 1; id < 40; id++)
     {
-        thisIsJustConceptOnHowItCouldWork(k);
+        const catCardData = await fetch(`api/CatCard/${id}`);
+        const catCardJson = await catCardData.json();
+        
+        const hostData = await fetch(`api/Host/${catCardJson.hostId}`);
+        const hostJson = await hostData.json();
+
+        const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`);
+        const bookingJson = await bookingData.json();
+
+        const imageData = await fetch(`api/CatCardImages/${catCardJson.id}`);
+        const imageJson = await imageData.json();
+
+        thisIsJustConceptOnHowItCouldWork(catCardJson.id, hostJson, bookingJson, imageJson);
     }
+
     var end = performance.now();
     var timeTaken = end - start;
 
@@ -4634,5 +4601,40 @@ function operationKillTheBrowser()
 
 
 operationKillTheBrowser()
+
+function workQuestionMark()
+{
+    
+}
+
+var buttonL = document.querySelector(".cat_card_L_button");
+var buttonR = document.querySelector(".cat_card_R_button");
+
+function catCardShowButtonsCarousel()
+{
+    var catCards = document.querySelectorAll(".cat_card");
+
+    
+    
+    
+}
+
+document.addEventListener("mouseover", function(e)
+{
+    try
+    {
+        if (e.target.className == "cat_card_image")
+        {
+            //catCardShowButtonsCarousel();
+            console.log(e.target)
+        }
+    }catch{}
+});
+
+
+
+
+
+
 
 

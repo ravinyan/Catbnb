@@ -7,7 +7,7 @@ namespace Airbnb.Models
         public int Id { get; set; }
 
         [Required]
-        public User User { get; set; } = new User();
+        public Host User { get; set; } = new Host();
 
         [Required]
         public string Review { get; set; } = string.Empty;

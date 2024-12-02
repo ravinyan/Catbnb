@@ -10,6 +10,8 @@ namespace Airbnb.DBContext
 
         }
 
+        Random rng = new Random();
+
         private List<Amenities> GenerateAmenities()
         {
             List<Amenities> amenitiesList = new List<Amenities>
@@ -45,13 +47,13 @@ namespace Airbnb.DBContext
             return amenitiesList;
         }
 
-        private List<User> GenerateUsers()
+        private List<Models.Host> GenerateUsers()
         {
-            List<User> usersList = new List<User>();
+            List<Models.Host> usersList = new List<Models.Host>();
 
             for (int i = 1; i <= 61; i++)
             {
-                usersList.Add(new User { Id = i, Name = $"bob{i}" });
+                usersList.Add(new Models.Host { Id = i, Name = $"bob{i}" });
             }
 
             return usersList;
@@ -83,23 +85,25 @@ namespace Airbnb.DBContext
         private List<BookingInfo> GenerateBookingInfo()
         {
             List<BookingInfo> bookingInfoList = new List<BookingInfo>();
-            Random rng = new Random();
             string[] countries = ["USA", "Poland", "Germany", "Spain", "Canada", "China", "Japan", "United Kingdom", "Turkey", "Italy"];
             string[] cities = ["Las Vegas", "Warsaw", "Berlin", "Valencia", "Vancouver", "Shanghai", "Tokyo", "London", "Istanbul", "Rome"];
             string[] descriptions = ["cat", "very cool cat", "cool cat", "10/10 cat", "best cat you will ever see", "this cat loves chandeliers",
                                      "this cat is scared of cucumbers", "1 shader braincell cat", "cute cat", "dog"];
             bool[] TrueOrFalse = [true, false];
-
+            
             for (int i = 1; i <= 610; i++)
             {
-                Console.WriteLine(countries[rng.Next(1, 10)]);
+                var cityCountryIndex = rng.Next(1, 10);
+
                 bookingInfoList.Add(new BookingInfo
                 {
                     Id = i,
-                    Country = countries[rng.Next(1, 10)],
-                    City = cities[rng.Next(1, 10)],
+                    Country = countries[cityCountryIndex],
+                    City = cities[cityCountryIndex],
                     BasePrice = rng.Next(100, 10000),
                     Description = descriptions[rng.Next(1, 10)],
+                    ShortDescription = "cat?",
+                    DateAvaiable = $"{rng.Next(1, 14)} May - {rng.Next(15, 31)} May",
                     NumberOfBedrooms = rng.Next(1, 16),
                     NumberOfBeds = rng.Next(1, 16),
                     NumberOfBathrooms = rng.Next(1, 16),
@@ -115,7 +119,6 @@ namespace Airbnb.DBContext
         private List<CatCardImages> GenerateCatCardImages()
         {
             List<CatCardImages> imagesList = new List<CatCardImages>();
-            Random rng = new Random();
 
             // i would use links but i can just do that instead... that way at least links will never die
             string[] urlImages = ["/img/img1.png",
@@ -147,8 +150,8 @@ namespace Airbnb.DBContext
             List<Amenities> amenitiesList = GenerateAmenities();
             modelBuilder.Entity<Amenities>().HasData(amenitiesList);
 
-            List<User> userList = GenerateUsers();
-            modelBuilder.Entity<User>().HasData(userList);
+            List<Models.Host> userList = GenerateUsers();
+            modelBuilder.Entity<Models.Host>().HasData(userList);
 
             List<CatCard> catCardsList = GenerateCatCards();
             modelBuilder.Entity<CatCard>().HasData(catCardsList);
@@ -160,7 +163,7 @@ namespace Airbnb.DBContext
             modelBuilder.Entity<CatCardImages>().HasData(imagesList);
 
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<Models.Host>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(u => u.Host);
 
@@ -188,7 +191,7 @@ namespace Airbnb.DBContext
         public DbSet<CatCard> CatCards { get; set; }
         public DbSet<CatCardImages> CatCardImages { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Models.Host> Users { get; set; }
 
         public DbSet<BookingInfo> BookingInfos { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
