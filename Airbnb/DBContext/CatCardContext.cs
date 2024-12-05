@@ -127,15 +127,24 @@ namespace Airbnb.DBContext
                                   "/img/img4.png",
                                   "/img/img5.png"];
 
-            for (int i = 1; i <= 610; i++)
+            var id = 1;
+            var ccid = 1;
+            for (int j = 1; j <= 122; j++)
             {
-                imagesList.Add(new CatCardImages 
+                for (int i = 1; i <= 5; i++)
                 {
-                    Id = i, 
-                    CatCardId = i, 
-                    Url = urlImages[rng.Next(1, 5)] 
-                });
+                    imagesList.Add(new CatCardImages
+                    {
+                        Id = id,
+                        CatCardId = ccid,
+                        Url = urlImages[rng.Next(1, 5)]
+                    });
+                    
+                    id++;
+                }
+                ccid++;
             }
+            
 
             return imagesList;
         }

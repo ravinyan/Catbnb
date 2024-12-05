@@ -1026,7 +1026,7 @@ div.grid_but_with_flex_boxes_coz_i_HATE_grid_scaling_stuff_coz_i_dont_understand
     flex-wrap: wrap;
     padding-inline-start: 40px;
     padding-inline-end: 40px;
-    gap: 10px;
+    gap: 20px;
     --a: calc(100% - 6px*2);
     --c: 16px;
 }

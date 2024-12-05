@@ -4468,16 +4468,21 @@ function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
     imageHref.className = "cat_card_href";
     imageHref.href = `https://localhost:7027/Rooms/${id}`;
     imageHref.dataset.active = true;
-    
-    let pictureTag = document.createElement("PICTURE");
 
-    let image = document.createElement("IMG");
-    image.className = "cat_card_image";
-    image.src = `${images.url}`;
+    var aaaa = images.filter(e => e.catCardId == id);
 
-    pictureTag.appendChild(image);
-    imageHref.appendChild(pictureTag);
-    imageElements.appendChild(imageHref);
+    for (iid = 0; iid < aaaa.length; iid++)
+    {
+        let pictureTag = document.createElement("PICTURE");
+
+        let image = document.createElement("IMG");
+        image.className = "cat_card_image";
+        image.src = `${images.url}`;
+
+        pictureTag.appendChild(image);
+        imageHref.appendChild(pictureTag);
+        imageElements.appendChild(imageHref);
+    }
 
     imageBox.appendChild(imageElementsOuterBox);
     imageBox.appendChild(imageElements);
@@ -4540,7 +4545,6 @@ function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
     DisplayText3.appendChild(catCard);
 }
 
-
 function catCardMoveCarousel(catCardId, buttonL, buttonR, numberOfImages)
 {
     let catCardButtons = catCardId.querySelectorAll(".cat_card_href");
@@ -4572,11 +4576,16 @@ function catCardMoveCarousel(catCardId, buttonL, buttonR, numberOfImages)
     });
 }
 
+var catCardsArray = [];
+var catCardsHostArray = [];
+var catCardsBookingArray = [];
+var catCardsImagesArray = [];
+
 async function operationKillTheBrowser()
 {
     var start = performance.now();
 
-    for (id = 1; id < 40; id++)
+    for (id = 1; id <= 40; id++)
     {
         const catCardData = await fetch(`api/CatCard/${id}`);
         const catCardJson = await catCardData.json();
@@ -4590,7 +4599,15 @@ async function operationKillTheBrowser()
         const imageData = await fetch(`api/CatCardImages/${catCardJson.id}`);
         const imageJson = await imageData.json();
 
-        thisIsJustConceptOnHowItCouldWork(catCardJson.id, hostJson, bookingJson, imageJson);
+        catCardsArray.push(catCardJson);
+        catCardsHostArray.push(hostJson);
+        catCardsBookingArray.push(bookingJson);
+        catCardsImagesArray.push(imageJson);
+    }
+
+    for (j = 0; j < catCardsArray.length; j++)
+    {
+        thisIsJustConceptOnHowItCouldWork(catCardsArray[j].id, catCardsHostArray[j], catCardsBookingArray[j], catCardsImagesArray);
     }
 
     var end = performance.now();
@@ -4599,41 +4616,78 @@ async function operationKillTheBrowser()
     console.log(timeTaken)
 }
 
-
 operationKillTheBrowser()
 
-function workQuestionMark()
+function catCardShowCarouselButtons()
 {
-    
-}
-
-var buttonL = document.querySelector(".cat_card_L_button");
-var buttonR = document.querySelector(".cat_card_R_button");
-
-function catCardShowButtonsCarousel()
-{
-    var catCards = document.querySelectorAll(".cat_card");
-
-    
-    
-    
-}
-
-document.addEventListener("mouseover", function(e)
-{
-    try
+    document.addEventListener("mouseover", function(e)
     {
-        if (e.target.className == "cat_card_image")
+        try
         {
-            //catCardShowButtonsCarousel();
-            console.log(e.target)
+            let catCard = e.target.closest(".cat_card");
+            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+            
+            if (e.target.closest(".cat_card"))
+            {
+                buttonL.style.opacity = "1";
+                buttonR.style.opacity = "1";
+            }
+
+        }catch{}
+    });
+    
+    document.addEventListener("mouseout", function(e)
+    {
+        try
+        {
+            let catCard = e.target.closest(".cat_card");
+            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+
+            if (e.target != catCard)
+            {
+                buttonL.style.opacity = "0";
+                buttonR.style.opacity = "0";
+            }
+
+        }catch{}
+    });
+}
+
+function catCardChangeCarouselImages()
+{
+    let catCardButtons = catCardId.querySelectorAll(".cat_card_href");
+    let buttonIndex = 0;
+
+    buttonL.addEventListener("click", function()
+    {
+
+        if (buttonIndex > 0)
+        {
+            buttonIndex --;
+
+            delete catCardButtons[buttonIndex + 1].dataset.active;
+            catCardButtons[buttonIndex].dataset.active = true;
         }
-    }catch{}
-});
+    });
 
+    buttonR.addEventListener("click", function()
+    {
+        if (buttonIndex < catCardButtons.length - 1)
+        {
+            buttonIndex ++;
 
+            delete catCardButtons[buttonIndex - 1].dataset.active;
+            catCardButtons[buttonIndex].dataset.active = true;
 
+            // little dots css box
+            console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
+        }
+    });
+}
 
+catCardShowCarouselButtons();
 
 
 
