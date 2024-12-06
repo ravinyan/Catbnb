@@ -4367,7 +4367,7 @@ function generateQueryStringURI()
 ----------------------------------------------------------------------------------------------------------------------*/
 // this should be the last thing to render on page to not block ui and other stuff from rendering
 
-function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
+function generateCatCards(id, host, booking, images)
 {
     let catCard = document.createElement("DIV");
     catCard.id = `CatCard-${id}`;
@@ -4411,16 +4411,16 @@ function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
 
     let controlbuttonLeft = document.createElement("BUTTON");
     controlbuttonLeft.className = "cat_card_L_button";
-    controlbuttonLeft.innerHTML = `<svg b-ugywe7wap2="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="-1 0 16 16">
+    controlbuttonLeft.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="-1 0 16 16" style="pointer-events: none;">
                                        <path b-ugywe7wap2="" d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"></path>
                                    </svg>`;
 
     let controlbuttonRight = document.createElement("BUTTON");
     controlbuttonRight.className = "cat_card_R_button";
-    controlbuttonRight.innerHTML = `<svg b-ugywe7wap2="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16">
+    controlbuttonRight.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16" style="pointer-events: none;">
                                         <path b-ugywe7wap2="" d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"></path>
                                     </svg>`;
-    
+
     controlButtons.appendChild(controlbuttonLeft);
     controlButtons.appendChild(controlbuttonRight);
 
@@ -4464,20 +4464,24 @@ function thisIsJustConceptOnHowItCouldWork(id, host, booking, images)
     let imageElements = document.createElement("DIV");
     imageElements.className = "cat_card_image_container";
 
-    let imageHref = document.createElement("A");
-    imageHref.className = "cat_card_href";
-    imageHref.href = `https://localhost:7027/Rooms/${id}`;
-    imageHref.dataset.active = true;
+    var catCardImagesIds = images.filter(e => e.catCardId == id);
 
-    var aaaa = images.filter(e => e.catCardId == id);
-
-    for (iid = 0; iid < aaaa.length; iid++)
+    for (iid = 0; iid < catCardImagesIds.length; iid++)
     {
+        let imageHref = document.createElement("A");
+        imageHref.className = "cat_card_href";
+        imageHref.href = `https://localhost:7027/Rooms/${id}`;
+        
         let pictureTag = document.createElement("PICTURE");
 
         let image = document.createElement("IMG");
         image.className = "cat_card_image";
-        image.src = `${images.url}`;
+        image.src = catCardImagesIds[iid].url;
+
+        if (iid == 0)
+        {
+            imageHref.dataset.active = true;
+        }
 
         pictureTag.appendChild(image);
         imageHref.appendChild(pictureTag);
@@ -4596,18 +4600,22 @@ async function operationKillTheBrowser()
         const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`);
         const bookingJson = await bookingData.json();
 
-        const imageData = await fetch(`api/CatCardImages/${catCardJson.id}`);
-        const imageJson = await imageData.json();
-
         catCardsArray.push(catCardJson);
         catCardsHostArray.push(hostJson);
         catCardsBookingArray.push(bookingJson);
+    }
+
+    for (id = 1; id <= 200; id++)
+    {
+        const imageData = await fetch(`api/CatCardImages/${id}`);
+        const imageJson = await imageData.json();
+
         catCardsImagesArray.push(imageJson);
     }
 
-    for (j = 0; j < catCardsArray.length; j++)
+    for (j = 0; j < 40; j++)
     {
-        thisIsJustConceptOnHowItCouldWork(catCardsArray[j].id, catCardsHostArray[j], catCardsBookingArray[j], catCardsImagesArray);
+        generateCatCards(catCardsArray[j].id, catCardsHostArray[j], catCardsBookingArray[j], catCardsImagesArray);
     }
 
     var end = performance.now();
@@ -4617,6 +4625,53 @@ async function operationKillTheBrowser()
 }
 
 operationKillTheBrowser()
+
+//var t1a = [];
+//var t2a = [];
+
+//async function performanceTest()
+//{
+//    var start = performance.now();
+
+//    for (i = 1; i < 30; i++)
+//    {
+//        const imageData = await fetch(`api/CatCardImages/${i}`);
+//        const imageJson = await imageData.json();
+
+//        t1a.push(imageJson);
+//    }
+  
+//    var end = performance.now();
+//    var timeTaken = end - start;
+
+//    console.log("1 - " + timeTaken)
+//    console.log(t1a)
+//}
+//async function performanceTest2()
+//{
+//    var start = performance.now();
+//    var imageJson = "";
+//    for (i = 1; i < 30; i++)
+//    {
+//        var a = await fetch(`api/CatCardImages/${i}`)
+//        .then(response => 
+//        {
+//            imageJson = response.json();
+//            return imageJson;
+//        });     
+
+//        t2a.push(a);
+//    }
+  
+//    var end = performance.now();
+//    var timeTaken = end - start;
+
+//    console.log("2 - " + timeTaken)
+//    console.log(t2a)
+//}
+
+//performanceTest()
+//performanceTest2();
 
 function catCardShowCarouselButtons()
 {
@@ -4657,38 +4712,58 @@ function catCardShowCarouselButtons()
 
 function catCardChangeCarouselImages()
 {
-    let catCardButtons = catCardId.querySelectorAll(".cat_card_href");
-    let buttonIndex = 0;
-
-    buttonL.addEventListener("click", function()
+    document.getElementById("DisplayText3").addEventListener("click", function(e) 
     {
-
-        if (buttonIndex > 0)
+        try
         {
-            buttonIndex --;
+            let catCard = e.target.closest(".cat_card");
+            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+            let catCardImages = catCard.querySelectorAll(".cat_card_href");
+            let buttonIndex = 0;
 
-            delete catCardButtons[buttonIndex + 1].dataset.active;
-            catCardButtons[buttonIndex].dataset.active = true;
+            for (i = 0; i < catCardImages.length; i++)
+            {
+                if (catCardImages[i].dataset.active == "true")
+                {
+                    buttonIndex = i;
+                    break;
+                }
+            }
+
+            if (e.target == buttonL)
+            {
+                if (buttonIndex > 0)
+                {
+                    buttonIndex --;
+                
+                    delete catCardImages[buttonIndex + 1].dataset.active;
+                    catCardImages[buttonIndex].dataset.active = true;
+                
+                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex + 1].style.background = "";
+                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white"
+                }
+            }
+            else if (e.target == buttonR)
+            {
+                if (buttonIndex < catCardImages.length - 1)
+                {
+                    buttonIndex ++;
+          
+                    delete catCardImages[buttonIndex - 1].dataset.active;
+                    catCardImages[buttonIndex].dataset.active = true;
+          
+                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex - 1].style.background = "";
+                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white";
+                }
+            }
         }
-    });
-
-    buttonR.addEventListener("click", function()
-    {
-        if (buttonIndex < catCardButtons.length - 1)
-        {
-            buttonIndex ++;
-
-            delete catCardButtons[buttonIndex - 1].dataset.active;
-            catCardButtons[buttonIndex].dataset.active = true;
-
-            // little dots css box
-            console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
-        }
-    });
+        catch{}
+    });        
 }
 
 catCardShowCarouselButtons();
-
+catCardChangeCarouselImages();
 
 
 

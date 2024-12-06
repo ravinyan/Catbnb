@@ -23,7 +23,14 @@ namespace Airbnb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Models.Host>> GetUser(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var host = await _context.Users.FindAsync(id);
+
+            if (host == null)
+            {
+                return NotFound();
+            }
+
+            return host;
         }
     }
 }

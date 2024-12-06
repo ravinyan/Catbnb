@@ -129,7 +129,7 @@ namespace Airbnb.DBContext
 
             var id = 1;
             var ccid = 1;
-            for (int j = 1; j <= 122; j++)
+            for (int j = 1; j <= 610; j++)
             {
                 for (int i = 1; i <= 5; i++)
                 {

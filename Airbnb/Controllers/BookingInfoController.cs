@@ -24,7 +24,14 @@ namespace Airbnb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingInfo>> GetBookingInfo(int id)
         {
-            return await _context.BookingInfos.FindAsync(id);
+            var bookingInfo = await _context.BookingInfos.FindAsync(id);
+
+            if (bookingInfo == null)
+            {
+                return NotFound();
+            }
+
+            return bookingInfo;
         }
     }
 }

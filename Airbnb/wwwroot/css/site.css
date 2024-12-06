@@ -1107,7 +1107,7 @@ div.cat_card_guest_favourite_button {
     width: 130px;
     font-weight: 600;
     text-align: center;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
 }
 
@@ -1142,7 +1142,7 @@ div.cat_card_heart_box {
 }
 
 div.cat_card_heart_box2 {
-    z-index: 1;
+    z-index: 2;
     position: absolute;
 }
 
@@ -1202,7 +1202,7 @@ div.cat_card_dots_box_parent {
 
 div.cat_card_dots_box {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     margin-block-end: 6px;
 }
 

@@ -24,7 +24,14 @@ namespace Airbnb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CatCard>> GetCatCard(int id)
         {
-            return await _context.CatCards.FindAsync(id);
+            var catCard = await _context.CatCards.FindAsync(id);
+
+            if (catCard == null)
+            {
+                return NotFound();
+            }
+
+            return catCard;
         }
     }
 }
