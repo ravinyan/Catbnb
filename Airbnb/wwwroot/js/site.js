@@ -27,60 +27,108 @@ window.onscroll = function()
 
 function headerScaling() 
 {
-    if (document.documentElement.scrollTop > 1 || document.body.scrollTop > 1)
+    if (window.location.pathname == "/" || window.location.pathname == "/home")
     {
-        //  if scrolled down
-        document.getElementById("TopHeader").style.height = "80px";
+        if (document.documentElement.scrollTop > 1 || document.body.scrollTop > 1)
+        {
+            //  if scrolled down
+            document.getElementById("TopHeader").style.height = "80px";
 
+            document.getElementById("MiniForm").style.display = "block";
+            document.getElementById("StaysMenuButtons").style.display = "none";
+
+            document.getElementById("StaysMenuForm").style.display = "none";
+            document.getElementById("ExperiencesMenuForm").style.display = "none";
+
+            document.getElementById("ScrollDiv").style.top = "80px";
+            //document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
+
+            document.getElementById("GreyBackground").style.display = "none";
+
+            //  resetting css for stuff
+            whereDropdown.style.display = "none";
+            datesDropdown.style.display = "none";
+            whoDropdown.style.display = "none";
+            whereDropdownExperiences.style.display = "none";
+            datesDropdownExperiences.style.display = "none";
+            whoDropdownExperiences.style.display = "none";
+
+            form.style.backgroundColor = ""
+            formExperiences.style.backgroundColor = ""
+            onClickButtonUnfocus(whereButton);
+            onClickButtonUnfocus(checkinButton);
+            onClickButtonUnfocus(checkoutButton);
+            onClickButtonUnfocus(whoButton);
+            onClickButtonUnfocus(whenButton);
+            onClickButtonUnfocus(flexibleBlockWhenButton);
+        }
+        else 
+        {
+            //  if on top of page
+            document.getElementById("TopHeader").style.height = "161px";
+
+            document.getElementById("MiniForm").style.display = "none";
+            document.getElementById("StaysMenuButtons").style.display = "block";
+
+            if (staysMenuButton.style.textShadow == "black 0px 0px 1px")
+            {
+                document.getElementById("StaysMenuForm").style.display = "block";
+            }
+            else if (experiencesMenuButton.style.textShadow == "black 0px 0px 1px")
+            {
+                document.getElementById("ExperiencesMenuForm").style.display = "block";
+            } 
+
+            document.getElementById("ScrollDiv").style.top = "161px";
+            document.getElementById("ScrollDiv").style.boxShadow = "none";
+        }
+    }
+    else if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        document.getElementById("TopHeader").style.height = "80px";
         document.getElementById("MiniForm").style.display = "block";
         document.getElementById("StaysMenuButtons").style.display = "none";
-
         document.getElementById("StaysMenuForm").style.display = "none";
         document.getElementById("ExperiencesMenuForm").style.display = "none";
-
-        document.getElementById("ScrollDiv").style.top = "80px";
-        document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
-
-        document.getElementById("GreyBackground").style.display = "none";
-
-        //  resetting css for stuff
-        whereDropdown.style.display = "none";
-        datesDropdown.style.display = "none";
-        whoDropdown.style.display = "none";
-        whereDropdownExperiences.style.display = "none";
-        datesDropdownExperiences.style.display = "none";
-        whoDropdownExperiences.style.display = "none";
-
-        form.style.backgroundColor = ""
-        formExperiences.style.backgroundColor = ""
-        onClickButtonUnfocus(whereButton);
-        onClickButtonUnfocus(checkinButton);
-        onClickButtonUnfocus(checkoutButton);
-        onClickButtonUnfocus(whoButton);
-        onClickButtonUnfocus(whenButton);
-        onClickButtonUnfocus(flexibleBlockWhenButton);
-    }
-    else 
-    {
-        //  if on top of page
-        document.getElementById("TopHeader").style.height = "161px";
-
-        document.getElementById("MiniForm").style.display = "none";
-        document.getElementById("StaysMenuButtons").style.display = "block";
-
-        if (staysMenuButton.style.textShadow == "black 0px 0px 1px")
-        {
-            document.getElementById("StaysMenuForm").style.display = "block";
-        }
-        else if (experiencesMenuButton.style.textShadow == "black 0px 0px 1px")
-        {
-            document.getElementById("ExperiencesMenuForm").style.display = "block";
-        } 
-
-        document.getElementById("ScrollDiv").style.top = "162px";
-        document.getElementById("ScrollDiv").style.boxShadow = "none";
     }
 }
+
+function headerSettingsHomePage()
+{
+    if (window.location.pathname == "/" || window.location.pathname == "/home")
+    {
+        document.getElementById("TopHeader").style.height = "161px";
+        document.getElementById("MiniForm").style.display = "none";
+        document.getElementById("StaysMenuButtons").style.display = "block";
+        document.getElementById("StaysMenuForm").style.display = "block";
+        document.getElementById("ScrollDiv").style.top = "161px";
+        document.getElementById("ScrollDiv").style.boxShadow = "none";
+        document.getElementById("ScrollDiv").style.display = "flex";
+
+        document.getElementById("ScrollDiv").style.borderBlockStart = "1px solid #dddddd";
+        document.getElementById("TopHeader").style.borderBlockEnd = "";
+    }
+}
+
+function headerSettingsRoomsPage()
+{
+    if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        document.getElementById("TopHeader").style.height = "80px";
+        document.getElementById("MiniForm").style.display = "block";
+        document.getElementById("StaysMenuButtons").style.display = "none";
+        document.getElementById("StaysMenuForm").style.display = "none";
+        document.getElementById("ExperiencesMenuForm").style.display = "none";
+        document.getElementById("GreyBackground").style.display = "none";
+        document.getElementById("ScrollDiv").style.display = "none";
+
+        document.getElementById("ScrollDiv").style.borderBlockStart = "";
+        document.getElementById("TopHeader").style.borderBlockEnd = "1px solid #dddddd";
+    }
+}
+
+headerSettingsRoomsPage();
+headerSettingsHomePage();
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------SCROLL MENU BUTTONS-------------------------------------------------
@@ -568,20 +616,14 @@ const displayText3 = document.getElementById("DisplayText3")
 
 if (window.location.search == "?category=Lakefront")
 {
-    displayText1.style.display = "flex";
-    displayText2.style.display = "none";
-    displayText3.style.display = "none";
+
 }
 else if (window.location.search == "?category=Amazing%20Views")
 {
-    displayText1.style.display = "none";
-    displayText2.style.display = "flex";
-    displayText3.style.display = "none";
+
 }
 else if (window.location.search == "?category=Design")
 {
-    displayText1.style.display = "none";
-    displayText2.style.display = "none";
     displayText3.style.display = "flex";
 }
 
@@ -4366,404 +4408,333 @@ function generateQueryStringURI()
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 // this should be the last thing to render on page to not block ui and other stuff from rendering
-
-function generateCatCards(id, host, booking, images)
+    //const hostData = await fetch(`api/Host/${catCardJson.hostId}`);
+            //const hostJson = await hostData.json();
+            /*catCardsHostArray.push(hostJson);*/
+function renderCatCardsOnMainPage()
 {
-    let catCard = document.createElement("DIV");
-    catCard.id = `CatCard-${id}`;
-    catCard.className = "cat_card";
-
-    let imageBox = document.createElement("DIV");
-    imageBox.className = "cat_card_image_box";
-
-    let imageElementsOuterBox = document.createElement("DIV");
-    imageElementsOuterBox.className = "cat_card_on_image_elements_box";
-
-    let imageElementsInnerBox = document.createElement("DIV");
-    imageElementsInnerBox.className = "cat_card_on_image_elements_box2";
-
-    let favouriteBox = document.createElement("DIV");
-    favouriteBox.className  = "cat_card_favourite_box";
-
-    let favouriteEmptyDiv = document.createElement("DIV");
-    let favouriteLabel = document.createElement("DIV");
-    favouriteLabel.className = "cat_card_guest_favourite_button";
-    favouriteLabel.innerText = "Guest favourite";
-
-    favouriteEmptyDiv.appendChild(favouriteLabel);
-    
-    let heartSVGOuterBox = document.createElement("DIV");
-    heartSVGOuterBox.className = "cat_card_heart_box";
-
-    let heartSVGInnerBox = document.createElement("DIV");
-    heartSVGInnerBox.className = "cat_card_heart_box2";
-    heartSVGInnerBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="stroke: white" width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
-                                      <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
-                                  </svg>`;
-
-    heartSVGOuterBox.appendChild(heartSVGInnerBox);
-
-    favouriteBox.appendChild(favouriteEmptyDiv);
-    favouriteBox.appendChild(heartSVGOuterBox);
-
-    let controlButtons = document.createElement("DIV");
-    controlButtons.className = "cat_card_buttons_box";
-
-    let controlbuttonLeft = document.createElement("BUTTON");
-    controlbuttonLeft.className = "cat_card_L_button";
-    controlbuttonLeft.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="-1 0 16 16" style="pointer-events: none;">
-                                       <path b-ugywe7wap2="" d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"></path>
-                                   </svg>`;
-
-    let controlbuttonRight = document.createElement("BUTTON");
-    controlbuttonRight.className = "cat_card_R_button";
-    controlbuttonRight.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16" style="pointer-events: none;">
-                                        <path b-ugywe7wap2="" d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"></path>
-                                    </svg>`;
-
-    controlButtons.appendChild(controlbuttonLeft);
-    controlButtons.appendChild(controlbuttonRight);
-
-    let imageDotsParent = document.createElement("DIV");
-    imageDotsParent.className = "cat_card_dots_box_parent";
-
-    let imageDotsBox = document.createElement("DIV");
-    imageDotsBox.className = "cat_card_dots_box";
-
-    for (i = 1; i < 6; i++)
+    if (window.location.pathname == "/" || window.location.pathname == "/home")
     {
-        let dot = document.createElement("SPAN");
+        function generateCatCards(card, booking)
+        {
+            let catCard = document.createElement("DIV");
+            catCard.id = `CatCard-${card.id}`;
+            catCard.className = "cat_card";
         
-        if (i == 1)
-        {
-            dot.className = "cat_card_dot";
-            dot.style.background = "white";
-        } 
-        else if (i == 5)
-        {
-            dot.className = "cat_card_dot";
-            dot.style.transform = "scale(66%, 66%)";
-        }
-        else
-        {
-            dot.className = "cat_card_dot";
-        }
-
-        imageDotsBox.appendChild(dot);
-    }
-
-    imageDotsParent.appendChild(imageDotsBox);
-
-    imageElementsInnerBox.appendChild(favouriteBox);
-    imageElementsInnerBox.appendChild(controlButtons);
-    imageElementsInnerBox.appendChild(imageDotsParent);
-
-    imageElementsOuterBox.appendChild(imageElementsInnerBox);
-    imageBox.appendChild(imageElementsOuterBox);
-
-    let imageElements = document.createElement("DIV");
-    imageElements.className = "cat_card_image_container";
-
-    var catCardImagesIds = images.filter(e => e.catCardId == id);
-
-    for (iid = 0; iid < catCardImagesIds.length; iid++)
-    {
-        let imageHref = document.createElement("A");
-        imageHref.className = "cat_card_href";
-        imageHref.href = `https://localhost:7027/Rooms/${id}`;
+            let imageBox = document.createElement("DIV");
+            imageBox.className = "cat_card_image_box";
         
-        let pictureTag = document.createElement("PICTURE");
-
-        let image = document.createElement("IMG");
-        image.className = "cat_card_image";
-        image.src = catCardImagesIds[iid].url;
-
-        if (iid == 0)
-        {
-            imageHref.dataset.active = true;
-        }
-
-        pictureTag.appendChild(image);
-        imageHref.appendChild(pictureTag);
-        imageElements.appendChild(imageHref);
-    }
-
-    imageBox.appendChild(imageElementsOuterBox);
-    imageBox.appendChild(imageElements);
-
-    let infoBox = document.createElement("DIV");
-    infoBox.className = "cat_card_info_box";
-
-    let cityInfo = document.createElement("DIV");
-    cityInfo.className = "cat_card_info_header";
-
-    let cityBox = document.createElement("DIV");
-    cityBox.className = "cat_card_info_box_country";
-    cityBox.innerText = `${booking.city}, ${booking.country}`;
-
-    let starRatingBox = document.createElement("DIV");
-    starRatingBox.className = "cat_card_stars_box";
-    starRatingBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
-                                   <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path>
-                               </svg>`;
-
-    let starRating = document.createElement("SPAN")
-    starRating.className = "cat_card_stars_rating";
-    starRating.innerText = "6";
-
-    starRatingBox.appendChild(starRating);
-
-    cityInfo.appendChild(cityBox);
-    cityInfo.appendChild(starRatingBox);
-
-    let shortDescr = document.createElement("DIV");
-    shortDescr.className = "cat_card_info_box_middle";
-    shortDescr.innerText = `${booking.shortDescription}`;
-
-    let dateInfo = document.createElement("DIV");
-    dateInfo.className = "cat_card_info_box_middle";
-    dateInfo.innerText = `${booking.dateAvaiable}`;
-
-    let priceInfo = document.createElement("DIV");
-    priceInfo.className = "cat_card_info_box_price_box";
-
-    let nightPrice = document.createElement("SPAN");
-    nightPrice.className = "cat_card_price";
-    nightPrice.innerText = `${booking.basePrice}$ `;
-
-    let nightText = document.createElement("SPAN");
-    nightText.innerText = "night";
-
-    priceInfo.appendChild(nightPrice);
-    priceInfo.appendChild(nightText);
-
-    infoBox.appendChild(cityInfo);
-    infoBox.appendChild(shortDescr);
-    infoBox.appendChild(dateInfo);
-    infoBox.appendChild(priceInfo);
-
-    // end
-    catCard.appendChild(imageBox);
-    catCard.appendChild(infoBox);
-
-    DisplayText3.appendChild(catCard);
-}
-
-function catCardMoveCarousel(catCardId, buttonL, buttonR, numberOfImages)
-{
-    let catCardButtons = catCardId.querySelectorAll(".cat_card_href");
-    let buttonIndex = 0;
-
-    buttonL.addEventListener("click", function()
-    {
-        if (buttonIndex > 0)
-        {
-            buttonIndex --;
-
-            delete catCardButtons[buttonIndex + 1].dataset.active;
-            catCardButtons[buttonIndex].dataset.active = true;
-        }
-    });
-
-    buttonR.addEventListener("click", function()
-    {
-        if (buttonIndex < catCardButtons.length - 1)
-        {
-            buttonIndex ++;
-
-            delete catCardButtons[buttonIndex - 1].dataset.active;
-            catCardButtons[buttonIndex].dataset.active = true;
-
-            // little dots css box
-            console.log(catCardId.childNodes[1].childNodes[1].childNodes[1].childNodes[5].childNodes[1].childNodes)
-        }
-    });
-}
-
-var catCardsArray = [];
-var catCardsHostArray = [];
-var catCardsBookingArray = [];
-var catCardsImagesArray = [];
-
-async function operationKillTheBrowser()
-{
-    var start = performance.now();
-
-    for (id = 1; id <= 40; id++)
-    {
-        const catCardData = await fetch(`api/CatCard/${id}`);
-        const catCardJson = await catCardData.json();
+            let imageElementsOuterBox = document.createElement("DIV");
+            imageElementsOuterBox.className = "cat_card_on_image_elements_box";
         
-        const hostData = await fetch(`api/Host/${catCardJson.hostId}`);
-        const hostJson = await hostData.json();
-
-        const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`);
-        const bookingJson = await bookingData.json();
-
-        catCardsArray.push(catCardJson);
-        catCardsHostArray.push(hostJson);
-        catCardsBookingArray.push(bookingJson);
-    }
-
-    for (id = 1; id <= 200; id++)
-    {
-        const imageData = await fetch(`api/CatCardImages/${id}`);
-        const imageJson = await imageData.json();
-
-        catCardsImagesArray.push(imageJson);
-    }
-
-    for (j = 0; j < 40; j++)
-    {
-        generateCatCards(catCardsArray[j].id, catCardsHostArray[j], catCardsBookingArray[j], catCardsImagesArray);
-    }
-
-    var end = performance.now();
-    var timeTaken = end - start;
-
-    console.log(timeTaken)
-}
-
-operationKillTheBrowser()
-
-//var t1a = [];
-//var t2a = [];
-
-//async function performanceTest()
-//{
-//    var start = performance.now();
-
-//    for (i = 1; i < 30; i++)
-//    {
-//        const imageData = await fetch(`api/CatCardImages/${i}`);
-//        const imageJson = await imageData.json();
-
-//        t1a.push(imageJson);
-//    }
-  
-//    var end = performance.now();
-//    var timeTaken = end - start;
-
-//    console.log("1 - " + timeTaken)
-//    console.log(t1a)
-//}
-//async function performanceTest2()
-//{
-//    var start = performance.now();
-//    var imageJson = "";
-//    for (i = 1; i < 30; i++)
-//    {
-//        var a = await fetch(`api/CatCardImages/${i}`)
-//        .then(response => 
-//        {
-//            imageJson = response.json();
-//            return imageJson;
-//        });     
-
-//        t2a.push(a);
-//    }
-  
-//    var end = performance.now();
-//    var timeTaken = end - start;
-
-//    console.log("2 - " + timeTaken)
-//    console.log(t2a)
-//}
-
-//performanceTest()
-//performanceTest2();
-
-function catCardShowCarouselButtons()
-{
-    document.addEventListener("mouseover", function(e)
-    {
-        try
-        {
-            let catCard = e.target.closest(".cat_card");
-            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+            let imageElementsInnerBox = document.createElement("DIV");
+            imageElementsInnerBox.className = "cat_card_on_image_elements_box2";
+        
+            let favouriteBox = document.createElement("DIV");
+            favouriteBox.className  = "cat_card_favourite_box";
+        
+            let favouriteEmptyDiv = document.createElement("DIV");
+            let favouriteLabel = document.createElement("DIV");
+            favouriteLabel.className = "cat_card_guest_favourite_button";
+            favouriteLabel.innerText = "Guest favourite";
+        
+            favouriteEmptyDiv.appendChild(favouriteLabel);
             
-            if (e.target.closest(".cat_card"))
+            let heartSVGOuterBox = document.createElement("DIV");
+            heartSVGOuterBox.className = "cat_card_heart_box";
+        
+            let heartSVGInnerBox = document.createElement("DIV");
+            heartSVGInnerBox.className = "cat_card_heart_box2";
+            heartSVGInnerBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="stroke: white" width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                                              <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+                                          </svg>`;
+        
+            heartSVGOuterBox.appendChild(heartSVGInnerBox);
+        
+            favouriteBox.appendChild(favouriteEmptyDiv);
+            favouriteBox.appendChild(heartSVGOuterBox);
+        
+            let controlButtons = document.createElement("DIV");
+            controlButtons.className = "cat_card_buttons_box";
+        
+            let controlbuttonLeft = document.createElement("BUTTON");
+            controlbuttonLeft.className = "cat_card_L_button";
+            controlbuttonLeft.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="-1 0 16 16" style="pointer-events: none;">
+                                               <path b-ugywe7wap2="" d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"></path>
+                                           </svg>`;
+        
+            let controlbuttonRight = document.createElement("BUTTON");
+            controlbuttonRight.className = "cat_card_R_button";
+            controlbuttonRight.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16" style="pointer-events: none;">
+                                                <path b-ugywe7wap2="" d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"></path>
+                                            </svg>`;
+        
+            controlButtons.appendChild(controlbuttonLeft);
+            controlButtons.appendChild(controlbuttonRight);
+        
+            let imageDotsParent = document.createElement("DIV");
+            imageDotsParent.className = "cat_card_dots_box_parent";
+        
+            let imageDotsBox = document.createElement("DIV");
+            imageDotsBox.className = "cat_card_dots_box";
+        
+            for (i = 1; i < 6; i++)
             {
-                buttonL.style.opacity = "1";
-                buttonR.style.opacity = "1";
-            }
-
-        }catch{}
-    });
-    
-    document.addEventListener("mouseout", function(e)
-    {
-        try
-        {
-            let catCard = e.target.closest(".cat_card");
-            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
-
-            if (e.target != catCard)
-            {
-                buttonL.style.opacity = "0";
-                buttonR.style.opacity = "0";
-            }
-
-        }catch{}
-    });
-}
-
-function catCardChangeCarouselImages()
-{
-    document.getElementById("DisplayText3").addEventListener("click", function(e) 
-    {
-        try
-        {
-            let catCard = e.target.closest(".cat_card");
-            let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-            let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
-            let catCardImages = catCard.querySelectorAll(".cat_card_href");
-            let buttonIndex = 0;
-
-            for (i = 0; i < catCardImages.length; i++)
-            {
-                if (catCardImages[i].dataset.active == "true")
-                {
-                    buttonIndex = i;
-                    break;
-                }
-            }
-
-            if (e.target == buttonL)
-            {
-                if (buttonIndex > 0)
-                {
-                    buttonIndex --;
+                let dot = document.createElement("SPAN");
                 
-                    delete catCardImages[buttonIndex + 1].dataset.active;
-                    catCardImages[buttonIndex].dataset.active = true;
-                
-                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex + 1].style.background = "";
-                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white"
-                }
-            }
-            else if (e.target == buttonR)
-            {
-                if (buttonIndex < catCardImages.length - 1)
+                if (i == 1)
                 {
-                    buttonIndex ++;
-          
-                    delete catCardImages[buttonIndex - 1].dataset.active;
-                    catCardImages[buttonIndex].dataset.active = true;
-          
-                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex - 1].style.background = "";
-                    catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white";
+                    dot.className = "cat_card_dot";
+                    dot.style.background = "white";
+                } 
+                else if (i == 5)
+                {
+                    dot.className = "cat_card_dot";
+                    dot.style.transform = "scale(66%, 66%)";
                 }
+                else
+                {
+                    dot.className = "cat_card_dot";
+                }
+        
+                imageDotsBox.appendChild(dot);
             }
+        
+            imageDotsParent.appendChild(imageDotsBox);
+        
+            imageElementsInnerBox.appendChild(favouriteBox);
+            imageElementsInnerBox.appendChild(controlButtons);
+            imageElementsInnerBox.appendChild(imageDotsParent);
+        
+            imageElementsOuterBox.appendChild(imageElementsInnerBox);
+            imageBox.appendChild(imageElementsOuterBox);
+        
+            let imageElements = document.createElement("DIV");
+            imageElements.className = "cat_card_image_container";
+        
+            for (iid = 0; iid < card.images.length; iid++)
+            {
+                let imageHref = document.createElement("A");
+                imageHref.className = "cat_card_href";
+                imageHref.href = `https://localhost:7027/Rooms/${card.id}`;
+        
+                let pictureTag = document.createElement("PICTURE");
+        
+                let image = document.createElement("IMG");
+                image.className = "cat_card_image";
+                image.src = card.images[iid].url;
+        
+                if (iid == 0)
+                {
+                    imageHref.dataset.active = true;
+                }
+        
+                pictureTag.appendChild(image);
+                imageHref.appendChild(pictureTag);
+                imageElements.appendChild(imageHref);
+            }
+        
+            imageBox.appendChild(imageElementsOuterBox);
+            imageBox.appendChild(imageElements);
+        
+            let infoBox = document.createElement("DIV");
+            infoBox.className = "cat_card_info_box";
+        
+            let cityInfo = document.createElement("DIV");
+            cityInfo.className = "cat_card_info_header";
+        
+            let cityBox = document.createElement("DIV");
+            cityBox.className = "cat_card_info_box_country";
+            cityBox.innerText = `${booking.city}, ${booking.country}`;
+        
+            let starRatingBox = document.createElement("DIV");
+            starRatingBox.className = "cat_card_stars_box";
+            starRatingBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                                           <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z"></path>
+                                       </svg>`;
+        
+            let starRating = document.createElement("SPAN")
+            starRating.className = "cat_card_stars_rating";
+            starRating.innerText = "6";
+        
+            starRatingBox.appendChild(starRating);
+        
+            cityInfo.appendChild(cityBox);
+            cityInfo.appendChild(starRatingBox);
+        
+            let shortDescr = document.createElement("DIV");
+            shortDescr.className = "cat_card_info_box_middle";
+            shortDescr.innerText = `${booking.shortDescription}`;
+        
+            let dateInfo = document.createElement("DIV");
+            dateInfo.className = "cat_card_info_box_middle";
+            dateInfo.innerText = `${booking.dateAvaiable}`;
+        
+            let priceInfo = document.createElement("DIV");
+            priceInfo.className = "cat_card_info_box_price_box";
+        
+            let nightPrice = document.createElement("SPAN");
+            nightPrice.className = "cat_card_price";
+            nightPrice.innerText = `${booking.basePrice}$ `;
+        
+            let nightText = document.createElement("SPAN");
+            nightText.innerText = "night";
+        
+            priceInfo.appendChild(nightPrice);
+            priceInfo.appendChild(nightText);
+        
+            infoBox.appendChild(cityInfo);
+            infoBox.appendChild(shortDescr);
+            infoBox.appendChild(dateInfo);
+            infoBox.appendChild(priceInfo);
+        
+            // end
+            catCard.appendChild(imageBox);
+            catCard.appendChild(infoBox);
+        
+            DisplayText3.appendChild(catCard);
         }
-        catch{}
-    });        
+        
+        var catCardsArray = [];
+        var catCardsBookingArray = [];
+        
+        async function operationKillTheBrowser()
+        {
+            var start = performance.now();
+        
+            for (id = 1; id <= 40; id++)
+            {
+                const catCardData = await fetch(`api/CatCard/${id}`);
+                const catCardJson = await catCardData.json();
+                
+                const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`);
+                const bookingJson = await bookingData.json();
+        
+                catCardsArray.push(catCardJson);
+                catCardsBookingArray.push(bookingJson);
+        
+                generateCatCards(catCardsArray[id - 1], catCardsBookingArray[id -1]);
+            }
+        
+            var end = performance.now();
+            var timeTaken = end - start;
+        
+            console.log(timeTaken)
+        }
+        
+        operationKillTheBrowser()
+        
+        function catCardShowCarouselButtons()
+        {
+            document.addEventListener("mouseover", function(e)
+            {
+                try
+                {
+                    let catCard = e.target.closest(".cat_card");
+                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+                    
+                    if (e.target.closest(".cat_card"))
+                    {
+                        buttonL.style.opacity = "1";
+                        buttonR.style.opacity = "1";
+                    }
+        
+                }catch{}
+            });
+            
+            document.addEventListener("mouseout", function(e)
+            {
+                try
+                {
+                    let catCard = e.target.closest(".cat_card");
+                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+        
+                    if (e.target != catCard)
+                    {
+                        buttonL.style.opacity = "0";
+                        buttonR.style.opacity = "0";
+                    }
+        
+                }catch{}
+            });
+        }
+        
+        function catCardChangeCarouselImages()
+        {
+            let display = document.getElementById("DisplayText3");
+            display.addEventListener("click", function(e) 
+            {
+                try
+                {
+                    let catCard = e.target.closest(".cat_card");
+                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+                    let catCardImages = catCard.querySelectorAll(".cat_card_href");
+                    let buttonIndex = 0;
+        
+                    for (i = 0; i < catCardImages.length; i++)
+                    {
+                        if (catCardImages[i].dataset.active == "true")
+                        {
+                            buttonIndex = i;
+                            break;
+                        }
+                    }
+        
+                    if (e.target == buttonL)
+                    {
+                        if (buttonIndex > 0)
+                        {
+                            buttonIndex --;
+                        
+                            delete catCardImages[buttonIndex + 1].dataset.active;
+                            catCardImages[buttonIndex].dataset.active = true;
+                        
+                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex + 1].style.background = "";
+                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white"
+                        }
+                    }
+                    else if (e.target == buttonR)
+                    {
+                        if (buttonIndex < catCardImages.length - 1)
+                        {
+                            buttonIndex ++;
+                  
+                            delete catCardImages[buttonIndex - 1].dataset.active;
+                            catCardImages[buttonIndex].dataset.active = true;
+                  
+                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex - 1].style.background = "";
+                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white";
+                        }
+                    }
+                }
+                catch{}
+            });        
+        }
+        
+        catCardShowCarouselButtons();
+        catCardChangeCarouselImages();
+    }
 }
 
-catCardShowCarouselButtons();
-catCardChangeCarouselImages();
+renderCatCardsOnMainPage();
 
+var roomPageId = +window.location.pathname.split("/")[2];
+console.log(roomPageId)
 
+function catCardGenerateRoomsPage()
+{
+    if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        document.getElementById("room").addEventListener("click", function(e) 
+        {
+            document.getElementById("ScrollDiv").style.display = "none";
+            console.log(e.target)
+        })
+    }
+}
+
+catCardGenerateRoomsPage();
 

@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="~/Airbnb.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="header">
-        <div id="TopHeader" class="size_changing_header">
+    <header class="header" style="height: 80px">
+        <div id="TopHeader" class="size_changing_header" style="height: 80px">
             <div class="header_div">
                 @* scuffed airbnb logo *@
                 <div class="logo stretch">
@@ -98,7 +98,7 @@
                 </div>
             </div>
             @* FORMS *@
-            <div id="StaysMenuForm">
+            <div id="StaysMenuForm" style="display: none">
                 <form class="form">
                     <div class="justify-content-center d-flex position-relative" style="width: 850px">
                         @* form *@
@@ -749,7 +749,7 @@
         </div>
     </header>
     @* MENU SCROLL BAR *@
-    <div id="ScrollDiv" class="scroll_bar">
+    <div id="ScrollDiv" class="scroll_bar" style="display: none;">
         <button id="ScrollRight" type="button" class="scroll_menu_button_right">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="-1 0 16 16">
                 <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
@@ -838,7 +838,6 @@
     </div> 
 
     <main role="main" style="position: relative; display: block">
-        <div style="height: 90px;"></div>
         @RenderBody()
     </main>
 

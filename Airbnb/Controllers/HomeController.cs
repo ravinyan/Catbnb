@@ -25,11 +25,5 @@ namespace Airbnb.Controllers
 		{
 			return View();
 		}
-
-		[Route("/Rooms/{id?}")]
-		public IActionResult Rooms(int id)
-		{
-			return View(id);
-		}
 	}
 }
