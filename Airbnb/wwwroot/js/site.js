@@ -605,27 +605,10 @@ const filterModalShowPlaces = document.getElementById("FilterModalShowPlaces");
 
 //  real last thing the url generator thing? dont know how to call it and dont care its url uri something blablabla
 
-const params = new Proxy(new URLSearchParams(window.location.search), 
-{
-    get: (key, value) => key.get(value)
-});
-
-const displayText1 = document.getElementById("DisplayText1")
-const displayText2 = document.getElementById("DisplayText2")
-const displayText3 = document.getElementById("DisplayText3")
-
-if (window.location.search == "?category=Lakefront")
-{
-
-}
-else if (window.location.search == "?category=Amazing%20Views")
-{
-
-}
-else if (window.location.search == "?category=Design")
-{
-    displayText3.style.display = "flex";
-}
+//const params = new Proxy(new URLSearchParams(window.location.search), 
+//{
+//    get: (key, value) => key.get(value)
+//});
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
@@ -4411,9 +4394,14 @@ function generateQueryStringURI()
     //const hostData = await fetch(`api/Host/${catCardJson.hostId}`);
             //const hostJson = await hostData.json();
             /*catCardsHostArray.push(hostJson);*/
-function renderCatCardsOnMainPage()
+var queryString = new URLSearchParams(window.location.search);  
+var controller = new AbortController();
+var signal =  controller.signal;
+
+function renderCatCardsOnMainPage(url)
 {
-    if (window.location.pathname == "/" || window.location.pathname == "/home")
+    if ((window.location.pathname == "/" || window.location.pathname == "/home")
+    &&  url.get("category") == "Lakefront")
     {
         function generateCatCards(card, booking)
         {
@@ -4604,10 +4592,10 @@ function renderCatCardsOnMainPage()
         
             for (id = 1; id <= 40; id++)
             {
-                const catCardData = await fetch(`api/CatCard/${id}`);
+                const catCardData = await fetch(`api/CatCard/${id}`, {signal});
                 const catCardJson = await catCardData.json();
                 
-                const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`);
+                const bookingData = await fetch(`api/BookingInfo/${catCardJson.bookingInfoId}`, {signal});
                 const bookingJson = await bookingData.json();
         
                 catCardsArray.push(catCardJson);
@@ -4717,12 +4705,36 @@ function renderCatCardsOnMainPage()
         catCardShowCarouselButtons();
         catCardChangeCarouselImages();
     }
+    else if (url.get("category") != "Lakefront")
+    {
+        controller.abort("Fetching data aborted");
+        controller = new AbortController();
+        signal =  controller.signal;
+        
+        document.getElementById("DisplayText3").innerHTML = "";
+    }
 }
 
-renderCatCardsOnMainPage();
+renderCatCardsOnMainPage(queryString);
 
 var roomPageId = +window.location.pathname.split("/")[2];
 console.log(roomPageId)
+const urlParams = ["category"];
+
+document.getElementById("ScrollMenu").addEventListener("click", function(e)
+{
+    if (history.pushState && e.target.tagName == "A")
+    {
+        let queryString = `?category=${e.target.innerText}`;
+
+        var newurl = window.location.origin + window.location.pathname + queryString;
+        window.history.pushState({path:newurl},'',newurl);
+
+        queryString = new URLSearchParams(window.location.search);
+
+        renderCatCardsOnMainPage(queryString);
+    }
+})
 
 function catCardGenerateRoomsPage()
 {
@@ -4730,7 +4742,10 @@ function catCardGenerateRoomsPage()
     {
         document.getElementById("room").addEventListener("click", function(e) 
         {
-            document.getElementById("ScrollDiv").style.display = "none";
+            var test = new URLSearchParams(window.location.search);
+            test.forEach(e => console.log(e))
+            var param = test.get("a");
+            debugger;
             console.log(e.target)
         })
     }
