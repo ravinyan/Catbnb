@@ -1,5 +1,6 @@
 ﻿using Airbnb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Airbnb.DBContext
 {
@@ -51,7 +52,7 @@ namespace Airbnb.DBContext
         {
             List<Models.Host> usersList = new List<Models.Host>();
 
-            for (int i = 1; i <= 61; i++)
+            for (int i = 1; i <= 244; i++)
             {
                 usersList.Add(new Models.Host { Id = i, Name = $"bob{i}" });
             }
@@ -63,22 +64,32 @@ namespace Airbnb.DBContext
         {
             List<CatCard> catCardsList = new List<CatCard>();
 
-            int hostId = 1;
-            for (int i = 1; i <= 610; i++)
+            int hostId = 0;
+            int categoryId = 0;
+            //2440 244
+            for (int i = 1; i <= 2440; i++)
             {
-                if (i == 600)
+                if (i % 10 == 1 && hostId <= 10)
                 {
-                    Console.WriteLine();
+                    hostId++;
                 }
-
-                if (i % 10 == 0 && hostId < 61)
+                else if (i % 10 == 1)
                 {
                     hostId++;
                 }
 
-                catCardsList.Add(new CatCard { Id = i, HostId = hostId, BookingInfoId = i});
-            }
+                if (i % 40 == 1 && categoryId <= 10)
+                {
+                    categoryId++;
+                }
+                else if (i % 40 == 1)
+                {
+                    categoryId++;
+                }
 
+                catCardsList.Add(new CatCard { Id = i, HostId = hostId, BookingInfoId = i, CategoryId = categoryId});
+            }
+            
             return catCardsList;
         }
 
@@ -91,7 +102,7 @@ namespace Airbnb.DBContext
                                      "this cat is scared of cucumbers", "1 shader braincell cat", "cute cat", "dog"];
             bool[] TrueOrFalse = [true, false];
             
-            for (int i = 1; i <= 610; i++)
+            for (int i = 1; i <= 2440; i++)
             {
                 var cityCountryIndex = rng.Next(1, 10);
 
@@ -129,7 +140,7 @@ namespace Airbnb.DBContext
 
             var id = 1;
             var ccid = 1;
-            for (int j = 1; j <= 610; j++)
+            for (int j = 1; j <= 2440; j++)
             {
                 for (int i = 1; i <= 5; i++)
                 {
@@ -145,7 +156,6 @@ namespace Airbnb.DBContext
                 ccid++;
             }
             
-
             return imagesList;
         }
 
@@ -189,7 +199,7 @@ namespace Airbnb.DBContext
                 new Categories { Id = 34, Name = "A-frames" },
                 new Categories { Id = 35, Name = "Bed & breakfasts" },
                 new Categories { Id = 36, Name = "New" },
-                new Categories { Id = 37, Name = "Chef's kitchens'" },
+                new Categories { Id = 37, Name = "Chef's kitchens" },
                 new Categories { Id = 38, Name = "Towers" },
                 new Categories { Id = 39, Name = "ski-in/out" },
                 new Categories { Id = 40, Name = "Creative spaces" },
@@ -268,13 +278,13 @@ namespace Airbnb.DBContext
                 .HasOne(cc => cc.CatCard)
                 .WithOne(bi => bi.BookingInfo);
 
-            //modelBuilder.Entity<CatCard>()
-            //    .HasOne(c => c.Category)
-            //    .WithMany(cc => cc.CatCards);
+            modelBuilder.Entity<Categories>()
+                .HasMany(cc => cc.CatCards)
+                .WithOne(c => c.Category);
         }
 
         public DbSet<CatCard> CatCards { get; set; }
-        //public DbSet<Categories> Categories { get; set; }
+        public DbSet<Categories> Categories { get; set; }
         public DbSet<CatCardImages> CatCardImages { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
         public DbSet<Models.Host> Users { get; set; }

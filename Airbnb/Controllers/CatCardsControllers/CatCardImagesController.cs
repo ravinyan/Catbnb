@@ -7,9 +7,9 @@ namespace Airbnb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CatCardImagesController : ControllerBase
+    public class CatCardImagesController : Controller
     {
-        private CatCardContext _context;
+        private readonly CatCardContext _context;
 
         public CatCardImagesController(CatCardContext context)
         {

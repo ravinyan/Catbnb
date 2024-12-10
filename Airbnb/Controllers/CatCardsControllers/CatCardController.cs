@@ -2,7 +2,6 @@
 using Airbnb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace Airbnb.Controllers
 {
@@ -25,14 +24,13 @@ namespace Airbnb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CatCard>> GetCatCard(int id)
         {
-            var catCard = await _context!.CatCards.Include(i => i.Images).FirstOrDefaultAsync(i => i.Id == id);
+            var catCard = await _context!.CatCards.Include(i => i.Images).Include(bi => bi.BookingInfo).FirstOrDefaultAsync(i => i.Id == id);
 
             if (catCard == null)
             {
                 return NotFound();
             }
 
-            
             return catCard;
         }
     }
