@@ -4733,6 +4733,10 @@ function renderCatCardsOnRefresh()
     {
         fetchNeededCatCards(queryValue)
     }
+    else
+    {
+        document.getElementById("DisplayText3").innerText = "hello this is main page... wow";
+    }
     
     var end = performance.now();
     var timeTaken = end - start;
