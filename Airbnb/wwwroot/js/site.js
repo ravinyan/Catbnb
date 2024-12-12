@@ -97,6 +97,8 @@ function headerSettingsHomePage()
 {
     if (window.location.pathname == "/" || window.location.pathname == "/home")
     {
+        document.getElementsByClassName("header")[0].style.position = "sticky";
+        document.getElementsByClassName("spacing")[0].style.display = "block";
         document.getElementById("TopHeader").style.height = "161px";
         document.getElementById("MiniForm").style.display = "none";
         document.getElementById("StaysMenuButtons").style.display = "block";
@@ -114,6 +116,8 @@ function headerSettingsRoomsPage()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
+        document.getElementsByClassName("header")[0].style.position = "relative";
+        document.getElementsByClassName("spacing")[0].style.display = "none";
         document.getElementById("TopHeader").style.height = "80px";
         document.getElementById("MiniForm").style.display = "block";
         document.getElementById("StaysMenuButtons").style.display = "none";
@@ -4724,23 +4728,26 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
 
 function renderCatCardsOnRefresh()
 { 
-    var start = performance.now();
-
-    queryString = new URLSearchParams(window.location.search);
-    var queryValue = queryString.get("category");
-
-    if (queryValue != null)
+    if (window.location.pathname == "/" || window.location.pathname == "/home")
     {
-        fetchNeededCatCards(queryValue)
-    }
-    else
-    {
-        document.getElementById("DisplayText3").innerText = "hello this is main page... wow";
-    }
-    
-    var end = performance.now();
-    var timeTaken = end - start;
-    console.log(timeTaken)
+        var start = performance.now();
+
+        queryString = new URLSearchParams(window.location.search);
+        var queryValue = queryString.get("category");
+
+        if (queryValue != null)
+        {
+            fetchNeededCatCards(queryValue)
+        }
+        else
+        {
+            document.getElementById("DisplayText3").innerText = "hello this is main page... wow";
+        }
+        
+        var end = performance.now();
+        var timeTaken = end - start;
+        console.log(timeTaken)
+    } 
 }
 
 renderCatCardsOnRefresh();
@@ -4748,19 +4755,13 @@ renderCatCardsOnRefresh();
 var roomPageId = +window.location.pathname.split("/")[2];
 console.log(roomPageId)
 const urlParams = ["category"];
+const roomContent = document.getElementById("RoomContent");
 
 function catCardGenerateRoomsPage()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
-        document.getElementById("room").addEventListener("click", function(e) 
-        {
-            var test = new URLSearchParams(window.location.search);
-            test.forEach(e => console.log(e))
-            var param = test.get("a");
-            debugger;
-            console.log(e.target)
-        })
+
     }
 }
 
