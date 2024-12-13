@@ -1524,10 +1524,11 @@ div.room_information {
 
 div.room_information_header {
     border-bottom: 1px solid #dddddd;
+    padding-block-end: 20px;
 }
 
 div.room_information_stay_box {
-    padding: 20px 0px;
+    padding-block-end: 20px;
 }
 
 div.room_information_stay_location {
@@ -1573,21 +1574,201 @@ div.room_information_host_description {
     opacity: 0.8;
 }
 
-div.room_information_benefits {
+div.room_information_highlightAmenities {
+    display: flex;
+    flex-direction: column;
+    border-block-end: 1px solid #dddddd;
+    padding: 20px 0px;
+}
 
+div.room_information_highlight_box {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    padding: 15px 0px;
+}
+
+div.room_information_highlight_svg {
+    display: flex;
+    align-items: center;
+}
+
+div.room_information_highlight_top {
+    font-weight: 600;
+    margin-block-end: 2px;
+}
+
+div.room_information_highlight_bottom {
+    font-size: 14px;
+    opacity: 0.8;
 }
 
 div.room_information_description {
+    display: flex;
+    flex-direction: column;
+    border-block-end: 1px solid #dddddd;
+    padding: 30px 0px;
+}
 
+div.room_information_description_text {
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+div.room_information_description_showMore {
+    display: flex;
+    align-items: center;
+}
+
+button.room_information_description_showMore_button {
+    display: flex;
+    text-decoration: underline;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0px;
+    margin-block-start: 20px;
 }
 
 div.room_information_petting {
+    padding: 20px 0px;
+    border-block-end: 1px solid #dddddd;
+    display: flex;
+    flex-direction: column;
+}
 
+div.room_information_petting_header {
+    padding-block-end: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+div.room_information_petting_header_text {
+    font-size: 22px;
+    font-weight: 600;
+    flex: 1 0;
+}
+
+div.room_information_petting_header_control_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+div.room_information_petting_header_control_counter {
+
+}
+
+button.room_information_petting_header_controlL {
+    background: white;
+    border: 1px solid #dddddd;
+    color: #dddddd;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+    button.room_information_petting_header_controlL:hover {
+        border: 1px solid black;
+        color: black;
+    }
+
+button.room_information_petting_header_controlR {
+    background: white;
+    border: 1px solid #8f8f8f;
+    color: #8f8f8f;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    button.room_information_petting_header_controlR:hover {
+        border: 1px solid black;
+        color: black;
+    }
+
+div.room_information_petting_images {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 15px;
+    overflow: hidden
+}
+
+div.room_information_petting_images_card {
+    width: 50%;
+}
+
+img.room_information_petting_image {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+div.room_information_petting_image_topText {
+    font-weight: 600;
+    margin-block-end: 2px;
+    margin-block-start: 8px;
+}
+
+div.room_information_petting_images_bottomText {
+    font-size: 14px;
+    opacity: 0.8;
 }
 
 div.room_information_amenities {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px;
+    border-block-end: 1px solid #dddddd;
+}
+
+div.room_information_amenities_header {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+div.room_information_amenities_list {
+    display: flex;
+    flex-direction: column;
+}
+
+div.room_information_amenities_item_box {
+    display: flex;
+    align-items: center;
+    padding: 8px 0px;
+}
+
+div.room_information_amenities_item_svg {
+    height: 10px;
+    width: 10px;
+    background-color: black;
+    border-radius: 50px;
+    margin-inline-end: 10px;
+}
+
+div.room_information_amenities_item_name {
 
 }
+
+div.room_information_amenities_showAll {
+
+}
+
+
 
 div.room_pricing {
     width: 40%;
