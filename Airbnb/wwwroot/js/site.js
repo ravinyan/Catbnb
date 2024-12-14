@@ -4761,7 +4761,83 @@ function catCardGenerateRoomsPage()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
+        var room = document.getElementById("RoomContent");
 
+        var b = room.getElementsByClassName("room_information_amenities_showAll")[0];
+
+        var c1 = room.getElementsByClassName("room_information_calendar1")[0];
+        var c2 = room.getElementsByClassName("room_information_calendar2")[0];
+
+
+        initializeDatesCalendars(c1, c2);
+
+        if (window.innerWidth < 1251)
+        {
+            let tr = c1.childNodes[2].childNodes[0].childNodes[0];
+            let width = Math.ceil(tr.offsetWidth / 7) - 26;
+            let height = width;
+
+            tr.style.width = (width * 7) + "px";
+
+            for (i = 0; i < 6; i++)
+            {
+                c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
+                c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+
+                for (j = 0; j < 7; j++)
+                {
+                    try
+                    {
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                    } catch{break;}
+                }
+            }
+        }
+
+        window.addEventListener("resize", function()
+        {   
+            if (window.innerWidth < 1250)
+            {
+                let tr = c1.childNodes[2].childNodes[0].childNodes[0];
+                let width = Math.ceil(tr.offsetWidth / 7) - 26;
+                let height = width;
+
+                tr.style.width = (width * 7) + "px";
+
+                for (i = 0; i < 6; i++)
+                {
+                    c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
+                    c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+
+                    for (j = 0; j < 7; j++)
+                    {
+                        try
+                        {
+                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                        } catch{break;}
+                    }
+                }
+            }
+            else
+            {
+                for (i = 0; i < 6; i++)
+                {
+                    c1.childNodes[2].childNodes[0].childNodes[i].style.width = 49 + "px";
+                    c1.childNodes[2].childNodes[0].childNodes[i].style.height = 49 + "px";
+
+                    for (j = 0; j < 7; j++)
+                    {
+                        try
+                        {
+                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = 49 + "px";
+                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = 49 + "px";
+                        } catch{break;}
+                    }
+                }
+            }
+        })
     }
 }
 

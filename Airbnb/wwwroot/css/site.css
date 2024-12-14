@@ -1519,7 +1519,7 @@ div.room_information_section {
 }
 
 div.room_information {
-    width: 60%
+    width: 65%
 }
 
 div.room_information_header {
@@ -1607,7 +1607,7 @@ div.room_information_description {
     display: flex;
     flex-direction: column;
     border-block-end: 1px solid #dddddd;
-    padding: 30px 0px;
+    padding: 20px 0px;
 }
 
 div.room_information_description_text {
@@ -1743,13 +1743,34 @@ div.room_information_amenities_header {
 
 div.room_information_amenities_list {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
 }
 
 div.room_information_amenities_item_box {
     display: flex;
     align-items: center;
     padding: 8px 0px;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    div.room_information_amenities_item_box {
+        display: flex;
+        align-items: center;
+        padding: 8px 0px;
+        width: 100%;
+        min-width: 320px;
+    }
+}
+
+@media (min-width: 1080px) {
+    div.room_information_amenities_item_box {
+        display: flex;
+        align-items: center;
+        padding: 8px 0px;
+        width: 50%;
+    }
 }
 
 div.room_information_amenities_item_svg {
@@ -1764,14 +1785,55 @@ div.room_information_amenities_item_name {
 
 }
 
-div.room_information_amenities_showAll {
-
+div.room_information_amenities_button_box {
+    margin-block-start: 20px;
 }
 
+button.room_information_amenities_showAll {
+   background: white;
+   border: 1px solid black;
+   width: 200px;
+   height: 50px;
+   border-radius: 10px;
+   padding: 0px;
+}
 
+div.room_information_I_HATE_CALENDARS_WHY_THERE_IS_CALENDAR {
+    border-block-end: 1px solid #dddddd;
+    padding: 30px 0px;
+}
+
+div.room_information_calendar_box {
+    display: flex;
+    flex-flow: row;
+    gap: 10px;
+}
+
+div.room_information_calendar1 {
+    width: 100%;
+}
+
+    div.room_information_calendar1 > table {
+        width: 100%;
+        min-width: 350px;
+    }
+
+div.room_information_calendar2 {
+    display: none;
+}
+
+@media (min-width: 1250px) {
+    div.room_information_calendar1 {
+        width: 50%;
+    }
+
+    div.room_information_calendar2 {
+        display: block;
+    }
+}
 
 div.room_pricing {
-    width: 40%;
+    width: 35%;
 }
 
 
