@@ -251,115 +251,114 @@
                                 @* CHECK IN/ CHECK OUT *@
                                 <div id="CheckinFormMenu" style="width: 33.33%; display: flex; background: none;">
                                     <div style="width: 50%">
-                                            <label class="shadowe w-100">
-                                                <div id="CheckinButton" class="label_box">
-                                                    <div class="fw-bold text-nowrap" style="background: none">
-                                                        Check in
-                                                    </div>
-                                                    <input id="CheckinInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
+                                        <label class="shadowe w-100">
+                                            <div id="CheckinButton" class="label_box">
+                                                <div class="fw-bold text-nowrap" style="background: none">
+                                                    Check in
                                                 </div>
-                                            </label>
-                                            @* popup modal thingy *@
-                                        </div>
+                                                <input id="CheckinInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
+                                            </div>
+                                        </label>
+                                        @* popup modal thingy *@
+                                    </div>
                                     <div style="border-right: 1px solid #ebebeb; height: 30px; align-self: center"></div>
                                     <div style="width: 50%; display: inline-block">
-                                            <label class="shadowe w-100">
-                                                <div id="CheckoutButton" class="label_box">
-                                                    <div class="fw-bold text-nowrap" style="background: none">
-                                                        Check out
-                                                        
-                                                    </div>
-                                                    <input id="CheckoutInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
+                                        <label class="shadowe w-100">
+                                            <div id="CheckoutButton" class="label_box">
+                                                <div class="fw-bold text-nowrap" style="background: none">
+                                                    Check out
                                                 </div>
-                                            </label>
-                                            <div style="position: absolute;">
-                                                <button id="ClearCalendarFormInputsButton" type="button" class="resetDatesForm">
-                                                    <svg id="ClearCalendarFormInputsButtonSVG" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x shadoweP" viewBox="0 0 16 16" style="border-radius: 50px">
-                                                        <path id="ClearCalendarFormInputsButtonPATH" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" style="z-index: -1" />
-                                                    </svg>
-                                                </button>
+                                                <input id="CheckoutInput" class="border-0 input" type="search" placeholder="Add dates" value="" spellcheck="false" readonly />
                                             </div>
-                                            @* popup modal thingy *@                       
-                                        </div>    
+                                        </label>
+                                        <div style="position: absolute;">
+                                            <button id="ClearCalendarFormInputsButton" type="button" class="resetDatesForm">
+                                                <svg id="ClearCalendarFormInputsButtonSVG" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x shadoweP" viewBox="0 0 16 16" style="border-radius: 50px">
+                                                    <path id="ClearCalendarFormInputsButtonPATH" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" style="z-index: -1" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        @* popup modal thingy *@                       
+                                    </div>    
                                 </div>
                                 @* DATES DROPDOWN *@
                                 <div id="CheckinDropdown" class="shadow dropdown_window" style="width: 100%; left: 0px">
                                     <div style="display: flex; justify-content: center">
-                                            <div style="background-color: #dedede; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-radius: 50px; width: 300px; height: 46px;">
-                                                <button id="DatesButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px; background-color: white">
-                                                    Dates
-                                                </button>
-                                                <button id="MonthsButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 0px; ">
-                                                    Months
-                                                </button>
-                                                <button id="FlexibleButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px;">
-                                                    Flexible
-                                                </button>
-                                            </div>
+                                        <div style="background-color: #dedede; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-radius: 50px; width: 300px; height: 46px;">
+                                            <button id="DatesButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px; background-color: white">
+                                                Dates
+                                            </button>
+                                            <button id="MonthsButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 0px; ">
+                                                Months
+                                            </button>
+                                            <button id="FlexibleButton" type="button" class="btn shadoweP" style="border-radius: 50px; margin: 4px 4px;">
+                                                Flexible
+                                            </button>
                                         </div>
+                                    </div>
                                     @* dates block *@
                                     <div id="DatesBlock" style="display: block">
-                                            <div class="shadowe" style="width: 100%; height: 0px">
-                                                <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
-                                                        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                                                    </svg>
-                                                </button>
-                                                <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
-                                                        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                                                    </svg>
-                                                </button>
+                                        <div class="shadowe" style="width: 100%; height: 0px">
+                                            <button id="MoveCalendarsLeft" type="button" class="btn" style="position: absolute; left: 0; border-radius: 50px; cursor: not-allowed; color: #dcdcdc; background: none; margin-inline-start: 30px">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" style="background: none;" viewBox="0 3 16 16">
+                                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                                                </svg>
+                                            </button>
+                                            <button id="MoveCalendarsRight" type="button" class="btn" style="position: absolute; right: 0; border-radius: 50px; cursor: pointer; margin-inline-end: 30px">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" style="background: none;" viewBox="0 3 16 16">
+                                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div id="DatesCalendars" class="calendars">
+                                            <div id="Calendar" style="max-width: 375px; padding: 10px">
+                                                <ul class="days_list">
+                                                    @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                    <li class="box">Mon</li>
+                                                    <li class="box">Tue</li>
+                                                    <li class="box">Wed</li>
+                                                    <li class="box">Thu</li>
+                                                    <li class="box">Fri</li>
+                                                    <li class="box">Sat</li>
+                                                    <li class="box">Sun</li>
+                                                </ul>
                                             </div>
-                                            <div id="DatesCalendars" class="calendars">
-                                                <div id="Calendar" style="max-width: 375px; padding: 10px">
-                                                    <ul class="days_list">
-                                                        @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                        <li class="box">Mon</li>
-                                                        <li class="box">Tue</li>
-                                                        <li class="box">Wed</li>
-                                                        <li class="box">Thu</li>
-                                                        <li class="box">Fri</li>
-                                                        <li class="box">Sat</li>
-                                                        <li class="box">Sun</li>
-                                                    </ul>
-                                                </div>
-                                                <div id="Calendar2" style="max-width: 375px; padding: 10px">
-                                                    <ul class="days_list">
-                                                        @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
-                                                        <li class="box">Mon</li>
-                                                        <li class="box">Tue</li>
-                                                        <li class="box">Wed</li>
-                                                        <li class="box">Thu</li>
-                                                        <li class="box">Fri</li>
-                                                        <li class="box">Sat</li>
-                                                        <li class="box">Sun</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
-                                                    <button id="CalendarExactDatesButton" type="button" class="PM">
-                                                        Exact dates
-                                                    </button>
-                                                    <button id="CalendarPM1Button" type="button" class="PM">
-                                                        ± 1 day
-                                                    </button>
-                                                    <button id="CalendarPM2Button" type="button" class="PM">
-                                                        ± 2 days
-                                                    </button>
-                                                    <button id="CalendarPM3Button" type="button" class="PM">
-                                                        ± 3 days
-                                                    </button>
-                                                    <button id="CalendarPM7Button" type="button" class="PM">
-                                                        ± 7 days
-                                                    </button>
-                                                    <button id="CalendarPM14Button" type="button" class="PM">
-                                                        ± 14 days
-                                                    </button>
-                                                </div>
+                                            <div id="Calendar2" style="max-width: 375px; padding: 10px">
+                                                <ul class="days_list">
+                                                    @* day of the week starts from monday and I DONT CARE CRY ABOUT IT *@
+                                                    <li class="box">Mon</li>
+                                                    <li class="box">Tue</li>
+                                                    <li class="box">Wed</li>
+                                                    <li class="box">Thu</li>
+                                                    <li class="box">Fri</li>
+                                                    <li class="box">Sat</li>
+                                                    <li class="box">Sun</li>
+                                                </ul>
                                             </div>
                                         </div>
+                                        <div>
+                                            <div style="margin-block-start: 10px; display:flex; align-items: center; gap: 10px">
+                                                <button id="CalendarExactDatesButton" type="button" class="PM">
+                                                    Exact dates
+                                                </button>
+                                                <button id="CalendarPM1Button" type="button" class="PM">
+                                                    ± 1 day
+                                                </button>
+                                                <button id="CalendarPM2Button" type="button" class="PM">
+                                                    ± 2 days
+                                                </button>
+                                                <button id="CalendarPM3Button" type="button" class="PM">
+                                                    ± 3 days
+                                                </button>
+                                                <button id="CalendarPM7Button" type="button" class="PM">
+                                                    ± 7 days
+                                                </button>
+                                                <button id="CalendarPM14Button" type="button" class="PM">
+                                                    ± 14 days
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @* months block *@
                                     <div id="MonthsBlock" style="display: none">
                                             <div>

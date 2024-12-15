@@ -1813,13 +1813,24 @@ div.room_information_calendar1 {
     width: 100%;
 }
 
-    div.room_information_calendar1 > table {
-        width: 100%;
-        min-width: 350px;
-    }
-
 div.room_information_calendar2 {
     display: none;
+}
+
+ul.room_information_days_list {
+    list-style-type: none;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+    user-select: none;
+    margin-block-end: 20px;
+    display: flex;
+}
+
+li.room_information_days_box {
+    display: flex;
+    justify-content: center;
+    width: 50px;
 }
 
 @media (min-width: 1250px) {
@@ -1830,7 +1841,19 @@ div.room_information_calendar2 {
     div.room_information_calendar2 {
         display: block;
     }
+
+    ul.room_information_days_list {
+        list-style-type: none;
+        font-size: 12px;
+        padding: 5px;
+        margin: 0px;
+        user-select: none;
+        margin-block-end: 20px;
+        display: flex;
+        width: 350px;
+    }
 }
+
 
 div.room_pricing {
     width: 35%;

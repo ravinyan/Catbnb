@@ -4761,35 +4761,47 @@ function catCardGenerateRoomsPage()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
-        var room = document.getElementById("RoomContent");
+        let room = document.getElementById("RoomContent");
 
-        var b = room.getElementsByClassName("room_information_amenities_showAll")[0];
-
-        var c1 = room.getElementsByClassName("room_information_calendar1")[0];
-        var c2 = room.getElementsByClassName("room_information_calendar2")[0];
-
+        let c1 = room.getElementsByClassName("room_information_calendar1")[0];
+        let c2 = room.getElementsByClassName("room_information_calendar2")[0];
+        
+        let dayList = room.getElementsByClassName("room_information_days_box");
 
         initializeDatesCalendars(c1, c2);
 
         if (window.innerWidth < 1251)
         {
-            let tr = c1.childNodes[2].childNodes[0].childNodes[0];
-            let width = Math.ceil(tr.offsetWidth / 7) - 26;
+            let monthNameLength = c1.childNodes[1].offsetWidth;
+            let tr = c1.childNodes[4].childNodes[0].childNodes[0];
+            let width = Math.ceil(monthNameLength / 7);
             let height = width;
+            c1.childNodes[2].offsetWidth = (width * 7);
+
+            c1.childNodes[2].childNodes.forEach(function(e)
+            {
+                if (e.tagName == "LI")
+                {
+                    e.style.width = width + "px";
+                }
+            });
 
             tr.style.width = (width * 7) + "px";
 
             for (i = 0; i < 6; i++)
             {
-                c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
-                c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+                c1.childNodes[4].childNodes[0].childNodes[i].style.width = width + "px";
+                c1.childNodes[4].childNodes[0].childNodes[i].style.height = height + "px";
 
                 for (j = 0; j < 7; j++)
                 {
                     try
                     {
-                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
-                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
+
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
                     } catch{break;}
                 }
             }
@@ -4799,23 +4811,36 @@ function catCardGenerateRoomsPage()
         {   
             if (window.innerWidth < 1250)
             {
-                let tr = c1.childNodes[2].childNodes[0].childNodes[0];
-                let width = Math.ceil(tr.offsetWidth / 7) - 26;
+                let monthNameLength = c1.childNodes[1].offsetWidth;
+                let tr = c1.childNodes[4].childNodes[0].childNodes[0];
+                let width = Math.ceil(monthNameLength / 7);
                 let height = width;
+                c1.childNodes[2].offsetWidth = (width * 7);
+
+                c1.childNodes[2].childNodes.forEach(function(e)
+                {
+                    if (e.tagName == "LI")
+                    {
+                        e.style.width = width + "px";
+                    }
+                });
 
                 tr.style.width = (width * 7) + "px";
 
                 for (i = 0; i < 6; i++)
                 {
-                    c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
-                    c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+                    c1.childNodes[4].childNodes[0].childNodes[i].style.width = width + "px";
+                    c1.childNodes[4].childNodes[0].childNodes[i].style.height = height + "px";
 
                     for (j = 0; j < 7; j++)
                     {
                         try
                         {
-                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
-                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
+
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
                         } catch{break;}
                     }
                 }
@@ -4824,16 +4849,19 @@ function catCardGenerateRoomsPage()
             {
                 for (i = 0; i < 6; i++)
                 {
-                    c1.childNodes[2].childNodes[0].childNodes[i].style.width = 49 + "px";
-                    c1.childNodes[2].childNodes[0].childNodes[i].style.height = 49 + "px";
+                    c1.childNodes[4].childNodes[0].childNodes[i].style.width = 49 + "px";
+                    c1.childNodes[4].childNodes[0].childNodes[i].style.height = 49 + "px";
 
                     for (j = 0; j < 7; j++)
                     {
                         try
                         {
-                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = 49 + "px";
-                            c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = 49 + "px";
-                        } catch{break;}
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = 49 + "px";
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = 49 + "px";
+
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = 49 + "px";
+                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = 49 + "px";
+                        }catch{break;}
                     }
                 }
             }
