@@ -1420,7 +1420,7 @@ div.spacing {
     height: 90px;
 }
 
-/*ROOMS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+/* ROOMS!!! wow thats a lot of lines of css... wow*/
 div.room {
     padding: 0px 30px;
 }
@@ -1430,7 +1430,7 @@ div.room_header {
     height: 50px;
     justify-content: space-between;
     align-items: flex-end;
-    max-width: 1100px;
+    max-width: 1150px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -1465,13 +1465,13 @@ button.room_header_save_box {
 }
 
 div.room_images {
-     display: flex;
-     width: 100%;
-     max-width: 1100px;
-     gap: 10px;
-     margin-left: auto;
-     margin-right: auto;
-     padding-block-start: 20px;
+    display: flex;
+    width: 100%;
+    max-width: 1150px;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-block-start: 20px;
 }
 
 div.room_images_mainImage {
@@ -1512,14 +1512,15 @@ img.room_images_image {
 div.room_information_section {
     display: flex;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1150px;
     margin-left: auto;
     margin-right: auto;
     padding-block-start: 20px;
 }
 
+/* INFORMATION SECTION!!! */
 div.room_information {
-    width: 65%
+    width: 65%;
 }
 
 div.room_information_header {
@@ -1807,6 +1808,40 @@ div.room_information_calendar_box {
     display: flex;
     flex-flow: row;
     gap: 10px;
+    position: relative;
+}
+
+div.room_information_calendar_moveControls {
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    top: 6px;
+}
+
+button.room_information_calendar_moveL {
+    display: flex;
+    position: absolute;
+    left: 0px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+button.room_information_calendar_moveR {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
 }
 
 div.room_information_calendar1 {
@@ -1854,9 +1889,155 @@ li.room_information_days_box {
     }
 }
 
-
+/* PRICING SECTION!!! */
 div.room_pricing {
     width: 35%;
+    display: flex;
+    justify-content: flex-end;
 }
+
+div.room_pricing_flying_rectangle {
+    border: 1px solid black;
+    width: 300px;
+    height: 480px;
+    max-width: 350px;
+    margin-inline-start: 6%;
+    margin-block-start: 40px;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    box-shadow: 5px 10px 28px 3px #dddddd;
+    position: sticky;
+    top: 80px;
+}
+
+div.room_pricing_flying_rectangle_box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+}
+
+div.room_pricing_flying_rectangle_night_price {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+div.room_pricing_flying_rectangle_night_price_text {
+    font-weight: bold;
+    font-size: 22px;
+    margin-inline-end: 5px;
+    margin-block-end: 15px;
+}
+
+div.room_pricing_flying_rectangle_reservation {
+    display: flex;
+    flex-direction: column;
+}
+
+div.room_pricing_flying_rectangle_reservation_boxes {
+    margin-block-end: 15px;
+}
+
+div.room_pricing_flying_rectangle_reservation_box1 {
+    display: flex;
+    flex-direction: row;
+}
+
+button.room_pricing_flying_rectangle_reservation_buttons_check1 {
+    width: 50%;
+    background: white;
+    border: none;
+    border-block-start: 1px solid black;
+    border-inline-start: 1px solid black;
+    border-top-left-radius: 10px;
+    text-align: left;
+    padding: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+button.room_pricing_flying_rectangle_reservation_buttons_check2 {
+    width: 50%;
+    background: white;
+    border: none;
+    border-block-start: 1px solid black;
+    border-inline-end: 1px solid black;
+    border-inline-start: 1px solid black;
+    border-top-right-radius: 10px;
+    text-align: left;
+    padding: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+div.room_pricing_flying_rectangle_reservation_box2 {
+
+}
+
+button.room_pricing_flying_rectangle_reservation_button_guest {
+    width: 100%;
+    background: white;
+    border: none;
+    border: 1px solid black;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-align: left;
+    padding: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+div.room_pricing_flying_rectangle_reservation_buttons_text {
+    font-weight: bold;
+}
+
+button.room_pricing_flying_rectangle_reservation_reserveButton {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background: #cf1b3c;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+div.room_pricing_flying_rectangle_noCharge {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+div.room_pricing_flying_rectangle_pricing {
+    display: flex;
+    flex-direction: column;
+}
+
+div.room_pricing_flying_rectangle_pricing_row {
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.room_pricing_flying_rectangle_pricing_row_text {
+    text-decoration: underline;
+}
+
+div.room_pricing_flying_rectangle_pricing_total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-block-start: 20px;
+    padding-block-start: 20px;
+    border-block-start: 1px solid #dddddd;
+    font-weight: bold;
+}
+
+
+
 
 
