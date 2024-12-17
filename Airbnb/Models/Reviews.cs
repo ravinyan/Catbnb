@@ -6,14 +6,19 @@ namespace Airbnb.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public Host User { get; set; } = new Host();
+        //  not something to be implemented but will leave it here anyway
+        //[Required]
+        //public Host User { get; set; } = new Host();
 
         [Required]
+        [StringLength(1000)]
         public string Review { get; set; } = string.Empty;
 
         [Required]
         [Range(0, 6)]
-        public decimal StarRating { get; set; } = 0;
+        public int StarRating { get; set; } = 0;
+
+        public int BookingInfoId { get; set; }
+        public BookingInfo? BookingInfo { get; set; }
     }
 }

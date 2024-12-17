@@ -47,9 +47,9 @@ namespace Airbnb.Models
         [Required]
         public bool InfantsAllowed { get; set; } = false;
 
-        //public int ReviewId { get; set; }
-        //public Reviews? Reviews { get; set; }
+        public ICollection<Reviews>? Reviews { get; set; }
 
+        [Required]
         public CatCard? CatCard { get; set; }
     }
 }

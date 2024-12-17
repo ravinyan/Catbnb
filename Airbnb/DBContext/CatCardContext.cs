@@ -1,6 +1,5 @@
 ﻿using Airbnb.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace Airbnb.DBContext
 {
@@ -229,6 +228,37 @@ namespace Airbnb.DBContext
             return categoryList;
         }
 
+        private List<Reviews> GenerateReviews()
+        {
+            var reviewList = new List<Reviews>();
+
+            string[] reviews = ["This cat is the best!", "This cat is amazing!", "This cat is pretty funny", "This cat is good but scratches couches",
+                                "This cat is ok", "This cat is boring", "This cat is stupid"];
+            int[] stars = [1, 2, 3, 4, 5, 6];
+
+            var id = 1;
+            var biid = 1;
+            for (int i = 1; i <= 2440; i++)
+            {
+                var reviewIndex = rng.Next(1, 6);
+                for (int j = 1; j <= 7; j++)
+                {
+                    reviewList.Add(new Reviews
+                    {
+                        Id = id,
+                        BookingInfoId = biid,
+                        Review = reviews[reviewIndex],
+                        StarRating = stars[reviewIndex],
+                    });
+
+                    id++;
+                }
+                biid++;
+            }
+
+            return reviewList;
+        }
+
         private void GenerateCatCardAmenities()
         {
 
@@ -254,6 +284,9 @@ namespace Airbnb.DBContext
             List<CatCardImages> imagesList = GenerateCatCardImages();
             modelBuilder.Entity<CatCardImages>().HasData(imagesList);
 
+            List<Reviews> reviewList = GenerateReviews();
+            modelBuilder.Entity<Reviews>().HasData(reviewList);
+
             modelBuilder.Entity<Models.Host>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(u => u.Host);
@@ -276,6 +309,10 @@ namespace Airbnb.DBContext
 
             modelBuilder.Entity<BookingInfo>()
                 .HasOne(cc => cc.CatCard)
+                .WithOne(bi => bi.BookingInfo);
+
+            modelBuilder.Entity<BookingInfo>()
+                .HasMany(r => r.Reviews)
                 .WithOne(bi => bi.BookingInfo);
 
             modelBuilder.Entity<Categories>()

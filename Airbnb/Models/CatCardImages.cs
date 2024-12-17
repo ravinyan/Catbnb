@@ -9,6 +9,7 @@ namespace Airbnb.Models
         [Required]
         public string Url { get; set; } = string.Empty;
 
+        [Required]
         public int CatCardId { get; set; }
         public CatCard? CatCard { get; set; }
     }
