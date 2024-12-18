@@ -232,15 +232,15 @@ namespace Airbnb.DBContext
         {
             var reviewList = new List<Reviews>();
 
-            string[] reviews = ["This cat is the best!", "This cat is amazing!", "This cat is pretty funny", "This cat is good but scratches couches",
-                                "This cat is ok", "This cat is boring", "This cat is stupid"];
-            int[] stars = [1, 2, 3, 4, 5, 6];
+            string[] reviews = ["This cat is the best!", "This cat is amazing!", "This cat is good but scratches couches",
+                                "This cat is boring", "This cat is stupid"];
+            int[] stars = [1, 2, 3, 4, 5];
 
             var id = 1;
             var biid = 1;
             for (int i = 1; i <= 2440; i++)
             {
-                var reviewIndex = rng.Next(1, 6);
+                var reviewIndex = rng.Next(0, 4);
                 for (int j = 1; j <= 7; j++)
                 {
                     reviewList.Add(new Reviews

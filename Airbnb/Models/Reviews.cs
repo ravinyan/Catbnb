@@ -15,8 +15,8 @@ namespace Airbnb.Models
         public string Review { get; set; } = string.Empty;
 
         [Required]
-        [Range(0, 6)]
-        public int StarRating { get; set; } = 0;
+        [Range(1, 5)]
+        public int StarRating { get; set; } = 1;
 
         public int BookingInfoId { get; set; }
         public BookingInfo? BookingInfo { get; set; }
