@@ -4872,4 +4872,35 @@ function catCardGenerateRoomsPage()
 catCardGenerateRoomsPage();
 
 
+var bl = document.getElementById("buttonleft");
+var br = document.getElementById("buttonright");
+var car = document.getElementsByClassName("room_information_petting_carousel")[0];
+
+bl.onclick = function()
+{
+    car.scrollLeft -= car.childNodes[1].childNodes[1].offsetWidth + 5;
+}
+
+br.onclick = function()
+{
+    car.scrollLeft += car.childNodes[1].childNodes[1].offsetWidth + 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
