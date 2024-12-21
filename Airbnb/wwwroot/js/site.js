@@ -4408,7 +4408,7 @@ var signal =  controller.signal;
 
 function catCardCarouselControl()
 {
-    if ((window.location.pathname == "/" || window.location.pathname == "/home"))
+    if ((window.location.pathname == "/" || window.location.pathname == "/home" ||  window.location.pathname == "/test"))
     {
         function catCardShowCarouselButtons()
         {
@@ -4417,8 +4417,8 @@ function catCardCarouselControl()
                 try
                 {
                     let catCard = e.target.closest(".cat_card");
-                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+                    let buttonL = catCard.getElementsByClassName("cat_card_L_button")[0];
+                    let buttonR = catCard.getElementsByClassName("cat_card_R_button")[0];
                     
                     if (e.target.closest(".cat_card"))
                     {
@@ -4434,8 +4434,8 @@ function catCardCarouselControl()
                 try
                 {
                     let catCard = e.target.closest(".cat_card");
-                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
+                    let buttonL = catCard.getElementsByClassName("cat_card_L_button")[0];
+                    let buttonR = catCard.getElementsByClassName("cat_card_R_button")[0];
         
                     if (e.target != catCard)
                     {
@@ -4446,57 +4446,80 @@ function catCardCarouselControl()
                 }catch{}
             });
         }
-        
+
+        let buttonIndex = 0;
+        let scrollValue = 0;
+        let scrollChange = 0;
+
         function catCardChangeCarouselImages()
         {
             let display = document.getElementById("DisplayText3");
+
             display.addEventListener("click", function(e) 
             {
                 try
                 {
                     let catCard = e.target.closest(".cat_card");
-                    let buttonL = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
-                    let buttonR = catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1];
-                    let catCardImages = catCard.querySelectorAll(".cat_card_href");
-                    let buttonIndex = 0;
+                    let buttonL = catCard.getElementsByClassName("cat_card_L_button")[0];
+                    let buttonR = catCard.getElementsByClassName("cat_card_R_button")[0];
+                    let carousel = catCard.getElementsByClassName("cat_card_image_container")[0];
+                    let dotBox = catCard.getElementsByClassName("cat_card_dots_box")[0];
         
-                    for (i = 0; i < catCardImages.length; i++)
+                    //for (i = 0; i < dotBox.childNodes.length; i++)
+                    //{
+                    //    if (dotBox.childNodes[i].style.background == "white")
+                    //    {
+                    //        scrollValue = carousel.childNodes[0].childNodes[1].offsetWidth * i;
+                    //        buttonIndex = i;
+                    //        break;
+                    //    }
+                    //}
+
+                    let stupidChangeThingIHATEJS = carousel.childNodes[1].childNodes[1].offsetWidth;
+
+                    
+                    if (e.target == buttonL && buttonIndex > 0)
                     {
-                        if (catCardImages[i].dataset.active == "true")
-                        {
-                            buttonIndex = i;
-                            break;
-                        }
+                        buttonIndex --;
+
+                        //if (buttonIndex == 0)
+                        //{
+                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
+                        //}
+                        //else
+                        //{
+                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
+                        //}                        
+
+                        //scrollChange = stupidChangeThingIHATEJS;
+                        carousel.scrollTo(scrollValue -= scrollChange, 0);
+
+                        dotBox.childNodes[buttonIndex + 1].style.background = "";
+                        dotBox.childNodes[buttonIndex].style.background = "white";
                     }
-        
-                    if (e.target == buttonL)
+                    else if (e.target == buttonR && buttonIndex < 4)
                     {
-                        if (buttonIndex > 0)
-                        {
-                            buttonIndex --;
+                        buttonIndex ++;
+
+                        //if (buttonIndex == 1)
+                        //{
+                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
+                        //}
+                        //else
+                        //{
+                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
+                        //}
                         
-                            delete catCardImages[buttonIndex + 1].dataset.active;
-                            catCardImages[buttonIndex].dataset.active = true;
-                        
-                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex + 1].style.background = "";
-                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white"
-                        }
+                        //scrollChange = stupidChangeThingIHATEJS;
+                        //carousel.scrollTo(scrollValue += scrollChange, 0);
+
+                        carousel.childNodes[1].scrollTo(scrollValue += 100, 0);
+                        //carousel.scrollLeft = stupidChangeThingIHATEJS;
+
+                        dotBox.childNodes[buttonIndex - 1].style.background = "";
+                        dotBox.childNodes[buttonIndex].style.background = "white";
                     }
-                    else if (e.target == buttonR)
-                    {
-                        if (buttonIndex < catCardImages.length - 1)
-                        {
-                            buttonIndex ++;
-                  
-                            delete catCardImages[buttonIndex - 1].dataset.active;
-                            catCardImages[buttonIndex].dataset.active = true;
-                  
-                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex - 1].style.background = "";
-                            catCard.childNodes[0].childNodes[0].childNodes[0].childNodes[2].childNodes[0].childNodes[buttonIndex].style.background = "white";
-                        }
-                    }
-                }
-                catch{}
+                }catch{}
             });        
         }
         
@@ -4617,8 +4640,14 @@ function generateCatCards(card)
     let imageElements = document.createElement("DIV");
     imageElements.className = "cat_card_image_container";
 
+    let imageElementUL = document.createElement("UL");
+    imageElementUL.className = "cat_card_image_containerUL";
+
     for (iid = 0; iid < card.images.length; iid++)
     {
+        let imageListItem = document.createElement("LI");
+        imageListItem.className = "cat_card_image_container_itemLI";
+
         let imageHref = document.createElement("A");
         imageHref.className = "cat_card_href";
         imageHref.href = `https://localhost:7027/Rooms/${card.id}`;
@@ -4636,8 +4665,12 @@ function generateCatCards(card)
 
         pictureTag.appendChild(image);
         imageHref.appendChild(pictureTag);
-        imageElements.appendChild(imageHref);
+        imageListItem.appendChild(imageHref);
+        imageElementUL.appendChild(imageListItem);
+        imageElements.appendChild(imageElementUL);
     }
+
+    imageElements.appendChild(imageElementUL);
 
     imageBox.appendChild(imageElementsOuterBox);
     imageBox.appendChild(imageElements);
@@ -4871,20 +4904,27 @@ function catCardGenerateRoomsPage()
 
 catCardGenerateRoomsPage();
 
-
-var bl = document.getElementById("buttonleft");
-var br = document.getElementById("buttonright");
-var car = document.getElementsByClassName("room_information_petting_carousel")[0];
-
-bl.onclick = function()
+function catCardControllRoomsPage()
 {
-    car.scrollLeft -= car.childNodes[1].childNodes[1].offsetWidth + 5;
+    if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        var bl = document.getElementById("buttonleft");
+        var br = document.getElementById("buttonright");
+        var car = document.getElementsByClassName("room_information_petting_carousel")[0];
+        
+        bl.onclick = function()
+        {
+            car.scrollLeft -= car.childNodes[1].childNodes[1].offsetWidth + 5;
+        }
+        
+        br.onclick = function()
+        {
+            car.scrollLeft += car.childNodes[1].childNodes[1].offsetWidth + 5;
+        }
+    }
 }
 
-br.onclick = function()
-{
-    car.scrollLeft += car.childNodes[1].childNodes[1].offsetWidth + 5;
-}
+catCardControllRoomsPage();
 
 
 

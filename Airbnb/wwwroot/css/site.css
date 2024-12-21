@@ -1357,35 +1357,46 @@ span.cat_card_dot {
 }
 
 div.cat_card_image_container {
-    position: relative;
-    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
     overflow: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    position: relative;
+
+}
+
+ul.cat_card_image_containerUL {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    min-width: 100%;
+    flex-wrap: nowrap;
+    height: 100%;
+
+}
+
+li.cat_card_image_container_itemLI {
+    max-width: 100%;
+    flex: 0 0 100%;
 }
 
 a.cat_card_href {
-    position: absolute;
+    position: relative;
     width: 100%;
-    opacity: 0;
-    inset: 0;
-    transition: 0.2s opacity ease-in-out;
-    transition-delay: 0.2s;
 }
-
-    a.cat_card_href[data-active] {
-        position: relative;
-        width: 100%;
-        z-index: 1;
-        opacity: 1;
-        /*transition: 0.1s opacity ease-in-out;*/
-        transition-delay: 0ms;
-    }
 
 img.cat_card_image {
     position: relative;
-    display: flex;
     object-fit: cover;
-    width: 100%;
     border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 /* info box stuff */
