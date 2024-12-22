@@ -4464,35 +4464,30 @@ function catCardCarouselControl()
                     let buttonR = catCard.getElementsByClassName("cat_card_R_button")[0];
                     let carousel = catCard.getElementsByClassName("cat_card_image_container")[0];
                     let dotBox = catCard.getElementsByClassName("cat_card_dots_box")[0];
+
+                    for (i = 0; i < dotBox.childNodes.length; i++)
+                    {
+                        if (dotBox.childNodes[i].style.background == "white")
+                        {
+                            scrollValue = carousel.childNodes[0].childNodes[1].offsetWidth * i;
+                            buttonIndex = i;
+                            break;
+                        }
+                    }
         
-                    //for (i = 0; i < dotBox.childNodes.length; i++)
-                    //{
-                    //    if (dotBox.childNodes[i].style.background == "white")
-                    //    {
-                    //        scrollValue = carousel.childNodes[0].childNodes[1].offsetWidth * i;
-                    //        buttonIndex = i;
-                    //        break;
-                    //    }
-                    //}
-
-                    let stupidChangeThingIHATEJS = carousel.childNodes[1].childNodes[1].offsetWidth;
-
-                    
                     if (e.target == buttonL && buttonIndex > 0)
                     {
                         buttonIndex --;
 
-                        //if (buttonIndex == 0)
-                        //{
-                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
-                        //}
-                        //else
-                        //{
-                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
-                        //}                        
-
-                        //scrollChange = stupidChangeThingIHATEJS;
-                        carousel.scrollTo(scrollValue -= scrollChange, 0);
+                        if (buttonIndex == 0)
+                        {
+                            scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
+                        }
+                        else
+                        {
+                            scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
+                        }                        
+                        carousel.childNodes[0].scrollTo(scrollValue -= scrollChange, 0);
 
                         dotBox.childNodes[buttonIndex + 1].style.background = "";
                         dotBox.childNodes[buttonIndex].style.background = "white";
@@ -4501,20 +4496,15 @@ function catCardCarouselControl()
                     {
                         buttonIndex ++;
 
-                        //if (buttonIndex == 1)
-                        //{
-                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
-                        //}
-                        //else
-                        //{
-                        //    scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
-                        //}
-                        
-                        //scrollChange = stupidChangeThingIHATEJS;
-                        //carousel.scrollTo(scrollValue += scrollChange, 0);
-
-                        carousel.childNodes[1].scrollTo(scrollValue += 100, 0);
-                        //carousel.scrollLeft = stupidChangeThingIHATEJS;
+                        if (buttonIndex == 1)
+                        {
+                            scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth + 1;
+                        }
+                        else
+                        {
+                            scrollChange = carousel.childNodes[0].childNodes[1].offsetWidth;
+                        }
+                        carousel.childNodes[0].scrollTo(scrollValue += scrollChange, 0);
 
                         dotBox.childNodes[buttonIndex - 1].style.background = "";
                         dotBox.childNodes[buttonIndex].style.background = "white";
@@ -4790,7 +4780,29 @@ console.log(roomPageId)
 const urlParams = ["category"];
 const roomContent = document.getElementById("RoomContent");
 
-function catCardGenerateRoomsPage()
+function catCardControllRoomsPage()
+{
+    if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        var bl = document.getElementById("buttonleft");
+        var br = document.getElementById("buttonright");
+        var car = document.getElementsByClassName("room_information_petting_carousel")[0];
+        
+        bl.onclick = function()
+        {
+            car.scrollLeft -= car.childNodes[1].childNodes[1].offsetWidth + 5;
+        }
+        
+        br.onclick = function()
+        {
+            car.scrollLeft += car.childNodes[1].childNodes[1].offsetWidth + 5;
+        }
+    }
+}
+
+catCardControllRoomsPage();
+
+function catCardGenerateRoomsPageCalendars()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
@@ -4798,8 +4810,6 @@ function catCardGenerateRoomsPage()
 
         let c1 = room.getElementsByClassName("room_information_calendar1")[0];
         let c2 = room.getElementsByClassName("room_information_calendar2")[0];
-        
-        let dayList = room.getElementsByClassName("room_information_days_box");
 
         initializeDatesCalendars(c1, c2);
 
@@ -4838,99 +4848,635 @@ function catCardGenerateRoomsPage()
                     } catch{break;}
                 }
             }
-        }
-
-        window.addEventListener("resize", function()
-        {   
-            if (window.innerWidth < 1250)
-            {
-                let monthNameLength = c1.childNodes[1].offsetWidth;
-                let tr = c1.childNodes[4].childNodes[0].childNodes[0];
-                let width = Math.ceil(monthNameLength / 7);
-                let height = width;
-                c1.childNodes[2].offsetWidth = (width * 7);
-
-                c1.childNodes[2].childNodes.forEach(function(e)
-                {
-                    if (e.tagName == "LI")
-                    {
-                        e.style.width = width + "px";
-                    }
-                });
-
-                tr.style.width = (width * 7) + "px";
-
-                for (i = 0; i < 6; i++)
-                {
-                    c1.childNodes[4].childNodes[0].childNodes[i].style.width = width + "px";
-                    c1.childNodes[4].childNodes[0].childNodes[i].style.height = height + "px";
-
-                    for (j = 0; j < 7; j++)
-                    {
-                        try
-                        {
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
-
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
-                        } catch{break;}
-                    }
-                }
-            }
-            else
-            {
-                for (i = 0; i < 6; i++)
-                {
-                    c1.childNodes[4].childNodes[0].childNodes[i].style.width = 49 + "px";
-                    c1.childNodes[4].childNodes[0].childNodes[i].style.height = 49 + "px";
-
-                    for (j = 0; j < 7; j++)
-                    {
-                        try
-                        {
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = 49 + "px";
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = 49 + "px";
-
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = 49 + "px";
-                            c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = 49 + "px";
-                        }catch{break;}
-                    }
-                }
-            }
-        })
+        } 
     }
 }
 
-catCardGenerateRoomsPage();
-
-function catCardControllRoomsPage()
+function catCardRoomsPageCalendarResize()
 {
-    if (window.location.pathname.split("/")[1] == "Rooms")
-    {
-        var bl = document.getElementById("buttonleft");
-        var br = document.getElementById("buttonright");
-        var car = document.getElementsByClassName("room_information_petting_carousel")[0];
-        
-        bl.onclick = function()
+    let room = document.getElementById("RoomContent");
+    let c1 = room.getElementsByClassName("room_information_calendar1")[0];
+
+    window.addEventListener("resize", function()
+    {   
+        if (window.innerWidth < 1250)
         {
-            car.scrollLeft -= car.childNodes[1].childNodes[1].offsetWidth + 5;
+            let monthNameLength = c1.childNodes[1].offsetWidth;
+            let tr = c1.childNodes[4].childNodes[0].childNodes[0];
+            let width = Math.ceil(monthNameLength / 7);
+            let height = width;
+            c1.childNodes[2].offsetWidth = (width * 7);
+
+            c1.childNodes[2].childNodes.forEach(function(e)
+            {
+                if (e.tagName == "LI")
+                {
+                    e.style.width = width + "px";
+                }
+            });
+
+            tr.style.width = (width * 7) + "px";
+
+            for (i = 0; i < 6; i++)
+            {
+                c1.childNodes[4].childNodes[0].childNodes[i].style.width = width + "px";
+                c1.childNodes[4].childNodes[0].childNodes[i].style.height = height + "px";
+
+                for (j = 0; j < 7; j++)
+                {
+                    try
+                    {
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
+
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                    } catch{break;}
+                }
+            }
         }
-        
-        br.onclick = function()
+        else
         {
-            car.scrollLeft += car.childNodes[1].childNodes[1].offsetWidth + 5;
+            for (i = 0; i < 6; i++)
+            {
+                c1.childNodes[4].childNodes[0].childNodes[i].style.width = 49 + "px";
+                c1.childNodes[4].childNodes[0].childNodes[i].style.height = 49 + "px";
+
+                for (j = 0; j < 7; j++)
+                {
+                    try
+                    {
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.width = 49 + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].style.height = 49 + "px";
+
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = 49 + "px";
+                        c1.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = 49 + "px";
+                    }catch{break;}
+                }
+            }
         }
-    }
+    })
 }
 
-catCardControllRoomsPage();
+catCardGenerateRoomsPageCalendars();
+catCardRoomsPageCalendarResize();
 
+//  its time for this behemoth... 
+//  its easy but will take a lot of time coz im slow at typing and need to check 10 times stuff for mistakes
+function catCardGenerateRoomsPage()
+{
+    let roomPage = document.createElement("DIV");
+    roomPage.id = "1"; // DB DATA
+    roomPage.className = "room";
 
+    //  HEADER
+    let roomHeader = document.createElement("DIV");
+    roomHeader.className = "room_header";
 
+    let roomHeaderTopText = document.createElement("DIV");
+    roomHeaderTopText.className = "room_header_topText";
+    roomHeaderTopText.innerText = "Cozy house on the water for 6 people"; // DB DATA
 
+    let roomHeaderButtons = document.createElement("DIV");
+    roomHeaderButtons.className = "room_header_buttons";
 
+    let roomHeaderShareBox = document.createElement("BUTTON");
+    roomHeaderShareBox.className = "room_header_share_box";
+    roomHeaderShareBox.innerHTML = `<svg viewBox="0 -3 32 32" xmlns="http://www.w3.org/2000/svg" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible; margin-inline-end: 8px;">
+                                        <path d="m27 18v9c0 1.1046-.8954 2-2 2h-18c-1.10457 0-2-.8954-2-2v-9m11-15v21m-10-11 9.2929-9.29289c.3905-.39053 1.0237-.39053 1.4142 0l9.2929 9.29289" fill="none"></path>
+                                    </svg>`;
+    roomHeaderShareBox.innerText = "Share";
 
+    let roomHeaderSaveBox = document.createElement("BUTTON");
+    roomHeaderSaveBox.className = "room_header_save_box";
+    roomHeaderSaveBox.innerHTML = `<svg viewBox="0 -3 32 32" xmlns="http://www.w3.org/2000/svg" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible; margin-inline-end: 8px;">
+                                       <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+                                   </svg>`;
+    roomHeaderSaveBox.innerText = "Save";
+
+    roomHeaderButtons.appendChild(roomHeaderShareBox);
+    roomHeaderButtons.appendChild(roomHeaderSaveBox);
+    roomHeader.appendChild(roomHeaderTopText);
+    roomHeader.appendChild(roomHeaderButtons);
+
+    //  IMAGES
+    let roomImages = document.createElement("DIV");
+    roomImages.className = "room_images";
+
+    let roomImagesMainImage = document.createElement("DIV");
+    roomImagesMainImage.className = "room_images_mainImage";
+
+    let roomImagesImageBoxM = document.createElement("DIV");
+    roomImagesImageBoxM.className = "room_images_image_box";
+
+    let roomImagesImageM = document.createElement("IMG");
+    roomImagesImageM.className = "room_images_image";
+    roomImagesImageM.src = "/img/img1.png"; // DB DATA
+
+    roomImagesImageBoxM.appendChild(roomImagesImageM);
+    roomImagesMainImage.appendChild(roomImagesImageBoxM);
+
+    let roomImagesSideImages = document.createElement("DIV");
+    roomImagesSideImages.className = "room_images_sideImages";
+
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 0)
+        {
+            let roomImagesSide1 = document.createElement("DIV");
+            roomImagesSide1.className = "room_images_side1";
+
+            for (j = 0; j < 2; j++)
+            {
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "room_images_image_box";
+
+                let roomImagesImage = document.createElement("IMG");
+                roomImagesImage.className = "room_images_image";
+
+                roomImagesImage.src = "/img/img1.png"; // DB DATA
+
+                roomImagesImageBox.appendChild(roomImagesImage);
+                roomImagesSide1.appendChild(roomImagesImageBox);
+            }
+
+            roomImagesSideImages.appendChild(roomImagesSide1);
+        }
+        else if (i == 1)
+        {
+            let roomImagesSide2 = document.createElement("DIV");
+            roomImagesSide2.className = "room_images_side1";
+
+            for (j = 0; j < 2; j++)
+            {
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "room_images_image_box";
+
+                let roomImagesImage = document.createElement("IMG");
+                roomImagesImage.className = "room_images_image";
+
+                roomImagesImage.src = "/img/img1.png"; // DB DATA
+
+                roomImagesImageBox.appendChild(roomImagesImage);
+                roomImagesSide2.appendChild(roomImagesImageBox);
+            }
+
+            roomImagesSideImages.appendChild(roomImagesSide2);
+        }
+    }
+
+    roomImages.appendChild(roomImagesMainImage);
+    roomImages.appendChild(roomImagesSideImages);
+
+    //  INFO SECTIONS (info and pricing)
+    let roomInformationSection = document.createElement("DIV");
+    roomInformationSection.className = "room_information_section";
+
+    // info
+    let roomInformation = document.createElement("DIV");
+    roomInformation.className = "room_information";
+
+    //  heder
+    let roomInformationHeader = document.createElement("DIV");
+    roomInformationHeader.className = "room_information_header";
+
+    let roomInformationStayBox = document.createElement("DIV");
+    roomInformationStayBox.className = "room_information_stayBox";
+
+    let roomInformationStayLocation = document.createElement("DIV");
+    roomInformationStayLocation.className = "room_information_stay_location";
+    let locationString = `Entire home in ${1}, ${2}`; // DB DATA
+    roomInformationStayLocation.innerText = locationString;
+
+    let roomInformationStayLiving = document.createElement("DIV");
+    roomInformationStayLiving.className = "room_information_stay_living";
+    let livingString = `${1} guest - ${2} bedrooms - ${3} beds - ${1} bath`; // DB DATA + VALIDATION 1 guest / 2 guest(s)
+    roomInformationStayLiving.innerText = livingString;
+
+    roomInformationStayBox.appendChild(roomInformationStayLocation);
+    roomInformationStayBox.appendChild(roomInformationStayLiving);
+    
+    let roomInformationReviews = document.createElement("DIV");
+    roomInformationReviews.className = "room_information_reviews";
+
+    let roomInformationReviewsGuestFavourite = document.createElement("DIV");
+    roomInformationReviewsGuestFavourite.className = "room_information_reviews_guestFavourite";
+    roomInformationReviewsGuestFavourite.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 32" fill="none" height="32"><g clip-path="url(#clip0_5880_37773)"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.4895 25.417L14.8276 24.4547L16.5303 23.6492L17.1923 24.6116L16.3409 25.0143L17.1923 24.6116C18.6638 26.751 17.9509 29.3868 15.5999 30.4989C14.8548 30.8513 14.0005 31.0196 13.1221 30.987L12.8044 30.9752L12.7297 29.2305L13.0474 29.2423C13.5744 29.2618 14.0871 29.1608 14.5341 28.9494C15.9447 28.2821 16.3725 26.7007 15.4895 25.417Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.32441 10.235C10.0819 8.96204 10.9247 7.4878 10.853 5.81232C10.7813 4.13685 9.80929 2.59524 7.93708 1.18749C6.17964 2.46049 5.33678 3.93473 5.40851 5.6102C5.48024 7.28568 6.45221 8.82729 8.32441 10.235Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7.19425 0.489275C7.55718 0.226387 8.10753 0.246818 8.49416 0.537533C10.5385 2.07473 11.7071 3.84975 11.7923 5.84026C11.8775 7.83076 10.8574 9.52453 8.93841 10.9146C8.57548 11.1775 8.02513 11.157 7.6385 10.8663C5.59415 9.32914 4.4256 7.55411 4.34039 5.56361C4.25517 3.57311 5.27521 1.87933 7.19425 0.489275ZM7.92362 2.3684C6.77985 3.38355 6.29788 4.47199 6.3478 5.63813C6.39772 6.80428 6.97457 7.93203 8.20904 9.03547C9.35281 8.02032 9.83478 6.93187 9.78486 5.76573C9.73493 4.59959 9.15809 3.47184 7.92362 2.3684Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.6806 24.0529C14.1314 22.353 12.4326 21.4688 10.5842 21.4001C8.73575 21.3315 7.10737 22.0923 5.69905 23.6824C7.24822 25.3823 8.94702 26.2666 10.7955 26.3352C12.6439 26.4038 14.2723 25.6431 15.6806 24.0529Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M4.90529 24.1787C4.60807 23.8526 4.58911 23.4097 4.8593 23.1046C6.38985 21.3765 8.27538 20.4331 10.521 20.5164C12.7666 20.5998 14.7391 21.6864 16.4227 23.5339C16.7199 23.86 16.7389 24.303 16.4687 24.608C14.9381 26.3361 13.0526 27.2795 10.807 27.1962C8.56134 27.1128 6.5889 26.0262 4.90529 24.1787ZM6.98781 23.7198C8.22307 24.8808 9.46778 25.4045 10.7323 25.4515C11.9968 25.4984 13.2005 25.0656 14.3402 23.9928C13.1049 22.8318 11.8602 22.3081 10.5957 22.2611C9.3312 22.2142 8.12744 22.6471 6.98781 23.7198Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.6766 20.7043C10.2137 18.5957 9.16392 17.0928 7.52727 16.1956C5.89062 15.2984 3.99442 15.1864 1.83867 15.8596C2.30157 17.9683 3.35135 19.4712 4.988 20.3684C6.62465 21.2656 8.52085 21.3775 10.6766 20.7043Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M0.791956 15.9443C0.703053 15.5393 0.94431 15.1569 1.37329 15.023C3.7337 14.2859 5.9714 14.3695 7.95247 15.4554C9.92449 16.5364 11.1013 18.3139 11.6022 20.5956C11.6911 21.0006 11.4499 21.3829 11.0209 21.5169C8.66048 22.254 6.42277 22.1704 4.4417 21.0844C2.46969 20.0034 1.29285 18.226 0.791956 15.9443ZM2.95349 16.4656C3.43375 17.9951 4.27991 19.007 5.41321 19.6282C6.5306 20.2407 7.84423 20.4286 9.44069 20.0743C8.96043 18.5448 8.11427 17.5329 6.98097 16.9116C5.86358 16.2991 4.54995 16.1113 2.95349 16.4656Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7.90911 15.6267C8.65652 13.6743 8.53705 11.9555 7.55072 10.4702C6.56438 8.98484 4.90844 8.03014 2.58291 7.60605C1.8355 9.55846 1.95497 11.2773 2.9413 12.7626C3.92764 14.2479 5.58357 15.2026 7.90911 15.6267Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.66037 7.28295C1.80927 6.89397 2.26578 6.67525 2.74598 6.76282C5.29848 7.22831 7.26368 8.31371 8.44396 10.0911C9.61955 11.8614 9.70866 13.854 8.89805 15.9715C8.74915 16.3605 8.29264 16.5792 7.81244 16.4916C5.25994 16.0261 3.29474 14.9407 2.11446 13.1634C0.938866 11.393 0.849755 9.40048 1.66037 7.28295ZM3.3385 8.6613C2.94038 10.1267 3.14588 11.3465 3.83454 12.3835C4.51397 13.4067 5.60091 14.1584 7.21992 14.5931C7.61804 13.1278 7.41254 11.9079 6.72388 10.8709C6.04445 9.84774 4.95751 9.09607 3.3385 8.6613Z" fill="#222222"></path></g><defs><clipPath id="clip0_5880_37773"><rect width="18.8235" height="32" fill="white" transform="translate(0.453125 0.000488281)"></rect></clipPath></defs></svg>
+                                                      <div class="room_information_reviews_guestFavourite_text">
+                                                          Guest favourite
+                                                      </div>
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 32" fill="none" height="32"><g clip-path="url(#clip0_5880_37786)"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.06516 25.417L4.72713 24.4547L3.02437 23.6492L2.3624 24.6116L3.21378 25.0143L2.3624 24.6116C0.890857 26.751 1.60381 29.3868 3.95483 30.4989C4.69986 30.8513 5.55423 31.0196 6.43257 30.987L6.75025 30.9752L6.82494 29.2305L6.50726 29.2423C5.98026 29.2618 5.46764 29.1608 5.02062 28.9494C3.61001 28.2821 3.18223 26.7007 4.06516 25.417Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M11.2303 10.235C9.47283 8.96204 8.62998 7.4878 8.70171 5.81232C8.77344 4.13685 9.7454 2.59524 11.6176 1.18749C13.375 2.46049 14.2179 3.93473 14.1462 5.6102C14.0744 7.28568 13.1025 8.82729 11.2303 10.235Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12.3604 0.489275C11.9975 0.226387 11.4472 0.246818 11.0605 0.537533C9.01618 2.07473 7.84763 3.84975 7.76242 5.84026C7.6772 7.83076 8.69724 9.52453 10.6163 10.9146C10.9792 11.1775 11.5296 11.157 11.9162 10.8663C13.9605 9.32914 15.1291 7.55411 15.2143 5.56361C15.2995 3.57311 14.2795 1.87933 12.3604 0.489275ZM11.6311 2.3684C12.7748 3.38355 13.2568 4.47199 13.2069 5.63813C13.157 6.80428 12.5801 7.93203 11.3456 9.03547C10.2019 8.02032 9.71991 6.93187 9.76983 5.76573C9.81975 4.59959 10.3966 3.47184 11.6311 2.3684Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M3.87411 24.0529C5.42328 22.353 7.12208 21.4688 8.97051 21.4001C10.8189 21.3315 12.4473 22.0923 13.8556 23.6824C12.3065 25.3823 10.6077 26.2666 8.75924 26.3352C6.9108 26.4038 5.28243 25.6431 3.87411 24.0529Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.6494 24.1787C14.9466 23.8526 14.9656 23.4097 14.6954 23.1046C13.1648 21.3765 11.2793 20.4331 9.03368 20.5164C6.78805 20.5998 4.81561 21.6864 3.13199 23.5339C2.83478 23.86 2.81582 24.303 3.08601 24.608C4.61655 26.3361 6.50208 27.2795 8.74771 27.1962C10.9933 27.1128 12.9658 26.0262 14.6494 24.1787ZM12.5669 23.7198C11.3316 24.8808 10.0869 25.4045 8.82241 25.4515C7.55791 25.4984 6.35415 25.0656 5.21452 23.9928C6.44977 22.8318 7.69449 22.3081 8.95899 22.2611C10.2235 22.2142 11.4272 22.6471 12.5669 23.7198Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.87809 20.7043C9.34099 18.5957 10.3908 17.0928 12.0274 16.1956C13.6641 15.2984 15.5603 15.1864 17.716 15.8596C17.2531 17.9683 16.2033 19.4712 14.5667 20.3684C12.93 21.2656 11.0338 21.3775 8.87809 20.7043Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M18.7627 15.9443C18.8516 15.5393 18.6104 15.1569 18.1814 15.023C15.821 14.2859 13.5833 14.3695 11.6022 15.4554C9.6302 16.5364 8.45336 18.3139 7.95247 20.5956C7.86356 21.0006 8.10482 21.3829 8.5338 21.5169C10.8942 22.254 13.1319 22.1704 15.113 21.0844C17.085 20.0034 18.2618 18.226 18.7627 15.9443ZM16.6012 16.4656C16.1209 17.9951 15.2748 19.007 14.1415 19.6282C13.0241 20.2407 11.7105 20.4286 10.114 20.0743C10.5943 18.5448 11.4404 17.5329 12.5737 16.9116C13.6911 16.2991 15.0047 16.1113 16.6012 16.4656Z" fill="#222222"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M11.6456 15.6267C10.8982 13.6743 11.0176 11.9555 12.004 10.4702C12.9903 8.98484 14.6462 8.03014 16.9718 7.60605C17.7192 9.55846 17.5997 11.2773 16.6134 12.7626C15.6271 14.2479 13.9711 15.2026 11.6456 15.6267Z" fill="#F7F7F7"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M17.8943 7.28295C17.7454 6.89397 17.2889 6.67525 16.8087 6.76282C14.2562 7.22831 12.291 8.31371 11.1107 10.0911C9.93513 11.8614 9.84602 13.854 10.6566 15.9715C10.8055 16.3605 11.262 16.5792 11.7422 16.4916C14.2947 16.0261 16.26 14.9407 17.4402 13.1634C18.6158 11.393 18.7049 9.40048 17.8943 7.28295ZM16.2162 8.6613C16.6143 10.1267 16.4088 11.3465 15.7201 12.3835C15.0407 13.4067 13.9538 14.1584 12.3348 14.5931C11.9366 13.1278 12.1421 11.9079 12.8308 10.8709C13.5102 9.84774 14.5972 9.09607 16.2162 8.6613Z" fill="#222222"></path></g><defs><clipPath id="clip0_5880_37786"><rect width="18.8235" height="32" fill="white" transform="matrix(-1 0 0 1 19.1016 0.000488281)"></rect></clipPath></defs></svg>`;
+
+    let roomInformationReviewsStars = document.createElement("DIV");
+    roomInformationReviewsStars.className = "room_information_reviews_stars";
+
+    let roomInformationReviewsStarRating = document.createElement("DIV");
+    roomInformationReviewsStarRating.className = "room_information_star_rating";
+    roomInformationReviewsStarRating.innerText = "5"; // DB DATA
+
+    let roomInformationReviewsStarSvgBox = document.createElement("DIV");
+    roomInformationReviewsStarSvgBox.className = "room_information_reviews_stars_svg_box";
+    roomInformationReviewsStarSvgBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin: 0px 2px;">
+                                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                                  </svg>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin: 0px 2px;">
+                                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                                  </svg>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin: 0px 2px;">
+                                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                                  </svg>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin: 0px 2px;">
+                                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                                  </svg>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin: 0px 2px;">
+                                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                                  </svg>`;
+
+    roomInformationReviewsStars.appendChild(roomInformationReviewsStarRating);
+    roomInformationReviewsStars.appendChild(roomInformationReviewsStarSvgBox);
+
+    // sometimes naming is hard you know?
+    let roomInformationReviewsReviews = document.createElement("DIV");
+    roomInformationReviewsReviews.className = "room_information_reviews_reviews";
+
+    let roomInformationReviewsReviewsNumber = document.createElement("DIV");
+    roomInformationReviewsReviewsNumber.className = "room_information_reviews_reviews_number";
+    roomInformationReviewsReviewsNumber.innerText = 77; // DB DATA
+
+    let roomInformationReviewsReviewsText = document.createElement("DIV");
+    roomInformationReviewsReviewsText.className = "room_information_reviews_reviews_text"
+    roomInformationReviewsReviewsText.innerText = "Reviews"; // VALIDATION FOR Review / Review(s)
+
+    roomInformationReviewsReviews.appendChild(roomInformationReviewsReviewsNumber);
+    roomInformationReviewsReviews.appendChild(roomInformationReviewsReviewsText);
+
+    roomInformationReviews.appendChild(roomInformationReviewsGuestFavourite);
+    roomInformationReviews.appendChild(roomInformationReviewsStars);
+    roomInformationReviews.appendChild(roomInformationReviewsReviews);
+
+    let roomInformationHost = document.createElement("DIV");
+    roomInformationHost.className = "room_information_host";
+
+    roomInformationHeader.appendChild(roomInformationStayBox);
+    roomInformationHeader.appendChild(roomInformationReviews);
+    roomInformationHeader.appendChild(roomInformationHost);
+
+    //  high ame
+    let roomInformationHighlightAmenities = document.createElement("DIV");
+    roomInformationHighlightAmenities.className = "room_information_highlightAmenities";
+
+    for (i = 0; i < 3; i++)
+    {
+        let roomInformationHighlightBox = document.createElement("DIV");;
+        roomInformationHighlightBox.className = "room_information_highlight_box";
+
+        let roomInformationHighlightSvg = document.createElement("DIV");
+        roomInformationHighlightSvg.className = "room_information_highlight_svg";
+
+        let roomInformationHighlightNoClassDiv = document.createElement("DIV");
+
+        let roomInformationHighlightTop = document.createElement("DIV");
+        roomInformationHighlightTop.className = "room_information_highlight_top";
+        roomInformationHighlightTop.innerText = "Free cancellation before something"; // DB DATA
+
+        let roomInformationHighlightBottom = document.createElement("DIV");
+        roomInformationHighlightBottom.className = "room_information_highlight_bottom";
+        roomInformationHighlightBottom.innerText = "Get a full refund if you change your mind."; // DB DATA
+
+        roomInformationHighlightNoClassDiv.appendChild(roomInformationHighlightTop);
+        roomInformationHighlightNoClassDiv.appendChild(roomInformationHighlightBottom);
+        roomInformationHighlightBox.appendChild(roomInformationHighlightSvg);
+        roomInformationHighlightBox.appendChild(roomInformationHighlightNoClassDiv);
+        roomInformationHighlightAmenities.appendChild(roomInformationHighlightBox);
+    }
+
+    //  desc
+    let roomInformationDescription = document.createElement("DIV");
+    roomInformationDescription.className = "room_information_description";
+
+    let roomInformationDescriptionText = document.createElement("DIV");
+    roomInformationDescriptionText.className = "room_information_description_text";
+    roomInformationDescriptionText.innerText = `The missile knows where it is at all times. It knows this because it knows where it isn't, by subtracting where it is, from where it isn't, or where it isn't, from where it is, whichever is greater, it obtains a difference, or deviation. The guidance sub-system uses deviations to generate corrective commands to drive the missile from a position where it is, to a position where it isn't, and arriving at a position where it wasn't, it now is. Consequently, the position where it is, is now the position that it wasn't, and it follows that the position where it was, is now the position that it isn't. In the event of the position that it is in is not the position that it wasn't, the system has required a variation. The variation being the difference between where the missile is, and where it wasn't. If variation is considered to be a significant factor, it too, may be corrected by the GEA. However, the missile must also know where it was. The missile guidance computance scenario works as follows: Because a variation has modified some of the information the missile has obtained, it is not sure just where it is, however it is sure where it isn't, within reason, and it knows where it was. It now subracts where it should be, from where it wasn't, or vice versa. By differentiating this from the algebraic sum og where it shouldn't be, and where it was. It is able to obtain a deviation, and a variation, which is called "air"`;
+                                                // DB DATA ^ ^ ^ tho this copypasta is better than any data... maybe i will put it into actual data...                                                   
+
+    let roomInformationDescriptionShowMore = document.createElement("DIV");
+    roomInformationDescriptionShowMore.className = "room_information_description_showMore";
+
+    let roomInformationDescriptionShowMoreButton = document.createElement("BUTTON");
+    roomInformationDescriptionShowMoreButton.className = "room_information_description_showMore_button";
+    roomInformationDescriptionShowMoreButton.innerHTML = `<div>
+                                                              Show more
+                                                          </div>
+                                                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 18 18" style="height: 14px; width: 14px; display: block; margin-inline-start: 8px; margin-block-start: 1px;">
+                                                              <path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z" fill-rule="evenodd"></path>
+                                                          </svg>`;
+    
+    roomInformationDescriptionShowMore.appendChild(roomInformationDescriptionShowMoreButton);
+
+    roomInformationDescription.appendChild(roomInformationDescriptionText);
+    roomInformationDescription.appendChild(roomInformationDescriptionShowMore);
+
+    //  pet
+    let roomInformationPetting = document.createElement("DIV");
+    roomInformationPetting.className = "room_information_petting";
+
+    let roomInformationPettingHeader = document.createElement("DIV");
+    roomInformationPettingHeader.className = "room_information_petting_header";
+
+    let roomInformationPettingHeaderText = document.createElement("DIV");
+    roomInformationPettingHeaderText.className = "room_information_petting_header_text";
+    roomInformationPettingHeaderText.innerText = "Who you'll pet";
+
+    let roomInformationPettingHeaderControlBox = document.createElement("DIV");
+    roomInformationPettingHeaderControlBox.className = "room_information_petting_header_control_box";
+
+    let roomInformationPettingHeaderControlCounter = document.createElement("DIV");
+    roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode("1"));
+    roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode(" / "));
+    roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode(`${2}`)); // DB DATA
+
+    let roomInformationPettingHeaderControlL = document.createElement("BUTTON");
+    roomInformationPettingHeaderControlL.className = "room_information_petting_header_controlL";
+    roomInformationPettingHeaderControlL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: currentColor; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
+                                                          <path fill="none" d="M20 28 8.7 16.7a1 1 0 0 1 0-1.4L20 4"></path>
+                                                      </svg>`;
+
+    let roomInformationPettingHeaderControlR = document.createElement("BUTTON");
+    roomInformationPettingHeaderControlR.className = "room_information_petting_header_controlR";
+    roomInformationPettingHeaderControlR.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: currentColor; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
+                                                          <path fill="none" d="m12 4 11.3 11.3a1 1 0 0 1 0 1.4L12 28"></path>
+                                                      </svg>`;
+
+    roomInformationPettingHeaderControlBox.appendChild(roomInformationPettingHeaderControlCounter);
+    roomInformationPettingHeaderControlBox.appendChild(roomInformationPettingHeaderControlL);
+    roomInformationPettingHeaderControlBox.appendChild(roomInformationPettingHeaderControlR);
+
+    roomInformationPettingHeader.appendChild(roomInformationPettingHeaderText);
+    roomInformationPettingHeader.appendChild(roomInformationPettingHeaderControlBox);
+
+    let roomInformationPettingCarousel = document.createElement("DIV");
+    roomInformationPettingCarousel.className = "room_information_petting_carousel";
+
+    let roomInformationPettingCarouselListBox = document.createElement("UL");
+    roomInformationPettingCarouselListBox.className = "room_information_petting_carousel_list_box";
+
+    //  DB DATA FOR LENGTH
+    for (i = 0; i < 3; i++)
+    {
+        let roomInformationPettingCarouselList = document.createElement("LI");
+        roomInformationPettingCarouselList.className = "room_information_petting_carousel_list";
+
+        let roomInformationPettingImage = document.createElement("IMG");
+        roomInformationPettingImage.className = "room_information_petting_image";
+        roomInformationPettingImage.src = "/img/Aldentge.webp";
+
+        let roomInformationPettingImageTopText = document.createElement("DIV");
+        roomInformationPettingImageTopText.className = "room_information_petting_image_topText";
+        roomInformationPettingImageTopText.innerText = "CAT CAT CAT!!! (?)"; // DB DATA
+
+        let roomInformationPettingImageBottomText = document.createElement("DIV");
+        roomInformationPettingImageBottomText.className = "room_information_petting_images_bottomText";
+        roomInformationPettingImageBottomText.innerText = "P E T I T N O W"; // DB DATA
+        
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImage);
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImageTopText);
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImageBottomText);
+
+        roomInformationPettingCarouselListBox.appendChild(roomInformationPettingCarouselList);
+    }
+    roomInformationPettingCarousel.appendChild(roomInformationPettingCarouselListBox);
+
+    roomInformationPetting.appendChild(roomInformationPettingHeader);
+    roomInformationPetting.appendChild(roomInformationPettingCarousel);
+
+    //  ame
+    let roomInformationAmenities = document.createElement("DIV");
+    roomInformationAmenities.className = "room_information_amenities";
+
+    let roomInformationAmenitiesHeader = document.createElement("DIV");
+    roomInformationAmenitiesHeader.className = "room_information_amenities_header";
+    roomInformationAmenitiesHeader.innerText = "What this place offers";
+
+    let roomInformationAmenitiesList = document.createElement("DIV");
+    roomInformationAmenitiesList.className = "room_information_amenities_list";
+
+    //  DB DATA LENGTH
+    for (i = 0; i < 7; i++)
+    {
+        let roomInformationAmenitiesItemBox = document.createElement("DIV");
+        roomInformationAmenitiesItemBox.className = "room_information_amenities_item_box";
+
+        let roomInformationAmenitiesItemSvg = document.createElement("DIV");
+        roomInformationAmenitiesItemSvg.className = "room_information_amenities_item_svg";
+
+        let roomInformationAmenitiesItemName = document.createElement("DIV");
+        roomInformationAmenitiesItemName.className = "room_information_amenities_item_name";
+        roomInformationAmenitiesItemName.innerText = "Wifi"; // DB DATA
+
+        roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemSvg);
+        roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemName);
+
+        roomInformationAmenitiesList.appendChild(roomInformationAmenitiesItemBox);
+    }
+
+    let roomInformationAmenitiesButtonBox = document.createElement("DIV");
+    roomInformationAmenitiesButtonBox.className = "room_information_amenities_button_box";
+
+    let roomInformationAmenitiesShowAll = document.createElement("BUTTON");
+    roomInformationAmenitiesShowAll.className = "room_information_amenities_showAll";
+    roomInformationAmenitiesShowAll.innerText = `Show all ${7} amenities`; // DB DATA NUMBER
+
+    roomInformationAmenitiesButtonBox.appendChild(roomInformationAmenitiesShowAll);
+
+    roomInformationAmenities.appendChild(roomInformationAmenitiesHeader);
+    roomInformationAmenities.appendChild(roomInformationAmenitiesList);
+    roomInformationAmenities.appendChild(roomInformationAmenitiesButtonBox);
+
+    //  caca
+    let roomInformationCalendars = document.createElement("DIV");
+    roomInformationCalendars.className = "room_information_I_HATE_CALENDARS_WHY_THERE_IS_CALENDAR";
+
+    let roomInformationCalendarBox = document.createElement("DIV");
+    roomInformationCalendarBox.className = "room_information_calendar_box";
+
+    let roomInformationCalendarMoveControls = document.createElement("DIV");
+    roomInformationCalendarMoveControls.className = "room_information_calendar_moveControls";
+
+    let roomInformationCalendarMoveL =  document.createElement("BUTTON");
+    roomInformationCalendarMoveL.className = "room_information_calendar_moveL";
+    roomInformationCalendarMoveL.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: currentColor; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
+                                                  <path fill="none" d="M20 28 8.7 16.7a1 1 0 0 1 0-1.4L20 4" />
+                                              </svg>`;
+
+    let roomInformationCalendarMoveR =  document.createElement("BUTTON");
+    roomInformationCalendarMoveR.className = "room_information_calendar_moveR";
+    roomInformationCalendarMoveR.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: currentColor; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
+                                                  <path fill="none" d="m12 4 11.3 11.3a1 1 0 0 1 0 1.4L12 28" />
+                                              </svg>`;
+
+    roomInformationCalendarMoveControls.appendChild(roomInformationCalendarMoveL);
+    roomInformationCalendarMoveControls.appendChild(roomInformationCalendarMoveR);
+
+    let roomInformationCalendar1 = document.createElement("DIV");
+    roomInformationCalendar1.className = "room_information_calendar1";
+    roomInformationCalendar1.innerHTML = `<ul class="room_information_days_list">
+                                              <li class="room_information_days_box">Mon</li>
+                                              <li class="room_information_days_box">Tue</li>
+                                              <li class="room_information_days_box">Wed</li>
+                                              <li class="room_information_days_box">Thu</li>
+                                              <li class="room_information_days_box">Fri</li>
+                                              <li class="room_information_days_box">Sat</li>
+                                              <li class="room_information_days_box">Sun</li>
+                                          </ul>`;
+
+    let roomInformationCalendar2 = document.createElement("DIV");
+    roomInformationCalendar2.className = "room_information_calendar2";
+    roomInformationCalendar2.innerHTML = `<ul class="room_information_days_list">
+                                              <li class="room_information_days_box">Mon</li>
+                                              <li class="room_information_days_box">Tue</li>
+                                              <li class="room_information_days_box">Wed</li>
+                                              <li class="room_information_days_box">Thu</li>
+                                              <li class="room_information_days_box">Fri</li>
+                                              <li class="room_information_days_box">Sat</li>
+                                              <li class="room_information_days_box">Sun</li>
+                                          </ul>`;
+
+    roomInformationCalendarBox.appendChild(roomInformationCalendarMoveControls);
+    roomInformationCalendarBox.appendChild(roomInformationCalendar1);
+    roomInformationCalendarBox.appendChild(roomInformationCalendar2);
+
+    roomInformationCalendars.appendChild(roomInformationCalendarBox);
+
+    roomInformation.appendChild(roomInformationHeader); //done
+    roomInformation.appendChild(roomInformationHighlightAmenities); //d
+    roomInformation.appendChild(roomInformationDescription); //d
+    roomInformation.appendChild(roomInformationPetting); //d
+    roomInformation.appendChild(roomInformationAmenities); //d
+    roomInformation.appendChild(roomInformationCalendars); //d (add later actual calendars lol)
+
+    // pricing
+    let roomPricing = document.createElement("DIV");
+    roomPricing.className = "room_pricing";
+
+    let roomPricingFlyingRectangle = document.createElement("DIV");
+    roomPricingFlyingRectangle.className = "room_pricing_flying_rectangle";
+
+    let roomPricingFlyingRectangleBox = document.createElement("DIV");
+    roomPricingFlyingRectangleBox.className = "room_pricing_flying_rectangle_box";
+
+    let roomPricingFlyingRectangleNightPrice = document.createElement("DIV");
+    roomPricingFlyingRectangleNightPrice.className = "room_pricing_flying_rectangle_night_price";
+
+    let roomPricingFlyingRectangleNightPriceText = document.createElement("DIV");
+    roomPricingFlyingRectangleNightPriceText.className = "room_pricing_flying_rectangle_night_price_text";
+    roomPricingFlyingRectangleNightPriceText.innerText = `${777}`; // DB DATA
+
+    let roomPricingFlyingRectangleNightPriceNoClassDiv = document.createElement("DIV");
+    roomPricingFlyingRectangleNightPriceNoClassDiv.innerText = "night";
+
+    roomPricingFlyingRectangleNightPrice.appendChild(roomPricingFlyingRectangleNightPriceText);
+    roomPricingFlyingRectangleNightPrice.appendChild(roomPricingFlyingRectangleNightPriceNoClassDiv);
+
+    let roomPricingFlyingRectangleReservation = document.createElement("DIV");
+    roomPricingFlyingRectangleReservation.className = "room_pricing_flying_rectangle_reservation";
+
+    let roomPricingFlyingRectangleReservationBoxes = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationBoxes.className = "room_pricing_flying_rectangle_reservation_boxes";
+
+    let roomPricingFlyingRectangleReservationBox1 = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationBox1.className = "room_pricing_flying_rectangle_reservation_box1";
+
+    let roomPricingFlyingRectangleReservationButtonsCheck1 = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsCheck1.className = "room_pricing_flying_rectangle_reservation_buttons_check1";
+
+    let roomPricingFlyingRectangleReservationButtonsText  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsText.className = "room_pricing_flying_rectangle_reservation_buttons_text";
+    roomPricingFlyingRectangleReservationButtonsText.innerText = "Check-in";
+
+    let roomPricingFlyingRectangleReservationButtonsDateNoClass  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsDateNoClass.innerText = `${22}/${11}/${2025}`; // DB DATA
+
+    roomPricingFlyingRectangleReservationButtonsCheck1.appendChild(roomPricingFlyingRectangleReservationButtonsText);
+    roomPricingFlyingRectangleReservationButtonsCheck1.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass);
+
+    let roomPricingFlyingRectangleReservationButtonsCheck2 = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsCheck2.className = "room_pricing_flying_rectangle_reservation_buttons_check2";
+
+    let roomPricingFlyingRectangleReservationButtonsText2  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsText2.className = "room_pricing_flying_rectangle_reservation_buttons_text";
+    roomPricingFlyingRectangleReservationButtonsText2.innerText = "Check-out";
+
+    let roomPricingFlyingRectangleReservationButtonsDateNoClass2  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsDateNoClass2.innerText = `${22}/${12}/${2025}`; // DB DATA
+
+    roomPricingFlyingRectangleReservationButtonsCheck2.appendChild(roomPricingFlyingRectangleReservationButtonsText2);
+    roomPricingFlyingRectangleReservationButtonsCheck2.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass2);
+
+    roomPricingFlyingRectangleReservationBox1.appendChild(roomPricingFlyingRectangleReservationButtonsCheck1);
+    roomPricingFlyingRectangleReservationBox1.appendChild(roomPricingFlyingRectangleReservationButtonsCheck2);
+
+    let roomPricingFlyingRectangleReservationBox2 = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationBox2.className = "room_pricing_flying_rectangle_reservation_box2";
+
+    let roomPricingFlyingRectangleReservationButtonGuest = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonGuest.className = "room_pricing_flying_rectangle_reservation_button_guest";
+
+    let roomPricingFlyingRectangleReservationButtonsText3  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsText3.className = "room_pricing_flying_rectangle_reservation_buttons_text";
+    roomPricingFlyingRectangleReservationButtonsText3.innerText = "Guests"; // DB VALIDATION guest / guest(s)
+
+    let roomPricingFlyingRectangleReservationButtonsDateNoClass3  = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `banana cat`; // DB DATA
+
+    roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsText3);
+    roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass3);
+
+    roomPricingFlyingRectangleReservationBox2.appendChild(roomPricingFlyingRectangleReservationButtonGuest);
+
+    roomPricingFlyingRectangleReservationBoxes.appendChild(roomPricingFlyingRectangleReservationBox1);
+    roomPricingFlyingRectangleReservationBoxes.appendChild(roomPricingFlyingRectangleReservationBox2);
+
+    let roomPricingFlyingRectangleReservationNoClassDiv = document.createElement("DIV");
+
+    let roomPricingFlyingRectangleReservationReserveButton = document.createElement("BUTTON");
+    roomPricingFlyingRectangleReservationReserveButton.className = "room_pricing_flying_rectangle_reservation_reserveButton";
+    roomPricingFlyingRectangleReservationReserveButton.innerText = "Reserve"
+
+    roomPricingFlyingRectangleReservationNoClassDiv.appendChild(roomPricingFlyingRectangleReservationReserveButton);
+
+    roomPricingFlyingRectangleReservation.appendChild(roomPricingFlyingRectangleReservationBoxes);
+    roomPricingFlyingRectangleReservation.appendChild(roomPricingFlyingRectangleReservationNoClassDiv);
+
+    let roomPricingFlyingRectangleNoCharge = document.createElement("DIV");
+    roomPricingFlyingRectangleNoCharge.className = "room_pricing_flying_rectangle_noCharge";
+    roomPricingFlyingRectangleNoCharge.innerText = "You won't be charged yet";
+
+    let roomPricingFlyingRectanglePricing = document.createElement("DIV");
+    roomPricingFlyingRectanglePricing.className = "room_pricing_flying_rectangle_pricing";
+
+    // for tomorrow brain hurts
+
+    roomPricingFlyingRectangleBox.appendChild(roomPricingFlyingRectangleNightPrice);
+    roomPricingFlyingRectangleBox.appendChild(roomPricingFlyingRectangleReservation);
+    roomPricingFlyingRectangleBox.appendChild(roomPricingFlyingRectangleNoCharge);
+    roomPricingFlyingRectangleBox.appendChild(roomPricingFlyingRectanglePricing);
+
+    roomPricingFlyingRectangle.appendChild(roomPricingFlyingRectangleBox);
+    roomPricing.appendChild(roomPricingFlyingRectangle);
+
+    // final
+    roomInformationSection.appendChild(roomInformation);
+    roomInformationSection.appendChild(roomPricing);
+
+    //  REVIEWS
+
+    //  FINAL
+
+    roomPage.appendChild(roomHeader);
+    roomPage.appendChild(roomImages);
+    roomPage.appendChild(roomInformationSection);
+    roomPage.appendChild();
+}
 
 
 

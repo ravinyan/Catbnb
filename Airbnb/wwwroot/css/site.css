@@ -1358,12 +1358,8 @@ span.cat_card_dot {
 
 div.cat_card_image_container {
     display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
+    overflow-x: hidden;
     position: relative;
-
 }
 
 ul.cat_card_image_containerUL {
@@ -1372,9 +1368,11 @@ ul.cat_card_image_containerUL {
     padding: 0px;
     display: flex;
     min-width: 100%;
-    flex-wrap: nowrap;
     height: 100%;
-
+    overflow-x: hidden;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 li.cat_card_image_container_itemLI {
@@ -1397,6 +1395,7 @@ img.cat_card_image {
     bottom: 0px;
     left: 0px;
     right: 0px;
+    scroll-snap-align: start;
 }
 
 /* info box stuff */
@@ -1661,13 +1660,16 @@ div.room_information_highlightAmenities {
 div.room_information_highlight_box {
     display: flex;
     flex-direction: row;
-    align-content: center;
+    align-items: center;
     padding: 15px 0px;
 }
 
 div.room_information_highlight_svg {
-    display: flex;
-    align-items: center;
+    height: 10px;
+    width: 10px;
+    background-color: black;
+    border-radius: 50px;
+    margin-inline-end: 15px;
 }
 
 div.room_information_highlight_top {
@@ -1778,11 +1780,9 @@ button.room_information_petting_header_controlR {
     }
 /* USE THIS FOR CAT CARDS TOMORROW (TODAY) ITS WAY BETTER LOL */
 div.room_information_petting_carousel {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
+    position: relative;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 ul.room_information_petting_carousel_list_box {
@@ -1791,8 +1791,10 @@ ul.room_information_petting_carousel_list_box {
     padding: 0px;
     display: flex;
     min-width: 100%;
-    flex-wrap: nowrap;
     height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
 }
 
 li.room_information_petting_carousel_list {
@@ -1805,6 +1807,7 @@ img.room_information_petting_image {
     width: 100%;
     border-radius: 10px;
     aspect-ratio: 16 / 9;
+    scroll-snap-align: start;
 }
 
 div.room_information_petting_image_topText {
@@ -1867,7 +1870,7 @@ div.room_information_amenities_item_svg {
     width: 10px;
     background-color: black;
     border-radius: 50px;
-    margin-inline-end: 10px;
+    margin-inline-end: 15px;
 }
 
 div.room_information_amenities_item_name {
@@ -1919,6 +1922,10 @@ button.room_information_calendar_moveL {
     border: none;
 }
 
+    button.room_information_calendar_moveL:hover {
+        background-color: #e8e8e8;
+    }
+
 button.room_information_calendar_moveR {
     display: flex;
     position: absolute;
@@ -1931,6 +1938,10 @@ button.room_information_calendar_moveR {
     align-items: center;
     border: none;
 }
+
+    button.room_information_calendar_moveR:hover {
+        background-color: #e8e8e8;
+    }
 
 div.room_information_calendar1 {
     width: 100%;
