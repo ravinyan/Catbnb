@@ -24,7 +24,11 @@ namespace Airbnb.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CatCard>> GetCatCard(int id)
         {
-            var catCard = await _context!.CatCards.Include(i => i.Images).Include(bi => bi.BookingInfo).FirstOrDefaultAsync(i => i.Id == id);
+            var catCard = await _context!.CatCards
+                .Include(i => i.Images)
+                .Include(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews)
+                .Include(h => h.Host)
+                .Include(a => a.Amenities).FirstOrDefaultAsync(i => i.Id == id);
 
             if (catCard == null)
             {

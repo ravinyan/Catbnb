@@ -20,7 +20,7 @@ div.footer {
     bottom: 0;
     height: 60px;
     left: 0;
-    position: relative;
+    position: absolute;
     width: 100%;
     margin-block-start: 10px;
     padding: 5px;
@@ -1792,7 +1792,7 @@ ul.room_information_petting_carousel_list_box {
     display: flex;
     min-width: 100%;
     height: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
@@ -1831,6 +1831,7 @@ div.room_information_amenities {
 div.room_information_amenities_header {
     font-size: 22px;
     font-weight: 600;
+    padding-block-end: 15px;
 }
 
 div.room_information_amenities_list {
@@ -1882,13 +1883,18 @@ div.room_information_amenities_button_box {
 }
 
 button.room_information_amenities_showAll {
-   background: white;
-   border: 1px solid black;
-   width: 200px;
-   height: 50px;
-   border-radius: 10px;
-   padding: 0px;
+    background: white;
+    border: 1px solid black;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 0px;
+    font-weight: 600;
 }
+
+    button.room_information_amenities_showAll:hover {
+        background: #e8e8e8;
+    }
 
 div.room_information_I_HATE_CALENDARS_WHY_THERE_IS_CALENDAR {
     padding-block-start: 30px;
@@ -2139,11 +2145,11 @@ div.room_pricing_flying_rectangle_pricing_total {
 
 /* reviews section and all that stuff below whatever this above is */
 div.room_reviews {
-
+    border-block-end: 1px solid #dddddd;
+    padding: 20px 0px;
 }
 
 div.room_reviews_userReviews_box {
-    border-block-end: 1px solid #dddddd;
     display: flex;
     flex-wrap: wrap;
 }
@@ -2227,7 +2233,21 @@ div.room_reviews_userReviews_review {
     overflow: hidden;
 }
 
+div.room_information_userReviews_button_box {
+    margin-block-start: 20px;
+}
 
+button.room_information_userReviews_showAll {
+    background: white;
+    border: 1px solid black;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 0px;
+    font-weight: 600;
+}
 
-
+    button.room_information_userReviews_showAll:hover {
+        background: #e8e8e8;
+    }
 
