@@ -5684,7 +5684,12 @@ catCardFetchRoomDataAndGenerateRoomHTML();
 
 
 
+async function testing()
+{
+     const a = await fetch(`api/CatCard/4`);
+     const b = await a.json();
+     console.log(b)
+}
 
-
-
+testing();
 

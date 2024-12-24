@@ -1,5 +1,6 @@
 ﻿using Airbnb.DBContext;
 using Airbnb.Models;
+using Catbnb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,8 +29,8 @@ namespace Airbnb.Controllers
                 .Include(i => i.Images)
                 .Include(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews)
                 .Include(h => h.Host)
-                .Include(a => a.Amenities).FirstOrDefaultAsync(i => i.Id == id);
-
+                .Include(a => a.Amenities)!.ThenInclude(a => a.Amenity).FirstOrDefaultAsync(i => i.Id == id);
+                
             if (catCard == null)
             {
                 return NotFound();

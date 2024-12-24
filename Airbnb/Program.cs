@@ -21,7 +21,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
+	// it just restarts database lol
     DBReset.InitializeSeedData(services);
 }
 

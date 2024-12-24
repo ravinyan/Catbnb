@@ -16,6 +16,8 @@ namespace Airbnb.Models
         [Range(0, int.MaxValue)]
         public decimal BasePrice { get; set; } = decimal.Zero;
 
+        public decimal CleaningFee { get; set; } = decimal.Zero;
+
         [Required]
         public string Description { get; set; } = string.Empty;
 

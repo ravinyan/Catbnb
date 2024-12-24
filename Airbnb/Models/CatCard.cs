@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Catbnb.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Airbnb.Models
 {
@@ -19,6 +20,6 @@ namespace Airbnb.Models
         public Categories? Category { get; set; }
 
         public ICollection<CatCardImages>? Images { get; set; }
-        public ICollection<Amenities>? Amenities { get; set; }
+        public ICollection<CatCardAmenities>? Amenities { get; set; }
     }
 }
