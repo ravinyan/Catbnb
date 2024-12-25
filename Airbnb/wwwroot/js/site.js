@@ -4924,12 +4924,12 @@ function catCardRoomsPageCalendarResize()
 catCardRoomsPageCalendarResize();
 
 //  so... you like readable code huh? well yea how about you go read a book instead coz this code aint readable bro
-function catCardGenerateRoomsPage()
+function catCardGenerateRoomsPage(room)
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
     {
         let roomPage = document.createElement("DIV");
-        roomPage.id = "1"; // DB DATA
+        roomPage.id = `Room-${room.id}`;
         roomPage.className = "room";
 
         //  HEADER
@@ -4938,7 +4938,10 @@ function catCardGenerateRoomsPage()
 
         let roomHeaderTopText = document.createElement("DIV");
         roomHeaderTopText.className = "room_header_topText";
-        roomHeaderTopText.innerText = "Cozy house on the water for 6 people"; // DB DATA
+        roomHeaderTopText.innerText = room.bookingInfo.maxNumberOfGuests == 1 
+                                    ? `Cozy cat on the water(?) for ${room.bookingInfo.maxNumberOfGuests} person`
+                                    : `Cozy cat on the water(?) for ${room.bookingInfo.maxNumberOfGuests} people`;
+                                    // STILL DB DATA FOR WHERE CAT IS
 
         let roomHeaderButtons = document.createElement("DIV");
         roomHeaderButtons.className = "room_header_buttons";
@@ -4975,7 +4978,7 @@ function catCardGenerateRoomsPage()
 
         let roomImagesImageM = document.createElement("IMG");
         roomImagesImageM.className = "room_images_image";
-        roomImagesImageM.src = "/img/img1.png"; // DB DATA
+        roomImagesImageM.src = `${room.images[0].url}`;
 
         roomImagesImageBoxM.appendChild(roomImagesImageM);
         roomImagesMainImage.appendChild(roomImagesImageBoxM);
@@ -4990,7 +4993,7 @@ function catCardGenerateRoomsPage()
                 let roomImagesSide1 = document.createElement("DIV");
                 roomImagesSide1.className = "room_images_side1";
 
-                for (j = 0; j < 2; j++)
+                for (j = 1; j <= 2; j++)
                 {
                     let roomImagesImageBox = document.createElement("DIV");
                     roomImagesImageBox.className = "room_images_image_box";
@@ -4998,7 +5001,7 @@ function catCardGenerateRoomsPage()
                     let roomImagesImage = document.createElement("IMG");
                     roomImagesImage.className = "room_images_image";
 
-                    roomImagesImage.src = "/img/img1.png"; // DB DATA
+                    roomImagesImage.src = `${room.images[j].url}`;
 
                     roomImagesImageBox.appendChild(roomImagesImage);
                     roomImagesSide1.appendChild(roomImagesImageBox);
@@ -5011,7 +5014,7 @@ function catCardGenerateRoomsPage()
                 let roomImagesSide2 = document.createElement("DIV");
                 roomImagesSide2.className = "room_images_side1";
 
-                for (j = 0; j < 2; j++)
+                for (j = 3; j <= 4; j++)
                 {
                     let roomImagesImageBox = document.createElement("DIV");
                     roomImagesImageBox.className = "room_images_image_box";
@@ -5019,7 +5022,7 @@ function catCardGenerateRoomsPage()
                     let roomImagesImage = document.createElement("IMG");
                     roomImagesImage.className = "room_images_image";
 
-                    roomImagesImage.src = "/img/img1.png"; // DB DATA
+                    roomImagesImage.src = `${room.images[j].url}`;
 
                     roomImagesImageBox.appendChild(roomImagesImage);
                     roomImagesSide2.appendChild(roomImagesImageBox);
@@ -5049,13 +5052,29 @@ function catCardGenerateRoomsPage()
 
         let roomInformationStayLocation = document.createElement("DIV");
         roomInformationStayLocation.className = "room_information_stay_location";
-        let locationString = `Entire home in ${1}, ${2}`; // DB DATA
+        let locationString = `Entire Cat in ${room.bookingInfo.city}, ${room.bookingInfo.country}`;
         roomInformationStayLocation.innerText = locationString;
 
         let roomInformationStayLiving = document.createElement("DIV");
         roomInformationStayLiving.className = "room_information_stay_living";
-        let livingString = `${1} guest - ${2} bedrooms - ${3} beds - ${1} bath`; // DB DATA + VALIDATION 1 guest / 2 guest(s)
-        roomInformationStayLiving.innerText = livingString;
+
+        let guestString = room.bookingInfo.maxNumberOfGuests == 1 
+                        ? "guest"
+                        : "guests";
+
+        let bedroomString = room.bookingInfo.numberOfBedrooms == 1
+                          ? "bedroom"
+                          : "bedrooms";
+
+        let bedString = room.bookingInfo.numberOfBeds == 1 
+                      ? "bed"
+                      : "beds";
+
+        let bathString =  room.bookingInfo.numberOfBathrooms == 1 
+                       ? "bath"
+                       : "baths";
+
+        roomInformationStayLiving.innerText = `${room.bookingInfo.maxNumberOfGuests} ${guestString} - ${room.bookingInfo.numberOfBedrooms} ${bedroomString} - ${room.bookingInfo.numberOfBeds} ${bedString} - ${room.bookingInfo.numberOfBathrooms} ${bathString}`;
 
         roomInformationStayBox.appendChild(roomInformationStayLocation);
         roomInformationStayBox.appendChild(roomInformationStayLiving);
@@ -5076,7 +5095,11 @@ function catCardGenerateRoomsPage()
 
         let roomInformationReviewsStarRating = document.createElement("DIV");
         roomInformationReviewsStarRating.className = "room_information_reviews_stars_rating";
-        roomInformationReviewsStarRating.innerText = "5"; // DB DATA
+
+        let starRatingTotal = 0;
+        room.bookingInfo.reviews.forEach(e => starRatingTotal += e.starRating)
+        starRatingTotal = starRatingTotal / room.bookingInfo.reviews.length;
+        roomInformationReviewsStarRating.innerText = starRatingTotal.toFixed(2);
 
         let roomInformationReviewsStarSvgBox = document.createElement("DIV");
         roomInformationReviewsStarSvgBox.className = "room_information_reviews_stars_svg_box";
@@ -5105,11 +5128,13 @@ function catCardGenerateRoomsPage()
 
         let roomInformationReviewsReviewsNumber = document.createElement("DIV");
         roomInformationReviewsReviewsNumber.className = "room_information_reviews_reviews_number";
-        roomInformationReviewsReviewsNumber.innerText = 77; // DB DATA
+        roomInformationReviewsReviewsNumber.innerText = room.bookingInfo.reviews.length;
 
         let roomInformationReviewsReviewsText = document.createElement("DIV");
         roomInformationReviewsReviewsText.className = "room_information_reviews_reviews_text"
-        roomInformationReviewsReviewsText.innerText = "Reviews"; // VALIDATION FOR Review / Review(s)
+        roomInformationReviewsReviewsText.innerText = room.bookingInfo.reviews.length == 1 
+                                                    ? "Review" 
+                                                    : "Reviews";
 
         roomInformationReviewsReviews.appendChild(roomInformationReviewsReviewsNumber);
         roomInformationReviewsReviews.appendChild(roomInformationReviewsReviewsText);
@@ -5129,11 +5154,11 @@ function catCardGenerateRoomsPage()
 
         let roomInformationHostName = document.createElement("DIV");
         roomInformationHostName.className = "room_information_host_name";
-        roomInformationHostName.innerText = "Hosted by your cat"; // not db data coz im not making users sorry
+        roomInformationHostName.innerText = `Hosted by ${room.host.name}`; 
 
         let roomInformationHostDescription = document.createElement("DIV");
         roomInformationHostDescription.className = "room_information_host_description";
-        roomInformationHostDescription.innerText = "Super Scratcher - 3 couches destroyed"; // not db data coz im not making users sorry
+        roomInformationHostDescription.innerText = "Super Scratcher - 3 couches destroyed"; // DB DATA LATER
 
         roomInformationHostNoClassDiv.appendChild(roomInformationHostName);
         roomInformationHostNoClassDiv.appendChild(roomInformationHostDescription);
@@ -5180,8 +5205,7 @@ function catCardGenerateRoomsPage()
 
         let roomInformationDescriptionText = document.createElement("DIV");
         roomInformationDescriptionText.className = "room_information_description_text";
-        roomInformationDescriptionText.innerText = `The missile knows where it is at all times. It knows this because it knows where it isn't, by subtracting where it is, from where it isn't, or where it isn't, from where it is, whichever is greater, it obtains a difference, or deviation. The guidance sub-system uses deviations to generate corrective commands to drive the missile from a position where it is, to a position where it isn't, and arriving at a position where it wasn't, it now is. Consequently, the position where it is, is now the position that it wasn't, and it follows that the position where it was, is now the position that it isn't. In the event of the position that it is in is not the position that it wasn't, the system has required a variation. The variation being the difference between where the missile is, and where it wasn't. If variation is considered to be a significant factor, it too, may be corrected by the GEA. However, the missile must also know where it was. The missile guidance computance scenario works as follows: Because a variation has modified some of the information the missile has obtained, it is not sure just where it is, however it is sure where it isn't, within reason, and it knows where it was. It now subracts where it should be, from where it wasn't, or vice versa. By differentiating this from the algebraic sum og where it shouldn't be, and where it was. It is able to obtain a deviation, and a variation, which is called "air"`;
-                                                    // DB DATA ^ ^ ^ tho this copypasta is better than any data... maybe i will put it into actual data...                                                   
+        roomInformationDescriptionText.innerText = `${room.bookingInfo.description}`;
 
         let roomInformationDescriptionShowMore = document.createElement("DIV");
         roomInformationDescriptionShowMore.className = "room_information_description_showMore";
@@ -5284,8 +5308,7 @@ function catCardGenerateRoomsPage()
         let roomInformationAmenitiesList = document.createElement("DIV");
         roomInformationAmenitiesList.className = "room_information_amenities_list";
 
-        //  DB DATA LENGTH
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < room.amenities.length && i < 10; i++)
         {
             let roomInformationAmenitiesItemBox = document.createElement("DIV");
             roomInformationAmenitiesItemBox.className = "room_information_amenities_item_box";
@@ -5295,7 +5318,7 @@ function catCardGenerateRoomsPage()
 
             let roomInformationAmenitiesItemName = document.createElement("DIV");
             roomInformationAmenitiesItemName.className = "room_information_amenities_item_name";
-            roomInformationAmenitiesItemName.innerText = "Wifi"; // DB DATA
+            roomInformationAmenitiesItemName.innerText = `${room.amenities[i].amenity.name}`; // DB DATA
 
             roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemSvg);
             roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemName);
@@ -5308,7 +5331,7 @@ function catCardGenerateRoomsPage()
 
         let roomInformationAmenitiesShowAll = document.createElement("BUTTON");
         roomInformationAmenitiesShowAll.className = "room_information_amenities_showAll";
-        roomInformationAmenitiesShowAll.innerText = `Show all ${7} amenities`; // DB DATA NUMBER
+        roomInformationAmenitiesShowAll.innerText = `Show all ${room.amenities.length} amenities`;
 
         roomInformationAmenitiesButtonBox.appendChild(roomInformationAmenitiesShowAll);
 
@@ -5371,12 +5394,12 @@ function catCardGenerateRoomsPage()
 
         roomInformationCalendars.appendChild(roomInformationCalendarBox);
 
-        roomInformation.appendChild(roomInformationHeader); //done
-        roomInformation.appendChild(roomInformationHighlightAmenities); //d
-        roomInformation.appendChild(roomInformationDescription); //d
-        roomInformation.appendChild(roomInformationPetting); //d
-        roomInformation.appendChild(roomInformationAmenities); //d
-        roomInformation.appendChild(roomInformationCalendars); //d (add later actual calendars lol)
+        roomInformation.appendChild(roomInformationHeader);
+        roomInformation.appendChild(roomInformationHighlightAmenities);
+        roomInformation.appendChild(roomInformationDescription);
+        roomInformation.appendChild(roomInformationPetting);
+        roomInformation.appendChild(roomInformationAmenities);
+        roomInformation.appendChild(roomInformationCalendars);
 
         // pricing
         let roomPricing = document.createElement("DIV");
@@ -5393,7 +5416,7 @@ function catCardGenerateRoomsPage()
 
         let roomPricingFlyingRectangleNightPriceText = document.createElement("DIV");
         roomPricingFlyingRectangleNightPriceText.className = "room_pricing_flying_rectangle_night_price_text";
-        roomPricingFlyingRectangleNightPriceText.innerText = `$${111}`; // DB DATA
+        roomPricingFlyingRectangleNightPriceText.innerText = `$${room.bookingInfo.basePrice}`;
 
         let roomPricingFlyingRectangleNightPriceNoClassDiv = document.createElement("DIV");
         roomPricingFlyingRectangleNightPriceNoClassDiv.innerText = "night";
@@ -5486,10 +5509,10 @@ function catCardGenerateRoomsPage()
 
         let roomPricingFlyingRectanglePricingRowText1 = document.createElement("DIV");
         roomPricingFlyingRectanglePricingRowText1.className = "room_pricing_flying_rectangle_pricing_row_text";
-        roomPricingFlyingRectanglePricingRowText1.innerText = `$${111} x 5 nights`; // DB DATA
+        roomPricingFlyingRectanglePricingRowText1.innerText = `$${room.bookingInfo.basePrice} x 5 nights`;
 
         let roomPricingFlyingRectanglePricingRowText1NoClassDiv = document.createElement("DIV");
-        roomPricingFlyingRectanglePricingRowText1NoClassDiv.innerText = `$${111 * 5}` // price * nights
+        roomPricingFlyingRectanglePricingRowText1NoClassDiv.innerText = `$${room.bookingInfo.basePrice * 5}`;
 
         roomPricingFlyingRectanglePricingRow1.appendChild(roomPricingFlyingRectanglePricingRowText1);
         roomPricingFlyingRectanglePricingRow1.appendChild(roomPricingFlyingRectanglePricingRowText1NoClassDiv);
@@ -5502,7 +5525,7 @@ function catCardGenerateRoomsPage()
         roomPricingFlyingRectanglePricingRowText2.innerText = "Cleaning fee";
 
         let roomPricingFlyingRectanglePricingRowText2NoClassDiv = document.createElement("DIV");
-        roomPricingFlyingRectanglePricingRowText2NoClassDiv.innerText = `$${111}` // DB DATA... ?
+        roomPricingFlyingRectanglePricingRowText2NoClassDiv.innerText = `$${room.bookingInfo.cleaningFee}`;
 
         roomPricingFlyingRectanglePricingRow2.appendChild(roomPricingFlyingRectanglePricingRowText2);
         roomPricingFlyingRectanglePricingRow2.appendChild(roomPricingFlyingRectanglePricingRowText2NoClassDiv);
@@ -5515,7 +5538,7 @@ function catCardGenerateRoomsPage()
         roomPricingFlyingRectanglePricingRowText3.innerText = "Airbnb service fee";
 
         let roomPricingFlyingRectanglePricingRowText3NoClassDiv = document.createElement("DIV");
-        roomPricingFlyingRectanglePricingRowText3NoClassDiv.innerText = `$${111}` // DB DATA... ?
+        roomPricingFlyingRectanglePricingRowText3NoClassDiv.innerText = `$${200}` // DB DATA... ?
 
         roomPricingFlyingRectanglePricingRow3.appendChild(roomPricingFlyingRectanglePricingRowText3);
         roomPricingFlyingRectanglePricingRow3.appendChild(roomPricingFlyingRectanglePricingRowText3NoClassDiv);
@@ -5531,7 +5554,7 @@ function catCardGenerateRoomsPage()
         roomPricingFlyingRectanglePricingTotalNoClassDiv1.innerText = "TOTAL";
 
         let roomPricingFlyingRectanglePricingTotalNoClassDiv2 = document.createElement("DIV");
-        roomPricingFlyingRectanglePricingTotalNoClassDiv2.innerText = `$${777}`; // DB DATA
+        roomPricingFlyingRectanglePricingTotalNoClassDiv2.innerText = `$${(room.bookingInfo.basePrice * 5) + room.bookingInfo.cleaningFee + 200}`;
 
         roomPricingFlyingRectanglePricingTotal.appendChild(roomPricingFlyingRectanglePricingTotalNoClassDiv1);
         roomPricingFlyingRectanglePricingTotal.appendChild(roomPricingFlyingRectanglePricingTotalNoClassDiv2);
@@ -5567,7 +5590,7 @@ function catCardGenerateRoomsPage()
                          </svg>`;
 
         //  LENGTH FROM DB DATA (max 6)
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < room.bookingInfo.reviews.length && i < 6; i++)
         {
             let roomReviewsUserReviewsUserInfo = document.createElement("DIV");
             roomReviewsUserReviewsUserInfo.className = "room_reviews_userReviews_userInfo";
@@ -5598,7 +5621,7 @@ function catCardGenerateRoomsPage()
 
             let roomReviewsUserReviewsUserInfoRatingDetailsRating = document.createElement("DIV");
             roomReviewsUserReviewsUserInfoRatingDetailsRating.className = "room_reviews_userReviews_userInfo_ratingDetails_rating";
-            let roomRating = `${4}`; // DB DATA
+            let roomRating = `${room.bookingInfo.reviews[i].starRating}`;
             let starString = "";
             
             for (j = 1; j <= 5; j++)
@@ -5629,8 +5652,7 @@ function catCardGenerateRoomsPage()
 
             let roomReviewsUserReviewsReview = document.createElement("DIV");
             roomReviewsUserReviewsReview.className = "room_reviews_userReviews_review";
-            roomReviewsUserReviewsReview.innerText = `meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow `; 
-                                                     // DB DATA ^^
+            roomReviewsUserReviewsReview.innerText = `${room.bookingInfo.reviews[i].review}`; 
 
             let roomReviewsUserReviews = document.createElement("DIV");
             roomReviewsUserReviews.className = "room_reviews_userReviews";
@@ -5647,7 +5669,7 @@ function catCardGenerateRoomsPage()
 
         let roomInformationUserReviewsShowAll = document.createElement("BUTTON");
         roomInformationUserReviewsShowAll.className = "room_information_userReviews_showAll";
-        roomInformationUserReviewsShowAll.innerText = `Show all ${7} reviews`; // DB DATA total reviews
+        roomInformationUserReviewsShowAll.innerText = `Show all ${room.bookingInfo.reviews.length} reviews`;
 
         roomInformationUserReviewsButtonBox.appendChild(roomInformationUserReviewsShowAll);
 
@@ -5667,11 +5689,14 @@ function catCardGenerateRoomsPage()
     }
 }
 
-function catCardFetchRoomDataAndGenerateRoomHTML()
+async function catCardFetchRoomDataAndGenerateRoomHTML()
 {
     var start = performance.now();
 
-    catCardGenerateRoomsPage();
+    const roomData = await fetch(`api/CatCard/${roomPageId}`);
+    const roomJson = await roomData.json();
+    console.log(roomJson)
+    catCardGenerateRoomsPage(roomJson);
 
     var end = performance.now();
     var timeTaken = end - start;
@@ -5682,14 +5707,4 @@ function catCardFetchRoomDataAndGenerateRoomHTML()
 catCardFetchRoomDataAndGenerateRoomHTML();
 
 
-
-
-async function testing()
-{
-     const a = await fetch(`api/CatCard/4`);
-     const b = await a.json();
-     console.log(b)
-}
-
-testing();
 

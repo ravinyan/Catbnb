@@ -408,7 +408,6 @@ div.blank_box {
     align-items: center;
     flex-direction: column;
     border: 1px solid white;
-    
 }
 
 button.resetDatesForm {
@@ -921,7 +920,6 @@ input.checkbox_input {
     position: absolute;
     padding: 0px;
     border: 0px;
-    
 }
 
 span.checkbox_box {
@@ -1837,7 +1835,6 @@ div.room_information_amenities_header {
 div.room_information_amenities_list {
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;
 }
 
 div.room_information_amenities_item_box {
@@ -1854,6 +1851,7 @@ div.room_information_amenities_item_box {
         padding: 8px 0px;
         width: 100%;
         min-width: 320px;
+
     }
 }
 

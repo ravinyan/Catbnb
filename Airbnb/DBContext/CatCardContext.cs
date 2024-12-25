@@ -110,7 +110,7 @@ namespace Airbnb.DBContext
             
             for (int i = 1; i <= 2440; i++)
             {
-                var cityCountryIndex = rng.Next(1, 8);
+                var cityCountryIndex = rng.Next(0, 10);
 
                 bookingInfoList.Add(new BookingInfo
                 {
@@ -119,7 +119,7 @@ namespace Airbnb.DBContext
                     City = cities[cityCountryIndex],
                     BasePrice = rng.Next(100, 10000),
                     CleaningFee = rng.Next(0, 100),
-                    Description = descriptions[rng.Next(1, 10)],
+                    Description = descriptions[rng.Next(0, 8)],
                     ShortDescription = "cat?",
                     DateAvaiable = $"{rng.Next(1, 14)} May - {rng.Next(15, 31)} May",
                     NumberOfBedrooms = rng.Next(1, 16),
@@ -242,16 +242,17 @@ namespace Airbnb.DBContext
 
             string[] reviews = ["This cat is the best!", "This cat is amazing!", "This cat is good but scratches couches",
                                 "This cat is boring", "This cat is stupid", "meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow "];
-            int[] stars = [1, 2, 3, 4, 5];
+            int[] stars = [5, 4, 3, 2, 1, 5];
 
             var id = 1;
             var biid = 1;
             for (int i = 1; i <= 2440; i++)
             {
-                var reviewIndex = rng.Next(0, 4);
+                
                 for (int j = 1; j <= 7; j++)
                 {
-                    reviewList.Add(new Reviews
+					var reviewIndex = rng.Next(0, 6);
+					reviewList.Add(new Reviews
                     {
                         Id = id,
                         BookingInfoId = biid,

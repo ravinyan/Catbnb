@@ -18,6 +18,13 @@ namespace Airbnb.Models
         [Range(1, 5)]
         public int StarRating { get; set; } = 1;
 
+        // for when i feel like not doing anything hard and want to work on database
+        public string StayTime { get; set; } = string.Empty;
+
+        public DateTime DateSent {  get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
         public int BookingInfoId { get; set; }
         public BookingInfo? BookingInfo { get; set; }
     }

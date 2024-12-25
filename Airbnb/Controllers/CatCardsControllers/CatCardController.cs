@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airbnb.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Rooms/api/[controller]")]
     public class CatCardController : Controller
     {
         private readonly CatCardContext? _context;
