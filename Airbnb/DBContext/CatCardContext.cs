@@ -48,13 +48,22 @@ namespace Airbnb.DBContext
             return amenitiesList;
         }
 
-        private List<Models.Host> GenerateUsers()
+        private List<User> GenerateUsers()
         {
-            List<Models.Host> usersList = new List<Models.Host>();
+            List<User> usersList = new List<User>();
+            string[] time = ["1 month", "6 months", "10 months", "1 year", "2 years", "3 years"];
+			string[] names = ["Bob", "Steven", "Big Bob", "Micheal", "Bob The Great", "Catnip", "BOBER"];
+            string[] title = ["Newbie Scratcher - jumps on chandeliers", "Scratcher - 1 couch destroyed", "Super Scratcher - 3 couches destroyed"];
 
-            for (int i = 1; i <= 244; i++)
+			for (int i = 1; i <= 244; i++)
             {
-                usersList.Add(new Models.Host { Id = i, Name = $"bob{i}" });
+				usersList.Add(new User
+				{
+					Id = i,
+					TimeOnCatbnb = time[rng.Next(0, 6)],
+					Name = names[rng.Next(0, 7)],
+                    Title = title[rng.Next(0, 3)],
+				});
             }
 
             return usersList;
@@ -64,18 +73,18 @@ namespace Airbnb.DBContext
         {
             List<CatCard> catCardsList = new List<CatCard>();
 
-            int hostId = 0;
+            int userId = 0;
             int categoryId = 0;
             //2440 244
             for (int i = 1; i <= 2440; i++)
             {
-                if (i % 10 == 1 && hostId <= 10)
+                if (i % 10 == 1 && userId <= 10)
                 {
-                    hostId++;
+					userId++;
                 }
                 else if (i % 10 == 1)
                 {
-                    hostId++;
+					userId++;
                 }
 
                 if (i % 40 == 1 && categoryId <= 10)
@@ -87,7 +96,7 @@ namespace Airbnb.DBContext
                     categoryId++;
                 }
 
-                catCardsList.Add(new CatCard { Id = i, HostId = hostId, BookingInfoId = i, CategoryId = categoryId});
+                catCardsList.Add(new CatCard { Id = i, HostId = userId, BookingInfoId = i, CategoryId = categoryId});
             }
             
             return catCardsList;
@@ -243,21 +252,34 @@ namespace Airbnb.DBContext
             string[] reviews = ["This cat is the best!", "This cat is amazing!", "This cat is good but scratches couches",
                                 "This cat is boring", "This cat is stupid", "meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow "];
             int[] stars = [5, 4, 3, 2, 1, 5];
-
+            string[] stayAmount = ["one night", "a few nights", "about a week", "a few weeks"];
+            
             var id = 1;
             var biid = 1;
+            var userId = 0;
             for (int i = 1; i <= 2440; i++)
             {
-                
-                for (int j = 1; j <= 7; j++)
+				if (i % 10 == 1 && userId <= 10)
+				{
+					userId++;
+				}
+				else if (i % 10 == 1)
+				{
+					userId++;
+				}
+
+				for (int j = 1; j <= 7; j++)
                 {
 					var reviewIndex = rng.Next(0, 6);
-					reviewList.Add(new Reviews
+                    reviewList.Add(new Reviews
                     {
                         Id = id,
                         BookingInfoId = biid,
                         Review = reviews[reviewIndex],
                         StarRating = stars[reviewIndex],
+                        StayTime = stayAmount[rng.Next(0, 4)],
+                        DateSent = new DateOnly(2024, 1, rng.Next(1, 25)),
+                        UserId = userId,
                     });
 
                     id++;
@@ -294,8 +316,8 @@ namespace Airbnb.DBContext
             List<Amenities> amenitiesList = GenerateAmenities();
             modelBuilder.Entity<Amenities>().HasData(amenitiesList);
 
-            List<Models.Host> userList = GenerateUsers();
-            modelBuilder.Entity<Models.Host>().HasData(userList);
+            List<Models.User> userList = GenerateUsers();
+            modelBuilder.Entity<Models.User>().HasData(userList);
 
             List<Categories> categoryList = GenerateCategories();
             modelBuilder.Entity<Categories>().HasData(categoryList);
@@ -319,7 +341,7 @@ namespace Airbnb.DBContext
 			List<CatCardAmenities> catCardAmenities = GenerateCatCardAmenities();
             modelBuilder.Entity<CatCardAmenities>().HasData(catCardAmenities);
 
-            modelBuilder.Entity<Models.Host>()
+            modelBuilder.Entity<Models.User>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(u => u.Host);
 
@@ -338,13 +360,17 @@ namespace Airbnb.DBContext
             modelBuilder.Entity<Categories>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(c => c.Category);
+
+            modelBuilder.Entity<User>()
+                .HasMany(r => r.Reviews)
+                .WithOne(u => u.User);
 		}
 
         public DbSet<CatCard> CatCards { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<CatCardImages> CatCardImages { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
-        public DbSet<Models.Host> Users { get; set; }
+        public DbSet<Models.User> Users { get; set; }
 
         public DbSet<BookingInfo> BookingInfos { get; set; }
         public DbSet<Reviews> Reviews { get; set; }

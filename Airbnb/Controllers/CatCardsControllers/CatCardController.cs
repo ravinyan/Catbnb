@@ -1,6 +1,5 @@
 ﻿using Airbnb.DBContext;
 using Airbnb.Models;
-using Catbnb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

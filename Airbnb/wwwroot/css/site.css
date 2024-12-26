@@ -1756,8 +1756,8 @@ button.room_information_petting_header_controlL {
 }
 
     button.room_information_petting_header_controlL:hover {
-        border: 1px solid black;
-        color: black;
+        border: 1px solid black !important;
+        color: black !important;
     }
 
 button.room_information_petting_header_controlR {
@@ -1773,10 +1773,10 @@ button.room_information_petting_header_controlR {
 }
 
     button.room_information_petting_header_controlR:hover {
-        border: 1px solid black;
-        color: black;
+        border: 1px solid black !important;
+        color: black !important;
     }
-/* USE THIS FOR CAT CARDS TOMORROW (TODAY) ITS WAY BETTER LOL */
+
 div.room_information_petting_carousel {
     position: relative;
     overflow-x: hidden;
@@ -1793,6 +1793,7 @@ ul.room_information_petting_carousel_list_box {
     overflow-x: hidden;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 li.room_information_petting_carousel_list {

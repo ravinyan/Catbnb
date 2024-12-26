@@ -13,7 +13,7 @@ namespace Airbnb.Models
 
         [Required]
         public int HostId { get; set; }
-        public Host? Host { get; set; }
+        public User? Host { get; set; }
 
         [Required]
         public int CategoryId { get; set; }
