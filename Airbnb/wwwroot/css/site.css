@@ -213,7 +213,7 @@ div.dropdown_window {
     display: none;
     background: white;
     position: absolute;
-    z-index: 1;
+    z-index: 3000;
     overscroll-behavior: contain;
     top: 100%;
     max-height: calc(100vh - 170px);
@@ -2249,4 +2249,39 @@ button.room_information_userReviews_showAll {
     button.room_information_userReviews_showAll:hover {
         background: #e8e8e8;
     }
+
+/* room modals */
+
+div.room_modal {
+    display: none;
+    position: absolute;
+    width: 800px;
+    height: 450px;
+    left: calc(50% - 400px);
+    top: 70px;
+    background: white;
+    z-index: 1000;
+    animation: openModal 0.2s;
+    opacity: 1;
+    border-radius: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    max-height: calc(100vh - 130px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -5177,7 +5177,7 @@ function roomGenerateRoomsPage(room)
     let roomInformationDescriptionText = document.createElement("DIV");
     roomInformationDescriptionText.className = "room_information_description_text";
     roomInformationDescriptionText.innerText = `${room.bookingInfo.description}`;
-
+    
     let roomInformationDescriptionShowMore = document.createElement("DIV");
     roomInformationDescriptionShowMore.className = "room_information_description_showMore";
 
@@ -5655,6 +5655,11 @@ function roomGenerateRoomsPage(room)
     roomPage.appendChild(roomReviews);
 
     roomContent.appendChild(roomPage);
+    
+    if (roomInformationDescriptionText.scrollHeight <= roomInformationDescriptionText.offsetHeight)
+    {
+        roomInformationDescription.removeChild(roomInformationDescriptionShowMore);
+    }
 
     roomGenerateRoomsPageCalendars();
 }
@@ -5683,11 +5688,22 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 
 roomFetchRoomDataAndGenerateRoomHTML();
 
-function roomControllRoomsPage(room)
+function roomControllRoomsPage(room, roomData)
 { 
     function roomControllDescriptionShowMore()
     {
         let showMoreDescriptionButton = room.getElementsByClassName("room_information_description_showMore_button")[0];
+        let modal = room.getElementsByClassName("room_modal")[0];
+        let modalBackground = room.getElementsByClassName("modal_background")[0];
+
+        showMoreDescriptionButton.onclick = function()
+        {
+            modal.style.display = "block";
+            modalBackground.style.display = "block";
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = "19px";
+        }
+
     }
 
     function roomControllImageCarousel()
@@ -5786,8 +5802,7 @@ function roomControllRoomsPage(room)
         let guestDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0];
     }
 
-
-
+    roomControllDescriptionShowMore();
 
 
     roomControllImageCarousel();
