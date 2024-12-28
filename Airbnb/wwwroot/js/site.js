@@ -1328,7 +1328,7 @@ const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
     // i give up fixing this
-    if (checkinDate.tagName != "NULL" && checkoutDate.tagName != "NULL")
+    if ((checkinDate.tagName != "NULL" || checkinDate.innerText != "") && (checkoutDate.tagName != "NULL" || checkoutDate.innerText != ""))
     {
         if (x == +checkinDate.innerText && checkinMonth == months[month] && checkinYear == year)
         {
@@ -5678,7 +5678,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         roomGenerateRoomsPage(roomJson);
 
         let room = document.getElementById("RoomContent");
-        roomControllRoomsPage(room);
+        roomControllRoomsPage(room, roomJson);
         
         var end = performance.now();
         var timeTaken = end - start;
@@ -5693,17 +5693,29 @@ function roomControllRoomsPage(room, roomData)
     function roomControllDescriptionShowMore()
     {
         let showMoreDescriptionButton = room.getElementsByClassName("room_information_description_showMore_button")[0];
-        let modal = room.getElementsByClassName("room_modal")[0];
-        let modalBackground = room.getElementsByClassName("modal_background")[0];
+        let modal = room.getElementsByClassName("modal_V2")[0];
+        let modalBackground = room.getElementsByClassName("modal_background_V2")[0];
 
         showMoreDescriptionButton.onclick = function()
         {
-            modal.style.display = "block";
+            modal.style.display = "flex";
             modalBackground.style.display = "block";
             document.body.style.overflow = "hidden";
             document.body.style.paddingRight = "19px";
+
+            modal.childNodes[3].innerText = `${roomData.bookingInfo.description}`;
         }
 
+        modalBackground.onclick = function(e)
+        {
+            if (e.target == modalBackground)
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }  
+        }
     }
 
     function roomControllImageCarousel()
@@ -5777,11 +5789,188 @@ function roomControllRoomsPage(room, roomData)
     function roomControllShowAllAmenities()
     {
         let showAllAmenitiesButton = room.getElementsByClassName("room_information_amenities_showAll")[0];
+        let modal = room.getElementsByClassName("modal_V2")[1];
+        let modalBackground = room.getElementsByClassName("modal_background_V2")[1];
+
+        showAllAmenitiesButton.onclick = function()
+        {
+            modal.style.display = "flex";
+            modalBackground.style.display = "block";
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = "19px";
+
+            let amenitiesSectionEssentials = document.createElement("DIV");
+            amenitiesSectionEssentials.className = "room_modal_amenities_section";
+
+            let amenitiesSectionFeatures = document.createElement("DIV");
+            amenitiesSectionFeatures.className = "room_modal_amenities_section";
+
+            let amenitiesSectionLocation = document.createElement("DIV");
+            amenitiesSectionLocation.className = "room_modal_amenities_section";
+
+            let amenitiesSectionSafety = document.createElement("DIV");
+            amenitiesSectionSafety.className = "room_modal_amenities_section";
+
+            let amenitiesBlockEssentials = document.createElement("DIV");
+            amenitiesBlockEssentials.className = "room_modal_amenities_block";
+
+            let amenitiesBlockFeatures = document.createElement("DIV");
+            amenitiesBlockFeatures.className = "room_modal_amenities_block";
+
+            let amenitiesBlockLocation = document.createElement("DIV");
+            amenitiesBlockLocation.className = "room_modal_amenities_block";
+
+            let amenitiesBlockSafety  = document.createElement("DIV");
+            amenitiesBlockSafety.className = "room_modal_amenities_block";
+
+            for (id = 0; id < roomData.amenities.length; id++)
+            {
+                var amenity = document.createElement("DIV");
+                amenity.className = "room_modal_amenity";
+
+                var amenitySVG = document.createElement("DIV");
+                amenitySVG.className = "room_modal_amenity_svg";
+
+                var amenityText = document.createElement("DIV");
+                amenityText.className = "room_modal_amenity_text";
+
+                let amenityIdDB = roomData.amenities[id].amenitiesId;
+                let amenityTextDB = `${roomData.amenities[id].amenity.name}`;
+
+                switch (true)
+                {
+                    case amenityIdDB >= 1 && amenityIdDB <= 10:
+
+                        amenityText.innerText = amenityTextDB;
+                        amenity.appendChild(amenitySVG);
+                        amenity.appendChild(amenityText);
+
+                        amenitiesBlockEssentials.appendChild(amenity);
+                        break;
+                    case amenityIdDB >= 11 && amenityIdDB <= 21:
+
+                        amenityText.innerText = amenityTextDB;
+                        amenity.appendChild(amenitySVG);
+                        amenity.appendChild(amenityText);
+
+                        amenitiesBlockFeatures.appendChild(amenity);
+                        break;
+                    case amenityIdDB >= 22 && amenityIdDB <= 24:
+
+                        amenityText.innerText = amenityTextDB;
+                        amenity.appendChild(amenitySVG);
+                        amenity.appendChild(amenityText);
+
+                        amenitiesBlockLocation.appendChild(amenity);
+                        break;
+                    case amenityIdDB >= 25 && amenityIdDB <= 26:
+
+                        amenityText.innerText = amenityTextDB;
+                        amenity.appendChild(amenitySVG);
+                        amenity.appendChild(amenityText);
+
+                        amenitiesBlockSafety.appendChild(amenity);
+                        break;
+                }
+            }
+
+            if (amenitiesBlockEssentials.childNodes.length != 0)
+            {
+                let amenitiesTitle = document.createElement("DIV");
+                amenitiesTitle.className = "room_modal_amenities_title";
+                amenitiesTitle.innerText = "Essentials";
+                amenitiesSectionEssentials.appendChild(amenitiesTitle);
+
+                for (i = 0; amenitiesBlockEssentials.childNodes.length > 0; i++)
+                {
+                    amenitiesSectionEssentials.appendChild(amenitiesBlockEssentials.childNodes[0]);
+                }
+
+                modal.childNodes[3].appendChild(amenitiesSectionEssentials);
+            }
+            
+            if (amenitiesBlockFeatures.childNodes.length != 0)
+            {
+                let amenitiesTitle = document.createElement("DIV");
+                amenitiesTitle.className = "room_modal_amenities_title";
+                amenitiesTitle.innerText = "Features";
+                amenitiesSectionFeatures.appendChild(amenitiesTitle);
+
+                for (i = 0; amenitiesBlockFeatures.childNodes.length > 0; i++)
+                {
+                    amenitiesSectionFeatures.appendChild(amenitiesBlockFeatures.childNodes[0]);
+                }
+
+                modal.childNodes[3].appendChild(amenitiesSectionFeatures);
+            }
+
+            if (amenitiesBlockLocation.childNodes.length != 0)
+            {
+                let amenitiesTitle = document.createElement("DIV");
+                amenitiesTitle.className = "room_modal_amenities_title";
+                amenitiesTitle.innerText = "Location";
+                amenitiesSectionLocation.appendChild(amenitiesTitle);
+
+                for (i = 0; amenitiesBlockLocation.childNodes.length > 0; i++)
+                {
+                    amenitiesSectionLocation.appendChild(amenitiesBlockLocation.childNodes[0]);
+                }
+
+                modal.childNodes[3].appendChild(amenitiesSectionLocation);
+            }
+
+            if (amenitiesBlockSafety.childNodes.length != 0)
+            {
+                let amenitiesTitle = document.createElement("DIV");
+                amenitiesTitle.className = "room_modal_amenities_title";
+                amenitiesTitle.innerText = "Safety";
+                amenitiesSectionSafety.appendChild(amenitiesTitle);
+
+                for (i = 0; amenitiesBlockSafety.childNodes.length > 0; i++)
+                {
+                    amenitiesSectionSafety.appendChild(amenitiesBlockSafety.childNodes[0]);
+                }
+
+                modal.childNodes[3].appendChild(amenitiesSectionSafety);
+            }
+        }
+
+        modalBackground.onclick = function(e)
+        {
+            if (e.target == modalBackground)
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }  
+        }
     }
 
     function roomControllShowAllReviews()
     {
         let showAllReviewsButton = room.getElementsByClassName("room_information_userReviews_showAll")[0];
+        let modal = room.getElementsByClassName("modal_V2")[2];
+        let modalBackground = room.getElementsByClassName("modal_background_V2")[2];
+
+        showAllReviewsButton.onclick = function()
+        {
+            modal.style.display = "flex";
+            modalBackground.style.display = "block";
+            document.body.style.overflow = "hidden";
+            document.body.style.paddingRight = "19px";
+        }
+
+        modalBackground.onclick = function(e)
+        {
+            if (e.target == modalBackground)
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }  
+        }
     }
 
     function roomControllCalendar()
@@ -5803,9 +5992,10 @@ function roomControllRoomsPage(room, roomData)
     }
 
     roomControllDescriptionShowMore();
-
-
     roomControllImageCarousel();
+    roomControllShowAllAmenities();
+    roomControllShowAllReviews();
+    
 
 }
 
