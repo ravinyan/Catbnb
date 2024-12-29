@@ -2276,7 +2276,7 @@ div.modal_V2 {
     background: white;
     z-index: 2000;
     top: 65px;
-    left: calc(50% - 375px);
+    left: calc(50% - 400px);
     border-radius: 20px;
 }
 
@@ -2328,7 +2328,7 @@ div.room_modal_amenities_section {
 }
 
 div.room_modal_amenities_title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     margin-block-start: 20px;
     padding: 5px 0px;
@@ -2339,6 +2339,7 @@ div.room_modal_amenity {
     flex-direction: row;
     align-items: center;
     padding: 15px 0px;
+    border-bottom: 1px solid #dddddd;
 }
 
 div.room_modal_amenity_svg {
@@ -2353,7 +2354,95 @@ div.room_modal_amenity_text {
 
 }
 
+div.room_modal_reviews_userReviews {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px;
+}
 
+div.room_modal_reviews_reviewsAndFilter_box {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.room_modal_reviews_count {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+button.room_modal_reviews_dropdown_filter {
+    background: white;
+    border: 1px solid #dddddd;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+div.room_modal_reviews_dropdown_filter_text {
+    font-size: 14px;
+    padding: 5px 0px;
+    padding-inline-start: 5px;
+    font-weight: 600;
+}
+
+div.room_modal_reviews_search_box {
+    margin-block-start: 20px;
+}
+
+div.room_modal_reviews_search_box_inner {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    border: 1px solid #dddddd;
+    padding: 7px 10px;
+    border-radius: 50px;
+}
+
+    div.room_modal_reviews_search_box_inner:focus-within {
+        outline: 2px solid black;
+        border-radius: 3px;
+        border-radius: 50px;
+    }
+
+label.room_modal_reviews_search_bar_label {
+    width: 100%;
+}
+
+input.room_modal_reviews_search_bar_input {
+    width: 100%;
+    border: none;
+}
+
+input.room_modal_reviews_search_bar_input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+div.room_modal_reviews_dropdown_filter_window {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: white;
+    box-shadow: 0px 0px 20px 11px #dddddd;
+    display: none;
+    top: 40px;
+    right: 0px;
+    border-radius: 10px;
+    width: 160px;
+    height: 132px;
+}
+
+div.room_modal_reviews_dropdown_filter_window_item {
+    padding: 10px;
+}
+
+    div.room_modal_reviews_dropdown_filter_window_item:hover {
+        background-color: #e5e5e5
+    }
 
 
 

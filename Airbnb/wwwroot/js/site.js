@@ -5695,6 +5695,7 @@ function roomControllRoomsPage(room, roomData)
         let showMoreDescriptionButton = room.getElementsByClassName("room_information_description_showMore_button")[0];
         let modal = room.getElementsByClassName("modal_V2")[0];
         let modalBackground = room.getElementsByClassName("modal_background_V2")[0];
+        var closeButton = room.getElementsByClassName("modal_close")[0];
 
         showMoreDescriptionButton.onclick = function()
         {
@@ -5715,6 +5716,14 @@ function roomControllRoomsPage(room, roomData)
                 document.body.style.overflow = "";
                 document.body.style.paddingRight = "";
             }  
+        }
+
+        closeButton.onclick = function()
+        {
+            modal.style.display = "none";
+            modalBackground.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         }
     }
 
@@ -5791,6 +5800,7 @@ function roomControllRoomsPage(room, roomData)
         let showAllAmenitiesButton = room.getElementsByClassName("room_information_amenities_showAll")[0];
         let modal = room.getElementsByClassName("modal_V2")[1];
         let modalBackground = room.getElementsByClassName("modal_background_V2")[1];
+        var closeButton = room.getElementsByClassName("modal_close")[1];
 
         showAllAmenitiesButton.onclick = function()
         {
@@ -5823,115 +5833,118 @@ function roomControllRoomsPage(room, roomData)
             let amenitiesBlockSafety  = document.createElement("DIV");
             amenitiesBlockSafety.className = "room_modal_amenities_block";
 
-            for (id = 0; id < roomData.amenities.length; id++)
+            if (modal.childNodes[3].innerText == "")
             {
-                var amenity = document.createElement("DIV");
-                amenity.className = "room_modal_amenity";
-
-                var amenitySVG = document.createElement("DIV");
-                amenitySVG.className = "room_modal_amenity_svg";
-
-                var amenityText = document.createElement("DIV");
-                amenityText.className = "room_modal_amenity_text";
-
-                let amenityIdDB = roomData.amenities[id].amenitiesId;
-                let amenityTextDB = `${roomData.amenities[id].amenity.name}`;
-
-                switch (true)
+                for (id = 0; id < roomData.amenities.length; id++)
                 {
-                    case amenityIdDB >= 1 && amenityIdDB <= 10:
+                    var amenity = document.createElement("DIV");
+                    amenity.className = "room_modal_amenity";
 
-                        amenityText.innerText = amenityTextDB;
-                        amenity.appendChild(amenitySVG);
-                        amenity.appendChild(amenityText);
+                    var amenitySVG = document.createElement("DIV");
+                    amenitySVG.className = "room_modal_amenity_svg";
 
-                        amenitiesBlockEssentials.appendChild(amenity);
-                        break;
-                    case amenityIdDB >= 11 && amenityIdDB <= 21:
+                    var amenityText = document.createElement("DIV");
+                    amenityText.className = "room_modal_amenity_text";
 
-                        amenityText.innerText = amenityTextDB;
-                        amenity.appendChild(amenitySVG);
-                        amenity.appendChild(amenityText);
+                    let amenityIdDB = roomData.amenities[id].amenitiesId;
+                    let amenityTextDB = `${roomData.amenities[id].amenity.name}`;
 
-                        amenitiesBlockFeatures.appendChild(amenity);
-                        break;
-                    case amenityIdDB >= 22 && amenityIdDB <= 24:
+                    switch (true)
+                    {
+                        case amenityIdDB >= 1 && amenityIdDB <= 10:
 
-                        amenityText.innerText = amenityTextDB;
-                        amenity.appendChild(amenitySVG);
-                        amenity.appendChild(amenityText);
+                            amenityText.innerText = amenityTextDB;
+                            amenity.appendChild(amenitySVG);
+                            amenity.appendChild(amenityText);
 
-                        amenitiesBlockLocation.appendChild(amenity);
-                        break;
-                    case amenityIdDB >= 25 && amenityIdDB <= 26:
+                            amenitiesBlockEssentials.appendChild(amenity);
+                            break;
+                        case amenityIdDB >= 11 && amenityIdDB <= 21:
 
-                        amenityText.innerText = amenityTextDB;
-                        amenity.appendChild(amenitySVG);
-                        amenity.appendChild(amenityText);
+                            amenityText.innerText = amenityTextDB;
+                            amenity.appendChild(amenitySVG);
+                            amenity.appendChild(amenityText);
 
-                        amenitiesBlockSafety.appendChild(amenity);
-                        break;
-                }
-            }
+                            amenitiesBlockFeatures.appendChild(amenity);
+                            break;
+                        case amenityIdDB >= 22 && amenityIdDB <= 24:
 
-            if (amenitiesBlockEssentials.childNodes.length != 0)
-            {
-                let amenitiesTitle = document.createElement("DIV");
-                amenitiesTitle.className = "room_modal_amenities_title";
-                amenitiesTitle.innerText = "Essentials";
-                amenitiesSectionEssentials.appendChild(amenitiesTitle);
+                            amenityText.innerText = amenityTextDB;
+                            amenity.appendChild(amenitySVG);
+                            amenity.appendChild(amenityText);
 
-                for (i = 0; amenitiesBlockEssentials.childNodes.length > 0; i++)
-                {
-                    amenitiesSectionEssentials.appendChild(amenitiesBlockEssentials.childNodes[0]);
+                            amenitiesBlockLocation.appendChild(amenity);
+                            break;
+                        case amenityIdDB >= 25 && amenityIdDB <= 26:
+
+                            amenityText.innerText = amenityTextDB;
+                            amenity.appendChild(amenitySVG);
+                            amenity.appendChild(amenityText);
+
+                            amenitiesBlockSafety.appendChild(amenity);
+                            break;
+                    }
                 }
 
-                modal.childNodes[3].appendChild(amenitiesSectionEssentials);
-            }
-            
-            if (amenitiesBlockFeatures.childNodes.length != 0)
-            {
-                let amenitiesTitle = document.createElement("DIV");
-                amenitiesTitle.className = "room_modal_amenities_title";
-                amenitiesTitle.innerText = "Features";
-                amenitiesSectionFeatures.appendChild(amenitiesTitle);
-
-                for (i = 0; amenitiesBlockFeatures.childNodes.length > 0; i++)
+                if (amenitiesBlockEssentials.childNodes.length != 0)
                 {
-                    amenitiesSectionFeatures.appendChild(amenitiesBlockFeatures.childNodes[0]);
+                    let amenitiesTitle = document.createElement("DIV");
+                    amenitiesTitle.className = "room_modal_amenities_title";
+                    amenitiesTitle.innerText = "Essentials";
+                    amenitiesSectionEssentials.appendChild(amenitiesTitle);
+
+                    for (i = 0; amenitiesBlockEssentials.childNodes.length > 0; i++)
+                    {
+                        amenitiesSectionEssentials.appendChild(amenitiesBlockEssentials.childNodes[0]);
+                    }
+
+                    modal.childNodes[3].appendChild(amenitiesSectionEssentials);
+                }
+                
+                if (amenitiesBlockFeatures.childNodes.length != 0)
+                {
+                    let amenitiesTitle = document.createElement("DIV");
+                    amenitiesTitle.className = "room_modal_amenities_title";
+                    amenitiesTitle.innerText = "Features";
+                    amenitiesSectionFeatures.appendChild(amenitiesTitle);
+
+                    for (i = 0; amenitiesBlockFeatures.childNodes.length > 0; i++)
+                    {
+                        amenitiesSectionFeatures.appendChild(amenitiesBlockFeatures.childNodes[0]);
+                    }
+
+                    modal.childNodes[3].appendChild(amenitiesSectionFeatures);
                 }
 
-                modal.childNodes[3].appendChild(amenitiesSectionFeatures);
-            }
-
-            if (amenitiesBlockLocation.childNodes.length != 0)
-            {
-                let amenitiesTitle = document.createElement("DIV");
-                amenitiesTitle.className = "room_modal_amenities_title";
-                amenitiesTitle.innerText = "Location";
-                amenitiesSectionLocation.appendChild(amenitiesTitle);
-
-                for (i = 0; amenitiesBlockLocation.childNodes.length > 0; i++)
+                if (amenitiesBlockLocation.childNodes.length != 0)
                 {
-                    amenitiesSectionLocation.appendChild(amenitiesBlockLocation.childNodes[0]);
+                    let amenitiesTitle = document.createElement("DIV");
+                    amenitiesTitle.className = "room_modal_amenities_title";
+                    amenitiesTitle.innerText = "Location";
+                    amenitiesSectionLocation.appendChild(amenitiesTitle);
+
+                    for (i = 0; amenitiesBlockLocation.childNodes.length > 0; i++)
+                    {
+                        amenitiesSectionLocation.appendChild(amenitiesBlockLocation.childNodes[0]);
+                    }
+
+                    modal.childNodes[3].appendChild(amenitiesSectionLocation);
                 }
 
-                modal.childNodes[3].appendChild(amenitiesSectionLocation);
-            }
-
-            if (amenitiesBlockSafety.childNodes.length != 0)
-            {
-                let amenitiesTitle = document.createElement("DIV");
-                amenitiesTitle.className = "room_modal_amenities_title";
-                amenitiesTitle.innerText = "Safety";
-                amenitiesSectionSafety.appendChild(amenitiesTitle);
-
-                for (i = 0; amenitiesBlockSafety.childNodes.length > 0; i++)
+                if (amenitiesBlockSafety.childNodes.length != 0)
                 {
-                    amenitiesSectionSafety.appendChild(amenitiesBlockSafety.childNodes[0]);
-                }
+                    let amenitiesTitle = document.createElement("DIV");
+                    amenitiesTitle.className = "room_modal_amenities_title";
+                    amenitiesTitle.innerText = "Safety";
+                    amenitiesSectionSafety.appendChild(amenitiesTitle);
 
-                modal.childNodes[3].appendChild(amenitiesSectionSafety);
+                    for (i = 0; amenitiesBlockSafety.childNodes.length > 0; i++)
+                    {
+                        amenitiesSectionSafety.appendChild(amenitiesBlockSafety.childNodes[0]);
+                    }
+
+                    modal.childNodes[3].appendChild(amenitiesSectionSafety);
+                }
             }
         }
 
@@ -5944,6 +5957,14 @@ function roomControllRoomsPage(room, roomData)
                 document.body.style.overflow = "";
                 document.body.style.paddingRight = "";
             }  
+        }
+
+        closeButton.onclick = function()
+        {
+            modal.style.display = "none";
+            modalBackground.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         }
     }
 
@@ -5952,6 +5973,7 @@ function roomControllRoomsPage(room, roomData)
         let showAllReviewsButton = room.getElementsByClassName("room_information_userReviews_showAll")[0];
         let modal = room.getElementsByClassName("modal_V2")[2];
         let modalBackground = room.getElementsByClassName("modal_background_V2")[2];
+        var closeButton = room.getElementsByClassName("modal_close")[2];
 
         showAllReviewsButton.onclick = function()
         {
@@ -5959,6 +5981,194 @@ function roomControllRoomsPage(room, roomData)
             modalBackground.style.display = "block";
             document.body.style.overflow = "hidden";
             document.body.style.paddingRight = "19px";
+
+            if (modal.childNodes[3].innerText == "")
+            {
+                let fullStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin-inline-end: 1px;">
+                                    <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                </svg>`;
+    
+                let emptyStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: #dddddd;">
+                                      <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
+                                 </svg>`;
+
+                let reviewsBox = document.createElement("DIV")
+                reviewsBox.className = "room_reviews_userReviews_box";
+
+                for (id = 0; id < roomData.bookingInfo.reviews.length; id++)
+                {
+                    let userReviewBox = document.createElement("DIV");
+                    userReviewBox.className = "room_modal_reviews_userReviews";
+
+                    let userInfo = document.createElement("DIV");
+                    userInfo.className = "room_reviews_userReviews_userInfo";
+
+                    let pfp = document.createElement("DIV");
+                    pfp.className = "room_reviews_userReviews_userInfo_pfp";
+                    pfp.innerText = "•⩊•";
+
+                    let userDetails = document.createElement("DIV");
+                    userDetails.className = "room_reviews_userReviews_userInfo_details";
+
+                    let username = document.createElement("DIV");
+                    username.className = "room_reviews_userReviews_userInfo_details_name";
+                    username.innerText = roomData.bookingInfo.reviews[id].user.name;
+                    
+                    let timeOnCatbnb = document.createElement("DIV");
+                    timeOnCatbnb.className = "room_reviews_userReviews_userInfo_details_time";
+                    timeOnCatbnb.innerText = roomData.bookingInfo.reviews[id].user.timeOnCatbnb;
+
+                    userDetails.appendChild(username);
+                    userDetails.appendChild(timeOnCatbnb);
+
+                    userInfo.appendChild(pfp);
+                    userInfo.appendChild(userDetails);
+
+                    let ratingDetails = document.createElement("DIV");
+                    ratingDetails.className = "room_reviews_userReviews_userInfo_ratingDetails";
+
+                    let starRatingBox = document.createElement("DIV");
+                    starRatingBox.className = "room_reviews_userReviews_userInfo_ratingDetails_rating";
+
+                    let roomRating = `${roomData.bookingInfo.reviews[id].starRating}`;
+                    let starString = "";
+                    
+                    for (j = 1; j <= 5; j++)
+                    {
+                        if (j <= roomRating)
+                        {
+                            starString += fullStar;
+                        }
+                        else if (j > roomRating)
+                        {
+                            starString += emptyStar;
+                        } 
+                    }
+
+                    starRatingBox.innerHTML = starString;
+
+                    let dateSubmitted = document.createElement("DIV");
+                    dateSubmitted.className = "room_reviews_userReviews_userInfo_ratingDetails_dateSubmitted";
+                    let date = new Date(roomData.bookingInfo.reviews[id].dateSent)
+                    dateSubmitted.innerText = `${months[date.getMonth()]} ${date.getFullYear()}`;
+
+                    let stayAmount = document.createElement("DIV");
+                    stayAmount.className = "room_reviews_userReviews_userInfo_ratingDetails_stayAmount";
+                    stayAmount.innerText = roomData.bookingInfo.reviews[id].stayTime;
+
+                    ratingDetails.appendChild(starRatingBox);
+                    ratingDetails.appendChild(dateSubmitted);
+                    ratingDetails.appendChild(stayAmount);
+
+                    let userReview = document.createElement("DIV");
+                    userReview.className = "room_reviews_userReviews_review";
+                    userReview.innerText = roomData.bookingInfo.reviews[id].review;
+
+                    userReviewBox.appendChild(userInfo);
+                    userReviewBox.appendChild(ratingDetails);
+                    userReviewBox.appendChild(userReview);
+
+                    reviewsBox.appendChild(userReviewBox);
+                }
+
+                let reviewsAndFilterBox = document.createElement("DIV");
+                reviewsAndFilterBox.className = "room_modal_reviews_reviewsAndFilter_box";
+
+                let numberOfReviews = document.createElement("DIV");
+                numberOfReviews.className = "room_modal_reviews_count";
+                numberOfReviews.innerText = `${roomData.bookingInfo.reviews.length} reviews`;
+
+                var filterDropdown = document.createElement("BUTTON");
+                filterDropdown.className = "room_modal_reviews_dropdown_filter";
+                
+                var filterDropdownText = document.createElement("DIV");
+                filterDropdownText.className = "room_modal_reviews_dropdown_filter_text";
+                filterDropdownText.innerText = "Most recent";
+
+                let filterDropdownSVG = document.createElement("SVG");
+                filterDropdownSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 12px; width: 12px; stroke: black; stroke-width: 5.33333; overflow: visible; margin-inline-start: 10px;">
+                                                   <path fill="none" d="M28 12 16.7 23.3a1 1 0 0 1-1.4 0L4 12"></path>
+                                               </svg>`;
+
+                var dropdownWindow = document.createElement("DIV");
+                dropdownWindow.className = "room_modal_reviews_dropdown_filter_window";
+
+                let dropdownOptions = ["Most recent", "Highest rated", "Lowest rated"];
+
+                for (i = 0; i < 3; i++)
+                {
+                    var dropdownWindowOption = document.createElement("DIV");
+                    dropdownWindowOption.className = "room_modal_reviews_dropdown_filter_window_item";
+                    dropdownWindowOption.innerText = dropdownOptions[i];
+
+                    dropdownWindow.appendChild(dropdownWindowOption);
+                }
+                
+                filterDropdown.appendChild(filterDropdownText); 
+                filterDropdown.appendChild(filterDropdownSVG);
+                filterDropdown.appendChild(dropdownWindow);
+
+                reviewsAndFilterBox.appendChild(numberOfReviews);
+                reviewsAndFilterBox.appendChild(filterDropdown);
+
+                let searchBox = document.createElement("DIV");
+                searchBox.className = "room_modal_reviews_search_box";
+
+                let searchBoxSVG = document.createElement("SVG");
+                searchBoxSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible; margin-inline-end: 10px;">
+                                              <path fill="none" d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"></path>
+                                          </svg>`;
+
+                let searchBoxLabel = document.createElement("LABEL");
+                searchBoxLabel.className = "room_modal_reviews_search_bar_label";
+
+                var searchBoxInput = document.createElement("INPUT");
+                searchBoxInput.className = "room_modal_reviews_search_bar_input";
+                searchBoxInput.setAttribute("placeholder", "Search reviews");
+                searchBoxInput.setAttribute("spellcheck", "false");
+
+                searchBoxLabel.appendChild(searchBoxInput);
+
+                let searchBoxInner = document.createElement("DIV");
+                searchBoxInner.className = "room_modal_reviews_search_box_inner";
+
+                searchBoxInner.appendChild(searchBoxSVG);
+                searchBoxInner.appendChild(searchBoxLabel);
+
+                searchBox.appendChild(searchBoxInner);
+
+                modal.childNodes[3].appendChild(reviewsAndFilterBox);
+                modal.childNodes[3].appendChild(searchBox);
+                modal.childNodes[3].appendChild(reviewsBox);
+            }
+
+            filterDropdown.onclick = function(e)
+            {
+                if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
+                {
+                    dropdownWindow.style.display = "block";
+                }
+            }
+
+            document.body.addEventListener("click", function(e)
+            {
+                if (!dropdownWindow.contains(e.target) && !filterDropdown.contains(e.target) && dropdownWindow.style.display == "block")
+                {
+                    dropdownWindow.style.display = "none";
+                }
+            })
+
+            dropdownWindow.onclick = function(e)
+            {
+                if (dropdownWindow.contains(e.target))
+                {
+                    filterDropdownText.innerText = e.target.innerText
+
+                    // sort
+
+                    dropdownWindow.style.display = "none";
+                }
+            }
         }
 
         modalBackground.onclick = function(e)
@@ -5970,6 +6180,14 @@ function roomControllRoomsPage(room, roomData)
                 document.body.style.overflow = "";
                 document.body.style.paddingRight = "";
             }  
+        }
+
+        closeButton.onclick = function()
+        {
+            modal.style.display = "none";
+            modalBackground.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
         }
     }
 
