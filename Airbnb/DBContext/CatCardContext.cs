@@ -278,7 +278,7 @@ namespace Airbnb.DBContext
                         Review = reviews[reviewIndex],
                         StarRating = stars[reviewIndex],
                         StayTime = stayAmount[rng.Next(0, 4)],
-                        DateSent = new DateOnly(2024, 1, rng.Next(1, 25)),
+                        DateSent = new DateOnly(2024, rng.Next(1, 12), rng.Next(1, 25)),
                         UserId = userId,
                     });
 

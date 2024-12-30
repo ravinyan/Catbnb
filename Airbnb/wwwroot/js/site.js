@@ -5697,16 +5697,19 @@ function roomControllRoomsPage(room, roomData)
         let modalBackground = room.getElementsByClassName("modal_background_V2")[0];
         var closeButton = room.getElementsByClassName("modal_close")[0];
 
-        showMoreDescriptionButton.onclick = function()
+        try
         {
-            modal.style.display = "flex";
-            modalBackground.style.display = "block";
-            document.body.style.overflow = "hidden";
-            document.body.style.paddingRight = "19px";
+            showMoreDescriptionButton.onclick = function()
+            {
+                modal.style.display = "flex";
+                modalBackground.style.display = "block";
+                document.body.style.overflow = "hidden";
+                document.body.style.paddingRight = "19px";
 
-            modal.childNodes[3].innerText = `${roomData.bookingInfo.description}`;
-        }
-
+                modal.childNodes[3].innerText = `${roomData.bookingInfo.description}`;
+            }
+        }catch{}
+        
         modalBackground.onclick = function(e)
         {
             if (e.target == modalBackground)
@@ -5982,17 +5985,55 @@ function roomControllRoomsPage(room, roomData)
             document.body.style.overflow = "hidden";
             document.body.style.paddingRight = "19px";
 
+            var reviews = [];
+            for (i = 0; i < roomData.bookingInfo.reviews.length; i++)
+            {
+                reviews.push(roomData.bookingInfo.reviews[i]);
+            }
+
+            function sortReviews(reviews)
+            {
+                for (i = 0; i < roomData.bookingInfo.reviews.length; i++)
+                {
+                    reviewsBox.childNodes[i].childNodes[0].childNodes[1].childNodes[0].innerText = reviews[i].user.name;
+                    reviewsBox.childNodes[i].childNodes[0].childNodes[1].childNodes[1].innerText = reviews[i].user.timeOnCatbnb;
+
+                    let roomRating = `${reviews[i].starRating}`;
+                    let starString = "";                    
+
+                    for (j = 1; j <= 5; j++)
+                    {
+                        if (j <= roomRating)
+                        {
+                            starString += fullStar;
+                        }
+                        else if (j > roomRating)
+                        {
+                            starString += emptyStar;
+                        } 
+                    }
+
+                    reviewsBox.childNodes[i].childNodes[1].childNodes[0].innerHTML = starString
+
+                    let date = new Date(reviews[i].dateSent)
+                    reviewsBox.childNodes[i].childNodes[1].childNodes[1].innerText = `${months[date.getMonth()]} ${date.getFullYear()}`;
+
+                    reviewsBox.childNodes[i].childNodes[1].childNodes[2].innerText = reviews[i].stayTime;
+                    reviewsBox.childNodes[i].childNodes[2].childNodes[0].data = reviews[i].review;
+                }
+            }
+
             if (modal.childNodes[3].innerText == "")
             {
-                let fullStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin-inline-end: 1px;">
+                var fullStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: currentcolor; margin-inline-end: 1px;">
                                     <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
                                 </svg>`;
     
-                let emptyStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: #dddddd;">
+                var emptyStar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; height: 8px; width: 8px; fill: #dddddd;">
                                       <path fill-rule="evenodd" d="m15.1 1.58-4.13 8.88-9.86 1.27a1 1 0 0 0-.54 1.74l7.3 6.57-1.97 9.85a1 1 0 0 0 1.48 1.06l8.62-5 8.63 5a1 1 0 0 0 1.48-1.06l-1.97-9.85 7.3-6.57a1 1 0 0 0-.55-1.73l-9.86-1.28-4.12-8.88a1 1 0 0 0-1.82 0z" />
                                  </svg>`;
 
-                let reviewsBox = document.createElement("DIV")
+                var reviewsBox = document.createElement("DIV")
                 reviewsBox.className = "room_reviews_userReviews_box";
 
                 for (id = 0; id < roomData.bookingInfo.reviews.length; id++)
@@ -6137,6 +6178,13 @@ function roomControllRoomsPage(room, roomData)
 
                 searchBox.appendChild(searchBoxInner);
 
+                reviews.sort(function(a, b) 
+                {
+                    return new Date(a.dateSent) - new Date(b.dateSent);
+                })
+
+                sortReviews(reviews);
+
                 modal.childNodes[3].appendChild(reviewsAndFilterBox);
                 modal.childNodes[3].appendChild(searchBox);
                 modal.childNodes[3].appendChild(reviewsBox);
@@ -6164,7 +6212,33 @@ function roomControllRoomsPage(room, roomData)
                 {
                     filterDropdownText.innerText = e.target.innerText
 
-                    // sort
+                    if (filterDropdownText.innerText == "Most recent")
+                    {
+                        reviews.sort(function(a, b) 
+                        {
+                            return new Date(a.dateSent) - new Date(b.dateSent);
+                        })
+
+                        sortReviews(reviews);
+                    }
+                    else if (filterDropdownText.innerText == "Highest rated")
+                    {
+                        reviews.sort(function(a, b) 
+                        {
+                            return b.starRating - a.starRating;
+                        })
+
+                        sortReviews(reviews);
+                    }
+                    else if (filterDropdownText.innerText == "Lowest rated")
+                    {
+                        reviews.sort(function(a, b) 
+                        {
+                            return a.starRating - b.starRating;
+                        })
+
+                        sortReviews(reviews);
+                    }
 
                     dropdownWindow.style.display = "none";
                 }
