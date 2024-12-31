@@ -6152,7 +6152,7 @@ function roomControllRoomsPage(room, roomData)
                 reviewsAndFilterBox.appendChild(numberOfReviews);
                 reviewsAndFilterBox.appendChild(filterDropdown);
 
-                let searchBox = document.createElement("DIV");
+                var searchBox = document.createElement("DIV");
                 searchBox.className = "room_modal_reviews_search_box";
 
                 let searchBoxSVG = document.createElement("SVG");
@@ -6190,14 +6190,17 @@ function roomControllRoomsPage(room, roomData)
                 modal.childNodes[3].appendChild(reviewsBox);
             }
 
-            filterDropdown.onclick = function(e)
+            if (filterDropdown != "")
             {
-                if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
+                filterDropdown.onclick = function(e)
                 {
-                    dropdownWindow.style.display = "block";
+                    if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
+                    {
+                        dropdownWindow.style.display = "block";
+                    }
                 }
             }
-
+            
             document.body.addEventListener("click", function(e)
             {
                 if (!dropdownWindow.contains(e.target) && !filterDropdown.contains(e.target) && dropdownWindow.style.display == "block")
@@ -6243,6 +6246,50 @@ function roomControllRoomsPage(room, roomData)
                     dropdownWindow.style.display = "none";
                 }
             }
+
+            function sortReviewsSearchBar()
+            {
+                searchBoxInput.onclick = function()
+                {
+                    if (searchBoxInput.value != "")
+                    {
+                        reviewsBox.childNodes.forEach(function(e) 
+                        {
+                            if (e.childNodes[2].innerText.split(" ").includes(`${searchBoxInput.value}`))
+                            {
+                                let markdown = document.createElement("MARK");
+                                markdown.innerText = `${searchBoxInput.value}`;
+
+                                let newStringT = e.childNodes[2].innerText.split(" ");
+                                let newDiv = document.createElement("DIV");
+
+                                for (i = 0; i < newStringT.length - 1; i++)
+                                {
+                                    if (newStringT[i] != markdown.innerText)
+                                    {
+                                        newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
+                                    }
+                                    else if (newStringT[i] == markdown.innerText)
+                                    {
+                                        newDiv.appendChild(markdown.cloneNode(true));
+                                    }
+                                }
+
+                                newDiv.appendChild(document.createTextNode(` ${newStringT[newStringT.length - 1]}`));
+                                e.childNodes[2].replaceWith(newDiv);
+                            }
+                        })
+                    }
+
+                    reviewsBox.childNodes.forEach(function(e) 
+                    {
+                        e.childNodes[2].innerText;
+                    })
+                }
+                
+            }
+
+            sortReviewsSearchBar();
         }
 
         modalBackground.onclick = function(e)

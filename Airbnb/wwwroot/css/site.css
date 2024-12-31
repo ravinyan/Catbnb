@@ -16,6 +16,11 @@ body {
     overflow-y: scroll;
 }
 
+mark {
+    background-color: #fffb37;
+    padding: 0px 3px;
+}
+
 div.footer {
     bottom: 0;
     height: 60px;
