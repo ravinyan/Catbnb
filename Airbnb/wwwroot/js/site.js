@@ -6102,7 +6102,7 @@ function roomControllRoomsPage(room, roomData)
                     ratingDetails.appendChild(stayAmount);
 
                     let userReview = document.createElement("DIV");
-                    userReview.className = "room_reviews_userReviews_review";
+                    userReview.className = "room_modal_reviews_userReviews_review";
                     userReview.innerText = roomData.bookingInfo.reviews[id].review;
 
                     userReviewBox.appendChild(userInfo);
@@ -6213,7 +6213,7 @@ function roomControllRoomsPage(room, roomData)
             {
                 if (dropdownWindow.contains(e.target))
                 {
-                    filterDropdownText.innerText = e.target.innerText
+                    filterDropdownText.innerText = e.target.innerText;
 
                     if (filterDropdownText.innerText == "Most recent")
                     {
@@ -6249,44 +6249,54 @@ function roomControllRoomsPage(room, roomData)
 
             function sortReviewsSearchBar()
             {
-                searchBoxInput.onclick = function()
+                searchBoxInput.onkeyup = function(e)
                 {
-                    if (searchBoxInput.value != "")
+                    if (e.key == "Enter")
                     {
-                        reviewsBox.childNodes.forEach(function(e) 
+                        if (searchBoxInput.value != "")
                         {
-                            if (e.childNodes[2].innerText.split(" ").includes(`${searchBoxInput.value}`))
+                            reviewsBox.childNodes.forEach(function(e) 
                             {
-                                let markdown = document.createElement("MARK");
-                                markdown.innerText = `${searchBoxInput.value}`;
-
-                                let newStringT = e.childNodes[2].innerText.split(" ");
-                                let newDiv = document.createElement("DIV");
-
-                                for (i = 0; i < newStringT.length - 1; i++)
+                                if (e.childNodes[2].innerText.split(" ").includes(`${searchBoxInput.value}`))
                                 {
-                                    if (newStringT[i] != markdown.innerText)
+                                    e.style.display = "block";
+                                    let markdown = document.createElement("MARK");
+                                    markdown.innerText = `${searchBoxInput.value}`;
+
+                                    let newStringT = e.childNodes[2].innerText.split(" ");
+                                    let newDiv = document.createElement("DIV");
+                                    newDiv.className = "room_modal_reviews_userReviews_review";
+
+                                    for (i = 0; i < newStringT.length; i++)
                                     {
-                                        newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
+                                        if (newStringT[i] != markdown.innerText)
+                                        {
+                                            newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
+                                        }
+                                        else if (newStringT[i] == markdown.innerText)
+                                        {
+                                            newDiv.appendChild(markdown.cloneNode(true));
+                                        }
                                     }
-                                    else if (newStringT[i] == markdown.innerText)
-                                    {
-                                        newDiv.appendChild(markdown.cloneNode(true));
-                                    }
+
+                                    e.childNodes[2].replaceWith(newDiv);
                                 }
-
-                                newDiv.appendChild(document.createTextNode(` ${newStringT[newStringT.length - 1]}`));
-                                e.childNodes[2].replaceWith(newDiv);
+                                else 
+                                {
+                                    e.style.display = "none";
+                                }
+                            })
+                        }
+                        else
+                        {
+                            for (i = 0; i < reviews.length; i++) 
+                            {
+                                reviewsBox.childNodes[i].childNodes[2].innerText = reviews[i].review;
+                                reviewsBox.childNodes[i].style.display = "block";
                             }
-                        })
+                        }
                     }
-
-                    reviewsBox.childNodes.forEach(function(e) 
-                    {
-                        e.childNodes[2].innerText;
-                    })
-                }
-                
+                }    
             }
 
             sortReviewsSearchBar();

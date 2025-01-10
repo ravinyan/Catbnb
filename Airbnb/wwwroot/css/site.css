@@ -2449,5 +2449,7 @@ div.room_modal_reviews_dropdown_filter_window_item {
         background-color: #e5e5e5
     }
 
-
+div.room_modal_reviews_userReviews_review {
+    word-break: break-word;
+}
 
