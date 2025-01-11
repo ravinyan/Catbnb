@@ -5993,33 +5993,84 @@ function roomControllRoomsPage(room, roomData)
 
             function sortReviews(reviews)
             {
-                for (i = 0; i < roomData.bookingInfo.reviews.length; i++)
+                reviewsBox.innerHTML = "";
+                for (i = 0; i < reviews.length; i++)
                 {
-                    reviewsBox.childNodes[i].childNodes[0].childNodes[1].childNodes[0].innerText = reviews[i].user.name;
-                    reviewsBox.childNodes[i].childNodes[0].childNodes[1].childNodes[1].innerText = reviews[i].user.timeOnCatbnb;
-
-                    let roomRating = `${reviews[i].starRating}`;
-                    let starString = "";                    
-
-                    for (j = 1; j <= 5; j++)
+                    if ((reviews[i].review.split(" ").includes(`${searchBoxInput.value}`) || searchBoxInput.value == ""))
                     {
-                        if (j <= roomRating)
+                        let userReviewBox = document.createElement("DIV");
+                        userReviewBox.className = "room_modal_reviews_userReviews";
+
+                        let userInfo = document.createElement("DIV");
+                        userInfo.className = "room_reviews_userReviews_userInfo";
+
+                        let pfp = document.createElement("DIV");
+                        pfp.className = "room_reviews_userReviews_userInfo_pfp";
+                        pfp.innerText = "•⩊•";
+
+                        let userDetails = document.createElement("DIV");
+                        userDetails.className = "room_reviews_userReviews_userInfo_details";
+
+                        let username = document.createElement("DIV");
+                        username.className = "room_reviews_userReviews_userInfo_details_name";
+                        username.innerText = reviews[i].user.name;
+                        
+                        let timeOnCatbnb = document.createElement("DIV");
+                        timeOnCatbnb.className = "room_reviews_userReviews_userInfo_details_time";
+                        timeOnCatbnb.innerText = reviews[i].user.timeOnCatbnb;
+
+                        userDetails.appendChild(username);
+                        userDetails.appendChild(timeOnCatbnb);
+
+                        userInfo.appendChild(pfp);
+                        userInfo.appendChild(userDetails);
+
+                        let ratingDetails = document.createElement("DIV");
+                        ratingDetails.className = "room_reviews_userReviews_userInfo_ratingDetails";
+
+                        let starRatingBox = document.createElement("DIV");
+                        starRatingBox.className = "room_reviews_userReviews_userInfo_ratingDetails_rating";
+
+                        let roomRating = `${reviews[i].starRating}`;
+                        let starString = "";
+                        
+                        for (j = 1; j <= 5; j++)
                         {
-                            starString += fullStar;
+                            if (j <= roomRating)
+                            {
+                                starString += fullStar;
+                            }
+                            else if (j > roomRating)
+                            {
+                                starString += emptyStar;
+                            } 
                         }
-                        else if (j > roomRating)
-                        {
-                            starString += emptyStar;
-                        } 
+
+                        starRatingBox.innerHTML = starString;
+
+                        let dateSubmitted = document.createElement("DIV");
+                        dateSubmitted.className = "room_reviews_userReviews_userInfo_ratingDetails_dateSubmitted";
+                        let date = new Date(reviews[i].dateSent)
+                        dateSubmitted.innerText = `${months[date.getMonth()]} ${date.getFullYear()}`;
+
+                        let stayAmount = document.createElement("DIV");
+                        stayAmount.className = "room_reviews_userReviews_userInfo_ratingDetails_stayAmount";
+                        stayAmount.innerText = reviews[i].stayTime;
+
+                        ratingDetails.appendChild(starRatingBox);
+                        ratingDetails.appendChild(dateSubmitted);
+                        ratingDetails.appendChild(stayAmount);
+
+                        let userReview = document.createElement("DIV");
+                        userReview.className = "room_modal_reviews_userReviews_review";
+                        userReview.innerText = reviews[i].review;
+
+                        userReviewBox.appendChild(userInfo);
+                        userReviewBox.appendChild(ratingDetails);
+                        userReviewBox.appendChild(userReview);
+
+                        reviewsBox.appendChild(userReviewBox);
                     }
-
-                    reviewsBox.childNodes[i].childNodes[1].childNodes[0].innerHTML = starString
-
-                    let date = new Date(reviews[i].dateSent)
-                    reviewsBox.childNodes[i].childNodes[1].childNodes[1].innerText = `${months[date.getMonth()]} ${date.getFullYear()}`;
-
-                    reviewsBox.childNodes[i].childNodes[1].childNodes[2].innerText = reviews[i].stayTime;
-                    reviewsBox.childNodes[i].childNodes[2].childNodes[0].data = reviews[i].review;
                 }
             }
 
@@ -6190,7 +6241,7 @@ function roomControllRoomsPage(room, roomData)
                 modal.childNodes[3].appendChild(reviewsBox);
             }
 
-            if (filterDropdown != "")
+            if (filterDropdown != "" && filterDropdown != undefined)
             {
                 filterDropdown.onclick = function(e)
                 {
@@ -6199,107 +6250,110 @@ function roomControllRoomsPage(room, roomData)
                         dropdownWindow.style.display = "block";
                     }
                 }
-            }
-            
-            document.body.addEventListener("click", function(e)
-            {
-                if (!dropdownWindow.contains(e.target) && !filterDropdown.contains(e.target) && dropdownWindow.style.display == "block")
+
+                document.body.addEventListener("click", function(e)
                 {
-                    dropdownWindow.style.display = "none";
-                }
-            })
-
-            dropdownWindow.onclick = function(e)
-            {
-                if (dropdownWindow.contains(e.target))
+                    if (!dropdownWindow.contains(e.target) && !filterDropdown.contains(e.target) && dropdownWindow.style.display == "block")
+                    {
+                        dropdownWindow.style.display = "none";
+                    }
+                })
+                
+                dropdownWindow.onclick = function(e)
                 {
-                    filterDropdownText.innerText = e.target.innerText;
-
-                    if (filterDropdownText.innerText == "Most recent")
+                    if (dropdownWindow.contains(e.target))
                     {
-                        reviews.sort(function(a, b) 
+                        filterDropdownText.innerText = e.target.innerText;
+
+                        if (filterDropdownText.innerText == "Most recent")
                         {
-                            return new Date(a.dateSent) - new Date(b.dateSent);
-                        })
-
-                        sortReviews(reviews);
-                    }
-                    else if (filterDropdownText.innerText == "Highest rated")
-                    {
-                        reviews.sort(function(a, b) 
-                        {
-                            return b.starRating - a.starRating;
-                        })
-
-                        sortReviews(reviews);
-                    }
-                    else if (filterDropdownText.innerText == "Lowest rated")
-                    {
-                        reviews.sort(function(a, b) 
-                        {
-                            return a.starRating - b.starRating;
-                        })
-
-                        sortReviews(reviews);
-                    }
-
-                    dropdownWindow.style.display = "none";
-                }
-            }
-
-            function sortReviewsSearchBar()
-            {
-                searchBoxInput.onkeyup = function(e)
-                {
-                    if (e.key == "Enter")
-                    {
-                        if (searchBoxInput.value != "")
-                        {
-                            reviewsBox.childNodes.forEach(function(e) 
+                            reviews.sort(function(a, b) 
                             {
-                                if (e.childNodes[2].innerText.split(" ").includes(`${searchBoxInput.value}`))
-                                {
-                                    e.style.display = "block";
-                                    let markdown = document.createElement("MARK");
-                                    markdown.innerText = `${searchBoxInput.value}`;
-
-                                    let newStringT = e.childNodes[2].innerText.split(" ");
-                                    let newDiv = document.createElement("DIV");
-                                    newDiv.className = "room_modal_reviews_userReviews_review";
-
-                                    for (i = 0; i < newStringT.length; i++)
-                                    {
-                                        if (newStringT[i] != markdown.innerText)
-                                        {
-                                            newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
-                                        }
-                                        else if (newStringT[i] == markdown.innerText)
-                                        {
-                                            newDiv.appendChild(markdown.cloneNode(true));
-                                        }
-                                    }
-
-                                    e.childNodes[2].replaceWith(newDiv);
-                                }
-                                else 
-                                {
-                                    e.style.display = "none";
-                                }
+                                return new Date(a.dateSent) - new Date(b.dateSent);
                             })
+
+                            sortReviews(reviews);
                         }
-                        else
+                        else if (filterDropdownText.innerText == "Highest rated")
                         {
-                            for (i = 0; i < reviews.length; i++) 
+                            reviews.sort(function(a, b) 
                             {
-                                reviewsBox.childNodes[i].childNodes[2].innerText = reviews[i].review;
-                                reviewsBox.childNodes[i].style.display = "block";
+                                return b.starRating - a.starRating;
+                            })
+
+                            sortReviews(reviews);
+                        }
+                        else if (filterDropdownText.innerText == "Lowest rated")
+                        {
+                            reviews.sort(function(a, b) 
+                            {
+                                return a.starRating - b.starRating;
+                            })
+
+                            sortReviews(reviews);
+                        }
+
+                        dropdownWindow.style.display = "none";
+                    }
+                }
+
+                function sortReviewsSearchBar()
+                {
+                    searchBoxInput.onkeyup = function(e)
+                    {
+                        if (e.key == "Enter")
+                        {
+                            if (searchBoxInput.value != "")
+                            {
+                                reviewsBox.childNodes.forEach(function(e) 
+                                {
+                                    var a = e.childNodes[2].innerText.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
+                                    debugger;
+                                    if (e.childNodes[2].innerText.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '').split(" ").includes(`${searchBoxInput.value}`))
+                                    {
+                                        e.style.display = "block";
+                                        let markdown = document.createElement("MARK");
+                                        markdown.innerText = `${searchBoxInput.value}`;
+
+                                        let newStringT = e.childNodes[2].innerText.split(" ");
+                                        let newDiv = document.createElement("DIV");
+                                        newDiv.className = "room_modal_reviews_userReviews_review";
+                                        
+                                        for (i = 0; i < newStringT.length; i++)
+                                        {
+                                            
+                                            if (newStringT[i] != markdown.innerText)
+                                            {
+                                                newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
+                                            }
+                                            else if (newStringT[i] == markdown.innerText)
+                                            {
+                                                newDiv.appendChild(markdown.cloneNode(true));
+                                            }
+                                        }
+
+                                        e.childNodes[2].replaceWith(newDiv);
+                                    }
+                                    else 
+                                    {
+                                        e.style.display = "none";
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                for (i = 0; i < reviews.length; i++) 
+                                {
+                                    reviewsBox.childNodes[i].childNodes[2].innerText = reviews[i].review;
+                                    reviewsBox.childNodes[i].style.display = "block";
+                                }
                             }
                         }
-                    }
-                }    
-            }
+                    }    
+                }
 
-            sortReviewsSearchBar();
+                sortReviewsSearchBar();
+            }
         }
 
         modalBackground.onclick = function(e)
