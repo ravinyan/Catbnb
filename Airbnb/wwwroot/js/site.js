@@ -6063,8 +6063,32 @@ function roomControllRoomsPage(room, roomData)
 
                         let userReview = document.createElement("DIV");
                         userReview.className = "room_modal_reviews_userReviews_review";
-                        userReview.innerText = reviews[i].review;
 
+                        let markdown = document.createElement("MARK");
+                        markdown.innerText = `${searchBoxInput.value}`;
+                        
+                        let newStringT = reviews[i].review.split(/([_\W ])/);
+                        let newDiv = document.createElement("DIV");
+                        newDiv.className = "room_modal_reviews_userReviews_review";
+                        let whatthestring = "";
+
+                        for (k = 0; k < newStringT.length; k++)
+                        {
+                            if (newStringT[k] != markdown.innerText)
+                            {
+                                whatthestring += newStringT[k];
+                            }
+                            else if (newStringT[k] == markdown.innerText && markdown.innerText != " " && markdown.innerText != "")
+                            {
+                                newDiv.appendChild(document.createTextNode(`${whatthestring}`));
+                                whatthestring = "";
+                                newDiv.appendChild(markdown.cloneNode(true));
+                            }
+                        }
+                        
+                        newDiv.appendChild(document.createTextNode(`${whatthestring}`))
+                        userReview.appendChild(newDiv);
+                        
                         userReviewBox.appendChild(userInfo);
                         userReviewBox.appendChild(ratingDetails);
                         userReviewBox.appendChild(userReview);
@@ -6072,6 +6096,10 @@ function roomControllRoomsPage(room, roomData)
                         reviewsBox.appendChild(userReviewBox);
                     }
                 }
+
+                numberOfReviews.innerText = `${reviewsBox.childNodes.length} ${reviewsBox.childNodes.length > 1 
+                                          ? "reviews" 
+                                          : "review"}`;
             }
 
             if (modal.childNodes[3].innerText == "")
@@ -6166,9 +6194,8 @@ function roomControllRoomsPage(room, roomData)
                 let reviewsAndFilterBox = document.createElement("DIV");
                 reviewsAndFilterBox.className = "room_modal_reviews_reviewsAndFilter_box";
 
-                let numberOfReviews = document.createElement("DIV");
+                var numberOfReviews = document.createElement("DIV");
                 numberOfReviews.className = "room_modal_reviews_count";
-                numberOfReviews.innerText = `${roomData.bookingInfo.reviews.length} reviews`;
 
                 var filterDropdown = document.createElement("BUTTON");
                 filterDropdown.className = "room_modal_reviews_dropdown_filter";
@@ -6307,31 +6334,36 @@ function roomControllRoomsPage(room, roomData)
                             {
                                 reviewsBox.childNodes.forEach(function(e) 
                                 {
+                                    // regex is absolute black magic to me and im not some archwizard 
+                                    // so hopefully random copy paste stuff will work perfectly
                                     var a = e.childNodes[2].innerText.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
-                                    debugger;
-                                    if (e.childNodes[2].innerText.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '').split(" ").includes(`${searchBoxInput.value}`))
+                                    if (a.split(" ").includes(`${searchBoxInput.value}`))
                                     {
                                         e.style.display = "block";
                                         let markdown = document.createElement("MARK");
                                         markdown.innerText = `${searchBoxInput.value}`;
 
-                                        let newStringT = e.childNodes[2].innerText.split(" ");
+                                        let newStringT = e.childNodes[2].innerText.split(/([_\W ])/);
                                         let newDiv = document.createElement("DIV");
                                         newDiv.className = "room_modal_reviews_userReviews_review";
-                                        
+                                        let whatthestringparttwo = "";
+
                                         for (i = 0; i < newStringT.length; i++)
                                         {
-                                            
                                             if (newStringT[i] != markdown.innerText)
                                             {
-                                                newDiv.appendChild(document.createTextNode(` ${newStringT[i]} `));
+                                                whatthestringparttwo += newStringT[i];
                                             }
                                             else if (newStringT[i] == markdown.innerText)
                                             {
+                                                newDiv.appendChild(document.createTextNode(`${whatthestringparttwo}`));
+                                                whatthestringparttwo = "";
                                                 newDiv.appendChild(markdown.cloneNode(true));
                                             }
                                         }
-
+                                        numberOfReviews.innerText
+                                        newDiv.appendChild(document.createTextNode(`${whatthestringparttwo}`));
+                                        
                                         e.childNodes[2].replaceWith(newDiv);
                                     }
                                     else 
@@ -6339,14 +6371,23 @@ function roomControllRoomsPage(room, roomData)
                                         e.style.display = "none";
                                     }
                                 })
+
+                                let indexing = 0;
+                                for (i = 0; i < reviews.length; i++)
+                                {
+                                    if (reviewsBox.childNodes[i].style.display == "block")
+                                    {
+                                        indexing ++;
+                                    }
+                                }
+
+                                numberOfReviews.innerText = `${indexing} ${indexing > 1 
+                                                          ? "reviews" 
+                                                          : "review"}`;
                             }
                             else
                             {
-                                for (i = 0; i < reviews.length; i++) 
-                                {
-                                    reviewsBox.childNodes[i].childNodes[2].innerText = reviews[i].review;
-                                    reviewsBox.childNodes[i].style.display = "block";
-                                }
+                                sortReviews(reviews);
                             }
                         }
                     }    
@@ -6376,14 +6417,136 @@ function roomControllRoomsPage(room, roomData)
         }
     }
 
+    // i hate my life right now...
+    // i hate calendars they make my head hurt i know i already done everything i need to do but its still pain my brain cant think
     function roomControllCalendar()
     {
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
-        let calendarControls = room.getElementsByClassName("room_information_calendar_moveControls")[0];
+        let moveLeft = room.getElementsByClassName("room_information_calendar_moveL")[0];
+        let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
+ 
+        let date = new Date();
+
+        let day = date.getDate();   // 1-31 days and then
+        let month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
+        let year = date.getFullYear();
+
+        let currentMonth = date.getMonth();
+        let currentYear = date.getFullYear();
+
+        let selectedStartDay = day;
+        let selectedStartMonth = date.getMonth();
+        let selectedStartYear = date.getFullYear();
+
+        let selectedEndDay = date.getDate(date.setDate(day + 2));
+        let selectedEndMonth = date.getMonth();
+        let selectedEndYear = date.getFullYear();
+
+        let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
+        let checkoutButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
+        checkinButton.childNodes[1].innerText = `${selectedStartDay}/${selectedStartMonth}/${selectedStartYear}`;
+        checkoutButton.childNodes[1].innerText = `${selectedEndDay}/${selectedEndMonth}/${selectedEndYear}`;
+
+        console.log(checkinButton.childNodes[1].innerText);
+        console.log(checkoutButton.childNodes[1].innerText);
+
+        let checkinSetDate = new Date(selectedStartYear, selectedStartMonth, selectedStartDay);
+        let checkoutSetDate = new Date(selectedEndYear, selectedEndMonth, selectedEndDay);
+        
+        function moveCalendarLeft(rightButton, leftButton, firstCalendar, secondCalendar)
+        {
+            if (window.getComputedStyle(leftButton).cursor == "pointer")
+            {
+                const monthNames = room.querySelectorAll(".month_name");
+                const tables = room.querySelectorAll(".nothing");
+            
+                monthNames.forEach(function(e)
+                {
+                    e.remove();
+                });
+            
+                tables.forEach(function(e)
+                {
+                    e.remove();
+                });
+            
+                leftButtonClicked = true;
+        
+                createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+                createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+        
+                leftButtonClicked = false;
+            
+                if (month == currentMonth && year == currentYear)
+                {
+                    leftButton.style.cursor = "not-allowed";
+                    leftButton.style.color = "#dcdcdc";
+                    leftButton.style.background = "none";
+                }
+                else
+                {
+                    rightButton.style.cursor = "pointer";
+                    rightButton.style.color = "";
+                    rightButton.style.background = "";
+                }
+            } 
+        }
+
+        function moveCalendarRight(rightButton, leftButton, firstCalendar, secondCalendar)
+        {
+            if (window.getComputedStyle(rightButton).cursor == "pointer")
+            {
+                const monthNames = room.querySelectorAll(".month_name");
+                const tables = room.querySelectorAll(".nothing");
+            
+                monthNames.forEach(function(e)
+                {
+                    e.remove();
+                });
+            
+                tables.forEach(function(e)
+                {
+                    e.remove();
+                });
+            
+                rightButtonClicked = true;
+        
+                createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+                createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+        
+                rightButtonClicked = false;
+            
+                if ((month == currentMonth && year == currentYear + 2))
+                {
+                    rightButton.style.cursor = "not-allowed";
+                    rightButton.style.color = "#dcdcdc";
+                    rightButton.style.background = "none";
+                }
+                else
+                {
+                    leftButton.style.cursor = "pointer";
+                    leftButton.style.color = "";
+                    leftButton.style.background = "";
+                }
+            }
+        }
+
+        // need ti resize calendars coz they are bad
+        moveLeft.onclick = function()
+        {
+            moveCalendarLeft(moveRight, moveLeft, calendar1, calendar2);
+
+        }
+
+        moveRight.onclick = function()
+        {
+            moveCalendarRight(moveRight, moveLeft, calendar1, calendar2);
+
+        }
     }
 
-    function roomControllCalendarDropdown()
+    function roomControllCalendarDropdowns()
     {
         let checkinDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
         let checkoutDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
@@ -6399,6 +6562,7 @@ function roomControllRoomsPage(room, roomData)
     roomControllShowAllAmenities();
     roomControllShowAllReviews();
     
+    roomControllCalendar();
 
 }
 
