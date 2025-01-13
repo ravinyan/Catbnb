@@ -1433,7 +1433,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
         }
     }
 
-    if (month == 0 && nextMonth == 0)
+    if (month == 0 && nextMonth == 0 && nextMonth != "")
     {
         year = nextYear;
     }
@@ -1851,7 +1851,7 @@ const getStupidCalendarDates = document.getElementById("DatesCalendars");
 
 function calendarValidationCSS(firstCalendar, secondCalendar, checkinDate, checkoutDate)
 {
-    removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate);
+    removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate, 4);
 
     selectedCheckinDate.style.background = "";
     selectedCheckinDate.style.color = "";
@@ -1886,7 +1886,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
 
-            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
             selectedCheckinDate = document.createElement(null);     
         }
         else if (selectedCheckoutDate.tagName != "NULL" && checkoutButton.style.backgroundColor == "white")
@@ -1894,7 +1894,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
-            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
             selectedCheckoutDate = document.createElement(null); 
         }
 
@@ -1907,7 +1907,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckinMonth = selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             selectedCheckinYear = +selectedCheckinDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
         }
         else if (selectedCheckoutDate.tagName == "NULL" && checkoutButton.style.backgroundColor == "white")
         {
@@ -1917,7 +1917,7 @@ getStupidCalendarDates.onclick = function(e)
             selectedCheckoutMonth = selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0 ,-5);
             selectedCheckoutYear = +selectedCheckoutDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
 
-            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+            correctCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
         }
 
         if (checkinButton.style.backgroundColor == "white")
@@ -1970,7 +1970,7 @@ clearCalendarFormInputButton.onclick = function()
     checkinFormInput.value = "";
     checkoutFormInput.value = "";
 
-    removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+    removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
 
     selectedCheckinDate.style.background = "";
     selectedCheckinDate.style.color = "";
@@ -1985,7 +1985,7 @@ clearCalendarFormInputButton.onclick = function()
     onClickButtonFocus(checkinButton);
 }
 
-function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar, target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar, target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex)
 {
     var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
     var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
@@ -2041,14 +2041,14 @@ function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar,
             {
                 try 
                 {
-                    var divBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                    var tdBox = currentCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                    var divBox = currentCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox = currentCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
                 }catch{} //  i hate you from the bottom of my heart 
 
                 try
                 {
-                    var divBox2 = otherCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                    var tdBox2 = otherCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                    var divBox2 = otherCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                    var tdBox2 = otherCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
                 }catch{} //  i swear to fucking god this is getting so annoying i fucking hate this try catch bullshit AAAAAAAAAAAAAAAAAAA
 
                 //  IF ITS SAME MONTH SAME YEAR
@@ -2268,7 +2268,7 @@ function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar,
     }
 }
 
-function calendarAddShadow(e, calendar, firstCalendar, secondCalendar, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function calendarAddShadow(e, calendar, firstCalendar, secondCalendar, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex)
 { 
     if ((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") && e.target.children.length == 0 && e.target.className == "box")
     {
@@ -2277,12 +2277,12 @@ function calendarAddShadow(e, calendar, firstCalendar, secondCalendar, checkinDa
         if (checkinDate.tagName == "NULL" && (checkinButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white")
         ||  checkoutDate.tagName == "NULL" && (checkoutButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white"))
         {
-            applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
+            applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex);
         }
     }
 }
 
-function calendarRemoveShadow(e, firstCalendar, secondCalendar, checkinDate, checkoutDate)
+function calendarRemoveShadow(e, firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
 {
     if (((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") || checkoutDate.tagName != "NULL") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
     {   
@@ -2290,29 +2290,29 @@ function calendarRemoveShadow(e, firstCalendar, secondCalendar, checkinDate, che
 
         if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
         {
-            removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate, tableIndex);
         }
     }
 }
 
 calendar.addEventListener("mouseover", function(e)
 {
-    calendarAddShadow(e, calendar, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    calendarAddShadow(e, calendar, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear, 4);
 })
 
 calendar.addEventListener("mouseout", function(e)
 {
-    calendarRemoveShadow(e, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+    calendarRemoveShadow(e, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
 })
 
 calendar2.addEventListener("mouseover", function(e)
 {
-    calendarAddShadow(e, calendar2, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    calendarAddShadow(e, calendar2, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear, 4);
 })
 
 calendar2.addEventListener("mouseout", function(e)
 {
-    calendarRemoveShadow(e, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate);
+    calendarRemoveShadow(e, calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
 })
 
 // ---------------------------- Experiences calendar ---------------------------
@@ -2362,7 +2362,7 @@ function datesCSSValitation()
         selectedCheckoutDate.style.color = "";
         checkoutFormInput.value = "";
 
-        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
 
         try
         {
@@ -2378,7 +2378,7 @@ function datesCSSValitation()
         selectedCheckinDate.style.color = "";
         checkoutFormInput.value = "";
 
-        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+        removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
 
         try
         {
@@ -2406,7 +2406,7 @@ getCalendarsDateExperiences.onclick = function(e)
             selectedCheckinDate.style.background = "";
             selectedCheckinDate.style.color = "";
 
-            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
             selectedCheckinDate = document.createElement(null);   
         }
         else if (selectedCheckoutDate.tagName != "NULL" && alternateDates == false)
@@ -2414,7 +2414,7 @@ getCalendarsDateExperiences.onclick = function(e)
             selectedCheckoutDate.style.background = "";
             selectedCheckoutDate.style.color = "";
 
-            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+            removeCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
             selectedCheckoutDate = document.createElement(null);
         }
 
@@ -2428,7 +2428,7 @@ getCalendarsDateExperiences.onclick = function(e)
 
             if (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
             {
-                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
             }
             
             checkinFormInput.value = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]} ${selectedCheckinYear}`;
@@ -2444,7 +2444,7 @@ getCalendarsDateExperiences.onclick = function(e)
 
             if (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
             {
-                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+                correctCalendarsShadows(calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
             }
 
             checkoutFormInput.value = `${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]} ${selectedCheckoutYear}`;
@@ -2479,22 +2479,22 @@ getCalendarsDateExperiences.onclick = function(e)
 
 calendarExperiences.addEventListener("mouseover", function(e)
 {
-    calendarAddShadow(e, calendarExperiences, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    calendarAddShadow(e, calendarExperiences, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear, 4);
 })
 
 calendarExperiences.addEventListener("mouseout", function(e)
 {
-    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
 })
 
 calendar2Experiences.addEventListener("mouseover", function(e)
 {
-    calendarAddShadow(e, calendar2Experiences, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
+    calendarAddShadow(e, calendar2Experiences, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear, 4);
 })
 
 calendar2Experiences.addEventListener("mouseout", function(e)
 {
-    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate);
+    calendarRemoveShadow(e, calendarExperiences, calendar2Experiences, selectedCheckinDate, selectedCheckoutDate, 4);
 })
 
 //  ------------------------ (+-) DATES OPTIONS BUTTONS ------------------------
@@ -2937,7 +2937,7 @@ const monthsBlockMoveEndCalendarsRight = document.getElementById("MonthsBlockMov
 const getStupidCalendarDatesAgain = document.getElementById("MonthsBlockStartCalendars");
 const getStupidCalendarDatesAgainAgain = document.getElementById("MonthsBlockEndCalendars");
 
-function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
+function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
 {
     for (i = 0; i < 6; i++)
     {
@@ -2945,14 +2945,14 @@ function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, chec
         {
             try 
             {
-                var divBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var divBox = firstCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox = firstCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
             }
             catch{} //  banana
             try 
             {
-                var divBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var divBox2 = secondCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox2 = secondCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
             }
             catch{} //  pizza
 
@@ -2971,8 +2971,8 @@ function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, chec
         }
     }
 }
-
-function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate)
+//
+function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
 {
     loop:
     for (i = 0; i < 6; i++)
@@ -2981,14 +2981,14 @@ function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, che
         {
             try 
             {
-                var divBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox = firstCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var divBox = firstCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox = firstCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
             }catch{} //  banana
 
             try 
             {
-                var divBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
-                var tdBox2 = secondCalendar.childNodes[4].childNodes[0].childNodes[i].childNodes[j];
+                var divBox2 = secondCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j].childNodes[0];
+                var tdBox2 = secondCalendar.childNodes[tableIndex].childNodes[0].childNodes[i].childNodes[j];
             }catch{} //  pizza
             
             if (firstCalendar == calendar && secondCalendar == calendar2 
@@ -3171,14 +3171,14 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 if (+div.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
                 &&  x >= +monthsBlockSelectedEndDate.innerText)
                 {
-                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                     monthsBlockChangeEndValuesCSS(td, div);
 
                     break loop;
                 }
                 else if (+div2.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 > new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate())
                 {
-                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                     monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
@@ -3186,7 +3186,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 else if (+div2.innerText == x && +monthsBlockSelectedStartDate.innerText + 28 >= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
                      &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                     monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
@@ -3198,7 +3198,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 if (+monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
                 ||  firstCalendar.contains(monthsBlockSelectedStartDate) && secondCalendar.contains(monthsBlockSelectedEndDate) &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                     monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
@@ -3207,7 +3207,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 {
                     if (monthsBlockSelectedStartDate != monthsBlockSelectedEndDate && monthsBlockSelectedEndDate.tagName != "NULL")
                     {
-                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                         monthsBlockSelectedEndDate.style.background = "";
                         monthsBlockSelectedEndDate.parentElement.style.background = "";
                         monthsBlockSelectedEndDate.style.color = "";
@@ -3225,7 +3225,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 if (+monthsBlockSelectedStartDate.innerText + 28 <= new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth) + 1, 0).getDate()
                 &&  x >= monthsBlockSelectedEndDate.innerText)
                 {
-                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                    removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                     monthsBlockChangeEndValuesCSS(td2, div2);
 
                     break loop;
@@ -3234,7 +3234,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
                 {
                     if (monthsBlockSelectedStartDate != monthsBlockSelectedEndDate && monthsBlockSelectedEndDate.tagName != "NULL")
                     {
-                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+                        removeCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
                         monthsBlockSelectedEndDate.style.background = "";
                         monthsBlockSelectedEndDate.parentElement.style.background = "";
                         monthsBlockSelectedEndDate.style.color = "";
@@ -3255,7 +3255,7 @@ function monthsBlockChangeEndValues(firstCalendar, secondCalendar, eDate)
         }
     }
 
-    correctCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+    correctCalendarsShadows(firstCalendar, secondCalendar, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
 }
 
 function monthsBlockValidateDatesPosition()
@@ -3313,7 +3313,7 @@ getStupidCalendarDatesAgain.onclick = function(e)
             monthsBlockSelectedStartDate.style.background = "";
             monthsBlockSelectedStartDate.style.color = "";
 
-            removeCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+            removeCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
             monthsBlockSelectedStartDate = "";     
         }
 
@@ -3326,7 +3326,7 @@ getStupidCalendarDatesAgain.onclick = function(e)
             monthsBlockSelectedStartMonth = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             monthsBlockSelectedStartYear = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
             
-            correctCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+            correctCalendarsShadows(monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
         }
 
         monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedStartMonth)]} ${monthsBlockSelectedStartYear}`;
@@ -3407,7 +3407,7 @@ getStupidCalendarDatesAgainAgain.onclick = function(e)
             monthsBlockSelectedEndDate.style.background = "";
             monthsBlockSelectedEndDate.style.color = "";
         
-            removeCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+            removeCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
             monthsBlockSelectedEndDate = "";     
         }
         
@@ -3420,7 +3420,7 @@ getStupidCalendarDatesAgainAgain.onclick = function(e)
             monthsBlockSelectedEndMonth = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
             monthsBlockSelectedEndYear = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
         
-           correctCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate);
+           correctCalendarsShadows(monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockSelectedStartDate, monthsBlockSelectedEndDate, 4);
         }
 
         monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedEndMonth)]} ${monthsBlockSelectedEndYear}`; 
@@ -6428,32 +6428,217 @@ function roomControllRoomsPage(room, roomData)
  
         let date = new Date();
 
-        let day = date.getDate();   // 1-31 days and then
-        let month = date.getMonth(); // WHY ITS FROM 0 TO 11 WHO HURT YOU
+        let day = date.getDate();
+        let month = date.getMonth();
         let year = date.getFullYear();
 
         let currentMonth = date.getMonth();
         let currentYear = date.getFullYear();
 
-        let selectedStartDay = day;
+        let selectedStartDay = document.createElement(null);
+        selectedStartDay.innerText = day;
         let selectedStartMonth = date.getMonth();
         let selectedStartYear = date.getFullYear();
 
-        let selectedEndDay = date.getDate(date.setDate(day + 2));
+        let selectedEndDay = document.createElement(null);
+        selectedEndDay.innerText = date.getDate(date.setDate(day + 2));
         let selectedEndMonth = date.getMonth();
         let selectedEndYear = date.getFullYear();
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
         let checkoutButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
-        checkinButton.childNodes[1].innerText = `${selectedStartDay}/${selectedStartMonth}/${selectedStartYear}`;
-        checkoutButton.childNodes[1].innerText = `${selectedEndDay}/${selectedEndMonth}/${selectedEndYear}`;
+        checkinButton.childNodes[1].innerText = `${selectedStartDay.innerText}/${(selectedStartMonth)}/${selectedStartYear}`;
+        checkoutButton.childNodes[1].innerText = `${selectedEndDay.innerText}/${selectedEndMonth + 1}/${selectedEndYear}`;
 
-        console.log(checkinButton.childNodes[1].innerText);
-        console.log(checkoutButton.childNodes[1].innerText);
+        let calendars = room.getElementsByClassName("room_information_calendar_box")[0];
+        let alternateDates = true;
 
-        let checkinSetDate = new Date(selectedStartYear, selectedStartMonth, selectedStartDay);
-        let checkoutSetDate = new Date(selectedEndYear, selectedEndMonth, selectedEndDay);
+        function resizeCalendars()
+        {
+            if (window.location.pathname.split("/")[1] == "Rooms")
+            {
+                let room = document.getElementById("RoomContent");
+
+                let c1 = room.getElementsByClassName("room_information_calendar1")[0];
+                let c2 = room.getElementsByClassName("room_information_calendar2")[0];
+
+                if (window.innerWidth < 1251)
+                {
+                    let monthNameLength = c1.childNodes[0].offsetWidth;
+                    let tr = c1.childNodes[2].childNodes[0].childNodes[0];
+                    let width = Math.ceil(monthNameLength / 7);
+                    let height = width;
+                    c1.childNodes[1].offsetWidth = (width * 7);
+
+                    c1.childNodes[1].childNodes.forEach(function(e)
+                    {
+                        if (e.tagName == "LI")
+                        {
+                            e.style.width = width + "px";
+                        }
+                    });
+
+                    tr.style.width = (width * 7) + "px";
+
+                    for (i = 0; i < 6; i++)
+                    {
+                        c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
+                        c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+
+                        for (j = 0; j < 7; j++)
+                        {
+                            try
+                            {
+                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
+                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
+
+                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                            } catch{break;}
+                        }
+                    }
+                } 
+            }
+        }
+
+        function initializeCalendars(firstCalendar, secondCalendar)
+        {
+            month = currentMonth - 1;
+            year = currentYear;
+           
+            const monthNames = room.querySelectorAll(".month_name");
+            const tables = room.querySelectorAll(".nothing");
+           
+            monthNames.forEach(function(e)
+            {
+                e.remove();
+            });
+           
+            tables.forEach(function(e)
+            {
+                e.remove();
+            });
         
+            rightButtonClicked = true;
+        
+            createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+            createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+        
+            rightButtonClicked = false;
+
+            resizeCalendars();
+        }
+
+        initializeCalendars(calendar1, calendar2);
+
+        function datesCSSValitation()
+        {
+            if (alternateDates == false)
+            {
+                selectedEndDay.style.background = "";
+                selectedEndDay.style.color = "";
+        
+                removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+        
+                try
+                {
+                    selectedEndDay.parentElement.style.background = "";
+                }
+                catch{}
+        
+                selectedEndDay = document.createElement(null);
+            }
+            else if (alternateDates == true)
+            {
+                selectedStartDay.style.background = "";
+                selectedStartDay.style.color = "";
+        
+                removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+        
+                try
+                {
+                    selectedStartDay.parentElement.style.background = "";
+                }
+                catch{}
+                
+                selectedStartDay = selectedEndDay;
+                selectedEndDay = document.createElement(null);
+                alternateDates = false;
+            }
+        }
+
+        calendars.onclick = function(e)
+        {
+            if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
+            {
+                if (selectedStartDay.tagName != "NULL" && alternateDates == true)
+                {
+                    selectedStartDay.style.background = "";
+                    selectedStartDay.style.color = "";
+
+                    removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+                    selectedStartDay = document.createElement(null);   
+                }
+                else if (selectedEndDay.tagName != "NULL" && alternateDates == false)
+                {
+                    selectedEndDay.style.background = "";
+                    selectedEndDay.style.color = "";
+
+                    removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+                    selectedEndDay = document.createElement(null);
+                }
+
+                if (selectedStartDay.tagName == "NULL" && alternateDates == true)
+                {
+                    selectedStartDay = e.target;
+                    selectedStartDay.style.background = "black";
+                    selectedStartDay.style.color = "white";
+                    selectedStartMonth = selectedStartDay.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[0].innerText.slice(0, -5);
+                    selectedStartYear = +selectedStartDay.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[0].innerText.slice(-4);
+
+                    if (selectedStartDay.tagName != "NULL" && selectedEndDay.tagName != "NULL")
+                    {
+                        correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+                    }
+                    
+                    checkinButton.childNodes[1].innerText = `${selectedStartDay.innerText}/${months.indexOf(selectedStartMonth) + 1}/${selectedStartYear}`;
+                    alternateDates = false;
+                }
+                else if (selectedEndDay.tagName == "NULL" && alternateDates == false)
+                {
+                    selectedEndDay = e.target;
+                    selectedEndDay.style.background = "black";
+                    selectedEndDay.style.color = "white";
+                    selectedEndMonth = selectedEndDay.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[0].innerText.slice(0 ,-5);
+                    selectedEndYear = +selectedEndDay.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[0].innerText.slice(-4);
+
+                    if (selectedStartDay.tagName != "NULL" && selectedEndDay.tagName != "NULL")
+                    {
+                        correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+                    }
+
+                    checkoutButton.childNodes[1].innerText = `${selectedEndDay.innerText}/${months.indexOf(selectedEndMonth) + 1}/${selectedEndYear}`;
+                    alternateDates = true;
+                }
+
+                if ((+selectedStartDay.innerText >= +selectedEndDay.innerText) 
+                &&  (selectedStartMonth == selectedEndMonth) && (selectedStartYear == selectedEndYear)
+                &&  (selectedStartDay.tagName != "NULL" && selectedEndDay.tagName != "NULL"))
+                {
+                    datesCSSValitation();
+                }
+                else if (months.indexOf(selectedStartMonth) > months.indexOf(selectedEndMonth)
+                     &&  (selectedStartYear == selectedEndYear ))
+                {
+                    datesCSSValitation();
+                }
+                else if ((selectedStartYear > selectedEndYear))
+                {
+                    datesCSSValitation();
+                }
+            }
+        }
+
         function moveCalendarLeft(rightButton, leftButton, firstCalendar, secondCalendar)
         {
             if (window.getComputedStyle(leftButton).cursor == "pointer")
@@ -6532,17 +6717,16 @@ function roomControllRoomsPage(room, roomData)
             }
         }
 
-        // need ti resize calendars coz they are bad
         moveLeft.onclick = function()
         {
             moveCalendarLeft(moveRight, moveLeft, calendar1, calendar2);
-
+            resizeCalendars();
         }
 
         moveRight.onclick = function()
         {
             moveCalendarRight(moveRight, moveLeft, calendar1, calendar2);
-
+            resizeCalendars();
         }
     }
 
