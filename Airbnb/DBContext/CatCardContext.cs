@@ -135,7 +135,7 @@ namespace Airbnb.DBContext
                     NumberOfBeds = rng.Next(1, 16),
                     NumberOfBathrooms = rng.Next(1, 16),
                     MaxNumberOfGuests = rng.Next(1, 16),
-                    PetsAllowed = TrueOrFalse[rng.Next(1, 2)],
+                    PetsAllowed = TrueOrFalse[rng.Next(0, 1)],
                     InfantsAllowed = TrueOrFalse[rng.Next(0, 1)],
                 });
             }

@@ -1433,7 +1433,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
         }
     }
 
-    if (month == 0 && nextMonth == 0 && nextMonth != "")
+    if (month == 0 && nextMonth == 0 && nextMonth.toString() != "")
     {
         year = nextYear;
     }
@@ -1985,10 +1985,10 @@ clearCalendarFormInputButton.onclick = function()
     onClickButtonFocus(checkinButton);
 }
 
-function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar, target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex)
+function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar, target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex, targetIndex)
 {
-    var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5));
-    var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+    var targetMonth = months.indexOf(target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[targetIndex].innerText.slice(0, -5));
+    var targetYear = target.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[targetIndex].innerText.slice(-4);
     var otherCalendar = ""
 
     if (checkinDate.tagName != "NULL")
@@ -2277,7 +2277,7 @@ function calendarAddShadow(e, calendar, firstCalendar, secondCalendar, checkinDa
         if (checkinDate.tagName == "NULL" && (checkinButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white")
         ||  checkoutDate.tagName == "NULL" && (checkoutButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white"))
         {
-            applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex);
+            applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex, 1);
         }
     }
 }
@@ -6424,16 +6424,11 @@ function roomControllRoomsPage(room, roomData)
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
         let moveLeft = room.getElementsByClassName("room_information_calendar_moveL")[0];
+        moveLeft.style.pointerEvents = "none";
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
  
         let date = new Date();
-
         let day = date.getDate();
-        let month = date.getMonth();
-        let year = date.getFullYear();
-
-        let currentMonth = date.getMonth();
-        let currentYear = date.getFullYear();
 
         let selectedStartDay = document.createElement(null);
         selectedStartDay.innerText = day;
@@ -6447,7 +6442,7 @@ function roomControllRoomsPage(room, roomData)
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
         let checkoutButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
-        checkinButton.childNodes[1].innerText = `${selectedStartDay.innerText}/${(selectedStartMonth)}/${selectedStartYear}`;
+        checkinButton.childNodes[1].innerText = `${selectedStartDay.innerText}/${selectedStartMonth + 1}/${selectedStartYear}`;
         checkoutButton.childNodes[1].innerText = `${selectedEndDay.innerText}/${selectedEndMonth + 1}/${selectedEndYear}`;
 
         let calendars = room.getElementsByClassName("room_information_calendar_box")[0];
@@ -6503,7 +6498,7 @@ function roomControllRoomsPage(room, roomData)
 
         function initializeCalendars(firstCalendar, secondCalendar)
         {
-            month = currentMonth - 1;
+            month = currentMonth;
             year = currentYear;
            
             const monthNames = room.querySelectorAll(".month_name");
@@ -6639,9 +6634,9 @@ function roomControllRoomsPage(room, roomData)
             }
         }
 
-        function moveCalendarLeft(rightButton, leftButton, firstCalendar, secondCalendar)
+        function moveCalendarLeft()
         {
-            if (window.getComputedStyle(leftButton).cursor == "pointer")
+            if (window.getComputedStyle(moveLeft).cursor == "pointer")
             {
                 const monthNames = room.querySelectorAll(".month_name");
                 const tables = room.querySelectorAll(".nothing");
@@ -6658,29 +6653,29 @@ function roomControllRoomsPage(room, roomData)
             
                 leftButtonClicked = true;
         
-                createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-                createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
         
                 leftButtonClicked = false;
-            
+
                 if (month == currentMonth && year == currentYear)
                 {
-                    leftButton.style.cursor = "not-allowed";
-                    leftButton.style.color = "#dcdcdc";
-                    leftButton.style.background = "none";
+                    moveLeft.style.cursor = "not-allowed";
+                    moveLeft.style.color = "#8f8f8f";
+                    moveLeft.style.pointerEvents = "none";
                 }
                 else
                 {
-                    rightButton.style.cursor = "pointer";
-                    rightButton.style.color = "";
-                    rightButton.style.background = "";
+                    moveRight.style.cursor = "pointer";
+                    moveRight.style.color = "black";
+                    moveRight.style.pointerEvents = "";
                 }
             } 
         }
 
-        function moveCalendarRight(rightButton, leftButton, firstCalendar, secondCalendar)
+        function moveCalendarRight()
         {
-            if (window.getComputedStyle(rightButton).cursor == "pointer")
+            if (window.getComputedStyle(moveRight).cursor == "pointer")
             {
                 const monthNames = room.querySelectorAll(".month_name");
                 const tables = room.querySelectorAll(".nothing");
@@ -6696,38 +6691,121 @@ function roomControllRoomsPage(room, roomData)
                 });
             
                 rightButtonClicked = true;
-        
-                createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-                createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+
+                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
         
                 rightButtonClicked = false;
-            
+
                 if ((month == currentMonth && year == currentYear + 2))
                 {
-                    rightButton.style.cursor = "not-allowed";
-                    rightButton.style.color = "#dcdcdc";
-                    rightButton.style.background = "none";
-                }
+                    moveRight.style.cursor = "not-allowed";
+                    moveRight.style.color = "#8f8f8f";
+                    moveRight.style.pointerEvents = "none";
+                }   
                 else
-                {
-                    leftButton.style.cursor = "pointer";
-                    leftButton.style.color = "";
-                    leftButton.style.background = "";
+                {   
+                    moveLeft.style.cursor = "pointer";
+                    moveLeft.style.color = "black";
+                    moveLeft.style.pointerEvents = "";
                 }
             }
         }
 
         moveLeft.onclick = function()
         {
-            moveCalendarLeft(moveRight, moveLeft, calendar1, calendar2);
+            moveCalendarLeft();
             resizeCalendars();
         }
 
         moveRight.onclick = function()
         {
-            moveCalendarRight(moveRight, moveLeft, calendar1, calendar2);
+            moveCalendarRight();
             resizeCalendars();
         }
+
+        function addShadow(e, calendar, firstCalendar, secondCalendar, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex)
+        { 
+            if ((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") && e.target.children.length == 0 && e.target.className == "box")
+            {
+                e.target.classList.add("box_new_hover");
+        
+                if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+                {
+                    applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex, 0);
+                }
+            }
+        }
+        
+        function removeShadow(e, firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
+        {
+            if (((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") || checkoutDate.tagName != "NULL") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
+            {   
+                e.target.classList.remove("box_new_hover");
+        
+                if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+                {
+                    removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate, tableIndex);
+                }
+            }
+        }
+
+        calendar1.addEventListener("mouseover", function(e)
+        {
+            addShadow(e, calendar1, calendar1, calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, 2);
+        })
+        
+        calendar1.addEventListener("mouseout", function(e)
+        {
+            removeShadow(e, calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+        })
+        
+        calendar2.addEventListener("mouseover", function(e)
+        {
+            addShadow(e, calendar2, calendar1, calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, 2);
+        })
+        
+        calendar2.addEventListener("mouseout", function(e)
+        {
+            removeShadow(e, calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
+        })
+
+        let dropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0];
+
+        let dropdownWindow = document.createElement("DIV");
+        dropdownWindow.className = "room_modal_guest_dropdown_window";
+
+        dropdown.appendChild(dropdownWindow);
+
+        function guestDropdown()
+        {
+            
+            if (dropdown != "" && dropdown != undefined)
+            {
+                dropdown.onclick = function(e)
+                {
+                    dropdownWindow.style.display = "block";
+                    if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
+                    {
+                        
+                    }
+                }
+
+                document.body.addEventListener("click", function(e)
+                {
+                    if (!dropdownWindow.contains(e.target) && !dropdown.contains(e.target) && dropdownWindow.style.display == "block")
+                    {
+                        //dropdownWindow.style.display = "none";
+                    }
+                })
+                
+                dropdownWindow.onclick = function(e)
+                {
+                }
+            }
+        }
+
+        guestDropdown();
     }
 
     function roomControllCalendarDropdowns()

@@ -1930,7 +1930,6 @@ button.room_information_calendar_moveL {
     justify-content: center;
     align-items: center;
     border: none;
-    pointer-events: none;
     cursor: not-allowed;
     color: #8f8f8f;
 }
@@ -1951,6 +1950,7 @@ button.room_information_calendar_moveR {
     align-items: center;
     border: none;
     cursor: pointer;
+    color: black;
 }
 
     button.room_information_calendar_moveR:hover {
@@ -2101,6 +2101,7 @@ button.room_pricing_flying_rectangle_reservation_button_guest {
     padding: 8px;
     font-size: 14px;
     white-space: nowrap;
+    position: relative;
 }
 
 div.room_pricing_flying_rectangle_reservation_buttons_text {
@@ -2456,4 +2457,40 @@ div.room_modal_reviews_dropdown_filter_window_item {
 div.room_modal_reviews_userReviews_review {
     word-break: break-word;
 }
+
+div.room_modal_guest_dropdown_window {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: white;
+    display: block;
+    flex: 1 0 auto;
+    border: 1px solid #dddddd;
+    top: 70px;
+    right: -1px;
+    border-radius: 10px;
+    width: 267.5px;
+    min-width: 100px;
+    height: 232px;
+}
+
+@media only screen and (max-width: 950px) {
+    div.room_modal_guest_dropdown_window {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: white;
+        display: block;
+        flex: 1 0 auto;
+        border: 1px solid #dddddd;
+        top: 70px;
+        right: -1px;
+        border-radius: 10px;
+        width: 235px;
+        min-width: 100px;
+        height: 232px;
+    }
+}
+
+
 
