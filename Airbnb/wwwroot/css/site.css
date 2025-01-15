@@ -1746,7 +1746,7 @@ div.room_information_petting_header_control_counter {
 
 }
 
-button.room_information_petting_header_controlL {
+button.room_information_petting_header_controlL:disabled {
     background: white;
     border: 1px solid #dddddd;
     color: #dddddd;
@@ -1756,16 +1756,10 @@ button.room_information_petting_header_controlL {
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
     cursor: not-allowed;
 }
 
-    button.room_information_petting_header_controlL:hover {
-        border: 1px solid black !important;
-        color: black !important;
-    }
-
-button.room_information_petting_header_controlR {
+button.room_information_petting_header_controlL:enabled {
     background: white;
     border: 1px solid #8f8f8f;
     color: #8f8f8f;
@@ -1777,7 +1771,37 @@ button.room_information_petting_header_controlR {
     justify-content: center;
 }
 
-    button.room_information_petting_header_controlR:hover {
+    button.room_information_petting_header_controlL:enabled:hover {
+        border: 1px solid black !important;
+        color: black !important;
+    }
+
+button.room_information_petting_header_controlR:disabled {
+    background: white;
+    border: 1px solid #dddddd;
+    color: #dddddd;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: not-allowed;
+}
+
+button.room_information_petting_header_controlR:enabled {
+    background: white;
+    border: 1px solid #8f8f8f;
+    color: #8f8f8f;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    button.room_information_petting_header_controlR:enabled:hover {
         border: 1px solid black !important;
         color: black !important;
     }
@@ -1919,7 +1943,7 @@ div.room_information_calendar_moveControls {
     top: 6px;
 }
 
-button.room_information_calendar_moveL {
+button.room_information_calendar_moveL:disabled {
     display: flex;
     position: absolute;
     left: 0px;
@@ -1934,11 +1958,41 @@ button.room_information_calendar_moveL {
     color: #8f8f8f;
 }
 
-    button.room_information_calendar_moveL:hover {
+button.room_information_calendar_moveL:enabled {
+    display: flex;
+    position: absolute;
+    left: 0px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    color: black;
+}
+
+    button.room_information_calendar_moveL:enabled:hover {
         background-color: #e8e8e8;
     }
 
-button.room_information_calendar_moveR {
+button.room_information_calendar_moveR:disabled {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+    background: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: not-allowed;
+    color: #8f8f8f;
+}
+
+button.room_information_calendar_moveR:enabled {
     display: flex;
     position: absolute;
     right: 0px;
@@ -1953,7 +2007,7 @@ button.room_information_calendar_moveR {
     color: black;
 }
 
-    button.room_information_calendar_moveR:hover {
+    button.room_information_calendar_moveR:enabled:hover {
         background-color: #e8e8e8;
     }
 
@@ -2211,6 +2265,8 @@ div.room_reviews_userReviews_userInfo_details_name {
 div.room_reviews_userReviews_userInfo_details_time {
     font-size: 14px;
     opacity: 0.8;
+    z-index: -1;
+    position: relative;
 }
 
 div.room_reviews_userReviews_userInfo_ratingDetails {
@@ -2463,7 +2519,7 @@ div.room_modal_guest_dropdown_window {
     width: 200px;
     height: 200px;
     background: white;
-    display: block;
+    display: none;
     flex: 1 0 auto;
     border: 1px solid #dddddd;
     top: 70px;
@@ -2471,7 +2527,8 @@ div.room_modal_guest_dropdown_window {
     border-radius: 10px;
     width: 267.5px;
     min-width: 100px;
-    height: 232px;
+    height: 380px;
+    padding: 10px;
 }
 
 @media only screen and (max-width: 950px) {
@@ -2480,7 +2537,7 @@ div.room_modal_guest_dropdown_window {
         width: 200px;
         height: 200px;
         background: white;
-        display: block;
+        display: none;
         flex: 1 0 auto;
         border: 1px solid #dddddd;
         top: 70px;
@@ -2488,9 +2545,137 @@ div.room_modal_guest_dropdown_window {
         border-radius: 10px;
         width: 235px;
         min-width: 100px;
-        height: 232px;
+        height: 380px;
+        padding: 10px;
     }
 }
+
+div.room_modal_guest_dropdown_box {
+    display: flex;
+    flex-direction: column;
+}
+
+div.room_modal_guest_dropdown_row {
+    display: flex;
+    align-items: center;
+    margin-block-end: 15px;
+}
+
+div.room_modal_guest_dropdown_text_box {
+    flex: 1 1 0%;
+}
+
+div.room_modal_guest_dropdown_textTop {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+div.room_modal_guest_dropdown_textBottom {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+div.room_modal_guest_dropdown_textBottom_pets {
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: 14px;
+    white-space: initial;
+}
+
+div.room_modal_guest_dropdown_button_box {
+    display: flex;
+    align-items: center;
+}
+
+button.room_modal_guest_dropdown_decrement_button:disabled {
+    background: white;
+    color: #dddddd;
+    border: 1px solid #dddddd;
+    border-radius: 50px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-end: 10px;
+    cursor: not-allowed;
+}
+
+button.room_modal_guest_dropdown_decrement_button:enabled {
+    background: white;
+    color: #8f8f8f;
+    border: 1px solid #8f8f8f;
+    border-radius: 50px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-end: 10px;
+}
+
+    button.room_modal_guest_dropdown_decrement_button:enabled:hover {
+        color: black;
+        border-color: black;
+    }
+
+button.room_modal_guest_dropdown_increment_button:disabled {
+    background: white;
+    color: #dddddd;
+    border: 1px solid #dddddd;
+    border-radius: 50px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: 10px;
+    cursor: not-allowed;
+}
+
+button.room_modal_guest_dropdown_increment_button:enabled {
+    background: white;
+    color: #8f8f8f;
+    border: 1px solid #8f8f8f;
+    border-radius: 50px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-start: 10px;
+}
+
+    button.room_modal_guest_dropdown_increment_button:enabled:hover {
+        color: black;
+        border-color: black;
+    }
+
+div.room_modal_guest_dropdown_maximum_guest_number_info {
+    white-space: initial;
+    font-size: 14px;
+}
+
+div.room_modal_guest_dropdown_close_button_box {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button.room_modal_guest_dropdown_close_button {
+    background: white;
+    border: none;
+    text-decoration: underline;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+    button.room_modal_guest_dropdown_close_button:hover {
+        background: #e8e8e8;
+    }
+
 
 
 

@@ -112,7 +112,7 @@ namespace Airbnb.DBContext
 									 "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.",
 									 "DO IT, just DO IT! Don't let your dreams be dreams. Yesterday, you said tomorrow. So just. DO IT! Make. your dreams. COME TRUE! Just... do it! Some people dream of success, while you're gonna wake up and work HARD at it! NOTHING IS IMPOSSIBLE!You should get to the point where anyone else would quit, and you're not gonna stop there. NO! What are you waiting for? ... DO IT! Just... DO IT! Yes you can! Just do it! If you're tired of starting over, stop. giving. up.",
 									 "If C# has a million fans, then I am one of them. If C# has ten fans, then I am one of them. If C# has only one fan then that is me. If C# has no fans, then that means I am no longer on earth. If the world is against C#, then I am against the world.",
-									 "What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little \"clever\" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.",
+                                     "What's this you've said to me, my good friend? Ill have you know I graduated top of my class in conflict resolution, and Ive been involved in numerous friendly discussions, and I have over 300 confirmed friends. I am trained in polite discussions and I'm the top mediator in the entire neighborhood. You are worth more to me than just another target. I hope we will come to have a friendship never before seen on this Earth. Don't you think you might be hurting someone's feelings saying that over the internet? Think about it, my friend. As we speak I am contacting my good friends across the USA and your P.O. box is being traced right now so you better prepare for the greeting cards, friend. The greeting cards that help you with your hate. You should look forward to it, friend. I can be anywhere, anytime for you, and I can calm you in over seven hundred ways, and that's just with my chess set. Not only am I extensively trained in conflict resolution, but I have access to the entire group of my friends and I will use them to their full extent to start our new friendship. If only you could have known what kindness and love your little comment was about to bring you, maybe you would have reached out sooner. But you couldn't, you didn't, and now we get to start a new friendship, you unique person. I will give you gifts and you might have a hard time keeping up. You're finally living, friend.",
 									 "don't care. CURSE OF RA 𓀀 𓀁 𓀂 𓀃 𓀄 𓀅 𓀆 𓀇 𓀈 𓀉 𓀊 𓀋 𓀌 𓀍 𓀎 𓀏 𓀐 𓀑 𓀒 𓀓 𓀔 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓀭 𓀮 𓀯 𓀰 𓀱 𓀲 𓀳 𓀴 𓀵 𓀶 𓀷 𓀸 𓀹 𓀺 𓀻 𓀼 𓀽 𓀾 𓀿 𓁀 𓁁 𓁂 𓁃 𓁄 𓁅 𓁆 𓁇 𓁈 𓁉 𓁊 𓁋 𓁌 𓁍 𓁎 𓁏 𓁐 𓁑 𓀄 𓀅 𓀆",
 									 "HOLD CTRL AND TYPE \"WTF\" FOR ℱ𝓪𝓷𝓬𝔂 𝓦𝓣ℱ"];
             bool[] TrueOrFalse = [true, false];
@@ -127,16 +127,16 @@ namespace Airbnb.DBContext
                     Country = countries[cityCountryIndex],
                     City = cities[cityCountryIndex],
                     BasePrice = rng.Next(100, 10000),
-                    CleaningFee = rng.Next(0, 100),
+                    CleaningFee = rng.Next(0, 10),
                     Description = descriptions[rng.Next(0, 8)],
                     ShortDescription = "cat?",
-                    DateAvaiable = $"{rng.Next(1, 14)} May - {rng.Next(15, 31)} May",
-                    NumberOfBedrooms = rng.Next(1, 16),
-                    NumberOfBeds = rng.Next(1, 16),
-                    NumberOfBathrooms = rng.Next(1, 16),
-                    MaxNumberOfGuests = rng.Next(1, 16),
-                    PetsAllowed = TrueOrFalse[rng.Next(0, 1)],
-                    InfantsAllowed = TrueOrFalse[rng.Next(0, 1)],
+                    DateAvaiable = $"{rng.Next(1, 15)} May - {rng.Next(15, 31)} May",
+                    NumberOfBedrooms = rng.Next(1, 17),
+                    NumberOfBeds = rng.Next(1, 17),
+                    NumberOfBathrooms = rng.Next(1, 17),
+                    MaxNumberOfGuests = rng.Next(1, 17),
+                    PetsAllowed = TrueOrFalse[rng.Next(0, 2)],
+                    InfantsAllowed = TrueOrFalse[rng.Next(0, 2)],
                 });
             }
 

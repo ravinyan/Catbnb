@@ -5212,7 +5212,7 @@ function roomGenerateRoomsPage(room)
     let roomInformationPettingHeaderControlCounter = document.createElement("DIV");
     roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode("1"));
     roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode(" / "));
-    roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode(`${2}`)); // DB DATA
+    roomInformationPettingHeaderControlCounter.appendChild(document.createTextNode(`${6}`)); // DB DATA
 
     let roomInformationPettingHeaderControlL = document.createElement("BUTTON");
     roomInformationPettingHeaderControlL.className = "room_information_petting_header_controlL";
@@ -5240,29 +5240,29 @@ function roomGenerateRoomsPage(room)
     roomInformationPettingCarouselListBox.className = "room_information_petting_carousel_list_box";
 
     //  DB DATA FOR LENGTH
-    for (i = 0; i < 3; i++)
-        {
-            let roomInformationPettingCarouselList = document.createElement("LI");
-            roomInformationPettingCarouselList.className = "room_information_petting_carousel_list";
+    for (i = 0; i < 7; i++)
+    {
+        let roomInformationPettingCarouselList = document.createElement("LI");
+        roomInformationPettingCarouselList.className = "room_information_petting_carousel_list";
 
-            let roomInformationPettingImage = document.createElement("IMG");
-            roomInformationPettingImage.className = "room_information_petting_image";
-            roomInformationPettingImage.src = "/img/Aldentge.webp";
+        let roomInformationPettingImage = document.createElement("IMG");
+        roomInformationPettingImage.className = "room_information_petting_image";
+        roomInformationPettingImage.src = "/img/Aldentge.webp";
 
-            let roomInformationPettingImageTopText = document.createElement("DIV");
-            roomInformationPettingImageTopText.className = "room_information_petting_image_topText";
-            roomInformationPettingImageTopText.innerText = "CAT CAT CAT!!! (?)"; // DB DATA
+        let roomInformationPettingImageTopText = document.createElement("DIV");
+        roomInformationPettingImageTopText.className = "room_information_petting_image_topText";
+        roomInformationPettingImageTopText.innerText = "CAT CAT CAT!!! (?)"; // DB DATA
 
-            let roomInformationPettingImageBottomText = document.createElement("DIV");
-            roomInformationPettingImageBottomText.className = "room_information_petting_images_bottomText";
-            roomInformationPettingImageBottomText.innerText = "P E T I T N O W"; // DB DATA
-            
-            roomInformationPettingCarouselList.appendChild(roomInformationPettingImage);
-            roomInformationPettingCarouselList.appendChild(roomInformationPettingImageTopText);
-            roomInformationPettingCarouselList.appendChild(roomInformationPettingImageBottomText);
+        let roomInformationPettingImageBottomText = document.createElement("DIV");
+        roomInformationPettingImageBottomText.className = "room_information_petting_images_bottomText";
+        roomInformationPettingImageBottomText.innerText = "P E T I T N O W"; // DB DATA
+        
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImage);
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImageTopText);
+        roomInformationPettingCarouselList.appendChild(roomInformationPettingImageBottomText);
 
-            roomInformationPettingCarouselListBox.appendChild(roomInformationPettingCarouselList);
-        }
+        roomInformationPettingCarouselListBox.appendChild(roomInformationPettingCarouselList);
+    }
     roomInformationPettingCarousel.appendChild(roomInformationPettingCarouselListBox);
 
     roomInformationPetting.appendChild(roomInformationPettingHeader);
@@ -5412,7 +5412,7 @@ function roomGenerateRoomsPage(room)
     roomPricingFlyingRectangleReservationButtonsText.innerText = "Check-in";
 
     let roomPricingFlyingRectangleReservationButtonsDateNoClass  = document.createElement("DIV");
-    roomPricingFlyingRectangleReservationButtonsDateNoClass.innerText = `${22}/${11}/${2025}`; // DB DATA
+    roomPricingFlyingRectangleReservationButtonsDateNoClass.innerText = `${22}/${11}/${2025}`;
 
     roomPricingFlyingRectangleReservationButtonsCheck1.appendChild(roomPricingFlyingRectangleReservationButtonsText);
     roomPricingFlyingRectangleReservationButtonsCheck1.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass);
@@ -5425,7 +5425,7 @@ function roomGenerateRoomsPage(room)
     roomPricingFlyingRectangleReservationButtonsText2.innerText = "Check-out";
 
     let roomPricingFlyingRectangleReservationButtonsDateNoClass2  = document.createElement("DIV");
-    roomPricingFlyingRectangleReservationButtonsDateNoClass2.innerText = `${22}/${12}/${2025}`; // DB DATA
+    roomPricingFlyingRectangleReservationButtonsDateNoClass2.innerText = `${22}/${12}/${2025}`;
 
     roomPricingFlyingRectangleReservationButtonsCheck2.appendChild(roomPricingFlyingRectangleReservationButtonsText2);
     roomPricingFlyingRectangleReservationButtonsCheck2.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass2);
@@ -5441,10 +5441,10 @@ function roomGenerateRoomsPage(room)
 
     let roomPricingFlyingRectangleReservationButtonsText3  = document.createElement("DIV");
     roomPricingFlyingRectangleReservationButtonsText3.className = "room_pricing_flying_rectangle_reservation_buttons_text";
-    roomPricingFlyingRectangleReservationButtonsText3.innerText = "Guests"; // DB VALIDATION guest / guest(s)
+    roomPricingFlyingRectangleReservationButtonsText3.innerText = "Guests";
 
     let roomPricingFlyingRectangleReservationButtonsDateNoClass3  = document.createElement("DIV");
-    roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `banana cat`; // DB DATA
+    roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `1 guest`;
 
     roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsText3);
     roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass3);
@@ -5607,7 +5607,7 @@ function roomGenerateRoomsPage(room)
 
             roomReviewsUserReviewsUserInfoRatingDetailsRating.innerHTML = starString;
         }
-        //${room.bookingInfo.reviews[i].dateSent.slice(0, 10)}
+
         let roomReviewsUserReviewsUserInfoRatingDetailsDateSubmitted = document.createElement("DIV");
         roomReviewsUserReviewsUserInfoRatingDetailsDateSubmitted.className = "room_reviews_userReviews_userInfo_ratingDetails_dateSubmitted";
         let date = new Date(room.bookingInfo.reviews[i].dateSent)
@@ -5640,8 +5640,9 @@ function roomGenerateRoomsPage(room)
 
     let roomInformationUserReviewsShowAll = document.createElement("BUTTON");
     roomInformationUserReviewsShowAll.className = "room_information_userReviews_showAll";
-    roomInformationUserReviewsShowAll.innerText = `Show all ${room.bookingInfo.reviews.length} reviews`;
-
+    roomInformationUserReviewsShowAll.innerText = room.bookingInfo.reviews.length > 1 
+                                                ? `Show all ${room.bookingInfo.reviews.length} reviews` 
+                                                : `Show all ${room.bookingInfo.reviews.length} review`;
     roomInformationUserReviewsButtonBox.appendChild(roomInformationUserReviewsShowAll);
 
     roomReviews.appendChild(roomReviewsUserReviewsBox);
@@ -5735,6 +5736,7 @@ function roomControllRoomsPage(room, roomData)
         if (window.location.pathname.split("/")[1] == "Rooms")
         {
             let bl = room.getElementsByClassName("room_information_petting_header_controlL")[0];
+            bl.disabled = !bl.disabled;
             let br = room.getElementsByClassName("room_information_petting_header_controlR")[0];
             let carouselBox = room.getElementsByClassName("room_information_petting_carousel")[0];
             let carousel = carouselBox.childNodes[0];
@@ -5756,17 +5758,15 @@ function roomControllRoomsPage(room, roomData)
                 {
                     carousel.scrollTo(scrollValue -= scrollChange, 0);
                     controlNumbers.childNodes[0].data--;
-                    br.style.cursor = "pointer";
-                    br.style.pointerEvents = "auto";
-                    br.style.color = "#8f8f8f";
-                    br.style.borderColor = "#8f8f8f";
 
+                    if (br.disabled == true)
+                    {
+                        br.disabled = !br.disabled;
+                    }
+                    
                     if (controlNumbers.childNodes[0].data == 1)
                     {
-                        bl.style.cursor = "not-allowed";
-                        bl.style.pointerEvents = "none";
-                        bl.style.color = "#dddddd";
-                        bl.style.borderColor = "#dddddd";
+                        bl.disabled = !bl.disabled;
                     }
                 } 
             }
@@ -5781,17 +5781,15 @@ function roomControllRoomsPage(room, roomData)
                 {
                     carousel.scrollTo(scrollValue += scrollChange, 0);
                     controlNumbers.childNodes[0].data++;
-                    bl.style.cursor = "pointer";
-                    bl.style.pointerEvents = "auto";
-                    bl.style.color = "#8f8f8f";
-                    bl.style.borderColor = "#8f8f8f";
+
+                    if (bl.disabled == true)
+                    {
+                        bl.disabled = !bl.disabled;
+                    }
 
                     if (controlNumbers.childNodes[0].data == controlNumbers.childNodes[2].data)
                     {
-                        br.style.cursor = "not-allowed";
-                        br.style.pointerEvents = "none";
-                        br.style.color = "#dddddd";
-                        br.style.borderColor = "#dddddd";
+                        br.disabled = !br.disabled;
                     }
                 }      
             }
@@ -6417,14 +6415,14 @@ function roomControllRoomsPage(room, roomData)
         }
     }
 
-    // i hate my life right now...
-    // i hate calendars they make my head hurt i know i already done everything i need to do but its still pain my brain cant think
+    // i love my life right now...
+    // horrors of calendars are finished now only fun stuff
     function roomControllCalendar()
     {
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
         let moveLeft = room.getElementsByClassName("room_information_calendar_moveL")[0];
-        moveLeft.style.pointerEvents = "none";
+        moveLeft.disabled = !moveLeft.disabled;
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
  
         let date = new Date();
@@ -6660,15 +6658,11 @@ function roomControllRoomsPage(room, roomData)
 
                 if (month == currentMonth && year == currentYear)
                 {
-                    moveLeft.style.cursor = "not-allowed";
-                    moveLeft.style.color = "#8f8f8f";
-                    moveLeft.style.pointerEvents = "none";
+                    moveLeft.disabled = !moveLeft.disabled;
                 }
-                else
+                else if (moveRight.disabled == true)
                 {
-                    moveRight.style.cursor = "pointer";
-                    moveRight.style.color = "black";
-                    moveRight.style.pointerEvents = "";
+                    moveRight.disabled = !moveRight.disabled;
                 }
             } 
         }
@@ -6696,18 +6690,14 @@ function roomControllRoomsPage(room, roomData)
                 createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
         
                 rightButtonClicked = false;
-
+                
                 if ((month == currentMonth && year == currentYear + 2))
                 {
-                    moveRight.style.cursor = "not-allowed";
-                    moveRight.style.color = "#8f8f8f";
-                    moveRight.style.pointerEvents = "none";
+                    moveRight.disabled = !moveRight.disabled;
                 }   
-                else
+                else if (moveLeft.disabled == true)
                 {   
-                    moveLeft.style.cursor = "pointer";
-                    moveLeft.style.color = "black";
-                    moveLeft.style.pointerEvents = "";
+                    moveLeft.disabled = !moveLeft.disabled;
                 }
             }
         }
@@ -6777,37 +6767,255 @@ function roomControllRoomsPage(room, roomData)
 
         dropdown.appendChild(dropdownWindow);
 
-        function guestDropdown()
+        function generateGuestDropdown()
         {
+            let optionsDiv = document.createElement("DIV");
+            optionsDiv.className = "room_modal_guest_dropdown_box";
+
+            let adultsRow = document.createElement("DIV");
+            adultsRow.className = "room_modal_guest_dropdown_row";
+
+            let adultsText = document.createElement("DIV");
+            adultsText.className = "room_modal_guest_dropdown_text_box";
+
+            let adultsTextTop = document.createElement("DIV");
+            adultsTextTop.className = "room_modal_guest_dropdown_textTop";
+            adultsTextTop.innerText = "Adults";
+
+            let adultsTextBottom = document.createElement("DIV");
+            adultsTextBottom.className = "room_modal_guest_dropdown_textBottom";
+            adultsTextBottom.innerText = "Age 13+";
+
+            adultsText.appendChild(adultsTextTop);
+            adultsText.appendChild(adultsTextBottom);
+
+            let adultsControlButtons = document.createElement("DIV");
+            adultsControlButtons.className = "room_modal_guest_dropdown_button_box";
+
+            let adultsDecrementButton = document.createElement("BUTTON");
+            adultsDecrementButton.className = "room_modal_guest_dropdown_decrement_button";
+            adultsDecrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m.75 6.75h10.5v-1.5h-10.5z"></path>
+                                               </svg>`;
+
+            let adultsIncrementButton = document.createElement("BUTTON");
+            adultsIncrementButton.className = "room_modal_guest_dropdown_increment_button";
+            adultsIncrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m6.75.75v4.5h4.5v1.5h-4.5v4.5h-1.5v-4.5h-4.5v-1.5h4.5v-4.5z"></path>
+                                               </svg>`;
+
+            var adultsCounter = document.createElement("SPAN");
+            adultsCounter.innerText = "0";
+
+            adultsDecrementButton.disabled = !adultsDecrementButton.disabled;
+
+            adultsControlButtons.appendChild(adultsDecrementButton);
+            adultsControlButtons.appendChild(adultsCounter);
+            adultsControlButtons.appendChild(adultsIncrementButton);
+
+            adultsRow.appendChild(adultsText);
+            adultsRow.appendChild(adultsControlButtons);
+
+            let childrenRow = document.createElement("DIV");
+            childrenRow.className = "room_modal_guest_dropdown_row";
+
+            let childrenText = document.createElement("DIV");
+            childrenText.className = "room_modal_guest_dropdown_text_box";
+
+            let childrenTextTop = document.createElement("DIV");
+            childrenTextTop.className = "room_modal_guest_dropdown_textTop";
+            childrenTextTop.innerText = "Children";
+
+            let childrenTextBottom = document.createElement("DIV");
+            childrenTextBottom.className = "room_modal_guest_dropdown_textBottom";
+            childrenTextBottom.innerText = "Ages 2-12";
+
+            childrenText.appendChild(childrenTextTop);
+            childrenText.appendChild(childrenTextBottom);
+
+            let childrenControlButtons = document.createElement("DIV");
+            childrenControlButtons.className = "room_modal_guest_dropdown_button_box";
+
+            let childrenDecrementButton = document.createElement("BUTTON");
+            childrenDecrementButton.className = "room_modal_guest_dropdown_decrement_button";
+            childrenDecrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m.75 6.75h10.5v-1.5h-10.5z"></path>
+                                               </svg>`;
+
+            let childrenIncrementButton = document.createElement("BUTTON");
+            childrenIncrementButton.className = "room_modal_guest_dropdown_increment_button";
+            childrenIncrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m6.75.75v4.5h4.5v1.5h-4.5v4.5h-1.5v-4.5h-4.5v-1.5h4.5v-4.5z"></path>
+                                               </svg>`;
+
+            var childrenCounter = document.createElement("SPAN");
+            childrenCounter.innerText = "0";
+
+            childrenDecrementButton.disabled = !childrenDecrementButton.disabled;
             
+            childrenControlButtons.appendChild(childrenDecrementButton);
+            childrenControlButtons.appendChild(childrenCounter);
+            childrenControlButtons.appendChild(childrenIncrementButton);
+
+            childrenRow.appendChild(childrenText);
+            childrenRow.appendChild(childrenControlButtons);
+
+            let infantsRow = document.createElement("DIV");
+            infantsRow.className = "room_modal_guest_dropdown_row";
+
+            let infantsText = document.createElement("DIV");
+            infantsText.className = "room_modal_guest_dropdown_text_box";
+
+            let infantsTextTop = document.createElement("DIV");
+            infantsTextTop.className = "room_modal_guest_dropdown_textTop";
+            infantsTextTop.innerText = "Infants";
+
+            let infantsTextBottom = document.createElement("DIV");
+            infantsTextBottom.className = "room_modal_guest_dropdown_textBottom";
+            infantsTextBottom.innerText = "Under 2";
+
+            infantsText.appendChild(infantsTextTop);
+            infantsText.appendChild(infantsTextBottom);
+
+            let infantsControlButtons = document.createElement("DIV");
+            infantsControlButtons.className = "room_modal_guest_dropdown_button_box";
+
+            let infantsDecrementButton = document.createElement("BUTTON");
+            infantsDecrementButton.className = "room_modal_guest_dropdown_decrement_button";
+            infantsDecrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m.75 6.75h10.5v-1.5h-10.5z"></path>
+                                               </svg>`;
+
+            let infantsIncrementButton = document.createElement("BUTTON");
+            infantsIncrementButton.className = "room_modal_guest_dropdown_increment_button";
+            infantsIncrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m6.75.75v4.5h4.5v1.5h-4.5v4.5h-1.5v-4.5h-4.5v-1.5h4.5v-4.5z"></path>
+                                               </svg>`;
+
+            var infantsCounter = document.createElement("SPAN");
+            infantsCounter.innerText = "0";
+
+            infantsDecrementButton.disabled = !infantsDecrementButton.disabled;
+            
+            infantsControlButtons.appendChild(infantsDecrementButton);
+            infantsControlButtons.appendChild(infantsCounter);
+            infantsControlButtons.appendChild(infantsIncrementButton);
+
+            infantsRow.appendChild(infantsText);
+            infantsRow.appendChild(infantsControlButtons);
+
+            let petsRow = document.createElement("DIV");
+            petsRow.className = "room_modal_guest_dropdown_row";
+
+            let petsText = document.createElement("DIV");
+            petsText.className = "room_modal_guest_dropdown_text_box";
+
+            let petsTextTop = document.createElement("DIV");
+            petsTextTop.className = "room_modal_guest_dropdown_textTop";
+            petsTextTop.innerText = "Pets";
+
+            let petsTextBottom = document.createElement("DIV");
+            petsTextBottom.className = "room_modal_guest_dropdown_textBottom_pets";
+            petsTextBottom.innerText = "Bringing a service animal?";
+
+            petsText.appendChild(petsTextTop);
+            petsText.appendChild(petsTextBottom);
+
+            let petsControlButtons = document.createElement("DIV");
+            petsControlButtons.className = "room_modal_guest_dropdown_button_box";
+
+            let petsDecrementButton = document.createElement("BUTTON");
+            petsDecrementButton.className = "room_modal_guest_dropdown_decrement_button";
+            petsDecrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m.75 6.75h10.5v-1.5h-10.5z"></path>
+                                               </svg>`;
+
+            let petsIncrementButton = document.createElement("BUTTON");
+            petsIncrementButton.className = "room_modal_guest_dropdown_increment_button";
+            petsIncrementButton.innerHTML = `<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="display: block; height: 12px; width: 12px; fill: currentcolor;">
+                                                   <path d="m6.75.75v4.5h4.5v1.5h-4.5v4.5h-1.5v-4.5h-4.5v-1.5h4.5v-4.5z"></path>
+                                               </svg>`;
+
+            var petsCounter = document.createElement("SPAN");
+            petsCounter.innerText = "0";
+             
+            petsControlButtons.appendChild(petsDecrementButton);
+            petsControlButtons.appendChild(petsCounter);
+            petsControlButtons.appendChild(petsIncrementButton);
+
+            petsRow.appendChild(petsText);
+            petsRow.appendChild(petsControlButtons);
+
+            optionsDiv.appendChild(adultsRow);
+            optionsDiv.appendChild(childrenRow);
+            optionsDiv.appendChild(infantsRow);
+            optionsDiv.appendChild(petsRow);
+            
+            let maximumGuestInformation = document.createElement("DIV");
+            maximumGuestInformation.className = "room_modal_guest_dropdown_maximum_guest_number_info";
+
+            if (roomData.bookingInfo.petsAllowed == false)
+            {
+                petsIncrementButton.disabled = !petsIncrementButton.disabled;
+                petsDecrementButton.disabled = !petsDecrementButton.disabled;
+
+                maximumGuestInformation.innerText = roomData.bookingInfo.maximumGuestInformation > 1
+                                                  ? `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guest, not including infants. Pets aren't allowed.`
+                                                  : `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guests, not including infants. Pets aren't allowed.`;
+            }
+            else
+            {
+                petsDecrementButton.disabled = !petsDecrementButton.disabled;
+
+                maximumGuestInformation.innerText = roomData.bookingInfo.maximumGuestInformation > 1
+                                                  ? `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guest, not including infants. Pets are allowed.`
+                                                  : `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guests, not including infants. Pets are allowed.`;
+            }
+
+            let closeButtonDiv = document.createElement("DIV")
+            closeButtonDiv.className = "room_modal_guest_dropdown_close_button_box";
+
+            let closeButton = document.createElement("BUTTON");
+            closeButton.className = "room_modal_guest_dropdown_close_button";
+            closeButton.innerText = "Close";
+
+            closeButtonDiv.appendChild(closeButton);
+
+            dropdownWindow.appendChild(optionsDiv);
+            dropdownWindow.appendChild(maximumGuestInformation);
+            dropdownWindow.appendChild(closeButtonDiv);
+        }
+
+        function controlGuestDropdown()
+        {
             if (dropdown != "" && dropdown != undefined)
             {
                 dropdown.onclick = function(e)
                 {
                     dropdownWindow.style.display = "block";
-                    if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
-                    {
-                        
-                    }
                 }
-
+            
                 document.body.addEventListener("click", function(e)
                 {
                     if (!dropdownWindow.contains(e.target) && !dropdown.contains(e.target) && dropdownWindow.style.display == "block")
                     {
-                        //dropdownWindow.style.display = "none";
+                        dropdownWindow.style.display = "none";
                     }
                 })
-                
-                dropdownWindow.onclick = function(e)
-                {
-                }
             }
         }
 
-        guestDropdown();
+        function controlGuestsValues()
+        {
+
+        }
+
+        generateGuestDropdown();
+        controlGuestDropdown();
+        controlGuestsValues();
     }
 
+    // im not doing that thank you very much
     function roomControllCalendarDropdowns()
     {
         let checkinDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
