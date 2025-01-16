@@ -1,6 +1,7 @@
 ﻿using Airbnb.Models;
 using Catbnb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Airbnb.DBContext
 {
@@ -117,9 +118,20 @@ namespace Airbnb.DBContext
 									 "HOLD CTRL AND TYPE \"WTF\" FOR ℱ𝓪𝓷𝓬𝔂 𝓦𝓣ℱ"];
             bool[] TrueOrFalse = [true, false];
             
+            
             for (int i = 1; i <= 2440; i++)
             {
                 var cityCountryIndex = rng.Next(0, 10);
+                var petCount = 0;
+                var petsAllowed = TrueOrFalse[rng.Next(0, 2)];
+                if (petsAllowed == true)
+                {
+                    petCount = rng.Next(1, 6);
+                }
+                else
+                {
+                    petCount = 0;
+                }
 
                 bookingInfoList.Add(new BookingInfo
                 {
@@ -135,7 +147,8 @@ namespace Airbnb.DBContext
                     NumberOfBeds = rng.Next(1, 17),
                     NumberOfBathrooms = rng.Next(1, 17),
                     MaxNumberOfGuests = rng.Next(1, 17),
-                    PetsAllowed = TrueOrFalse[rng.Next(0, 2)],
+                    PetsAllowed = petsAllowed,
+                    MaxNumberOfPets = petCount,
                     InfantsAllowed = TrueOrFalse[rng.Next(0, 2)],
                 });
             }

@@ -47,6 +47,9 @@ namespace Airbnb.Models
         public bool PetsAllowed { get; set; } = false;
 
         [Required]
+        public int MaxNumberOfPets { get; set; } = 0;
+
+        [Required]
         public bool InfantsAllowed { get; set; } = false;
 
 		public ICollection<Reviews>? Reviews { get; set; }

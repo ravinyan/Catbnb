@@ -2971,7 +2971,7 @@ function removeCalendarsShadows(firstCalendar, secondCalendar, checkinDate, chec
         }
     }
 }
-//
+
 function correctCalendarsShadows(firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
 {
     loop:
@@ -6513,12 +6513,13 @@ function roomControllRoomsPage(room, roomData)
             });
         
             rightButtonClicked = true;
-        
+
             createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
             createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
         
             rightButtonClicked = false;
-
+            debugger;
+            correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
             resizeCalendars();
         }
 
@@ -6761,10 +6762,8 @@ function roomControllRoomsPage(room, roomData)
         })
 
         let dropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0];
-
         let dropdownWindow = document.createElement("DIV");
         dropdownWindow.className = "room_modal_guest_dropdown_window";
-
         dropdown.appendChild(dropdownWindow);
 
         function generateGuestDropdown()
@@ -6805,7 +6804,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var adultsCounter = document.createElement("SPAN");
-            adultsCounter.innerText = "0";
+            adultsCounter.innerText = 1;
 
             adultsDecrementButton.disabled = !adultsDecrementButton.disabled;
 
@@ -6849,7 +6848,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var childrenCounter = document.createElement("SPAN");
-            childrenCounter.innerText = "0";
+            childrenCounter.innerText = 0;
 
             childrenDecrementButton.disabled = !childrenDecrementButton.disabled;
             
@@ -6893,7 +6892,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var infantsCounter = document.createElement("SPAN");
-            infantsCounter.innerText = "0";
+            infantsCounter.innerText = 0;
 
             infantsDecrementButton.disabled = !infantsDecrementButton.disabled;
             
@@ -6937,7 +6936,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var petsCounter = document.createElement("SPAN");
-            petsCounter.innerText = "0";
+            petsCounter.innerText = 0;
              
             petsControlButtons.appendChild(petsDecrementButton);
             petsControlButtons.appendChild(petsCounter);
@@ -6972,10 +6971,10 @@ function roomControllRoomsPage(room, roomData)
                                                   : `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guests, not including infants. Pets are allowed.`;
             }
 
-            let closeButtonDiv = document.createElement("DIV")
+            var closeButtonDiv = document.createElement("DIV")
             closeButtonDiv.className = "room_modal_guest_dropdown_close_button_box";
 
-            let closeButton = document.createElement("BUTTON");
+            var closeButton = document.createElement("BUTTON");
             closeButton.className = "room_modal_guest_dropdown_close_button";
             closeButton.innerText = "Close";
 
@@ -6990,14 +6989,15 @@ function roomControllRoomsPage(room, roomData)
         {
             if (dropdown != "" && dropdown != undefined)
             {
-                dropdown.onclick = function(e)
+                dropdown.onclick = function()
                 {
                     dropdownWindow.style.display = "block";
                 }
             
                 document.body.addEventListener("click", function(e)
                 {
-                    if (!dropdownWindow.contains(e.target) && !dropdown.contains(e.target) && dropdownWindow.style.display == "block")
+                    if ((!dropdownWindow.contains(e.target) && !dropdown.contains(e.target) && dropdownWindow.style.display == "block")
+                    ||  e.target.className == "room_modal_guest_dropdown_close_button")
                     {
                         dropdownWindow.style.display = "none";
                     }
@@ -7007,7 +7007,346 @@ function roomControllRoomsPage(room, roomData)
 
         function controlGuestsValues()
         {
+            let decrementAdults = room.getElementsByClassName("room_modal_guest_dropdown_decrement_button")[0];
+            let incrementAdults = room.getElementsByClassName("room_modal_guest_dropdown_increment_button")[0];
+            let adultsValue = room.getElementsByClassName("room_modal_guest_dropdown_button_box")[0].childNodes[1];
 
+            let decrementChildren = room.getElementsByClassName("room_modal_guest_dropdown_decrement_button")[1];
+            let incrementChildrem = room.getElementsByClassName("room_modal_guest_dropdown_increment_button")[1];
+            let childrenValue = room.getElementsByClassName("room_modal_guest_dropdown_button_box")[1].childNodes[1];
+
+            let decrementInfants = room.getElementsByClassName("room_modal_guest_dropdown_decrement_button")[2];
+            let incrementInfants = room.getElementsByClassName("room_modal_guest_dropdown_increment_button")[2];
+            let infantsValue = room.getElementsByClassName("room_modal_guest_dropdown_button_box")[2].childNodes[1];
+
+            let decrementPets = room.getElementsByClassName("room_modal_guest_dropdown_decrement_button")[3];
+            let incrementPets = room.getElementsByClassName("room_modal_guest_dropdown_increment_button")[3];
+            let petsValue = room.getElementsByClassName("room_modal_guest_dropdown_button_box")[3].childNodes[1];
+
+            let allGuestsValue = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0].childNodes[1];
+            let guests = 1;
+            let infants = "";
+            let pets = "";
+
+            incrementAdults.onclick = function ()
+            {
+                adultsValue.innerText ++;
+
+                if (decrementAdults.disabled == true && adultsValue.innerText > 1)
+                {
+                    decrementAdults.disabled = !decrementAdults.disabled;
+                }
+
+                if ((incrementChildrem.disabled == false || incrementAdults.disabled == false) 
+                &&  (+childrenValue.innerText + +adultsValue.innerText) == roomData.bookingInfo.maxNumberOfGuests)
+                {
+                    incrementAdults.disabled = !incrementAdults.disabled;
+                    incrementChildrem.disabled = !incrementChildrem.disabled;
+                }
+ 
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            decrementAdults.onclick = function ()
+            {
+                adultsValue.innerText --;
+
+                if (decrementAdults.disabled == false && adultsValue.innerText == 1)
+                {
+                    decrementAdults.disabled = !decrementAdults.disabled;
+                }
+
+                if ((incrementChildrem.disabled == true || incrementAdults.disabled == true) 
+                &&  (+childrenValue.innerText + +adultsValue.innerText) != roomData.bookingInfo.maxNumberOfGuests)
+                {
+                    incrementAdults.disabled = !incrementAdults.disabled;
+                    incrementChildrem.disabled = !incrementChildrem.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            incrementChildrem.onclick = function ()
+            {
+                childrenValue.innerText ++;
+
+                if (decrementChildren.disabled == true && childrenValue.innerText > 0)
+                {
+                    decrementChildren.disabled = !decrementChildren.disabled;
+                }
+          
+                if ((incrementChildrem.disabled == false || incrementAdults.disabled == false) 
+                &&  (+childrenValue.innerText + +adultsValue.innerText) == roomData.bookingInfo.maxNumberOfGuests)
+                {
+                    incrementChildrem.disabled = !incrementChildrem.disabled;
+                    incrementAdults.disabled = !incrementAdults.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            decrementChildren.onclick = function ()
+            {
+                childrenValue.innerText --;
+
+                if (decrementChildren.disabled == false && childrenValue.innerText == 0)
+                {
+                    decrementChildren.disabled = !decrementChildren.disabled;
+                }
+
+                if ((incrementChildrem.disabled == true || incrementAdults.disabled == true) 
+                &&  (+childrenValue.innerText + +adultsValue.innerText) != roomData.bookingInfo.maxNumberOfGuests)
+                {
+                    incrementChildrem.disabled = !incrementChildrem.disabled;
+                    incrementAdults.disabled = !incrementAdults.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            incrementInfants.onclick = function ()
+            {
+                infantsValue.innerText++;
+
+                if (decrementInfants.disabled == true && infantsValue.innerText > 0)
+                {
+                    decrementInfants.disabled = !decrementInfants.disabled;
+                }
+
+                if (incrementInfants.disabled == false && infantsValue.innerText == 5)
+                {
+                    incrementInfants.disabled = !incrementInfants.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            decrementInfants.onclick = function ()
+            {
+                infantsValue.innerText --;
+
+                if (decrementInfants.disabled == false && infantsValue.innerText == 0)
+                {
+                    decrementInfants.disabled = !decrementInfants.disabled;
+                }
+
+                if (incrementInfants.disabled == true && infantsValue.innerText != 5)
+                {
+                    incrementInfants.disabled = !incrementInfants.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            incrementPets.onclick = function ()
+            {
+                petsValue.innerText ++;
+
+                if (decrementPets.disabled == true && petsValue.innerText > 0)
+                {
+                    decrementPets.disabled = !decrementPets.disabled;
+                }
+
+                if (incrementPets.disabled == false && petsValue.innerText == roomData.bookingInfo.maxNumberOfPets)
+                {
+                    incrementPets.disabled = !incrementPets.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
+
+            decrementPets.onclick = function ()
+            {
+                petsValue.innerText --;
+
+                if (decrementPets.disabled == false && petsValue.innerText == 0)
+                {
+                    decrementPets.disabled = !decrementPets.disabled;
+                }
+
+                if (incrementPets.disabled == true && petsValue.innerText != roomData.bookingInfo.maxNumberOfPets)
+                {
+                    incrementPets.disabled = !incrementPets.disabled;
+                }
+
+                guests = (+adultsValue.innerText + +childrenValue.innerText) == 1 
+                       ? `${+adultsValue.innerText + +childrenValue.innerText} Guest` 
+                       : `${+adultsValue.innerText + +childrenValue.innerText} Guests`;
+                
+                if (+infantsValue.innerText >= 0)
+                {
+                    infants = infantsValue.innerText == 1
+                            ? `, ${infantsValue.innerText} Infant`
+                            :  infantsValue.innerText > 1
+                            ? `, ${infantsValue.innerText} Infants`
+                            : "";
+                }
+
+                if (+petsValue.innerText >= 0)
+                {
+                    pets = petsValue.innerText == 1
+                         ? `, ${petsValue.innerText} Pet`
+                         : petsValue.innerText > 1
+                         ? `, ${petsValue.innerText} Pets`
+                         : "";
+                }
+
+                allGuestsValue.innerText = `${guests}${infants}${pets}`;
+            }
         }
 
         generateGuestDropdown();
