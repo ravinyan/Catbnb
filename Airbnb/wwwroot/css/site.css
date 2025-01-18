@@ -2158,6 +2158,12 @@ button.room_pricing_flying_rectangle_reservation_button_guest {
     position: relative;
 }
 
+div.room_pricing_flying_rectangle_reservation_button_guest_svg {
+    position: absolute;
+    right: 15px;
+    top: 19px;
+}
+
 div.room_pricing_flying_rectangle_reservation_buttons_text {
     font-weight: bold;
 }

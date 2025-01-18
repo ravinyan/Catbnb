@@ -1324,6 +1324,11 @@ var monthsBlockPreviousSelectedEndYear = "";
 
 const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStartDate");
 const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
+//  room calendar stuff i give up
+var selectedStartDay = document.createElement(null);
+selectedStartDay.innerText = day + 12;
+let selectedEndDay = document.createElement(null);
+selectedEndDay.innerText = date.getDate(date.setDate(day + 14));
 
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -1566,6 +1571,22 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                         div.style.color = "white";
                         addedCheckoutDate = true;
                     }
+                    else if (calendarId.className == "room_information_calendar1" && +checkinDate.innerText == x
+                         &&  checkinMonth == month && checkinYear == year)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedStartDay = div;
+                        selectedStartDay.innerText = x;
+                    }
+                    else if (calendarId.className == "room_information_calendar1" && +checkoutDate.innerText == x 
+                         &&  checkoutMonth == month && checkoutYear == year)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedEndDay = div;
+                        selectedEndDay.innerText = x;
+                    }
                     else
                     {
                         div.innerText = x;
@@ -1575,7 +1596,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
-   
+
             td.appendChild(div);     
             tr.appendChild(td);
         }
@@ -1716,6 +1737,15 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                         addedCheckoutDate = true;
+                    }
+                    else if (calendarId.className == "room_information_calendar2" && +checkoutDate.innerText == x && checkoutMonth == nextMonth
+                         &&  checkoutYear == nextYear && checkoutDate.tagName != "DIV")
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedEndDay = div;
+                        selectedEndDay.innerText = x;
+                        
                     }
                     else
                     {
@@ -5446,8 +5476,15 @@ function roomGenerateRoomsPage(room)
     let roomPricingFlyingRectangleReservationButtonsDateNoClass3  = document.createElement("DIV");
     roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `1 guest`;
 
+    let roomPricingFlyingRectangleReservationButtonGuestSVG = document.createElement("DIV");
+    roomPricingFlyingRectangleReservationButtonGuestSVG.className = "room_pricing_flying_rectangle_reservation_button_guest_svg";
+    roomPricingFlyingRectangleReservationButtonGuestSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
+                                                                         <path fill="none" d="M28 12 16.7 23.3a1 1 0 0 1-1.4 0L4 12"></path>
+                                                                     </svg>`;
+
     roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsText3);
     roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonsDateNoClass3);
+    roomPricingFlyingRectangleReservationButtonGuest.appendChild(roomPricingFlyingRectangleReservationButtonGuestSVG);
 
     roomPricingFlyingRectangleReservationBox2.appendChild(roomPricingFlyingRectangleReservationButtonGuest);
 
@@ -6415,8 +6452,6 @@ function roomControllRoomsPage(room, roomData)
         }
     }
 
-    // i love my life right now...
-    // horrors of calendars are finished now only fun stuff
     function roomControllCalendar()
     {
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
@@ -6428,14 +6463,10 @@ function roomControllRoomsPage(room, roomData)
         let date = new Date();
         let day = date.getDate();
 
-        let selectedStartDay = document.createElement(null);
-        selectedStartDay.innerText = day;
         let selectedStartMonth = date.getMonth();
         let selectedStartYear = date.getFullYear();
 
-        let selectedEndDay = document.createElement(null);
-        selectedEndDay.innerText = date.getDate(date.setDate(day + 2));
-        let selectedEndMonth = date.getMonth();
+        let selectedEndMonth = date.getMonth(date.setDate((day +12)+ 2));
         let selectedEndYear = date.getFullYear();
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
@@ -6496,7 +6527,7 @@ function roomControllRoomsPage(room, roomData)
 
         function initializeCalendars(firstCalendar, secondCalendar)
         {
-            month = currentMonth;
+            month = currentMonth - 1;
             year = currentYear;
            
             const monthNames = room.querySelectorAll(".month_name");
@@ -6516,13 +6547,13 @@ function roomControllRoomsPage(room, roomData)
 
             createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
             createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-        
+
             rightButtonClicked = false;
-            debugger;
+
             correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
             resizeCalendars();
         }
-
+        
         initializeCalendars(calendar1, calendar2);
 
         function datesCSSValitation()
@@ -7354,25 +7385,11 @@ function roomControllRoomsPage(room, roomData)
         controlGuestsValues();
     }
 
-    // im not doing that thank you very much
-    function roomControllCalendarDropdowns()
-    {
-        let checkinDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
-        let checkoutDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
-    }
-
-    function roomControllGuestsDropdown()
-    {
-        let guestDropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0];
-    }
-
     roomControllDescriptionShowMore();
     roomControllImageCarousel();
     roomControllShowAllAmenities();
     roomControllShowAllReviews();
-    
     roomControllCalendar();
-
 }
 
 
