@@ -1326,9 +1326,9 @@ const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStart
 const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
 //  room calendar stuff i give up
 var selectedStartDay = document.createElement(null);
-selectedStartDay.innerText = day + 12;
+selectedStartDay.innerText = day;
 let selectedEndDay = document.createElement(null);
-selectedEndDay.innerText = date.getDate(date.setDate(day + 14));
+selectedEndDay.innerText = date.getDate(date.setDate(day + 5));
 
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -1739,13 +1739,12 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         addedCheckoutDate = true;
                     }
                     else if (calendarId.className == "room_information_calendar2" && +checkoutDate.innerText == x && checkoutMonth == nextMonth
-                         &&  checkoutYear == nextYear && checkoutDate.tagName != "DIV")
+                         &&  checkoutYear == nextYear)
                     {
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                         selectedEndDay = div;
                         selectedEndDay.innerText = x;
-                        
                     }
                     else
                     {
@@ -2059,6 +2058,18 @@ function applyShadowBetweenDates(currentCalendar, firstCalendar, secondCalendar,
             {
                 otherCalendar = calendar2Experiences;
             }
+        }
+    }
+
+    if (otherCalendar == null)
+    {
+        if (currentCalendar.className == "room_information_calendar1")
+        {
+            otherCalendar = document.getElementsByClassName("room_information_calendar2")[0];
+        }
+        else if (currentCalendar.className == "room_information_calendar2")
+        {
+            otherCalendar = document.getElementsByClassName("room_information_calendar1")[0];
         }
     }
 
@@ -4242,18 +4253,18 @@ function initializeDatesCalendars(firstCalendar, secondCalendar)
     month = currentMonth - 1;
     year = currentYear;
    
-    const monthNames = document.querySelectorAll(".month_name");
-    const tables = document.querySelectorAll(".nothing");
-   
-    monthNames.forEach(function(e)
-    {
-        e.remove();
-    });
-   
-    tables.forEach(function(e)
-    {
-        e.remove();
-    });
+    //const monthNames = document.querySelectorAll(".month_name");
+    //const tables = document.querySelectorAll(".nothing");
+    //
+    //monthNames.forEach(function(e)
+    //{
+    //    e.remove();
+    //});
+    //
+    //tables.forEach(function(e)
+    //{
+    //    e.remove();
+    //});
 
     rightButtonClicked = true;
 
@@ -4940,9 +4951,8 @@ function roomGenerateRoomsPage(room)
     let roomHeaderTopText = document.createElement("DIV");
     roomHeaderTopText.className = "room_header_topText";
     roomHeaderTopText.innerText = room.bookingInfo.maxNumberOfGuests == 1 
-                                ? `Cozy cat on the water(?) for ${room.bookingInfo.maxNumberOfGuests} person`
-                                : `Cozy cat on the water(?) for ${room.bookingInfo.maxNumberOfGuests} people`;
-                                // STILL DB DATA FOR WHERE CAT IS
+                                ? `Cozy cat to pet for ${room.bookingInfo.maxNumberOfGuests} person`
+                                : `Cozy cats to pet for ${room.bookingInfo.maxNumberOfGuests} people`;
 
     let roomHeaderButtons = document.createElement("DIV");
     roomHeaderButtons.className = "room_header_buttons";
@@ -5053,7 +5063,7 @@ function roomGenerateRoomsPage(room)
 
     let roomInformationStayLocation = document.createElement("DIV");
     roomInformationStayLocation.className = "room_information_stay_location";
-    let locationString = `Entire Cat in ${room.bookingInfo.city}, ${room.bookingInfo.country}`;
+    let locationString = `Cat Petting in ${room.bookingInfo.city}, ${room.bookingInfo.country}`;
     roomInformationStayLocation.innerText = locationString;
 
     let roomInformationStayLiving = document.createElement("DIV");
@@ -5171,9 +5181,13 @@ function roomGenerateRoomsPage(room)
     roomInformationHeader.appendChild(roomInformationReviews);
     roomInformationHeader.appendChild(roomInformationHost);
 
-    //  high ame
+    //  high ame - not doing db stuff here coz it would be (in my opinion) best done with accounts implenented where user pick 
+    //  these himself from selection of customizable options... and im not implementing accounts in this project
     let roomInformationHighlightAmenities = document.createElement("DIV");
     roomInformationHighlightAmenities.className = "room_information_highlightAmenities";
+
+    let highlightTopArray = ["Dedicated workspace", "Peace and quiet", "At-home coffee"];
+    let highlightBottomArray = ["A room with wifi that’s well-suited for working.", "This home is in quiet area.", "Start your morning right with the espresso machine."];
 
     for (i = 0; i < 3; i++)
     {
@@ -5187,11 +5201,11 @@ function roomGenerateRoomsPage(room)
 
         let roomInformationHighlightTop = document.createElement("DIV");
         roomInformationHighlightTop.className = "room_information_highlight_top";
-        roomInformationHighlightTop.innerText = "Free cancellation before something"; // DB DATA
+        roomInformationHighlightTop.innerText = highlightTopArray[i];
 
         let roomInformationHighlightBottom = document.createElement("DIV");
         roomInformationHighlightBottom.className = "room_information_highlight_bottom";
-        roomInformationHighlightBottom.innerText = "Get a full refund if you change your mind."; // DB DATA
+        roomInformationHighlightBottom.innerText = highlightBottomArray[i];
 
         roomInformationHighlightNoClassDiv.appendChild(roomInformationHighlightTop);
         roomInformationHighlightNoClassDiv.appendChild(roomInformationHighlightBottom);
@@ -5277,7 +5291,7 @@ function roomGenerateRoomsPage(room)
 
         let roomInformationPettingImage = document.createElement("IMG");
         roomInformationPettingImage.className = "room_information_petting_image";
-        roomInformationPettingImage.src = "/img/Aldentge.webp";
+        roomInformationPettingImage.src = "https://images.dog.ceo/breeds/pomeranian/n02112018_7019.jpg"; // cute cat! very cat!
 
         let roomInformationPettingImageTopText = document.createElement("DIV");
         roomInformationPettingImageTopText.className = "room_information_petting_image_topText";
@@ -5478,7 +5492,7 @@ function roomGenerateRoomsPage(room)
 
     let roomPricingFlyingRectangleReservationButtonGuestSVG = document.createElement("DIV");
     roomPricingFlyingRectangleReservationButtonGuestSVG.className = "room_pricing_flying_rectangle_reservation_button_guest_svg";
-    roomPricingFlyingRectangleReservationButtonGuestSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
+    roomPricingFlyingRectangleReservationButtonGuestSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible; transition: 0.3s">
                                                                          <path fill="none" d="M28 12 16.7 23.3a1 1 0 0 1-1.4 0L4 12"></path>
                                                                      </svg>`;
 
@@ -5504,7 +5518,7 @@ function roomGenerateRoomsPage(room)
 
     let roomPricingFlyingRectangleNoCharge = document.createElement("DIV");
     roomPricingFlyingRectangleNoCharge.className = "room_pricing_flying_rectangle_noCharge";
-    roomPricingFlyingRectangleNoCharge.innerText = "You won't be charged yet";
+    roomPricingFlyingRectangleNoCharge.innerText = "You won't be charged (there is no feature for that)";
 
     let roomPricingFlyingRectanglePricing = document.createElement("DIV");
     roomPricingFlyingRectanglePricing.className = "room_pricing_flying_rectangle_pricing";
@@ -5728,6 +5742,21 @@ roomFetchRoomDataAndGenerateRoomHTML();
 
 function roomControllRoomsPage(room, roomData)
 { 
+    let shareButton = room.getElementsByClassName("room_header_share_box")[0];
+    let saveButton = room.getElementsByClassName("room_header_save_box")[0];
+
+    shareButton.onclick = function()
+    {
+        navigator.clipboard.writeText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        alert("Copied URL");
+    }
+
+    saveButton.onclick = function()
+    {
+        navigator.clipboard.writeText(window.location.origin + window.location.pathname);
+        alert("Copied page URL");
+    }
+
     function roomControllDescriptionShowMore()
     {
         let showMoreDescriptionButton = room.getElementsByClassName("room_information_description_showMore_button")[0];
@@ -6240,7 +6269,7 @@ function roomControllRoomsPage(room, roomData)
                 filterDropdownText.innerText = "Most recent";
 
                 let filterDropdownSVG = document.createElement("SVG");
-                filterDropdownSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 12px; width: 12px; stroke: black; stroke-width: 5.33333; overflow: visible; margin-inline-start: 10px;">
+                filterDropdownSVG.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="display: block; fill: none; height: 12px; width: 12px; stroke: black; stroke-width: 5.33333; overflow: visible; margin-inline-start: 10px; transition: 0.3s">
                                                    <path fill="none" d="M28 12 16.7 23.3a1 1 0 0 1-1.4 0L4 12"></path>
                                                </svg>`;
 
@@ -6310,6 +6339,7 @@ function roomControllRoomsPage(room, roomData)
                     if (e.target.className != "room_modal_reviews_dropdown_filter_window_item")
                     {
                         dropdownWindow.style.display = "block";
+                        filterDropdown.childNodes[1].childNodes[0].style.transform = "rotate(180deg)";
                     }
                 }
 
@@ -6318,6 +6348,7 @@ function roomControllRoomsPage(room, roomData)
                     if (!dropdownWindow.contains(e.target) && !filterDropdown.contains(e.target) && dropdownWindow.style.display == "block")
                     {
                         dropdownWindow.style.display = "none";
+                        filterDropdown.childNodes[1].childNodes[0].style.transform = "rotate(0deg)";
                     }
                 })
                 
@@ -6356,6 +6387,7 @@ function roomControllRoomsPage(room, roomData)
                         }
 
                         dropdownWindow.style.display = "none";
+                        filterDropdown.childNodes[1].childNodes[0].style.transform = "rotate(0deg)";
                     }
                 }
 
@@ -6466,7 +6498,7 @@ function roomControllRoomsPage(room, roomData)
         let selectedStartMonth = date.getMonth();
         let selectedStartYear = date.getFullYear();
 
-        let selectedEndMonth = date.getMonth(date.setDate((day +12)+ 2));
+        let selectedEndMonth = date.getMonth(date.setDate((day) + 5));
         let selectedEndYear = date.getFullYear();
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
@@ -6476,6 +6508,9 @@ function roomControllRoomsPage(room, roomData)
 
         let calendars = room.getElementsByClassName("room_information_calendar_box")[0];
         let alternateDates = true;
+
+        let pricingForNights = room.getElementsByClassName("room_pricing_flying_rectangle_pricing_row")[0];
+        let pricingTotal = room.getElementsByClassName("room_pricing_flying_rectangle_pricing_total")[0];
 
         function resizeCalendars()
         {
@@ -6544,7 +6579,7 @@ function roomControllRoomsPage(room, roomData)
             });
         
             rightButtonClicked = true;
-
+            
             createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
             createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
 
@@ -6572,6 +6607,7 @@ function roomControllRoomsPage(room, roomData)
                 catch{}
         
                 selectedEndDay = document.createElement(null);
+                checkoutButton.childNodes[1].innerText = `Add date`;
             }
             else if (alternateDates == true)
             {
@@ -6586,9 +6622,9 @@ function roomControllRoomsPage(room, roomData)
                 }
                 catch{}
                 
-                selectedStartDay = selectedEndDay;
-                selectedEndDay = document.createElement(null);
-                alternateDates = false;
+                selectedStartDay = document.createElement(null);
+                checkinButton.childNodes[1].innerText = `Add date`;
+                alternateDates = true;
             }
         }
 
@@ -6660,6 +6696,18 @@ function roomControllRoomsPage(room, roomData)
                 else if ((selectedStartYear > selectedEndYear))
                 {
                     datesCSSValitation();
+                }
+
+                if (selectedStartDay.tagName == "DIV" && selectedEndDay.tagName == "DIV")
+                {
+                    let start = new Date(selectedStartYear, months.indexOf(selectedStartMonth), +selectedStartDay.innerText);
+                    let end = new Date(selectedEndYear, months.indexOf(selectedEndMonth), +selectedEndDay.innerText);
+                    let timeDiff = Math.abs(start - end);
+                    let daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                    pricingForNights.childNodes[0].innerText = `$${roomData.bookingInfo.basePrice} x ${daysDiff} nights`;
+                    pricingForNights.childNodes[1].innerText = `$${roomData.bookingInfo.basePrice * daysDiff}`;
+                    pricingTotal.childNodes[1].innerText = `$${roomData.bookingInfo.basePrice * daysDiff + roomData.bookingInfo.cleaningFee + 200}`;
                 }
             }
         }
@@ -6737,12 +6785,14 @@ function roomControllRoomsPage(room, roomData)
         moveLeft.onclick = function()
         {
             moveCalendarLeft();
+            correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
             resizeCalendars();
         }
 
         moveRight.onclick = function()
         {
             moveCalendarRight();
+            correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
             resizeCalendars();
         }
 
@@ -7023,6 +7073,7 @@ function roomControllRoomsPage(room, roomData)
                 dropdown.onclick = function()
                 {
                     dropdownWindow.style.display = "block";
+                    dropdown.childNodes[2].childNodes[0].style.transform = "rotate(180deg)";
                 }
             
                 document.body.addEventListener("click", function(e)
@@ -7031,6 +7082,7 @@ function roomControllRoomsPage(room, roomData)
                     ||  e.target.className == "room_modal_guest_dropdown_close_button")
                     {
                         dropdownWindow.style.display = "none";
+                        dropdown.childNodes[2].childNodes[0].style.transform = "rotate(0deg)";
                     }
                 })
             }

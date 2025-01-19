@@ -1478,7 +1478,12 @@ button.room_header_share_box {
     text-decoration: underline;
     border: none;
     background: white;
+    border-radius: 10px;
 }
+
+    button.room_header_share_box:hover {
+        background: #e8e8e8;
+    }
 
 button.room_header_save_box {
     display: flex;
@@ -1487,7 +1492,12 @@ button.room_header_save_box {
     text-decoration: underline;
     border: none;
     background: white;
+    border-radius: 10px;
 }
+
+    button.room_header_save_box:hover {
+        background: #e8e8e8;
+    }
 
 div.room_images {
     display: flex;
@@ -2178,12 +2188,15 @@ button.room_pricing_flying_rectangle_reservation_reserveButton {
     border-radius: 10px;
 }
 
+    button.room_pricing_flying_rectangle_reservation_reserveButton:hover {
+        background: #bb0000;
+    }
+
 div.room_pricing_flying_rectangle_noCharge {
     text-align: center;
     font-weight: bold;
     margin: 10px 0px;
     font-size: 14px;
-    white-space: nowrap;
 }
 
 div.room_pricing_flying_rectangle_pricing {
