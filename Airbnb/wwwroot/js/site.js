@@ -4604,7 +4604,7 @@ function generateCatCards(card)
 
     let heartSVGInnerBox = document.createElement("DIV");
     heartSVGInnerBox.className = "cat_card_heart_box2";
-    heartSVGInnerBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="stroke: white" width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+    heartSVGInnerBox.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" style="stroke-width: 2; stroke: white" width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
                                       <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
                                   </svg>`;
 
@@ -4724,8 +4724,12 @@ function generateCatCards(card)
 
     let starRating = document.createElement("SPAN")
     starRating.className = "cat_card_stars_rating";
-    starRating.innerText = "6";
 
+    let starRatingTotal = 0;
+    card.bookingInfo.reviews.forEach(e => starRatingTotal += e.starRating)
+    starRatingTotal = starRatingTotal / card.bookingInfo.reviews.length;
+
+    starRating.innerText = starRatingTotal.toFixed(2);
     starRatingBox.appendChild(starRating);
 
     cityInfo.appendChild(cityBox);
@@ -4788,6 +4792,24 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
         var timeTaken = end - start;
         console.log(timeTaken)
     }
+})
+
+document.addEventListener("click", function(e)
+{
+    if (window.location.pathname == "/" || window.location.pathname == "/home")
+    {
+        if (e.target.tagName == "path" && e.target.parentElement.parentElement.className == "cat_card_heart_box2")
+        {  
+            if (window.getComputedStyle(e.target.parentElement.parentElement).color == "rgb(0, 0, 0)")
+            {
+                e.target.parentElement.parentElement.style.color = "rgb(245, 2, 200)"
+            }
+            else if (window.getComputedStyle(e.target.parentElement.parentElement).color == "rgb(245, 2, 200)")
+            {
+                e.target.parentElement.parentElement.style.color = "rgb(0, 0, 0)";
+            }
+        }
+    } 
 })
 
 function renderCatCardsOnRefresh()
@@ -5742,19 +5764,34 @@ roomFetchRoomDataAndGenerateRoomHTML();
 
 function roomControllRoomsPage(room, roomData)
 { 
-    let shareButton = room.getElementsByClassName("room_header_share_box")[0];
     let saveButton = room.getElementsByClassName("room_header_save_box")[0];
+    let shareButton = room.getElementsByClassName("room_header_share_box")[0];
+    let popupMessage1 = room.getElementsByClassName("room_popup_block1")[0];
+    let popupMessage2 = room.getElementsByClassName("room_popup_block2")[0];
 
-    shareButton.onclick = function()
-    {
-        navigator.clipboard.writeText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-        alert("Copied URL");
-    }
+    saveButton.appendChild(popupMessage1);
+    shareButton.appendChild(popupMessage2);
 
     saveButton.onclick = function()
     {
         navigator.clipboard.writeText(window.location.origin + window.location.pathname);
-        alert("Copied page URL");
+
+        popupMessage1.style.display = "block";
+        setTimeout(() => 
+        {
+            popupMessage1.style.display = "none";
+        }, 3000);
+    }
+
+    shareButton.onclick = function()
+    {
+        navigator.clipboard.writeText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
+        popupMessage2.style.display = "block";
+        setTimeout(() => 
+        {
+            popupMessage2.style.display = "none";
+        }, 3000);
     }
 
     function roomControllDescriptionShowMore()

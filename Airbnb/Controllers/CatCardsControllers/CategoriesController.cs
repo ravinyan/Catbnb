@@ -25,7 +25,7 @@ namespace Airbnb.Controllers.CatCardsControllers
         public async Task<ActionResult<Categories>> GetCategory(int id)
         {
             var category = await _context.Categories
-                .Include(cc => cc.CatCards)!.ThenInclude(bi => bi.BookingInfo)
+                .Include(cc => cc.CatCards)!.ThenInclude(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews)
                 .Include(cc => cc.CatCards)!.ThenInclude(i => i.Images)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
