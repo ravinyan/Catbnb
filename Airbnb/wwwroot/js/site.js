@@ -950,6 +950,46 @@ addGuestsButton.onclick = function()
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------WHERE FORM + EXPERIENCES FORM---------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+var whereInput = document.getElementById("WhereInput");
+var whereInputExperiences = document.getElementById("WhereInputExperiences");
+
+document.getElementById("WhereDropdown").addEventListener("click", function(e)
+{
+    if (e.target.className == "image_box")
+    {
+        let text = e.target.parentElement.parentElement.childNodes[3].innerText;
+
+        if (text != "I'm flexible")
+        {
+            whereInput.value = text;
+        }
+        else
+        {
+            whereInput.value = "";
+        }
+    }
+})
+
+document.getElementById("WhereDropdownExperiences").addEventListener("click", function(e)
+{
+    if (e.target.className == "image_box")
+    {
+        let text = e.target.parentElement.parentElement.childNodes[3].innerText;
+
+        if (text != "I'm flexible")
+        {
+            whereInputExperiences.value = text;
+        }
+        else
+        {
+            whereInputExperiences.value = "";
+        }
+    }
+})
+
+/*--------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------WHO FORM DROPDOWN WINDOW/FORM--------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 const adultsCount = document.getElementById("AdultsCount");
@@ -1771,6 +1811,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
+// fix this when i feel better
 staysMenuButton.addEventListener("click", function()
 {
     initializeDatesCalendars(calendar, calendar2);
@@ -4253,18 +4294,18 @@ function initializeDatesCalendars(firstCalendar, secondCalendar)
     month = currentMonth - 1;
     year = currentYear;
    
-    //const monthNames = document.querySelectorAll(".month_name");
-    //const tables = document.querySelectorAll(".nothing");
-    //
-    //monthNames.forEach(function(e)
-    //{
-    //    e.remove();
-    //});
-    //
-    //tables.forEach(function(e)
-    //{
-    //    e.remove();
-    //});
+    const monthNames = document.querySelectorAll(".month_name");
+    const tables = document.querySelectorAll(".nothing");
+    
+    monthNames.forEach(function(e)
+    {
+        e.remove();
+    });
+    
+    tables.forEach(function(e)
+    {
+        e.remove();
+    });
 
     rightButtonClicked = true;
 
@@ -4565,6 +4606,11 @@ function changeURIQueryString(e)
 {
     if (history.pushState && e.target.tagName == "A")
     {
+        let whereQuery = whereInput;
+        let checkinQuery = checkinFormInput;
+        let checkoutQuery = checkoutFormInput;
+        let whoQuery = formGuestsInput;
+
         let queryString = `?category=${e.target.innerText}`;
     
         var newurl = window.location.origin + window.location.pathname + queryString;
@@ -4838,6 +4884,9 @@ function renderCatCardsOnRefresh()
 
 renderCatCardsOnRefresh();
 
+/*--------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------ROOM PAGE------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 function roomGenerateRoomsPageCalendars()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
@@ -4959,7 +5008,7 @@ function roomCalendarResize()
 
 roomCalendarResize();
 
-//  so... you like readable code huh? well yea how about you go read a book instead coz this code aint readable bro
+//  so... you like readable code huh? well yea how about you go read a book instead coz this code aint readable (at least for me)
 function roomGenerateRoomsPage(room)
 {
     let roomPage = document.createElement("DIV");
