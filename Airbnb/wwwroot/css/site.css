@@ -755,17 +755,17 @@ div.scrollmenu {
     grid-column-gap: 15px;
 }
 
-    div.scrollmenu a {
-        opacity: 0.65;
-        color: black;
-        text-align: center;
-        text-decoration: none;
-        user-select: none;
-    }
+a.scrollmenu_button {
+    color: #7d7d7d;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    font-weight: 600;
+}
 
-        div.scrollmenu a:hover {
-            opacity: 1;
-        }
+    a.scrollmenu_button:hover {
+        color: black !important;
+    }
 
 button.filter {
     min-width: 100px;
@@ -1048,8 +1048,7 @@ div.my_head_exploded {
 div.grid_but_with_flex_boxes_coz_i_HATE_grid_scaling_stuff_coz_i_dont_understand_it {
     display: flex;
     flex-wrap: wrap;
-    padding-inline-start: 40px;
-    padding-inline-end: 40px;
+    padding: 20px 40px;
     gap: 20px;
     --a: calc(100% - 6px*2);
     --c: 16px;

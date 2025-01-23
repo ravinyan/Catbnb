@@ -4477,16 +4477,18 @@ function generateQueryStringURI()
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 // this should be the last thing to render on page to not block ui and other stuff from rendering
-const categoriesCards = ["", "Icons", "Lakefront", "Cabins", "Amazing views", "Top of the world", "Design", "Amazing pools", "Beachfront", 
-                         "Tiny homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
-                         "Domes", "Off-the-grid", "Camping", "Rooms", "National parks", "Castles", "Luxe", "Vineyards", "Islands", 
-                         "Top cities", "Caves", "Historical homes", "Barns", "Earth homes", "Play", "Containers", "A-frames", 
-                         "Bed & breakfasts", "New", "Chef's kitchens", "Towers", "ski-in/out", "Creative spaces", "Yurts", "Arctic", 
-                         "Desert", "Windmils", "Trulli", "Cycladic homes", "Adapted", "Casas particulares", "Grand pianos", "Dammusi",
-                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's huts", "Beach", "Lake"]
+const categoriesCards = ["", "Icons", "Lakefront", "Cabins", "Amazing%20views", "Top%20of%20the%20world", "Design", "Amazing%20pools", "Beachfront", 
+                         "Tiny%20homes", "Countryside", "OMG!", "Farms", "Treehouses", "Tropical", "Houseboats", "Mansions", "Boats", 
+                         "Domes", "Off-the-grid", "Camping", "Rooms", "National%20parks", "Castles", "Luxe", "Vineyards", "Islands", 
+                         "Top%20cities", "Caves", "Historical%20homes", "Barns", "Earth%20homes", "Play", "Containers", "A-frames", 
+                         "Bed%20%26%20breakfasts", "New", "Chef's%20kitchens", "Towers", "ski-in%2Fout", "Creative%20spaces", "Yurts", "Arctic", 
+                         "Desert", "Windmils", "Trulli", "Cycladic%20homes", "Adapted", "Casas%20particulares", "Grand%20pianos", "Dammusi",
+                         "Riads", "Skiing", "Campers", "Surfing", "Golfing", "Hanoks", "Minsus", "Ryokans", "Shepherd's%20huts", "Beach", "Lake"]
 var queryString = new URLSearchParams(window.location.search);
 var controller = new AbortController();
 var signal =  controller.signal;
+var loaderCatCards = document.getElementById("LoaderCatCards");
+var loaderRoom = document.getElementById("LoaderRooms");
 
 function catCardCarouselControl()
 {
@@ -4611,7 +4613,7 @@ function changeURIQueryString(e)
         let checkoutQuery = checkoutFormInput;
         let whoQuery = formGuestsInput;
 
-        let queryString = `?category=${e.target.innerText}`;
+        let queryString = `?category=${encodeURIComponent(e.target.innerText)}`;
     
         var newurl = window.location.origin + window.location.pathname + queryString;
         window.history.pushState({path:newurl},'',newurl);
@@ -4816,24 +4818,40 @@ function generateCatCards(card)
 
 async function fetchNeededCatCards(queryValue)
 {
-    const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal});
-    const categoriesJson = await categoriesData.json();
+    loaderCatCards.style.display = "flex";
 
+    const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
+    const categoriesJson = await categoriesData.json();
+    
     categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
+
+    loaderCatCards.style.display = "none";
 }
 
 document.getElementById("ScrollMenu").addEventListener("click", function(e)
 {
     if (e.target.tagName == "A")
     {  
+        for (i = 0; i < scrollMenu.childNodes.length; i++)
+        {
+            if (scrollMenu.childNodes[i].tagName == "A")
+            {
+                scrollMenu.childNodes[i].style.color = "#7d7d7d";
+            }
+        }
+ 
+        e.target.style.color = "black";
+
         document.getElementById("DisplayText3").innerHTML = "";
         var start = performance.now();
 
         queryString = changeURIQueryString(e);
         var queryValue = queryString.get("category");
-        
-        fetchNeededCatCards(queryValue);
+        queryValue = encodeURIComponent(queryValue);
 
+        fetchNeededCatCards(queryValue);
+        
+        DisplayText3.innerText;
         var end = performance.now();
         var timeTaken = end - start;
         console.log(timeTaken)
@@ -4866,9 +4884,19 @@ function renderCatCardsOnRefresh()
 
         queryString = new URLSearchParams(window.location.search);
         var queryValue = queryString.get("category");
+        queryValue = encodeURIComponent(queryValue);
 
         if (queryValue != null)
         {
+            for (i = 0; i < scrollMenu.childNodes.length; i++)
+            {
+                if (scrollMenu.childNodes[i].tagName == "A" && scrollMenu.childNodes[i].innerText == queryValue)
+                {
+                    scrollMenu.childNodes[i].style.color = "black";
+                    break;
+                }
+            }
+
             fetchNeededCatCards(queryValue)
         }
         else
@@ -5794,15 +5822,18 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
 
-        const roomData = await fetch(`api/CatCard/${roomPageId}`);
+        loaderRoom.style.display = "flex";
+
+        const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
         const roomJson = await roomData.json();
-        console.log(roomJson)
 
         roomGenerateRoomsPage(roomJson);
 
         let room = document.getElementById("RoomContent");
         roomControllRoomsPage(room, roomJson);
-        
+
+        loaderRoom.style.display = "none";
+
         var end = performance.now();
         var timeTaken = end - start;
         console.log(timeTaken)
