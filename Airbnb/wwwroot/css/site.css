@@ -767,13 +767,13 @@ a.scrollmenu_button {
         color: black !important;
     }
 
+/* -------------------------------------- FILTER CLASSES -------------------------------------- */
 button.filter {
     min-width: 100px;
     min-height: 50px;
     border-radius: 15px;
 }
 
-/* filter modal */
 div.filter_button_box {
     border-block-end: 0.5px solid #dddddd;
     padding: 25px;
@@ -1043,7 +1043,7 @@ div.my_head_exploded {
     top: 0px;
 }
 
-/* CAT CARD CLASSES */
+/* -------------------------------------- CAT CARD CLASSES -------------------------------------- */
 /* yes i copied stuff from certain popular website and i feel good about it */
 div.grid_but_with_flex_boxes_coz_i_HATE_grid_scaling_stuff_coz_i_dont_understand_it {
     display: flex;
@@ -1404,6 +1404,7 @@ img.cat_card_image {
     left: 0px;
     right: 0px;
     scroll-snap-align: start;
+    aspect-ratio: 1 / 1;
 }
 
 /* info box stuff */
@@ -1450,7 +1451,8 @@ div.spacing {
     height: 90px;
 }
 
-/* ROOMS!!! wow thats a lot of lines of css... wow*/
+/* -------------------------------------- ROOM CLASSES -------------------------------------- */
+/* wow thats a lot of lines of css... wow */
 div.room {
     padding: 0px 30px;
 }
@@ -1549,6 +1551,7 @@ img.room_images_image {
     object-fit: cover;
     width: 100%;
     border-radius: 10px;
+    aspect-ratio: 1 / 1;
 }
 
 div.room_information_section {

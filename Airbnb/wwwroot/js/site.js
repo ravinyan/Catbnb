@@ -42,7 +42,7 @@ function headerScaling()
 
             document.getElementById("ScrollDiv").style.top = "80px";
             //document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
-
+            
             document.getElementById("GreyBackground").style.display = "none";
 
             //  resetting css for stuff
@@ -4818,14 +4818,14 @@ function generateCatCards(card)
 
 async function fetchNeededCatCards(queryValue)
 {
-    loaderCatCards.style.display = "flex";
+    //loaderCatCards.style.display = "flex";
 
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
     
     categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
 
-    loaderCatCards.style.display = "none";
+    //loaderCatCards.style.display = "none";
 }
 
 document.getElementById("ScrollMenu").addEventListener("click", function(e)
@@ -4886,11 +4886,11 @@ function renderCatCardsOnRefresh()
         var queryValue = queryString.get("category");
         queryValue = encodeURIComponent(queryValue);
 
-        if (queryValue != null)
+        if (queryValue != null && queryValue != "null")
         {
             for (i = 0; i < scrollMenu.childNodes.length; i++)
             {
-                if (scrollMenu.childNodes[i].tagName == "A" && scrollMenu.childNodes[i].innerText == queryValue)
+                if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == queryValue)
                 {
                     scrollMenu.childNodes[i].style.color = "black";
                     break;
@@ -5063,7 +5063,6 @@ function roomGenerateRoomsPage(room)
                                     </svg>
                                     Share`;
     
-
     let roomHeaderSaveBox = document.createElement("BUTTON");
     roomHeaderSaveBox.className = "room_header_save_box";
     roomHeaderSaveBox.innerHTML = `<svg viewBox="0 -3 32 32" xmlns="http://www.w3.org/2000/svg" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible; margin-inline-end: 8px;">
@@ -5799,14 +5798,14 @@ function roomGenerateRoomsPage(room)
     roomReviews.appendChild(roomInformationUserReviewsButtonBox);
     //  FINAL
     let roomContent = document.getElementById("RoomContent");
-
+    
     roomPage.appendChild(roomHeader);
     roomPage.appendChild(roomImages);
     roomPage.appendChild(roomInformationSection);
     roomPage.appendChild(roomReviews);
 
     roomContent.appendChild(roomPage);
-    
+
     if (roomInformationDescriptionText.scrollHeight <= roomInformationDescriptionText.offsetHeight)
     {
         roomInformationDescription.removeChild(roomInformationDescriptionShowMore);
@@ -5822,7 +5821,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
 
-        loaderRoom.style.display = "flex";
+        //loaderRoom.style.display = "flex";
 
         const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
         const roomJson = await roomData.json();
@@ -5832,7 +5831,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         let room = document.getElementById("RoomContent");
         roomControllRoomsPage(room, roomJson);
 
-        loaderRoom.style.display = "none";
+        //loaderRoom.style.display = "none";
 
         var end = performance.now();
         var timeTaken = end - start;
