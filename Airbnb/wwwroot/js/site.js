@@ -4469,7 +4469,35 @@ for (imDumbo = 0; imDumbo < arrV.length; imDumbo++)
 //  FINAL BOSS 
 function generateQueryStringURI()
 {
-
+    let whereQuery = whereInput.value == "" 
+                   ? `&location=flexible`
+                   : `&location=${whereInput.value}`;
+    
+    let checkinQuery = checkinFormInput.value == "" 
+                     ? "" 
+                     : `&checkin=${selectedCheckinDate.innerText}-${months.indexOf(selectedCheckinMonth) + 1}-${selectedCheckinYear}`;
+    
+    let checkoutQuery = checkoutFormInput.value == "" 
+                      ? "" 
+                      : `&checkout=${selectedCheckoutDate.innerText}-${months.indexOf(selectedCheckoutMonth) + 1}-${selectedCheckoutYear}`;
+    
+    let adults = document.getElementById("AdultsCount").innerText.trim() == "0"
+               ? "" 
+               : `&adults=${document.getElementById("AdultsCount").innerText.trim()}`;
+    
+    let children = document.getElementById("ChildrenCount").innerText.trim() == "0" 
+                 ? "" 
+                 : `&children=${document.getElementById("ChildrenCount").innerText.trim()}`;
+    
+    let infants = document.getElementById("InfantsCount").innerText.trim() == "0"
+                ? ""
+                : `&infants=${document.getElementById("InfantsCount").innerText.trim()}`;
+    
+    let pets = document.getElementById("PetsCount").innerText.trim() == "0"
+             ? "" 
+             : `&pets=${document.getElementById("PetsCount").innerText.trim()}`;
+    
+    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${adults}${children}${infants}${pets}`
 }
 //console.log(value)
 
@@ -4608,10 +4636,7 @@ function changeURIQueryString(e)
 {
     if (history.pushState && e.target.tagName == "A")
     {
-        let whereQuery = whereInput;
-        let checkinQuery = checkinFormInput;
-        let checkoutQuery = checkoutFormInput;
-        let whoQuery = formGuestsInput;
+        
 
         let queryString = `?category=${encodeURIComponent(e.target.innerText)}`;
     
@@ -4819,18 +4844,20 @@ function generateCatCards(card)
 async function fetchNeededCatCards(queryValue)
 {
     //loaderCatCards.style.display = "flex";
+    document.body.style.cursor = "wait";
 
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
     
     categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
 
+    document.body.style.cursor = "";
     //loaderCatCards.style.display = "none";
 }
 
 document.getElementById("ScrollMenu").addEventListener("click", function(e)
 {
-    if (e.target.tagName == "A")
+    if (e.target.tagName == "A" && e.target.style.color != "black")
     {  
         for (i = 0; i < scrollMenu.childNodes.length; i++)
         {
@@ -4845,13 +4872,12 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
         document.getElementById("DisplayText3").innerHTML = "";
         var start = performance.now();
 
-        queryString = changeURIQueryString(e);
-        var queryValue = queryString.get("category");
-        queryValue = encodeURIComponent(queryValue);
+        //queryString = changeURIQueryString(e);
+        //var queryValue = queryString.get("category");
+        queryValue = encodeURIComponent(e.target.innerText);
 
         fetchNeededCatCards(queryValue);
-        
-        DisplayText3.innerText;
+
         var end = performance.now();
         var timeTaken = end - start;
         console.log(timeTaken)
@@ -4883,27 +4909,20 @@ function renderCatCardsOnRefresh()
         var start = performance.now();
 
         queryString = new URLSearchParams(window.location.search);
-        var queryValue = queryString.get("category");
-        queryValue = encodeURIComponent(queryValue);
-
-        if (queryValue != null && queryValue != "null")
+        var queryValue = scrollMenu.childNodes[1].innerText;
+        //queryValue = encodeURIComponent(queryValue);
+       
+        for (i = 0; i < scrollMenu.childNodes.length; i++)
         {
-            for (i = 0; i < scrollMenu.childNodes.length; i++)
+            if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == queryValue)
             {
-                if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == queryValue)
-                {
-                    scrollMenu.childNodes[i].style.color = "black";
-                    break;
-                }
+                scrollMenu.childNodes[i].style.color = "black";
+                break;
             }
+        }
 
-            fetchNeededCatCards(queryValue)
-        }
-        else
-        {
-            document.getElementById("DisplayText3").innerText = "hello this is main page... wow";
-        }
-        
+        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+
         var end = performance.now();
         var timeTaken = end - start;
         console.log(timeTaken)
@@ -5822,6 +5841,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var roomPageId = +window.location.pathname.split("/")[2];
 
         //loaderRoom.style.display = "flex";
+        document.body.style.cursor = "wait";
 
         const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
         const roomJson = await roomData.json();
@@ -5831,6 +5851,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         let room = document.getElementById("RoomContent");
         roomControllRoomsPage(room, roomJson);
 
+        document.body.style.cursor = "";
         //loaderRoom.style.display = "none";
 
         var end = performance.now();
