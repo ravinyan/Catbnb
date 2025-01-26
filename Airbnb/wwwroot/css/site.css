@@ -262,6 +262,7 @@ img.image_box {
 div.region_text_box {
     margin: 0px 4px;
     font-size: 14px;
+    font-weight: bold;
 }
 
 div.guest_box {

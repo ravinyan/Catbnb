@@ -4412,66 +4412,12 @@ document.addEventListener("click", function(e)
     }
 })
 
-//tetstetening testing test 1 2 3 test
-// maybe useful? https://css-tricks.com/snippets/javascript/get-url-variables/
-//               https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-// /test?banana=pizza42&pineapple=lol
-const queryKey = new Proxy(new URLSearchParams(window.location.search), 
-{
-    get: (key, value) => key.get(value)
-});
-//  referrence how airbnb does their stuff... there is a lof ot that
-//  i should have uh:
-//  array with all keys
-//  read all values from all keys
-//  somehow it will read URI and sort stuff on webpage (might have idea how to do it)
-//  i will just do some of it coz i dont have time to thing of another thing to work on and start working on it
-//  
-//  i think it will need to be ordered as: 
-//  things that are always selected > things optional that might not be in URI query string
-//  tab_id, type_of_stay[homes,experiences], monthly_start_date, monthly_end_date, monthly_length, flexible_trip_length,
-//  > checkin, checkout, flex_date[+- dates], monthly_flex_date[+- dates], adults, children, infants, pets, flexible_trip_months,
-var URIkeysArray = []
-//  i dont understand what does this mean why there is []
-//                          refinement_paths[]=/homes
-var testingbananaman = decodeURIComponent("refinement_paths%5B%5D=%2Fhomes")
-console.log(testingbananaman)
-// ?tab_id=home_tab
-// &refinement_paths%5B%5D=%2Fhomes
-// &search_mode=flex_destinations_search
-// &flexible_trip_lengths%5B%5D=one_week
-// &location_search=MIN_MAP_BOUNDS
-// &monthly_start_date=2024-12-01
-// &monthly_length=3
-// &monthly_end_date=2025-03-01
-// &disable_auto_translation=true
-// &price_filter_input_type=0
-// &channel=EXPLORE
-// &date_picker_type=calendar
-// &checkin=2024-11-07
-// &checkout=2024-12-09
-// $adults=1
-// &children=1
-// &infants=1
-// &pets=1
-// &category_tag=Tag%3A7765
-// &search_type=category_change
-var keyArray = []
-
-var arr = ["banana", "pineapple"]
-var arrV = [queryKey[arr[0]], queryKey[arr[1]]]
-
-for (imDumbo = 0; imDumbo < arrV.length; imDumbo++)
-{
-    console.log(arrV[imDumbo]);
-}
-
-//  FINAL BOSS 
+//  FINAL BOSS GET THE QUERY STRING AND GET THE FRICK OUT UNDETECTED YOU HAVE ONLY 1 SHOT 
 function generateQueryStringURI()
 {
     let whereQuery = whereInput.value == "" 
-                   ? `&location=flexible`
-                   : `&location=${whereInput.value}`;
+                   ? `?location=flexible`
+                   : `?location=${whereInput.value}`;
     
     let checkinQuery = checkinFormInput.value == "" 
                      ? "" 
@@ -4480,7 +4426,36 @@ function generateQueryStringURI()
     let checkoutQuery = checkoutFormInput.value == "" 
                       ? "" 
                       : `&checkout=${selectedCheckoutDate.innerText}-${months.indexOf(selectedCheckoutMonth) + 1}-${selectedCheckoutYear}`;
+
+    let monthsCheckinQuery =  monthsBlockStartDateValue == "" 
+                     ? "" 
+                     : `&monthly-checkin=${monthsBlockSelectedStartDate.innerText}-${months.indexOf(monthsBlockSelectedStartMonth) + 1}-${monthsBlockSelectedStartYear}`;
+
+    let monthsCheckoutQuery = monthsBlockEndDateValue == "" 
+                      ? "" 
+                      : `&monthly-checkout=${monthsBlockSelectedEndDate.innerText}-${months.indexOf(monthsBlockSelectedEndMonth) + 1}-${monthsBlockSelectedEndYear}`;
+
+    let flexibleStayTimeQuery = "";
+    let stayButtons = document.getElementsByClassName("stay_button");
+    for (i = 0; i < stayButtons.length; i++)
+    {
+        if (window.getComputedStyle(stayButtons[i]).borderColor == "rgb(0, 0, 0)")
+        {
+            flexibleStayTimeQuery = `&flexible-trip-length=${stayButtons[i].innerText.trim()}`;
+        }
+    }
+
+    let flexibleTripMonthCards = "";
+    let monthCards = document.getElementsByClassName("month_card");
     
+    for (i = 0; i < monthCards.length; i++)
+    {
+        if (window.getComputedStyle(monthCards[i]).borderColor == "rgb(0, 0, 0)")
+        {
+            flexibleTripMonthCards += `&flexible-trip-month=${monthCards[i].innerText.trim()}` 
+        }
+    }
+
     let adults = document.getElementById("AdultsCount").innerText.trim() == "0"
                ? "" 
                : `&adults=${document.getElementById("AdultsCount").innerText.trim()}`;
@@ -4496,10 +4471,25 @@ function generateQueryStringURI()
     let pets = document.getElementById("PetsCount").innerText.trim() == "0"
              ? "" 
              : `&pets=${document.getElementById("PetsCount").innerText.trim()}`;
+
+    let category = "";
+    for (i = 0; i < scrollMenu.childNodes.length; i++)
+    {
+        if (scrollMenu.childNodes[i].tagName == "A")
+        {
+            if (window.getComputedStyle(scrollMenu.childNodes[i]).color == "rgb(0, 0, 0)")
+            {
+                category = `&category=${encodeURIComponent(scrollMenu.childNodes[i].innerText)}`;
+            }
+        }
+    }
     
-    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${adults}${children}${infants}${pets}`
+    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}`;
+    var newurl = window.location.origin + window.location.pathname + queryString;
+    window.history.pushState({path:newurl},'',newurl);
+    
+    return queryString = new URLSearchParams(window.location.search);
 }
-//console.log(value)
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
@@ -4631,21 +4621,6 @@ function catCardCarouselControl()
 }
 
 catCardCarouselControl();
-
-function changeURIQueryString(e)
-{
-    if (history.pushState && e.target.tagName == "A")
-    {
-        
-
-        let queryString = `?category=${encodeURIComponent(e.target.innerText)}`;
-    
-        var newurl = window.location.origin + window.location.pathname + queryString;
-        window.history.pushState({path:newurl},'',newurl);
-    
-        return queryString = new URLSearchParams(window.location.search);
-    }
-}
 
 function generateCatCards(card)
 {
@@ -4859,6 +4834,8 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
 {
     if (e.target.tagName == "A" && e.target.style.color != "black")
     {  
+        var start = performance.now();
+
         for (i = 0; i < scrollMenu.childNodes.length; i++)
         {
             if (scrollMenu.childNodes[i].tagName == "A")
@@ -4866,16 +4843,13 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
                 scrollMenu.childNodes[i].style.color = "#7d7d7d";
             }
         }
- 
         e.target.style.color = "black";
 
+        generateQueryStringURI();
+        
         document.getElementById("DisplayText3").innerHTML = "";
-        var start = performance.now();
-
-        //queryString = changeURIQueryString(e);
-        //var queryValue = queryString.get("category");
+        
         queryValue = encodeURIComponent(e.target.innerText);
-
         fetchNeededCatCards(queryValue);
 
         var end = performance.now();
@@ -4909,19 +4883,25 @@ function renderCatCardsOnRefresh()
         var start = performance.now();
 
         queryString = new URLSearchParams(window.location.search);
-        var queryValue = scrollMenu.childNodes[1].innerText;
-        //queryValue = encodeURIComponent(queryValue);
-       
-        for (i = 0; i < scrollMenu.childNodes.length; i++)
+        var categoryQuery = queryString.get("category");
+
+        if (categoryQuery != null && categoryQuery != "")
         {
-            if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == queryValue)
+            for (i = 0; i < scrollMenu.childNodes.length; i++)
             {
-                scrollMenu.childNodes[i].style.color = "black";
-                break;
+                if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+                {
+                    scrollMenu.childNodes[i].style.color = "black";
+                    fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
+                    break;
+                }
             }
         }
-
-        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+        else if (categoryQuery == null || categoryQuery == "")
+        {
+            scrollMenu.childNodes[1].style.color = "black";
+            fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+        }
 
         var end = performance.now();
         var timeTaken = end - start;
