@@ -208,6 +208,7 @@ filterModalBackground.onclick = function()
 const filterModalAnyType = document.getElementById("FilterModalAnyType");
 const filterModalRoom = document.getElementById("FilterModalRoom");
 const filterModalEntireHome = document.getElementById("FilterModalEntireHome");
+var selectedTypeOfPlace = "";
 
 filterModalAnyType.style.border = "1px solid black";
 filterModalAnyType.style.background = "#E8E8E8";
@@ -223,6 +224,19 @@ function filterModalSelectTypeOfPlace(button, button2, button3)
         button.style.background = "#E8E8E8";
         button2.style.background = "";
         button3.style.background = "";
+
+        if (button == filterModalAnyType)
+        {
+            selectedTypeOfPlace = "";
+        }
+        else if (button == filterModalRoom)
+        {
+            selectedTypeOfPlace = "Room";
+        }
+        else if (button = filterModalEntireHome)
+        {
+            selectedTypeOfPlace = "Home";
+        }
     }
 }
 
@@ -416,6 +430,8 @@ filterModalShowLessAmenities.onclick = function()
 }
 
 // amenities buttons refactored edition
+var selectedAmenities = [];
+
 document.getElementById("FilterModalAmenitiesButtonsParent").addEventListener("click", function(e) 
 {
     let button = e.target.closest("button")
@@ -426,16 +442,23 @@ document.getElementById("FilterModalAmenitiesButtonsParent").addEventListener("c
         {
             button.style.background = "";
             button.style.border = "";
+
+            let index = selectedAmenities.indexOf(button.childNodes[3].innerText.trim());
+            selectedAmenities.splice(index, 1);
         }
         else if (button.style.background == "")
         {
             button.style.background = "#E8E8E8";
             button.style.border = "1px solid black";
+
+            selectedAmenities.push(button.childNodes[3].innerText.trim());
         }
     }
 });
 
 //  booking options refactored edition
+var selectedBookingOptions = [];
+
 document.getElementById("FilterModalBookingButtonsParent").addEventListener("click", function(e) 
 {
     let button = e.target.closest("button")
@@ -446,33 +469,45 @@ document.getElementById("FilterModalBookingButtonsParent").addEventListener("cli
         {
             button.style.background = "";
             button.style.border = "";
+
+            let index = selectedBookingOptions.indexOf(button.childNodes[3].innerText.trim());
+            selectedBookingOptions.splice(index, 1);
         }
         else if (button.style.background == "")
         {
             button.style.background = "#E8E8E8";
             button.style.border = "1px solid black";
+
+            selectedBookingOptions.push(button.childNodes[3].innerText.trim());
         }
     }
 });
 
 //  standout stays not refactored edition... sad
 const filterModalStandoutStays = document.getElementById("FilterModalStandoutStays");
-    
+var standoutStaysSelected = false;
+
 filterModalStandoutStays.onclick = function()
 {
     if (filterModalStandoutStays.style.background == "rgb(232, 232, 232)")
     {
         filterModalStandoutStays.style.background = "";
         filterModalStandoutStays.style.border = "";
+
+        standoutStaysSelected = false;
     }
     else if (filterModalStandoutStays.style.background == "")
     {
         filterModalStandoutStays.style.background = "#E8E8E8";
         filterModalStandoutStays.style.border = "1px solid black";
+
+        standoutStaysSelected = true;
     }
 }
 
 //  property type refactored edition
+var selectedPropertyType = [];
+
 document.getElementById("FilterModalPropertyTypeDropdownMenu").addEventListener("click", function(e)
 {
     let button = e.target.closest("button");
@@ -483,16 +518,23 @@ document.getElementById("FilterModalPropertyTypeDropdownMenu").addEventListener(
         {
             button.style.background = "";
             button.style.border = "";
+
+            let index = selectedPropertyType.indexOf(button.childNodes[3].innerText.trim());
+            selectedPropertyType.splice(index, 1);
         }
         else if (button.style.background == "")
         {
             button.style.background = "#E8E8E8";
             button.style.border = "1px solid black";
+
+            selectedPropertyType.push(button.childNodes[3].innerText.trim());
         }
     }
 })
 
 //  accessibility features refactored edition
+var selectedAccessibilityCheckboxes = [];
+
 document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu").addEventListener("click", function(e)
 {
     let label = e.target.closest("label");
@@ -513,20 +555,23 @@ document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu").addEvent
                 input.parentElement.childNodes[3].style.background = "black";
                 input.parentElement.childNodes[3].childNodes[1].style.display = "block";
 
-                console.log("\n", input.id, input.checked)
+                selectedAccessibilityCheckboxes.push(label.childNodes[3].innerText.trim());
             }
             else if (input.checked == false)
             {
                 input.parentElement.childNodes[3].style.background = "white";
                 input.parentElement.childNodes[3].childNodes[1].style.display = "none";
 
-                console.log("\n", input.id, input.checked)
+                let index = selectedAccessibilityCheckboxes.indexOf(label.childNodes[3].innerText.trim());
+                selectedAccessibilityCheckboxes.splice(index, 1);
             }
         }
     }
 })
 
 //  host language refactored edition
+var selectedHostLanguagesCheckboxes = [];
+
 document.getElementById("FilterModalHostLanguageDropdownMenu").addEventListener("click", function(e)
 {
     let label = e.target.closest("label");
@@ -547,14 +592,15 @@ document.getElementById("FilterModalHostLanguageDropdownMenu").addEventListener(
                 input.parentElement.childNodes[3].style.background = "black";
                 input.parentElement.childNodes[3].childNodes[1].style.display = "block";
 
-                console.log("\n", input.id, input.checked)
+                selectedHostLanguagesCheckboxes.push(label.childNodes[3].innerText.trim());
             }
             else if (input.checked == false)
             {
                 input.parentElement.childNodes[3].style.background = "white";
                 input.parentElement.childNodes[3].childNodes[1].style.display = "none";
 
-                console.log("\n", input.id, input.checked)
+                let index = selectedHostLanguagesCheckboxes.indexOf(label.childNodes[3].innerText.trim());
+                selectedHostLanguagesCheckboxes.splice(index, 1);
             }
         }
     }
@@ -606,13 +652,6 @@ filterModalOpenDropdown(filterModalHostLanguageDropdown, filterModalHostLanguage
 // last thingy footer
 const filterModalClearAll = document.getElementById("FilterModalClearAll"); 
 const filterModalShowPlaces = document.getElementById("FilterModalShowPlaces");
-
-//  real last thing the url generator thing? dont know how to call it and dont care its url uri something blablabla
-
-//const params = new Proxy(new URLSearchParams(window.location.search), 
-//{
-//    get: (key, value) => key.get(value)
-//});
 
 /*--------------------------------------------------------------------------------------------------------------------
 ----------------------------------------STAYS/EXPERIENCES BUTTONS FORM DISPLAY----------------------------------------
@@ -4373,21 +4412,49 @@ flexibleButton.onclick = function()
     monthsButton.style.backgroundColor = "";
 }
 
-// SEARCH BUTTON testing or whatever it wont do anything really for next few days
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------MENU FORMS(both) SEARCH BUTTONS-------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const searchButton = document.getElementById("SearchButton");
 const searchButtonExperiences = document.getElementById("SearchButtonExperiences");
 
 searchButton.onclick = function()
 {
-    console.log("stop searching")
+    let queryString = new URLSearchParams(window.location.search);
+    let queryValue = queryString.get("category");
+    generateQueryStringURI();
+    DisplayText3.innerHTML = "";
+
+    if (queryValue != null || queryValue != "")
+    {
+        fetchNeededCatCards(queryValue);
+    }
+    else if (queryValue == null || queryValue == "")
+    {
+        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+    }
 }
 
 searchButtonExperiences.onclick = function()
 {
-    console.log("stop searching lol")
+    let queryString = new URLSearchParams(window.location.search);
+    let queryValue = queryString.get("category");
+    generateQueryStringURI();
+    DisplayText3.innerHTML = "";
+
+    if (queryValue != null || queryValue != "")
+    {
+        fetchNeededCatCards(queryValue);
+    }
+    else if (queryValue == null || queryValue == "")
+    {
+        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+    }
 }
 
-// something whatever i dont feel like doing anything
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------USER MENU DROPDOWN AND FUNCTIONS------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 const userMenuDropdownButton = document.getElementById("UserMenuDropdownButton");
 const userMenuDropdown = document.getElementById("UserMenuDropdown");
 //  modals
@@ -4412,6 +4479,9 @@ document.addEventListener("click", function(e)
     }
 })
 
+/*--------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------QUERY STRING GENERATOR-----------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
 //  FINAL BOSS GET THE QUERY STRING AND GET THE FRICK OUT UNDETECTED YOU HAVE ONLY 1 SHOT 
 function generateQueryStringURI()
 {
@@ -4490,6 +4560,281 @@ function generateQueryStringURI()
     
     return queryString = new URLSearchParams(window.location.search);
 }
+
+/*--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------GETTING AND USING FILTER VALUES-------------------------------------------
+----------------------------------------------------------------------------------------------------------------------*/
+// for testing to delete
+function getAllFilterValues()
+{
+    let typeOfPlaceButtons = document.getElementsByClassName("type_of_place_button");
+    let selectedTypeOfPlace = "";
+
+    for (i = 0; i < typeOfPlaceButtons.length; i++)
+    {
+        if (window.getComputedStyle(typeOfPlaceButtons[i]).borderColor == "rgb(0, 0, 0)")
+        {
+            selectedTypeOfPlace = typeOfPlaceButtons[i].innerText.trim();
+        }
+    }
+
+    // amenities / booking options / property type
+    let allAmenities = document.getElementsByClassName("amenities_button");
+    let selectedAmenities = [];
+
+    for (i = 0; i < allAmenities.length; i++)
+    {
+        if (window.getComputedStyle(allAmenities[i]).borderColor == "rgb(0, 0, 0)")
+        {
+            selectedAmenities.push(allAmenities[i].childNodes[3].innerText.trim());
+        }
+    }
+
+    let accessibilities = document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu");
+    let accessibilitiesCheckboxes = accessibilities.childNodes;
+    let selectedAccessibities = [];
+
+    for (i = 0; i < accessibilitiesCheckboxes.length; i++)
+    {
+        if (accessibilitiesCheckboxes[i].tagName == "DIV")
+        {
+            for (j = 0; j < accessibilitiesCheckboxes[i].childNodes.length; j++)
+            {
+                if (accessibilitiesCheckboxes[i].childNodes[j].tagName == "LABEL")
+                {
+                    if (accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[1].checked == true)
+                    {
+                        selectedAccessibities.push(`${accessibilitiesCheckboxes[i].childNodes[j].innerText.trim()} - ${accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[1].checked}`);
+                    }
+                }
+            }
+        }
+    }
+
+    let languages = document.getElementById("FilterModalHostLanguageDropdownMenu");
+    let languagesCheckboxes = languages.childNodes[1].childNodes;
+    let selectedlanguages = [];
+
+    for (i = 0; i < languagesCheckboxes.length; i++)
+    {
+        if (languagesCheckboxes[i].tagName == "LABEL")
+        {
+            if (languagesCheckboxes[i].childNodes[1].childNodes[1].checked == true)
+            {
+                selectedlanguages.push(`${languagesCheckboxes[i].childNodes[3].innerText.trim()} - ${languagesCheckboxes[i].childNodes[1].childNodes[1].checked}`);
+            }
+        }
+    }
+
+    let guestFavourite = false;
+
+    if (filterModalStandoutStays.style.borderColor == "black")
+    {
+        guestFavourite = true;
+    }
+
+    console.log(selectedTypeOfPlace);
+    console.log(selectedAmenities);
+    console.log(selectedAccessibities);
+    console.log(selectedlanguages);
+
+    console.log(filterModalMinimumPriceInput.value);
+    console.log(filterModalMaximumPriceInput.value);
+    
+    console.log(filterModalBedroomsCount.innerText);
+    console.log(filterModalBedsCount.innerText);
+    console.log(filterModalBathroomsCount.innerText);
+
+    console.log(guestFavourite);
+}
+
+function clearAllFilterValues()
+{
+    filterModalAnyType.style.border = "1px solid black";
+    filterModalAnyType.style.background = "#E8E8E8";
+
+    filterModalRoom.style.border = "";
+    filterModalRoom.style.background = "";
+    filterModalEntireHome.style.border = "";
+    filterModalEntireHome.style.background = "";
+    selectedTypeOfPlace = "";
+
+    filterModalMinimumPriceSlider.value = 1;
+    filterModalMinimumPriceInput.value = 1;
+    filterModalMaximumPriceSlider.value = 10000;
+    filterModalMaximumPriceInput.value = 10000;
+
+    filterModalBedroomsCount.innerText = "Any";
+    filterModalBedsCount.innerText = "Any";
+    filterModalBathroomsCount.innerText = "Any";
+
+    filterModalDecrementBedrooms.classList = "rooms_and_beds_disabled_button";
+    filterModalDecrementBeds.classList = "rooms_and_beds_disabled_button";
+    filterModalDecrementBathrooms.classList = "rooms_and_beds_disabled_button";
+
+    filterModalIncrementBedrooms.classList = "rooms_and_beds_enabled_button";
+    filterModalIncrementBeds.classList = "rooms_and_beds_enabled_button";
+    filterModalIncrementBathrooms.classList = "rooms_and_beds_enabled_button";
+
+    selectedHostLanguagesCheckboxes = [];
+    let languages = document.getElementById("FilterModalHostLanguageDropdownMenu");
+    let languagesCheckboxes = languages.childNodes[1].childNodes;
+
+    for (i = 0; i < languagesCheckboxes.length; i++)
+    {
+        if (languagesCheckboxes[i].tagName == "LABEL")
+        {
+            if (languagesCheckboxes[i].childNodes[1].childNodes[3].style.background == "black")
+            {
+                languagesCheckboxes[i].childNodes[1].childNodes[3].style.background = "white"
+                languagesCheckboxes[i].childNodes[1].childNodes[3].childNodes[1].style.display = "none";
+            }
+        }
+    }
+
+    selectedAccessibilityCheckboxes = [];
+    let accessibilities = document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu");
+    let accessibilitiesCheckboxes = accessibilities.childNodes;
+    
+    for (i = 0; i < accessibilitiesCheckboxes.length; i++)
+    {
+        if (accessibilitiesCheckboxes[i].tagName == "DIV")
+        {
+            for (j = 0; j < accessibilitiesCheckboxes[i].childNodes.length; j++)
+            {
+                if (accessibilitiesCheckboxes[i].childNodes[j].tagName == "LABEL")
+                {
+                    if (accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[3].style.background == "black")
+                    {                                                         
+                        accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[3].style.background = "white"
+                        accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[3].childNodes[1].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+    standoutStaysSelected = false;
+    filterModalStandoutStays.style.background = "";
+    filterModalStandoutStays.style.border = "";
+
+    selectedAmenities = [];
+    let amenitiesBasic = document.getElementById("FilterModalAmenitiesLess").childNodes;
+    let amenitiesMoreSections = document.getElementById("FilterModalAmenitiesMore").childNodes;
+
+    for (i = 0; i < amenitiesBasic.length; i++)
+    {
+        if (amenitiesBasic[i].tagName == "BUTTON")
+        {
+            if (amenitiesBasic[i].style.background == "rgb(232, 232, 232)")
+            {
+                amenitiesBasic[i].style.background = ""
+                amenitiesBasic[i].style.border = "";
+            }
+        }
+    }
+
+    for (i = 0; i < amenitiesMoreSections.length; i++)
+    {
+        if (amenitiesMoreSections[i].tagName == "DIV")
+        { 
+            if (i == 1)
+            {
+                for (j = 0; j < amenitiesMoreSections[i].childNodes[1].childNodes.length; j++)
+                {  
+                    if (amenitiesMoreSections[i].childNodes[1].childNodes[j].tagName == "BUTTON")
+                    {
+                        if (amenitiesMoreSections[i].childNodes[1].childNodes[j].style.background == "rgb(232, 232, 232)")
+                        {                                                         
+                            amenitiesMoreSections[i].childNodes[1].childNodes[j].style.background = "";
+                            amenitiesMoreSections[i].childNodes[1].childNodes[j].style.border = "";
+                        }
+                    }
+                }
+            }
+            else if (i > 1 && i < 9)
+            {
+                for (j = 0; j < amenitiesMoreSections[i].childNodes[3].childNodes.length; j++)
+                { 
+                    if (amenitiesMoreSections[i].childNodes[3].childNodes[j].tagName == "BUTTON")
+                    {
+                        if (amenitiesMoreSections[i].childNodes[3].childNodes[j].style.background == "rgb(232, 232, 232)")
+                        {                                                         
+                            amenitiesMoreSections[i].childNodes[3].childNodes[j].style.background = "";
+                            amenitiesMoreSections[i].childNodes[3].childNodes[j].style.border = "";
+                        }
+                    }
+                }
+            }
+            else if (i == 9)
+            {
+                for (j = 0; j < amenitiesMoreSections[i].childNodes[1].childNodes.length; j++)
+                { 
+                    if (amenitiesMoreSections[i].childNodes[1].childNodes[j].tagName == "BUTTON")
+                    {
+                        if (amenitiesMoreSections[i].childNodes[1].childNodes[j].style.background == "rgb(232, 232, 232)")
+                        {                                                        
+                            amenitiesMoreSections[i].childNodes[1].childNodes[j].style.background = "";
+                            amenitiesMoreSections[i].childNodes[1].childNodes[j].style.border = "";
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    selectedBookingOptions = [];
+    let bookingOptionsButtons = document.getElementById("FilterModalBookingButtonsParent").childNodes;
+
+    for (i = 0; i < bookingOptionsButtons.length; i++)
+    {
+        if (bookingOptionsButtons[i].tagName == "BUTTON")
+        {
+            if (bookingOptionsButtons[i].style.background == "rgb(232, 232, 232)")
+            {
+                bookingOptionsButtons[i].style.background = ""
+                bookingOptionsButtons[i].style.border = "";
+            }
+        }
+    }
+
+    selectedPropertyType = [];
+    let propertyTypeButtons = document.getElementById("FilterModalPropertyTypeDropdownMenu").childNodes;
+
+    for (i = 0; i < propertyTypeButtons.length; i++)
+    {
+        if (propertyTypeButtons[i].tagName == "BUTTON")
+        {
+            if (propertyTypeButtons[i].style.background == "rgb(232, 232, 232)")
+            {
+                propertyTypeButtons[i].style.background = ""
+                propertyTypeButtons[i].style.border = "";
+            }
+        }
+    }
+}
+
+filterModalShowPlaces.onclick = function()
+{
+    console.log(selectedHostLanguagesCheckboxes);
+    console.log(selectedAccessibilityCheckboxes);
+    console.log(standoutStaysSelected);
+    console.log(selectedTypeOfPlace);
+    console.log(selectedAmenities);
+    console.log(selectedBookingOptions);
+    console.log(selectedPropertyType);
+    console.log(filterModalBedroomsCount.innerText);
+    console.log(filterModalBedsCount);
+    console.log(filterModalBathroomsCount);
+    //getAllFilterValues();
+}
+
+filterModalClearAll.onclick = function()
+{
+    clearAllFilterValues();
+}
+
+// NEED TO FIX OLD MODALS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
@@ -4818,7 +5163,6 @@ function generateCatCards(card)
 
 async function fetchNeededCatCards(queryValue)
 {
-    //loaderCatCards.style.display = "flex";
     document.body.style.cursor = "wait";
 
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
@@ -4827,7 +5171,6 @@ async function fetchNeededCatCards(queryValue)
     categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
 
     document.body.style.cursor = "";
-    //loaderCatCards.style.display = "none";
 }
 
 document.getElementById("ScrollMenu").addEventListener("click", function(e)
@@ -5820,7 +6163,6 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
 
-        //loaderRoom.style.display = "flex";
         document.body.style.cursor = "wait";
 
         const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
@@ -5832,7 +6174,6 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         roomControllRoomsPage(room, roomJson);
 
         document.body.style.cursor = "";
-        //loaderRoom.style.display = "none";
 
         var end = performance.now();
         var timeTaken = end - start;
