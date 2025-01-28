@@ -4824,9 +4824,11 @@ filterModalShowPlaces.onclick = function()
     console.log(selectedBookingOptions);
     console.log(selectedPropertyType);
     console.log(filterModalBedroomsCount.innerText);
-    console.log(filterModalBedsCount);
-    console.log(filterModalBathroomsCount);
+    console.log(filterModalBedsCount.innerText);
+    console.log(filterModalBathroomsCount.innerText);
     //getAllFilterValues();
+
+    //  all values need to go to URI and then i need to read URI values and get stuff from database... how
 }
 
 filterModalClearAll.onclick = function()
@@ -5392,8 +5394,8 @@ function roomGenerateRoomsPage(room)
     let roomHeaderTopText = document.createElement("DIV");
     roomHeaderTopText.className = "room_header_topText";
     roomHeaderTopText.innerText = room.bookingInfo.maxNumberOfGuests == 1 
-                                ? `Cozy cat to pet for ${room.bookingInfo.maxNumberOfGuests} person`
-                                : `Cozy cats to pet for ${room.bookingInfo.maxNumberOfGuests} people`;
+                                ? `${room.bookingInfo.typeOfPlace} with cute cat to pet for ${room.bookingInfo.maxNumberOfGuests} person`
+                                : `${room.bookingInfo.typeOfPlace} with cute cats to pet for ${room.bookingInfo.maxNumberOfGuests} people`;
 
     let roomHeaderButtons = document.createElement("DIV");
     roomHeaderButtons.className = "room_header_buttons";

@@ -50,6 +50,82 @@ namespace Airbnb.DBContext
             return amenitiesList;
         }
 
+        private List<HostLanguages> GenerateHostLanguages()
+        {
+            List<HostLanguages> languagesList = new List<HostLanguages>()
+            {
+                new HostLanguages { Id = 1, Name = "Chinese" },
+                new HostLanguages { Id = 2, Name = "English" },
+                new HostLanguages { Id = 3, Name = "French" },
+                new HostLanguages { Id = 4, Name = "German" },
+                new HostLanguages { Id = 5, Name = "Italian" },
+                new HostLanguages { Id = 6, Name = "Japanese" },
+                new HostLanguages { Id = 7, Name = "Korean" },
+                new HostLanguages { Id = 8, Name = "Portuguese" },
+                new HostLanguages { Id = 9, Name = "Russian" },
+                new HostLanguages { Id = 10, Name = "Spanish" },
+                new HostLanguages { Id = 11, Name = "Arabic" },
+                new HostLanguages { Id = 12, Name = "Croatian" },
+                new HostLanguages { Id = 13, Name = "Chech" },
+                new HostLanguages { Id = 14, Name = "Danish" },
+                new HostLanguages { Id = 15, Name = "Dutch" },
+                new HostLanguages { Id = 16, Name = "Greek" },
+                new HostLanguages { Id = 17, Name = "Hindi" },
+                new HostLanguages { Id = 18, Name = "Hungarian" },
+                new HostLanguages { Id = 19, Name = "Indonesian" },
+                new HostLanguages { Id = 20, Name = "Norwegian" },
+                new HostLanguages { Id = 21, Name = "Polish" },
+                new HostLanguages { Id = 22, Name = "Swedish" },
+                new HostLanguages { Id = 23, Name = "Turkish" },
+                new HostLanguages { Id = 24, Name = "Belarusian" },
+                new HostLanguages { Id = 25, Name = "Bosnian" },
+                new HostLanguages { Id = 26, Name = "Latvian" },
+                new HostLanguages { Id = 27, Name = "Lithuanian" },
+                new HostLanguages { Id = 28, Name = "Punjabi" },
+                new HostLanguages { Id = 29, Name = "Romanian" },
+                new HostLanguages { Id = 30, Name = "Serbian" },
+                new HostLanguages { Id = 31, Name = "Slovakian" },
+                new HostLanguages { Id = 32, Name = "Ukrainian" },
+            };
+
+            return languagesList;
+        }
+
+        private List<AccessibilityFeatures> GenerateAccessibilities()
+        {
+            List<AccessibilityFeatures> accessibilitiesList = new List<AccessibilityFeatures>()
+            {
+                new AccessibilityFeatures { Id = 1, Name = "Step-free guest entrance" },
+                new AccessibilityFeatures { Id = 2, Name = "Guest entrance wider than 32 inches (81 centimeters)" },
+                new AccessibilityFeatures { Id = 3, Name = "Accessible parking spot" },
+                new AccessibilityFeatures { Id = 4, Name = "Step-free path to the guest entrance" },
+                new AccessibilityFeatures { Id = 5, Name = "Step-free bedroom access" },
+                new AccessibilityFeatures { Id = 6, Name = "Bedroom entrance wider than 32 inches (81 centimeters)" },
+                new AccessibilityFeatures { Id = 7, Name = "Step-free bathroom access" },
+                new AccessibilityFeatures { Id = 8, Name = "Bathroom entrance wider than 32 inches (81 centimeters)" },
+                new AccessibilityFeatures { Id = 9, Name = "Toilet grab bar" },
+                new AccessibilityFeatures { Id = 10, Name = "Shower grab bar" },
+                new AccessibilityFeatures { Id = 11, Name = "Step-free shower" },
+                new AccessibilityFeatures { Id = 12, Name = "Shower or bath chair" },
+                new AccessibilityFeatures { Id = 13, Name = "Ceiling or mobile hoist" },
+            };
+
+            return accessibilitiesList;
+        }
+
+        private List<PropertyType> GeneratePropertyType()
+        {
+            List<PropertyType> propertyTypeList = new List<PropertyType>()
+            {
+                new PropertyType { Id = 1, Name = "House" },
+                new PropertyType { Id = 2, Name = "Apartment" },
+                new PropertyType { Id = 3, Name = "Guesthouse" },
+                new PropertyType { Id = 4, Name = "Hotel" },
+            };
+
+            return propertyTypeList;
+        }
+
         private List<User> GenerateUsers()
         {
             List<User> usersList = new List<User>();
@@ -114,13 +190,14 @@ namespace Airbnb.DBContext
 									 "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.",
 									 "DO IT, just DO IT! Don't let your dreams be dreams. Yesterday, you said tomorrow. So just. DO IT! Make. your dreams. COME TRUE! Just... do it! Some people dream of success, while you're gonna wake up and work HARD at it! NOTHING IS IMPOSSIBLE!You should get to the point where anyone else would quit, and you're not gonna stop there. NO! What are you waiting for? ... DO IT! Just... DO IT! Yes you can! Just do it! If you're tired of starting over, stop. giving. up.",
 									 "If C# has a million fans, then I am one of them. If C# has ten fans, then I am one of them. If C# has only one fan then that is me. If C# has no fans, then that means I am no longer on earth. If the world is against C#, then I am against the world.",
-                                     "What's this you've said to me, my good friend? Ill have you know I graduated top of my class in conflict resolution, and Ive been involved in numerous friendly discussions, and I have over 300 confirmed friends. I am trained in polite discussions and I'm the top mediator in the entire neighborhood. You are worth more to me than just another target. I hope we will come to have a friendship never before seen on this Earth. Don't you think you might be hurting someone's feelings saying that over the internet? Think about it, my friend. As we speak I am contacting my good friends across the USA and your P.O. box is being traced right now so you better prepare for the greeting cards, friend. The greeting cards that help you with your hate. You should look forward to it, friend. I can be anywhere, anytime for you, and I can calm you in over seven hundred ways, and that's just with my chess set. Not only am I extensively trained in conflict resolution, but I have access to the entire group of my friends and I will use them to their full extent to start our new friendship. If only you could have known what kindness and love your little comment was about to bring you, maybe you would have reached out sooner. But you couldn't, you didn't, and now we get to start a new friendship, you unique person. I will give you gifts and you might have a hard time keeping up. You're finally living, friend.",
+                                     "What's this you've said to me, my good friend? I'll have you know I graduated top of my class in conflict resolution, and I've been involved in numerous friendly discussions, and I have over 300 confirmed friends. I am trained in polite discussions and I'm the top mediator in the entire neighborhood. You are worth more to me than just another target. I hope we will come to have a friendship never before seen on this Earth. Don't you think you might be hurting someone's feelings saying that over the internet? Think about it, my friend. As we speak I am contacting my good friends across the USA and your P.O. box is being traced right now so you better prepare for the greeting cards, friend. The greeting cards that help you with your hate. You should look forward to it, friend. I can be anywhere, anytime for you, and I can calm you in over seven hundred ways, and that's just with my chess set. Not only am I extensively trained in conflict resolution, but I have access to the entire group of my friends and I will use them to their full extent to start our new friendship. If only you could have known what kindness and love your little comment was about to bring you, maybe you would have reached out sooner. But you couldn't, you didn't, and now we get to start a new friendship, you unique person. I will give you gifts and you might have a hard time keeping up. You're finally living, friend.",
 									 "don't care. CURSE OF RA 𓀀 𓀁 𓀂 𓀃 𓀄 𓀅 𓀆 𓀇 𓀈 𓀉 𓀊 𓀋 𓀌 𓀍 𓀎 𓀏 𓀐 𓀑 𓀒 𓀓 𓀔 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓀭 𓀮 𓀯 𓀰 𓀱 𓀲 𓀳 𓀴 𓀵 𓀶 𓀷 𓀸 𓀹 𓀺 𓀻 𓀼 𓀽 𓀾 𓀿 𓁀 𓁁 𓁂 𓁃 𓁄 𓁅 𓁆 𓁇 𓁈 𓁉 𓁊 𓁋 𓁌 𓁍 𓁎 𓁏 𓁐 𓁑 𓀄 𓀅 𓀆",
 									 "HOLD CTRL AND TYPE \"WTF\" FOR ℱ𝓪𝓷𝓬𝔂 𝓦𝓣ℱ"];
             bool[] TrueOrFalse = [true, false];
             string currentMonth = DateTime.Now.ToString("MMM", CultureInfo.InvariantCulture);
             int currentYear = DateTime.Now.Year;
             int maxNumberOfDays = DateTime.DaysInMonth(currentYear, DateTime.ParseExact(currentMonth, "MMM", CultureInfo.InvariantCulture).Month);
+            string[] typeOfPlace = ["Room", "Entire home"];
 
             for (int i = 1; i <= 2440; i++)
             {
@@ -152,6 +229,9 @@ namespace Airbnb.DBContext
                     NumberOfBathrooms = rng.Next(1, 17),
                     MaxNumberOfGuests = rng.Next(1, 17),
                     PetsAllowed = petsAllowed,
+                    SelfCheckin = TrueOrFalse[rng.Next(0, 2)],
+                    InstantBook = TrueOrFalse[rng.Next(0, 2)],
+                    TypeOfPlace = typeOfPlace[rng.Next(0, 2)],
                     MaxNumberOfPets = petCount,
                     InfantsAllowed = TrueOrFalse[rng.Next(0, 2)],
                 });

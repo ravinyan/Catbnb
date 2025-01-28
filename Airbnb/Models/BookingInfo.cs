@@ -47,6 +47,15 @@ namespace Airbnb.Models
         public bool PetsAllowed { get; set; } = false;
 
         [Required]
+        public bool SelfCheckin { get; set; } = false;
+
+        [Required]
+        public bool InstantBook { get; set; } = false;
+
+        [Required]
+        public string TypeOfPlace { get; set; } = string.Empty;
+
+        [Required]
         public int MaxNumberOfPets { get; set; } = 0;
 
         [Required]
