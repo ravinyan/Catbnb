@@ -9,7 +9,5 @@ namespace Airbnb.Models
 		[MaxLength(60)]
 		[Required]
 		public string Name { get; set; } = string.Empty;
-
-        //public ICollection<CatCard>? CatCards { get; set; }
     }
 }

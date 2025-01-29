@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Catbnb.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Airbnb.Models
 {
@@ -65,5 +66,15 @@ namespace Airbnb.Models
 
         [Required]
         public CatCard? CatCard { get; set; }
+
+        [Required]
+        public ICollection<BookingInfoAccessibilityFeatures>? AccessibilityFeatures { get; set; }
+
+        [Required]
+        public ICollection<BookingInfoHostLanguages>? HostLanguages { get; set; }
+
+        [Required]
+        public int PropertyTypeId { get; set; }
+        public PropertyType? PropertyType { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Airbnb.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Catbnb.Models
 {
@@ -9,5 +10,8 @@ namespace Catbnb.Models
         [StringLength(10)]
         [Required]
         public string Name { get; set; } = string.Empty;
+
+        [Required]
+        public ICollection<BookingInfo>? BookingInfos { get; set; }
     }
 }

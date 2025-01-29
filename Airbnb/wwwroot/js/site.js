@@ -5169,7 +5169,7 @@ async function fetchNeededCatCards(queryValue)
 
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
-    
+    console.log(categoriesJson)
     categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
 
     document.body.style.cursor = "";
