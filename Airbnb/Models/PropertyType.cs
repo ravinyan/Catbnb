@@ -11,7 +11,7 @@ namespace Catbnb.Models
         [Required]
         public string Name { get; set; } = string.Empty;
 
-        [Required]
-        public ICollection<BookingInfo>? BookingInfos { get; set; }
+        //[Required]
+        //public ICollection<BookingInfo>? BookingInfos { get; set; }
     }
 }

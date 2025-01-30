@@ -76,5 +76,8 @@ namespace Airbnb.Models
         [Required]
         public int PropertyTypeId { get; set; }
         public PropertyType? PropertyType { get; set; }
+
+        [Required]
+        public ICollection<BookingInfoBookingOptions>? BookingOptions { get; set; }
     }
 }

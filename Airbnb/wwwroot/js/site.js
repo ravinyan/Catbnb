@@ -235,7 +235,7 @@ function filterModalSelectTypeOfPlace(button, button2, button3)
         }
         else if (button = filterModalEntireHome)
         {
-            selectedTypeOfPlace = "Home";
+            selectedTypeOfPlace = "Entire home";
         }
     }
 }
@@ -4826,7 +4826,23 @@ filterModalShowPlaces.onclick = function()
     console.log(filterModalBedroomsCount.innerText);
     console.log(filterModalBedsCount.innerText);
     console.log(filterModalBathroomsCount.innerText);
+    console.log(filterModalMaximumPriceInput.value)
+    console.log(filterModalMinimumPriceInput.value)
     //getAllFilterValues();
+
+    queryString = new URLSearchParams(window.location.search);
+    var categoryQuery = queryString.get("category");
+
+    for (i = 0; i < scrollMenu.childNodes.length; i++)
+    {
+        if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+        {
+            DisplayText3.innerHTML = "";
+            scrollMenu.childNodes[i].style.color = "black";
+            fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
+            break;
+        }
+    }
 
     //  all values need to go to URI and then i need to read URI values and get stuff from database... how
 }
@@ -5170,7 +5186,74 @@ async function fetchNeededCatCards(queryValue)
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
     console.log(categoriesJson)
-    categoriesJson.catCards.forEach(cardArray => generateCatCards(cardArray));
+   
+    categoriesJson.catCards.forEach(cardArray =>
+    {
+        // warning: massive if statement!
+        var cardAmenities = [];
+        for (i = 0; i < cardArray.amenities.length; i++)
+        {
+            cardAmenities.push(cardArray.amenities[i].amenity.name);
+        }
+        var foundAmenities = selectedAmenities.every(function(val) 
+        {
+            return cardAmenities.indexOf(val) !== -1;
+        });
+        
+        var cardBookingOptions = [];
+        for (i = 0; i < cardArray.bookingInfo.bookingOptions.length; i++)
+        {
+            cardBookingOptions.push(cardArray.bookingInfo.bookingOptions[i].bookingOptions.name);
+        }
+        var foundBookingOptions = selectedBookingOptions.every(function(val) 
+        {
+            return cardBookingOptions.indexOf(val) !== -1;
+        });
+
+        var cardProperty = cardArray.bookingInfo.propertyType.name;
+        var foundPropertyType = selectedPropertyType.every(function(val) 
+        {
+            return cardProperty.indexOf(val) !== -1;
+        });
+        
+        var cardAccessibilityOptions = []
+        for (i = 0; i < cardArray.bookingInfo.accessibilityFeatures.length; i++)
+        {
+            cardAccessibilityOptions.push(cardArray.bookingInfo.accessibilityFeatures[i].accessibilityFeature.name);
+        }
+        var foundAccessibilityOptions = selectedAccessibilityCheckboxes.every(function(val) 
+        {
+            return cardAccessibilityOptions.indexOf(val) !== -1;
+        });
+
+        var cardHostLanguages = []
+        for (i = 0; i < cardArray.bookingInfo.hostLanguages.length; i++)
+        {
+            cardHostLanguages.push(cardArray.bookingInfo.hostLanguages[i].hostLanguage.name);
+        }
+        var foundHostLanguages = selectedHostLanguagesCheckboxes.every(function(val) 
+        {
+            return cardHostLanguages.indexOf(val) !== -1;
+        });
+
+        if ((cardArray.bookingInfo.typeOfPlace == selectedTypeOfPlace || selectedTypeOfPlace == "")
+        &&  (cardArray.bookingInfo.basePrice >= +filterModalMinimumPriceInput.value && cardArray.bookingInfo.basePrice <= +filterModalMaximumPriceInput.value)
+        &&  ((cardArray.bookingInfo.numberOfBedrooms == +filterModalBedroomsCount.innerText && cardArray.bookingInfo.numberOfBeds == +filterModalBedsCount.innerText && cardArray.bookingInfo.numberOfBathrooms == +filterModalBathroomsCount.innerText) || (filterModalBedroomsCount.innerText == "Any" || filterModalBedsCount.innerText == "Any" || filterModalBathroomsCount.innerText == "Any"))
+        &&  (foundAmenities == true)
+        &&  (foundBookingOptions == true)
+        &&  ("Standout stays (not in database but calculate star rating and >4 will be guest favourite)")
+        &&  (foundPropertyType == true)
+        &&  (foundAccessibilityOptions == true)
+        &&  (foundHostLanguages == true))
+        {
+            console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
+            generateCatCards(cardArray);
+        }
+        else
+        {
+            console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` +  "\n%cBAD ^^", "color:red; font-size:16px;")
+        }
+    });
 
     document.body.style.cursor = "";
 }

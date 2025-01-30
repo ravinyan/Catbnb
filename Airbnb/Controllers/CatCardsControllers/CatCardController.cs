@@ -26,9 +26,9 @@ namespace Airbnb.Controllers
         {
             var catCard = await _context!.CatCards
                 .Include(i => i.Images)
-                .Include(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews)
+                .Include(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews).AsSplitQuery()
                 .Include(h => h.Host)
-                .Include(a => a.Amenities)!.ThenInclude(a => a.Amenity).FirstOrDefaultAsync(i => i.Id == id);
+                .Include(a => a.Amenities)!.ThenInclude(a => a.Amenity).AsSplitQuery().FirstOrDefaultAsync(i => i.Id == id);
                 
             if (catCard == null)
             {

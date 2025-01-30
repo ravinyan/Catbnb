@@ -1,4 +1,5 @@
 ﻿using Airbnb.Models;
+using Azure.Core.GeoJson;
 using Catbnb.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -124,6 +125,18 @@ namespace Airbnb.DBContext
             };
 
             return propertyTypeList;
+        }
+
+        private List<BookingOptions> GenerateBookingOptions()
+        {
+            List<BookingOptions> bookingOptionsList = new List<BookingOptions>()
+            {
+                new BookingOptions { Id = 1, Name = "Instant Book" },
+                new BookingOptions { Id = 2, Name = "Self check-in" },
+                new BookingOptions { Id = 3, Name = "Allows pets" },
+            };
+
+            return bookingOptionsList;
         }
 
         private List<User> GenerateUsers()
@@ -451,6 +464,28 @@ namespace Airbnb.DBContext
             return bookingInfoAccessibilityFeatures;
         }
 
+        private List<BookingInfoBookingOptions> GenerateBookingInfoBookingOptions()
+        {
+            List<BookingInfoBookingOptions> bookingInfoBookingOptions = new List<BookingInfoBookingOptions>();
+
+            for (int i = 1; i <= 2440; i++)
+            {
+                var options = Enumerable.Range(1, 3).OrderBy(x => rng.Next()).Take(2).ToList();
+
+                for (int j = 0; j < 2; j++)
+                {
+                    bookingInfoBookingOptions.Add(new BookingInfoBookingOptions
+                    {
+                        BookingInfoId = i,
+                        BookingOptionsId = options[j],
+                    });
+                }
+            }
+
+            return bookingInfoBookingOptions;
+        }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             List<Amenities> amenitiesList = GenerateAmenities();
@@ -483,6 +518,9 @@ namespace Airbnb.DBContext
             List<AccessibilityFeatures> accessibilityFeaturesList = GenerateAccessibilities();
             modelBuilder.Entity<AccessibilityFeatures>().HasData(accessibilityFeaturesList);
 
+            List<BookingOptions> bookingOptionsList = GenerateBookingOptions();
+            modelBuilder.Entity<BookingOptions>().HasData(bookingOptionsList);
+
             modelBuilder.Entity<CatCardAmenities>()
                 .ToTable("CatCardAmenities")
                 .HasKey(k => new { k.AmenitiesId, k.CatCardId });
@@ -504,6 +542,13 @@ namespace Airbnb.DBContext
             List<BookingInfoAccessibilityFeatures> bookingInfoAccessibilityFeatures = GenerateBookingInfoAccessibilityFeatures();
             modelBuilder.Entity<BookingInfoAccessibilityFeatures>().HasData(bookingInfoAccessibilityFeatures);
 
+            modelBuilder.Entity<BookingInfoBookingOptions>()
+                .ToTable("BookingInfoBookingOptions")
+                .HasKey(k => new { k.BookingOptionsId, k.BookingInfoId });
+
+            List<BookingInfoBookingOptions> bookingInfoBookingOptions = GenerateBookingInfoBookingOptions();
+            modelBuilder.Entity<BookingInfoBookingOptions>().HasData(bookingInfoBookingOptions);
+
             modelBuilder.Entity<Models.User>()
                 .HasMany(cc => cc.CatCards)
                 .WithOne(u => u.Host);
@@ -521,8 +566,7 @@ namespace Airbnb.DBContext
                 .WithOne(bi => bi.BookingInfo);
 
             modelBuilder.Entity<BookingInfo>()
-                .HasOne(pt => pt.PropertyType)
-                .WithMany(bi => bi.BookingInfos);
+                .HasOne(pt => pt.PropertyType);
 
             modelBuilder.Entity<Categories>()
                 .HasMany(cc => cc.CatCards)
@@ -545,5 +589,6 @@ namespace Airbnb.DBContext
         public DbSet<HostLanguages> HostLanguages { get; set; }
         public DbSet<AccessibilityFeatures> AccessibilityFeatures { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<BookingOptions> BookingOptions { get; set; }
     }
 }
