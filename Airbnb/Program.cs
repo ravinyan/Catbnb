@@ -25,8 +25,6 @@ using (var scope = app.Services.CreateScope())
     //DBReset.InitializeSeedData(services);
 }
 
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

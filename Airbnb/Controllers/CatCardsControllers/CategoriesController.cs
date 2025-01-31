@@ -2,7 +2,6 @@
 using Airbnb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace Airbnb.Controllers.CatCardsControllers
 {

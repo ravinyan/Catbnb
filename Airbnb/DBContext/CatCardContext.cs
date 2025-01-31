@@ -1,8 +1,6 @@
 ﻿using Airbnb.Models;
-using Azure.Core.GeoJson;
 using Catbnb.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Airbnb.DBContext

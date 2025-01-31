@@ -2376,11 +2376,28 @@ div.modal_V2 {
     border-radius: 20px;
 }
 
+div.modal_V2_S {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    width: 600px;
+    height: 4500px;
+    max-height: calc(100vh - 100px);
+    background: white;
+    z-index: 2000;
+    top: 65px;
+    left: calc(50% - 300px);
+    border-radius: 20px;
+}
+
 div.modal_header_V2 {
     padding: 15px 15px;
     width: 100%;
     height: auto;
     border-bottom: 1px solid #dddddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 div.modal_body_V2 {

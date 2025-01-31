@@ -187,16 +187,28 @@ categoriesMenu();
 const filterButton = document.getElementById("FilterButton");
 const filterModal = document.getElementById("FilterModal");
 const filterModalBackground = document.getElementById("FilterModalBackground");
+const filterModalCloseButton = filterModal.childNodes[1].childNodes[1];
 
 filterButton.onclick = function()
 {
-    filterModal.style.display = "block";
+    filterModal.style.display = "flex";
     filterModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
 
-filterModalBackground.onclick = function()
+filterModalBackground.onclick = function(e)
+{
+    if (e.target == filterModalBackground)
+    {
+        filterModal.style.display = "none";
+        filterModalBackground.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
+}
+
+filterModalCloseButton.onclick = function()
 {
     filterModal.style.display = "none";
     filterModalBackground.style.display = "none";
@@ -687,6 +699,7 @@ experiencesMenuButton.onclick = function()
 const globeIcon = document.getElementById("GlobeIcon");
 const languageRegionCurrencyModal = document.getElementById("LanguageRegionCurrencyModal");
 const languageRegionCurrencyModalBackground = document.getElementById("LanguageRegionCurrencyModalBackground");
+const languageRegionCurrencyModalCloseButton = languageRegionCurrencyModal.childNodes[1].childNodes[1];
 const languagesButton = document.getElementById("ModalLanguageAndRegionButton");
 const currenciesButton = document.getElementById("ModalCurrenciesButton");
 
@@ -695,13 +708,24 @@ const currencies = document.getElementById("Currencies");
 
 globeIcon.onclick = function()
 {
-    languageRegionCurrencyModal.style.display = "block";
+    languageRegionCurrencyModal.style.display = "flex";
     languageRegionCurrencyModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
 }
 
-languageRegionCurrencyModalBackground.onclick = function()
+languageRegionCurrencyModalBackground.onclick = function(e)
+{
+    if (e.target == languageRegionCurrencyModalBackground)
+    {
+        languageRegionCurrencyModalBackground.style.display = "none";
+        languageRegionCurrencyModal.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
+}
+
+languageRegionCurrencyModalCloseButton.onclick = function()
 {
     languageRegionCurrencyModalBackground.style.display = "none";
     languageRegionCurrencyModal.style.display = "none";
@@ -768,7 +792,7 @@ function onClickButtonUnfocus(button)
 
 document.addEventListener('mousedown', function(e) 
 {
-    if (e.target == imstupidsvg || e.target == imstupidpath || monthsBlockModalStartDate.style.display == "block" || monthsBlockModalEndDate.style.display == "block")
+    if (e.target == imstupidsvg || e.target == imstupidpath || monthsBlockModalStartDate.style.display == "flex" || monthsBlockModalEndDate.style.display == "flex")
     {
         return;
     }
@@ -3825,37 +3849,108 @@ function monthsBlockInitializeCalendars(e, firstCalendar, secondCalendar, leftBu
 }
 
 const monthsBlockModalBackground = document.getElementById("MonthsBlockModalBackground");
-
-function monthsBlockCloseModal()
-{
-    monthsBlockModalBackground.style.display = "none";
-    monthsBlockModalStartDate.style.display = "none";
-    monthsBlockModalEndDate.style.display = "none";
-    document.body.style.overflow = "";
-    document.body.style.paddingRight = "";
-}
-
-function monthsBlockOpenModal(modal)
-{
-    modal.style.display = "block";
-    monthsBlockModalBackground.style.display = "block";
-    document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = "19px";
-}
+const monthsBlockModalBackground2 = document.getElementById("MonthsBlockModalBackground2");
 
 monthsBlockWhenStartDate.onclick = function(e)
 {
-    monthsBlockOpenModal(monthsBlockModalStartDate);
+    monthsBlockModalStartDate.style.display = "flex";
+    monthsBlockModalBackground.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
+
     monthsBlockInitializeCalendars(e, monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockMoveStartCalendarsLeft, monthsBlockMoveStartCalendarsRight);
 }
 
 monthsBlockWhenEndDate.onclick = function(e)
 {
-    monthsBlockOpenModal(monthsBlockModalEndDate);
+    monthsBlockModalEndDate.style.display = "flex";
+    monthsBlockModalBackground2.style.display = "block";
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = "19px";
+
     monthsBlockInitializeCalendars(e, monthsBlockCalendarEndLeft, monthsBlockCalendarEndRight, monthsBlockMoveEndCalendarsLeft, monthsBlockMoveEndCalendarsRight);
 }
 
-monthsBlockModalBackground.onclick = function()
+monthsBlockModalBackground.onclick = function(e)
+{
+    if (e.target == monthsBlockModalBackground)
+    {
+        if (monthsBlockPreviousSelectedStartDate != "")
+        {
+            monthsBlockSelectedStartDate = monthsBlockPreviousSelectedStartDate;
+            monthsBlockSelectedStartMonth = monthsBlockPreviousSelectedStartMonth;
+            monthsBlockSelectedStartYear = monthsBlockPreviousSelectedStartYear;
+            try
+            {
+                let m = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+                let y = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+                monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+            }catch{} // i hate i know i can make check if statement
+        }
+
+        if (monthsBlockPreviousSelectedEndDate != "")
+        {
+            monthsBlockSelectedEndDate = monthsBlockPreviousSelectedEndDate;
+            monthsBlockSelectedEndMonth = monthsBlockPreviousSelectedEndMonth;
+            monthsBlockSelectedEndYear = monthsBlockPreviousSelectedEndYear;
+            try
+            {
+                let m = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+                let y = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+                monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+                
+            }catch{} // try catch but i dont want to
+        }
+
+        monthsBlockModalBackground.style.display = "none";
+        monthsBlockModalStartDate.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
+}
+
+monthsBlockModalBackground2.onclick = function(e)
+{
+    if (e.target == monthsBlockModalBackground2)
+    {
+        if (monthsBlockPreviousSelectedStartDate != "")
+        {
+            monthsBlockSelectedStartDate = monthsBlockPreviousSelectedStartDate;
+            monthsBlockSelectedStartMonth = monthsBlockPreviousSelectedStartMonth;
+            monthsBlockSelectedStartYear = monthsBlockPreviousSelectedStartYear;
+            try
+            {
+                let m = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+                let y = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+                monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+            }catch{} // i hate i know i can make check if statement
+        }
+
+        if (monthsBlockPreviousSelectedEndDate != "")
+        {
+            monthsBlockSelectedEndDate = monthsBlockPreviousSelectedEndDate;
+            monthsBlockSelectedEndMonth = monthsBlockPreviousSelectedEndMonth;
+            monthsBlockSelectedEndYear = monthsBlockPreviousSelectedEndYear;
+            try
+            {
+                let m = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+                let y = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+                monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+                
+            }catch{} // try catch but i dont want to
+        }
+
+        monthsBlockModalBackground2.style.display = "none";
+        monthsBlockModalEndDate.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
+}
+
+const monthsBlockModalStartDateCloseButton = monthsBlockModalStartDate.childNodes[1].childNodes[1];
+const monthsBlockModalEndDateCloseButton = monthsBlockModalEndDate.childNodes[1].childNodes[1];
+
+monthsBlockModalStartDateCloseButton.onclick = function()
 {
     if (monthsBlockPreviousSelectedStartDate != "")
     {
@@ -3884,7 +3979,45 @@ monthsBlockModalBackground.onclick = function()
         }catch{} // try catch but i dont want to
     }
 
-    monthsBlockCloseModal();
+    monthsBlockModalStartDate.style.display = "none";
+    monthsBlockModalBackground.style.display = "none";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+}
+
+monthsBlockModalEndDateCloseButton.onclick = function()
+{
+    if (monthsBlockPreviousSelectedStartDate != "")
+    {
+        monthsBlockSelectedStartDate = monthsBlockPreviousSelectedStartDate;
+        monthsBlockSelectedStartMonth = monthsBlockPreviousSelectedStartMonth;
+        monthsBlockSelectedStartYear = monthsBlockPreviousSelectedStartYear;
+        try
+        {
+            let m = monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +monthsBlockSelectedStartDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockStartDateValue = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+        }catch{} // i hate i know i can make check if statement
+    }
+
+    if (monthsBlockPreviousSelectedEndDate != "")
+    {
+        monthsBlockSelectedEndDate = monthsBlockPreviousSelectedEndDate;
+        monthsBlockSelectedEndMonth = monthsBlockPreviousSelectedEndMonth;
+        monthsBlockSelectedEndYear = monthsBlockPreviousSelectedEndYear;
+        try
+        {
+            let m = monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(0, -5);
+            let y = +monthsBlockSelectedEndDate.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].innerText.slice(-4);
+            monthsBlockEndDateValue = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(m)]} ${y}`;
+            
+        }catch{} // try catch but i dont want to
+    }
+
+    monthsBlockModalEndDate.style.display = "none";
+    monthsBlockModalBackground2.style.display = "none";
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
 }
 
 const monthsBlockSaveStartDateButton = document.getElementById("MonthsBlockSaveStartDate");
@@ -4006,7 +4139,7 @@ function monthsBlockCorrectCirclePositionEndDate()
     }
 }
 
-monthsBlockSaveStartDateButton.onclick = function()
+monthsBlockSaveStartDateButton.onclick = function(e)
 {
     monthsBlockSavedStartPMValue = monthsBlockStartPMValue;
 
@@ -4032,10 +4165,17 @@ monthsBlockSaveStartDateButton.onclick = function()
     monthsBlockWhenEndDate.innerText = `${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`;
 
     monthsBlockCorrectCirclePositionStartDate();
-    monthsBlockCloseModal();
+
+    if (e.target == monthsBlockSaveStartDateButton)
+    {
+        monthsBlockModalBackground.style.display = "none";
+        monthsBlockModalStartDate.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
 }
 
-monthsBlockSaveEndDateButton.onclick = function()
+monthsBlockSaveEndDateButton.onclick = function(e)
 {
     monthsBlockSavedEndPMValue = monthsBlockEndPMValue;
     
@@ -4055,7 +4195,14 @@ monthsBlockSaveEndDateButton.onclick = function()
     monthsBlockWhenEndDate.innerText = `${monthsBlockEndDateValue} ${monthsBlockSavedEndPMValue}`;
 
     monthsBlockCorrectCirclePositionEndDate();
-    monthsBlockCloseModal();
+
+    if (e.target == monthsBlockSaveEndDateButton)
+    {
+        monthsBlockModalBackground2.style.display = "none";
+        monthsBlockModalEndDate.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -4564,90 +4711,6 @@ function generateQueryStringURI()
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------GETTING AND USING FILTER VALUES-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-// for testing to delete
-function getAllFilterValues()
-{
-    let typeOfPlaceButtons = document.getElementsByClassName("type_of_place_button");
-    let selectedTypeOfPlace = "";
-
-    for (i = 0; i < typeOfPlaceButtons.length; i++)
-    {
-        if (window.getComputedStyle(typeOfPlaceButtons[i]).borderColor == "rgb(0, 0, 0)")
-        {
-            selectedTypeOfPlace = typeOfPlaceButtons[i].innerText.trim();
-        }
-    }
-
-    // amenities / booking options / property type
-    let allAmenities = document.getElementsByClassName("amenities_button");
-    let selectedAmenities = [];
-
-    for (i = 0; i < allAmenities.length; i++)
-    {
-        if (window.getComputedStyle(allAmenities[i]).borderColor == "rgb(0, 0, 0)")
-        {
-            selectedAmenities.push(allAmenities[i].childNodes[3].innerText.trim());
-        }
-    }
-
-    let accessibilities = document.getElementById("FilterModalAccessibilityFeaturesDropdownMenu");
-    let accessibilitiesCheckboxes = accessibilities.childNodes;
-    let selectedAccessibities = [];
-
-    for (i = 0; i < accessibilitiesCheckboxes.length; i++)
-    {
-        if (accessibilitiesCheckboxes[i].tagName == "DIV")
-        {
-            for (j = 0; j < accessibilitiesCheckboxes[i].childNodes.length; j++)
-            {
-                if (accessibilitiesCheckboxes[i].childNodes[j].tagName == "LABEL")
-                {
-                    if (accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[1].checked == true)
-                    {
-                        selectedAccessibities.push(`${accessibilitiesCheckboxes[i].childNodes[j].innerText.trim()} - ${accessibilitiesCheckboxes[i].childNodes[j].childNodes[1].childNodes[1].checked}`);
-                    }
-                }
-            }
-        }
-    }
-
-    let languages = document.getElementById("FilterModalHostLanguageDropdownMenu");
-    let languagesCheckboxes = languages.childNodes[1].childNodes;
-    let selectedlanguages = [];
-
-    for (i = 0; i < languagesCheckboxes.length; i++)
-    {
-        if (languagesCheckboxes[i].tagName == "LABEL")
-        {
-            if (languagesCheckboxes[i].childNodes[1].childNodes[1].checked == true)
-            {
-                selectedlanguages.push(`${languagesCheckboxes[i].childNodes[3].innerText.trim()} - ${languagesCheckboxes[i].childNodes[1].childNodes[1].checked}`);
-            }
-        }
-    }
-
-    let guestFavourite = false;
-
-    if (filterModalStandoutStays.style.borderColor == "black")
-    {
-        guestFavourite = true;
-    }
-
-    console.log(selectedTypeOfPlace);
-    console.log(selectedAmenities);
-    console.log(selectedAccessibities);
-    console.log(selectedlanguages);
-
-    console.log(filterModalMinimumPriceInput.value);
-    console.log(filterModalMaximumPriceInput.value);
-    
-    console.log(filterModalBedroomsCount.innerText);
-    console.log(filterModalBedsCount.innerText);
-    console.log(filterModalBathroomsCount.innerText);
-
-    console.log(guestFavourite);
-}
-
 function clearAllFilterValues()
 {
     filterModalAnyType.style.border = "1px solid black";
@@ -4816,43 +4879,33 @@ function clearAllFilterValues()
 
 filterModalShowPlaces.onclick = function()
 {
-    console.log(selectedHostLanguagesCheckboxes);
-    console.log(selectedAccessibilityCheckboxes);
-    console.log(standoutStaysSelected);
-    console.log(selectedTypeOfPlace);
-    console.log(selectedAmenities);
-    console.log(selectedBookingOptions);
-    console.log(selectedPropertyType);
-    console.log(filterModalBedroomsCount.innerText);
-    console.log(filterModalBedsCount.innerText);
-    console.log(filterModalBathroomsCount.innerText);
-    console.log(filterModalMaximumPriceInput.value)
-    console.log(filterModalMinimumPriceInput.value)
-    //getAllFilterValues();
-
     queryString = new URLSearchParams(window.location.search);
     var categoryQuery = queryString.get("category");
 
-    for (i = 0; i < scrollMenu.childNodes.length; i++)
+    if (categoryQuery != null && categoryQuery != "")
     {
-        if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+        for (i = 0; i < scrollMenu.childNodes.length; i++)
         {
-            DisplayText3.innerHTML = "";
-            scrollMenu.childNodes[i].style.color = "black";
-            fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
-            break;
+            if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+            {
+                DisplayText3.innerHTML = "";
+                scrollMenu.childNodes[i].style.color = "black";
+                fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
+                break;
+            }
         }
     }
-
-    //  all values need to go to URI and then i need to read URI values and get stuff from database... how
+    else if (categoryQuery == null || categoryQuery == "")
+    {
+        scrollMenu.childNodes[1].style.color = "black";
+        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+    }
 }
 
 filterModalClearAll.onclick = function()
 {
     clearAllFilterValues();
 }
-
-// NEED TO FIX OLD MODALS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
