@@ -482,8 +482,7 @@ button.when_buttons {
 }
 
 /* modal testing */
-/**/
-div.modal_window {
+/*div.modal_window {
     display: none;
     position: absolute;
     width: 800px;
@@ -549,10 +548,10 @@ div.modal_body {
 div.modal_footer {
     width: 100%;
     height: auto;
-}
+}*/
 
 /*this is cool wtf*/
-@keyframes fadeIn {
+/*@keyframes fadeIn {
     0% {
         opacity: 0;
     }
@@ -572,7 +571,7 @@ div.modal_footer {
         top: 70px;
         opacity: 1;
     }
-}
+}*/
 
 div.invalid_day_popup {
     background-color: white;
@@ -2374,6 +2373,7 @@ div.modal_V2 {
     top: 65px;
     left: calc(50% - 400px);
     border-radius: 20px;
+    animation: modalV2_slideOut 0.2s;
 }
 
 div.modal_V2_S {
@@ -2388,6 +2388,35 @@ div.modal_V2_S {
     top: 65px;
     left: calc(50% - 300px);
     border-radius: 20px;
+    animation: modalV2_slideOut 0.2s;
+}
+
+div.modal_V2_slideIn {
+    animation: modalV2_slideIn 0.2s;
+}
+
+@keyframes modalV2_slideIn {
+    0% {
+        top: 300px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 65px;
+        opacity: 1;
+    }
+}
+
+@keyframes modalV2_slideOut {
+    0% {
+        top: 65px;
+        opacity: 1;
+    }
+
+    100% {
+        top: 300px;
+        opacity: 0;
+    }
 }
 
 div.modal_header_V2 {

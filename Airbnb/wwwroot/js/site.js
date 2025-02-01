@@ -195,25 +195,36 @@ filterButton.onclick = function()
     filterModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
+    filterModal.classList.add("modal_V2_slideIn");
 }
 
 filterModalBackground.onclick = function(e)
 {
     if (e.target == filterModalBackground)
     {
-        filterModal.style.display = "none";
-        filterModalBackground.style.display = "none";
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
+        filterModal.classList.remove("modal_V2_slideIn");
+        
+        setTimeout(() => 
+        {
+            filterModal.style.display = "none";
+            filterModalBackground.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+        }, 150);
     }
 }
 
 filterModalCloseButton.onclick = function()
 {
-    filterModal.style.display = "none";
-    filterModalBackground.style.display = "none";
-    document.body.style.overflow = "";
-    document.body.style.paddingRight = "";
+    filterModal.classList.remove("modal_V2_slideIn");
+    
+    setTimeout(() => 
+    {
+        filterModal.style.display = "none";
+        filterModalBackground.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }, 150);
 }
 
 //  type of place
@@ -958,18 +969,18 @@ const addGuestsButton = document.getElementById("MiniAddGuestsButton");
 
 window.onclick = function()
 {
-    if (document.getElementById("GreyBackground").style.display == "block")
+    if (document.getElementById("GreyBackground").style.display == "block" && window.location.pathname == "/" || window.location.pathname == "/home")
     {
         document.getElementById("GreyBackground").onclick = function() 
         {
             document.getElementById("GreyBackground").style.display = "none";
 
             document.getElementById("TopHeader").style.height = "80px";
-            document.getElementById("ScrollDiv").style.zIndex = "";
+            document.getElementById("ScrollDiv").style.zIndex = "10";
             
             document.getElementById("MiniForm").style.display = "block";
             document.getElementById("StaysMenuButtons").style.display = "none";
-            document.getElementById("StaysMenuForm").style.display = "none";   
+            document.getElementById("StaysMenuForm").style.display = "none";
         };
     }
 }
@@ -985,6 +996,8 @@ anywhereButton.onclick = function()
      document.getElementById("StaysMenuForm").style.display = "block";
 
      document.getElementById("GreyBackground").style.display = "block";
+
+     initializeDatesCalendars(calendar, calendar2);
 }
 
 anyWeekButton.onclick = function()
@@ -997,6 +1010,8 @@ anyWeekButton.onclick = function()
      document.getElementById("StaysMenuForm").style.display = "block";
 
      document.getElementById("GreyBackground").style.display = "block";
+
+     initializeDatesCalendars(calendar, calendar2);
 }
 
 addGuestsButton.onclick = function()
@@ -1009,7 +1024,8 @@ addGuestsButton.onclick = function()
      document.getElementById("StaysMenuForm").style.display = "block";
 
      document.getElementById("GreyBackground").style.display = "block";
-     console.log("CA PY BA RA capybara capybara capybara capybara")
+     
+     initializeDatesCalendars(calendar, calendar2);
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -2745,7 +2761,7 @@ calendarPM14Button.onclick = function(e)
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
----------------------------------------------CIRCLE OF DEATH AND SUFFERING--------------------------------------------
+---------------------------------------CIRCLE OF DEATH AND SUFFERING/MONTH BLOCK--------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
 //  https://www.w3schools.com/graphics/svg_path.asp
 //    ^Y
@@ -3853,16 +3869,20 @@ const monthsBlockModalBackground2 = document.getElementById("MonthsBlockModalBac
 
 monthsBlockWhenStartDate.onclick = function(e)
 {
+    monthsBlockModalStartDate.classList.add("modal_V2_slideIn");
+
     monthsBlockModalStartDate.style.display = "flex";
     monthsBlockModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
-
+    
     monthsBlockInitializeCalendars(e, monthsBlockCalendarStartLeft, monthsBlockCalendarStartRight, monthsBlockMoveStartCalendarsLeft, monthsBlockMoveStartCalendarsRight);
 }
 
 monthsBlockWhenEndDate.onclick = function(e)
 {
+    monthsBlockModalEndDate.classList.add("modal_V2_slideIn");
+
     monthsBlockModalEndDate.style.display = "flex";
     monthsBlockModalBackground2.style.display = "block";
     document.body.style.overflow = "hidden";
@@ -3902,10 +3922,15 @@ monthsBlockModalBackground.onclick = function(e)
             }catch{} // try catch but i dont want to
         }
 
-        monthsBlockModalBackground.style.display = "none";
-        monthsBlockModalStartDate.style.display = "none";
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
+        monthsBlockModalStartDate.classList.remove("modal_V2_slideIn");
+
+        setTimeout(() => 
+        {
+            monthsBlockModalBackground.style.display = "none";
+            monthsBlockModalStartDate.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+        }, 150);
     }
 }
 
@@ -3940,10 +3965,15 @@ monthsBlockModalBackground2.onclick = function(e)
             }catch{} // try catch but i dont want to
         }
 
-        monthsBlockModalBackground2.style.display = "none";
-        monthsBlockModalEndDate.style.display = "none";
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
+        monthsBlockModalEndDate.classList.remove("modal_V2_slideIn");
+
+        setTimeout(() => 
+        {
+            monthsBlockModalBackground2.style.display = "none";
+            monthsBlockModalEndDate.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+        }, 150);
     }
 }
 
@@ -3979,10 +4009,15 @@ monthsBlockModalStartDateCloseButton.onclick = function()
         }catch{} // try catch but i dont want to
     }
 
-    monthsBlockModalStartDate.style.display = "none";
-    monthsBlockModalBackground.style.display = "none";
-    document.body.style.overflow = "";
-    document.body.style.paddingRight = "";
+    monthsBlockModalStartDate.classList.remove("modal_V2_slideIn");
+
+    setTimeout(() => 
+    {
+        monthsBlockModalStartDate.style.display = "none";
+        monthsBlockModalBackground.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }, 150);
 }
 
 monthsBlockModalEndDateCloseButton.onclick = function()
@@ -4014,11 +4049,17 @@ monthsBlockModalEndDateCloseButton.onclick = function()
         }catch{} // try catch but i dont want to
     }
 
-    monthsBlockModalEndDate.style.display = "none";
-    monthsBlockModalBackground2.style.display = "none";
-    document.body.style.overflow = "";
-    document.body.style.paddingRight = "";
+    monthsBlockModalEndDate.classList.remove("modal_V2_slideIn");
+
+    setTimeout(() => 
+    {
+        monthsBlockModalEndDate.style.display = "none";
+        monthsBlockModalBackground2.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }, 150);
 }
+
 
 const monthsBlockSaveStartDateButton = document.getElementById("MonthsBlockSaveStartDate");
 const monthsBlockSaveEndDateButton = document.getElementById("MonthsBlockSaveEndDate");
@@ -4906,7 +4947,6 @@ filterModalClearAll.onclick = function()
 {
     clearAllFilterValues();
 }
-
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------MAIN PAGE CAT CARDS-------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
@@ -5515,6 +5555,54 @@ function roomCalendarResize()
 }
 
 roomCalendarResize();
+
+function resizeCalendars()
+{
+    if (window.location.pathname.split("/")[1] == "Rooms")
+    {
+        let room = document.getElementById("RoomContent");
+
+        let c1 = room.getElementsByClassName("room_information_calendar1")[0];
+        let c2 = room.getElementsByClassName("room_information_calendar2")[0];
+
+        if (window.innerWidth < 1251)
+        {
+            let monthNameLength = c1.childNodes[0].offsetWidth;
+            let tr = c1.childNodes[2].childNodes[0].childNodes[0];
+            let width = Math.ceil(monthNameLength / 7);
+            let height = width;
+            c1.childNodes[1].offsetWidth = (width * 7);
+
+            c1.childNodes[1].childNodes.forEach(function(e)
+            {
+                if (e.tagName == "LI")
+                {
+                    e.style.width = width + "px";
+                }
+            });
+
+            tr.style.width = (width * 7) + "px";
+
+            for (i = 0; i < 6; i++)
+            {
+                c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
+                c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
+
+                for (j = 0; j < 7; j++)
+                {
+                    try
+                    {
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
+
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
+                        c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
+                    } catch{break;}
+                }
+            }
+        } 
+    }
+}
 
 //  so... you like readable code huh? well yea how about you go read a book instead coz this code aint readable (at least for me)
 function roomGenerateRoomsPage(room)
@@ -6322,7 +6410,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 roomFetchRoomDataAndGenerateRoomHTML();
 
 function roomControllRoomsPage(room, roomData)
-{ 
+{
     let saveButton = room.getElementsByClassName("room_header_save_box")[0];
     let shareButton = room.getElementsByClassName("room_header_share_box")[0];
     let popupMessage1 = room.getElementsByClassName("room_popup_block1")[0];
@@ -6364,6 +6452,8 @@ function roomControllRoomsPage(room, roomData)
         {
             showMoreDescriptionButton.onclick = function()
             {
+                modal.classList.add("modal_V2_slideIn");
+
                 modal.style.display = "flex";
                 modalBackground.style.display = "block";
                 document.body.style.overflow = "hidden";
@@ -6377,19 +6467,29 @@ function roomControllRoomsPage(room, roomData)
         {
             if (e.target == modalBackground)
             {
-                modal.style.display = "none";
-                modalBackground.style.display = "none";
-                document.body.style.overflow = "";
-                document.body.style.paddingRight = "";
+                modal.classList.remove("modal_V2_slideIn");
+
+                setTimeout(() => 
+                {
+                    modal.style.display = "none";
+                    modalBackground.style.display = "none";
+                    document.body.style.overflow = "";
+                    document.body.style.paddingRight = "";
+                }, 150);
             }  
         }
 
         closeButton.onclick = function()
         {
-            modal.style.display = "none";
-            modalBackground.style.display = "none";
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
+            modal.classList.remove("modal_V2_slideIn");
+
+            setTimeout(() => 
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }, 150);
         }
     }
 
@@ -6467,6 +6567,8 @@ function roomControllRoomsPage(room, roomData)
 
         showAllAmenitiesButton.onclick = function()
         {
+            modal.classList.add("modal_V2_slideIn");
+
             modal.style.display = "flex";
             modalBackground.style.display = "block";
             document.body.style.overflow = "hidden";
@@ -6615,19 +6717,29 @@ function roomControllRoomsPage(room, roomData)
         {
             if (e.target == modalBackground)
             {
-                modal.style.display = "none";
-                modalBackground.style.display = "none";
-                document.body.style.overflow = "";
-                document.body.style.paddingRight = "";
+                modal.classList.remove("modal_V2_slideIn");
+
+                setTimeout(() => 
+                {
+                    modal.style.display = "none";
+                    modalBackground.style.display = "none";
+                    document.body.style.overflow = "";
+                    document.body.style.paddingRight = "";
+                }, 150);
             }  
         }
 
         closeButton.onclick = function()
         {
-            modal.style.display = "none";
-            modalBackground.style.display = "none";
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
+            modal.classList.remove("modal_V2_slideIn");
+
+            setTimeout(() => 
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }, 150);
         }
     }
 
@@ -6640,6 +6752,8 @@ function roomControllRoomsPage(room, roomData)
 
         showAllReviewsButton.onclick = function()
         {
+            modal.classList.add("modal_V2_slideIn");
+
             modal.style.display = "flex";
             modalBackground.style.display = "block";
             document.body.style.overflow = "hidden";
@@ -7064,19 +7178,29 @@ function roomControllRoomsPage(room, roomData)
         {
             if (e.target == modalBackground)
             {
-                modal.style.display = "none";
-                modalBackground.style.display = "none";
-                document.body.style.overflow = "";
-                document.body.style.paddingRight = "";
+                modal.classList.remove("modal_V2_slideIn");
+
+                setTimeout(() => 
+                {
+                    modal.style.display = "none";
+                    modalBackground.style.display = "none";
+                    document.body.style.overflow = "";
+                    document.body.style.paddingRight = "";
+                }, 150);
             }  
         }
 
         closeButton.onclick = function()
         {
-            modal.style.display = "none";
-            modalBackground.style.display = "none";
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
+            modal.classList.remove("modal_V2_slideIn");
+
+            setTimeout(() => 
+            {
+                modal.style.display = "none";
+                modalBackground.style.display = "none";
+                document.body.style.overflow = "";
+                document.body.style.paddingRight = "";
+            }, 150);
         }
     }
 
@@ -7107,54 +7231,6 @@ function roomControllRoomsPage(room, roomData)
 
         let pricingForNights = room.getElementsByClassName("room_pricing_flying_rectangle_pricing_row")[0];
         let pricingTotal = room.getElementsByClassName("room_pricing_flying_rectangle_pricing_total")[0];
-
-        function resizeCalendars()
-        {
-            if (window.location.pathname.split("/")[1] == "Rooms")
-            {
-                let room = document.getElementById("RoomContent");
-
-                let c1 = room.getElementsByClassName("room_information_calendar1")[0];
-                let c2 = room.getElementsByClassName("room_information_calendar2")[0];
-
-                if (window.innerWidth < 1251)
-                {
-                    let monthNameLength = c1.childNodes[0].offsetWidth;
-                    let tr = c1.childNodes[2].childNodes[0].childNodes[0];
-                    let width = Math.ceil(monthNameLength / 7);
-                    let height = width;
-                    c1.childNodes[1].offsetWidth = (width * 7);
-
-                    c1.childNodes[1].childNodes.forEach(function(e)
-                    {
-                        if (e.tagName == "LI")
-                        {
-                            e.style.width = width + "px";
-                        }
-                    });
-
-                    tr.style.width = (width * 7) + "px";
-
-                    for (i = 0; i < 6; i++)
-                    {
-                        c1.childNodes[2].childNodes[0].childNodes[i].style.width = width + "px";
-                        c1.childNodes[2].childNodes[0].childNodes[i].style.height = height + "px";
-
-                        for (j = 0; j < 7; j++)
-                        {
-                            try
-                            {
-                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.width = width + "px";
-                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].style.height = height + "px";
-
-                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.width = width + "px";
-                                c1.childNodes[2].childNodes[0].childNodes[i].childNodes[j].childNodes[0].style.height = height + "px";
-                            } catch{break;}
-                        }
-                    }
-                } 
-            }
-        }
 
         function initializeCalendars(firstCalendar, secondCalendar)
         {
@@ -8031,6 +8107,53 @@ function roomControllRoomsPage(room, roomData)
         generateGuestDropdown();
         controlGuestDropdown();
         controlGuestsValues();
+
+        var bg = document.getElementById("GreyBackground");
+
+        window.onscroll = function() 
+        {
+            if ((document.documentElement.scrollTop > 1 || document.body.scrollTop > 1) && bg.style.display == "block")
+            {    
+                document.getElementById("MiniForm").style.display = "block";
+                document.getElementById("GreyBackground").style.display = "none";
+                document.getElementById("StaysMenuButtons").style.display = "none";
+                document.getElementById("StaysMenuForm").style.display = "none";
+                document.getElementById("ExperiencesMenuForm").style.display = "none";
+                document.getElementById("TopHeader").style.height = "80px";
+
+                initializeCalendars(calendar1, calendar2);
+
+                if (moveLeft.disabled == false)
+                {
+                    moveLeft.disabled = !moveLeft.disabled;
+                }  
+            }
+        };
+        
+        window.onclick = function()
+        {
+            if (document.getElementById("GreyBackground").style.display == "block")
+            {
+                document.getElementById("GreyBackground").onclick = function() 
+                {
+                    document.getElementById("GreyBackground").style.display = "none";
+    
+                    document.getElementById("TopHeader").style.height = "80px";
+                    document.getElementById("ScrollDiv").style.zIndex = "10";
+                    
+                    document.getElementById("MiniForm").style.display = "block";
+                    document.getElementById("StaysMenuButtons").style.display = "none";
+                    document.getElementById("StaysMenuForm").style.display = "none";
+                    
+                    initializeCalendars(calendar1, calendar2);
+
+                    if (moveLeft.disabled == false)
+                    {
+                        moveLeft.disabled = !moveLeft.disabled;
+                    }                 
+                };
+            }
+        }
     }
 
     roomControllDescriptionShowMore();
@@ -8038,6 +8161,13 @@ function roomControllRoomsPage(room, roomData)
     roomControllShowAllAmenities();
     roomControllShowAllReviews();
     roomControllCalendar();
+
+    var reserveButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_reserveButton")[0];
+
+    reserveButton.onclick = function()
+    {
+        location.href = "https://www.youtube.com/watch?v=uD4izuDMUQA";
+    }
 }
 
 
