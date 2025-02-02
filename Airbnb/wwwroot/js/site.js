@@ -5050,7 +5050,7 @@ function catCardCarouselControl()
                         dotBox.childNodes[buttonIndex + 1].style.background = "";
                         dotBox.childNodes[buttonIndex].style.background = "white";
                     }
-                    else if (e.target == buttonR && buttonIndex < 4)
+                    else if (e.target == buttonR && buttonIndex < dotBox.childNodes.length - 1)
                     {
                         buttonIndex ++;
 
@@ -5153,7 +5153,6 @@ function generateCatCards(card)
         else if (i == 5)
         {
             dot.className = "cat_card_dot";
-            dot.style.transform = "scale(66%, 66%)";
         }
         else
         {
