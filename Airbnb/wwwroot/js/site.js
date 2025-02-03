@@ -4615,7 +4615,7 @@ searchButton.onclick = function()
 
     if (queryValue != null || queryValue != "")
     {
-        fetchNeededCatCards(queryValue);
+        fetchNeededCatCards(encodeURIComponent(queryValue));
     }
     else if (queryValue == null || queryValue == "")
     {
@@ -4714,21 +4714,19 @@ function generateQueryStringURI()
         }
     }
 
-    let adults = document.getElementById("AdultsCount").innerText.trim() == "0"
-               ? "" 
-               : `&adults=${document.getElementById("AdultsCount").innerText.trim()}`;
+    let adults = `&adults=${document.getElementById("AdultsCount").innerText}`;
     
-    let children = document.getElementById("ChildrenCount").innerText.trim() == "0" 
+    let children = document.getElementById("ChildrenCount").innerText == "0"
                  ? "" 
-                 : `&children=${document.getElementById("ChildrenCount").innerText.trim()}`;
+                 : `&children=${document.getElementById("ChildrenCount").innerText}`;
     
-    let infants = document.getElementById("InfantsCount").innerText.trim() == "0"
+    let infants = document.getElementById("InfantsCount").innerText == "0"
                 ? ""
-                : `&infants=${document.getElementById("InfantsCount").innerText.trim()}`;
+                : `&infants=${document.getElementById("InfantsCount").innerText}`;
     
-    let pets = document.getElementById("PetsCount").innerText.trim() == "0"
+    let pets = document.getElementById("PetsCount").innerText == "0"
              ? "" 
-             : `&pets=${document.getElementById("PetsCount").innerText.trim()}`;
+             : `&pets=${document.getElementById("PetsCount").innerText}`;
 
     let category = "";
     for (i = 0; i < scrollMenu.childNodes.length; i++)
@@ -4742,7 +4740,55 @@ function generateQueryStringURI()
         }
     }
     
-    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}`;
+    let typeOfPlace = selectedTypeOfPlace == "" 
+                    ? "" 
+                    : `&type-of-place=${selectedTypeOfPlace}`;
+    let priceMax = `&max-price=${filterModalMaximumPriceInput.value}`;
+    let priceMin = `&min-price=${filterModalMinimumPriceInput.value}`;
+    let bedrooms = filterModalBedroomsCount.innerText == "Any" 
+                 ? "" 
+                 : `&bedroom-count=${filterModalBedroomsCount.innerText}`;
+    let beds = filterModalBedsCount.innerText == "Any" 
+             ? "" 
+             : `&beds-count=${filterModalBedsCount.innerText}`;
+    let bathrooms = filterModalBathroomsCount.innerText == "Any" 
+                  ? "" 
+                  : `&bathroom-count=${filterModalBathroomsCount.innerText}`;
+    let amenities = "";
+    for (i = 0; i < selectedAmenities.length; i++)
+    {
+        amenities += `&amenity=${selectedAmenities[i]}`;
+    }
+
+    let bookingOptions = "";
+    for (i = 0; i < selectedBookingOptions.length; i++)
+    {
+        bookingOptions += `&booking-option=${selectedBookingOptions[i]}`;
+    }
+
+    let standoutStay = standoutStaysSelected == false 
+                     ? "" 
+                     : `&standout-stay=${standoutStaysSelected}`;
+
+    let propertyTypes = "";
+    for (i = 0; i < selectedPropertyType.length; i++)
+    {
+        propertyTypes += `&property-type=${selectedPropertyType[i]}`;
+    }
+
+    let accessibilityFeatures = "";
+    for (i = 0; i < selectedAccessibilityCheckboxes.length; i++)
+    {
+        accessibilityFeatures += `&accessibility-feature=${selectedAccessibilityCheckboxes[i]}`;
+    }
+
+    let hostLanguages = "";
+    for (i = 0; i < selectedHostLanguagesCheckboxes.length; i++)
+    {
+        hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
+    }
+    
+    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     var newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
     
@@ -4920,7 +4966,7 @@ function clearAllFilterValues()
 
 filterModalShowPlaces.onclick = function()
 {
-    queryString = new URLSearchParams(window.location.search);
+    queryString = generateQueryStringURI();
     var categoryQuery = queryString.get("category");
 
     if (categoryQuery != null && categoryQuery != "")
@@ -4938,9 +4984,20 @@ filterModalShowPlaces.onclick = function()
     }
     else if (categoryQuery == null || categoryQuery == "")
     {
+        DisplayText3.innerHTML = "";
         scrollMenu.childNodes[1].style.color = "black";
         fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
     }
+
+    filterModal.classList.remove("modal_V2_slideIn");
+    
+    setTimeout(() => 
+    {
+        filterModal.style.display = "none";
+        filterModalBackground.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }, 150);
 }
 
 filterModalClearAll.onclick = function()
@@ -5278,72 +5335,117 @@ async function fetchNeededCatCards(queryValue)
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
     console.log(categoriesJson)
-   
+    
+    let queryString = new URLSearchParams(window.location.search);
+
     categoriesJson.catCards.forEach(cardArray =>
     {
-        // warning: massive if statement!
-        var cardAmenities = [];
-        for (i = 0; i < cardArray.amenities.length; i++)
+        if (queryString.size != 0)
         {
-            cardAmenities.push(cardArray.amenities[i].amenity.name);
-        }
-        var foundAmenities = selectedAmenities.every(function(val) 
-        {
-            return cardAmenities.indexOf(val) !== -1;
-        });
-        
-        var cardBookingOptions = [];
-        for (i = 0; i < cardArray.bookingInfo.bookingOptions.length; i++)
-        {
-            cardBookingOptions.push(cardArray.bookingInfo.bookingOptions[i].bookingOptions.name);
-        }
-        var foundBookingOptions = selectedBookingOptions.every(function(val) 
-        {
-            return cardBookingOptions.indexOf(val) !== -1;
-        });
+            let adultsCount = +queryString.get("adults");
+            let childrenCount = +queryString.get("children");
+            let adultsTotal = adultsCount + childrenCount;
+            let typeOfPlace = queryString.get("type-of-place");
+            let minPrice = +queryString.get("min-price");
+            let maxPrice = +queryString.get("max-price");
+            let bedrooms = +queryString.get("bedroom-count");
+            let beds = +queryString.get("beds-count");
+            let bathrooms = +queryString.get("bathroom-count");
 
-        var cardProperty = cardArray.bookingInfo.propertyType.name;
-        var foundPropertyType = selectedPropertyType.every(function(val) 
-        {
-            return cardProperty.indexOf(val) !== -1;
-        });
-        
-        var cardAccessibilityOptions = []
-        for (i = 0; i < cardArray.bookingInfo.accessibilityFeatures.length; i++)
-        {
-            cardAccessibilityOptions.push(cardArray.bookingInfo.accessibilityFeatures[i].accessibilityFeature.name);
-        }
-        var foundAccessibilityOptions = selectedAccessibilityCheckboxes.every(function(val) 
-        {
-            return cardAccessibilityOptions.indexOf(val) !== -1;
-        });
+            let cardAmenities = [];
+            for (i = 0; i < cardArray.amenities.length; i++)
+            {
+                cardAmenities.push(cardArray.amenities[i].amenity.name);
+            }
 
-        var cardHostLanguages = []
-        for (i = 0; i < cardArray.bookingInfo.hostLanguages.length; i++)
-        {
-            cardHostLanguages.push(cardArray.bookingInfo.hostLanguages[i].hostLanguage.name);
-        }
-        var foundHostLanguages = selectedHostLanguagesCheckboxes.every(function(val) 
-        {
-            return cardHostLanguages.indexOf(val) !== -1;
-        });
+            let amenities = queryString.getAll("amenity");
+            let foundAmenities = amenities.every(function(val) 
+            {
+                return cardAmenities.indexOf(val) !== -1;
+            });
+            
+            let cardBookingOptions = [];
+            for (i = 0; i < cardArray.bookingInfo.bookingOptions.length; i++)
+            {
+                cardBookingOptions.push(cardArray.bookingInfo.bookingOptions[i].bookingOptions.name);
+            }
 
-        if ((cardArray.bookingInfo.typeOfPlace == selectedTypeOfPlace || selectedTypeOfPlace == "")
-        &&  (cardArray.bookingInfo.basePrice >= +filterModalMinimumPriceInput.value && cardArray.bookingInfo.basePrice <= +filterModalMaximumPriceInput.value)
-        &&  ((cardArray.bookingInfo.numberOfBedrooms == +filterModalBedroomsCount.innerText && cardArray.bookingInfo.numberOfBeds == +filterModalBedsCount.innerText && cardArray.bookingInfo.numberOfBathrooms == +filterModalBathroomsCount.innerText) || (filterModalBedroomsCount.innerText == "Any" || filterModalBedsCount.innerText == "Any" || filterModalBathroomsCount.innerText == "Any"))
-        &&  (foundAmenities == true)
-        &&  (foundBookingOptions == true)
-        &&  ("Standout stays (not in database but calculate star rating and >4 will be guest favourite)")
-        &&  (foundPropertyType == true)
-        &&  (foundAccessibilityOptions == true)
-        &&  (foundHostLanguages == true))
-        {
-            console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
-            generateCatCards(cardArray);
+            let bookingOptions = queryString.getAll("booking-option");
+            let foundBookingOptions = bookingOptions.every(function(val) 
+            {
+                return cardBookingOptions.indexOf(val) !== -1;
+            });
+
+            let cardProperty = cardArray.bookingInfo.propertyType.name;
+
+            let propertyTypes = queryString.getAll("property-type");
+            var foundPropertyType = propertyTypes.every(function(val) 
+            {
+                return cardProperty.indexOf(val) !== -1;
+            });
+            
+            let cardAccessibilityOptions = []
+            for (i = 0; i < cardArray.bookingInfo.accessibilityFeatures.length; i++)
+            {
+                cardAccessibilityOptions.push(cardArray.bookingInfo.accessibilityFeatures[i].accessibilityFeature.name);
+            }
+
+            let accessibilityOptions = queryString.getAll("accessibility-feature");
+            let foundAccessibilityOptions = accessibilityOptions.every(function(val) 
+            {
+                return cardAccessibilityOptions.indexOf(val) !== -1;
+            });
+
+            let cardHostLanguages = []
+            for (i = 0; i < cardArray.bookingInfo.hostLanguages.length; i++)
+            {
+                cardHostLanguages.push(cardArray.bookingInfo.hostLanguages[i].hostLanguage.name);
+            }
+
+            let hostLanguages = queryString.getAll("host-language");
+            let foundHostLanguages = hostLanguages.every(function(val) 
+            {
+                return cardHostLanguages.indexOf(val) !== -1;
+            });
+     
+            let checkinDate = "";
+            let checkoutDate = "";
+
+            if (checkinFormMenu.style.display == "flex")
+            {
+                
+            }
+            else if (whenFormMenu.style.display == "flex")
+            {
+                
+            }
+            else if (flexibleBlockWhenFormMenu.style.display == "flex")
+            {
+               
+            }
+
+            if ((cardArray.bookingInfo.typeOfPlace == typeOfPlace || typeOfPlace == null)
+            &&  (cardArray.bookingInfo.basePrice >= minPrice && cardArray.bookingInfo.basePrice <= maxPrice)
+            &&  ((cardArray.bookingInfo.numberOfBedrooms == bedrooms || bedrooms == 0) && (cardArray.bookingInfo.numberOfBeds == beds || beds == 0) && (cardArray.bookingInfo.numberOfBathrooms == bathrooms || bathrooms == 0))
+            &&  (foundAmenities == true)
+            &&  (foundBookingOptions == true)
+            &&  ("Standout stays (not in database but calculate star rating and >4 will be guest favourite)")
+            &&  (foundPropertyType == true)
+            &&  (foundAccessibilityOptions == true)
+            &&  (foundHostLanguages == true)
+            &&  (cardArray.bookingInfo.maxNumberOfGuests >= adultsTotal))
+            {
+                //console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
+                generateCatCards(cardArray);
+            }
+            else
+            {
+                //console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` +  "\n%cBAD ^^", "color:red; font-size:16px;")
+            }
         }
         else
         {
-            console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` +  "\n%cBAD ^^", "color:red; font-size:16px;")
+            generateCatCards(cardArray);
         }
     });
 
