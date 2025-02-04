@@ -394,11 +394,11 @@ function filterModalChangeRoomAndBedsValues(increment, decrement, counter)
             counter.innerText = 1;
             decrement.classList = "rooms_and_beds_enabled_button";
         }
-        else if (+counter.innerText < 8)
+        else if (+counter.innerText < 16)
         {
             counter.innerText ++;
 
-            if (+counter.innerText == 8)
+            if (+counter.innerText == 16)
             {
                 increment.classList = "rooms_and_beds_disabled_button";
             }
@@ -414,7 +414,7 @@ function filterModalChangeRoomAndBedsValues(increment, decrement, counter)
         {
             counter.innerText -= 1;
 
-            if (+counter.innerText == 7)
+            if (+counter.innerText == 15)
             {
                 increment.classList = "rooms_and_beds_enabled_button";
             }
@@ -4608,9 +4608,9 @@ const searchButtonExperiences = document.getElementById("SearchButtonExperiences
 
 searchButton.onclick = function()
 {
-    let queryString = new URLSearchParams(window.location.search);
+    let queryString = generateQueryStringURI();
     let queryValue = queryString.get("category");
-    generateQueryStringURI();
+    
     DisplayText3.innerHTML = "";
 
     if (queryValue != null || queryValue != "")
@@ -4625,9 +4625,9 @@ searchButton.onclick = function()
 
 searchButtonExperiences.onclick = function()
 {
-    let queryString = new URLSearchParams(window.location.search);
+    let queryString = generateQueryStringURI();
     let queryValue = queryString.get("category");
-    generateQueryStringURI();
+    
     DisplayText3.innerHTML = "";
 
     if (queryValue != null || queryValue != "")
@@ -4787,7 +4787,7 @@ function generateQueryStringURI()
     {
         hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
     }
-    
+
     let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     var newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
@@ -5337,117 +5337,149 @@ async function fetchNeededCatCards(queryValue)
     console.log(categoriesJson)
     
     let queryString = new URLSearchParams(window.location.search);
-
-    categoriesJson.catCards.forEach(cardArray =>
+    // add break statements when all is done
+    for (why = 0; why < categoriesJson.catCards.length; why++)
     {
-        if (queryString.size != 0)
-        {
-            let adultsCount = +queryString.get("adults");
-            let childrenCount = +queryString.get("children");
-            let adultsTotal = adultsCount + childrenCount;
-            let typeOfPlace = queryString.get("type-of-place");
-            let minPrice = +queryString.get("min-price");
-            let maxPrice = +queryString.get("max-price");
-            let bedrooms = +queryString.get("bedroom-count");
-            let beds = +queryString.get("beds-count");
-            let bathrooms = +queryString.get("bathroom-count");
+       if (queryString.size != 0)
+       {
+           let location = queryString.get("location");
+           let euCountries = ["Poland", "Germany", "Spain", "Italy", "United Kingdom"];
+           let asiaCountries = ["China", "Japan", "Turkey"]
+           let locationFound = false;
+         
+           if (location == categoriesJson.catCards[why].bookingInfo.country || location == "flexible")
+           {
+               locationFound = true;
+           }
+           else if (location == "Europe")
+           {
+               if (euCountries.includes(categoriesJson.catCards[why].bookingInfo.country))
+               {
+                   locationFound = true;
+               }
+           }
+           else if (location == "Asia")
+           {
+               if (asiaCountries.includes(categoriesJson.catCards[why].bookingInfo.country))
+               {
+                   locationFound = true;
+               }
+           }
 
-            let cardAmenities = [];
-            for (i = 0; i < cardArray.amenities.length; i++)
-            {
-                cardAmenities.push(cardArray.amenities[i].amenity.name);
-            }
+           let adultsCount = +queryString.get("adults");
+           let childrenCount = +queryString.get("children");
+           let adultsTotal = adultsCount + childrenCount;
+           let typeOfPlace = queryString.get("type-of-place");
+           let minPrice = +queryString.get("min-price");
+           let maxPrice = +queryString.get("max-price");
+           let bedrooms = +queryString.get("bedroom-count");
+           let beds = +queryString.get("beds-count");
+           let bathrooms = +queryString.get("bathroom-count");
 
-            let amenities = queryString.getAll("amenity");
-            let foundAmenities = amenities.every(function(val) 
-            {
-                return cardAmenities.indexOf(val) !== -1;
-            });
-            
-            let cardBookingOptions = [];
-            for (i = 0; i < cardArray.bookingInfo.bookingOptions.length; i++)
-            {
-                cardBookingOptions.push(cardArray.bookingInfo.bookingOptions[i].bookingOptions.name);
-            }
+           let cardAmenities = [];
+           for (j = 0; j < categoriesJson.catCards[why].amenities.length; j++)
+           {
+               cardAmenities.push(categoriesJson.catCards[why].amenities[j].amenity.name);
+           }
 
-            let bookingOptions = queryString.getAll("booking-option");
-            let foundBookingOptions = bookingOptions.every(function(val) 
-            {
-                return cardBookingOptions.indexOf(val) !== -1;
-            });
+           let amenities = queryString.getAll("amenity");
+           let foundAmenities = amenities.every(function(val) 
+           {
+               return cardAmenities.indexOf(val) !== -1;
+           });
+         
+           let cardBookingOptions = [];
+           for (j = 0; j < categoriesJson.catCards[why].bookingInfo.bookingOptions.length; j++)
+           {
+               cardBookingOptions.push(categoriesJson.catCards[why].bookingInfo.bookingOptions[j].bookingOptions.name);
+           }
 
-            let cardProperty = cardArray.bookingInfo.propertyType.name;
+           let bookingOptions = queryString.getAll("booking-option");
+           let foundBookingOptions = bookingOptions.every(function(val) 
+           {
+               return cardBookingOptions.indexOf(val) !== -1;
+           });
 
-            let propertyTypes = queryString.getAll("property-type");
-            var foundPropertyType = propertyTypes.every(function(val) 
-            {
-                return cardProperty.indexOf(val) !== -1;
-            });
-            
-            let cardAccessibilityOptions = []
-            for (i = 0; i < cardArray.bookingInfo.accessibilityFeatures.length; i++)
-            {
-                cardAccessibilityOptions.push(cardArray.bookingInfo.accessibilityFeatures[i].accessibilityFeature.name);
-            }
+           let cardProperty = categoriesJson.catCards[why].bookingInfo.propertyType.name;
 
-            let accessibilityOptions = queryString.getAll("accessibility-feature");
-            let foundAccessibilityOptions = accessibilityOptions.every(function(val) 
-            {
-                return cardAccessibilityOptions.indexOf(val) !== -1;
-            });
+           let propertyTypes = queryString.getAll("property-type");
+           var foundPropertyType = propertyTypes.every(function(val) 
+           {
+               return cardProperty.indexOf(val) !== -1;
+           });
+         
+           let cardAccessibilityOptions = []
+           for (j = 0; j < categoriesJson.catCards[why].bookingInfo.accessibilityFeatures.length; j++)
+           {
+               cardAccessibilityOptions.push(categoriesJson.catCards[why].bookingInfo.accessibilityFeatures[j].accessibilityFeature.name);
+           }
 
-            let cardHostLanguages = []
-            for (i = 0; i < cardArray.bookingInfo.hostLanguages.length; i++)
-            {
-                cardHostLanguages.push(cardArray.bookingInfo.hostLanguages[i].hostLanguage.name);
-            }
+           let accessibilityOptions = queryString.getAll("accessibility-feature");
+           let foundAccessibilityOptions = accessibilityOptions.every(function(val) 
+           {
+               return cardAccessibilityOptions.indexOf(val) !== -1;
+           });
 
-            let hostLanguages = queryString.getAll("host-language");
-            let foundHostLanguages = hostLanguages.every(function(val) 
-            {
-                return cardHostLanguages.indexOf(val) !== -1;
-            });
-     
-            let checkinDate = "";
-            let checkoutDate = "";
+           let cardHostLanguages = []
+           for (j = 0; j < categoriesJson.catCards[why].bookingInfo.hostLanguages.length; j++)
+           {
+               cardHostLanguages.push(categoriesJson.catCards[why].bookingInfo.hostLanguages[j].hostLanguage.name);
+           }
 
-            if (checkinFormMenu.style.display == "flex")
-            {
-                
-            }
-            else if (whenFormMenu.style.display == "flex")
-            {
-                
-            }
-            else if (flexibleBlockWhenFormMenu.style.display == "flex")
-            {
-               
-            }
+           let hostLanguages = queryString.getAll("host-language");
+           let foundHostLanguages = hostLanguages.every(function(val) 
+           {
+               return cardHostLanguages.indexOf(val) !== -1;
+           });
+    
+           let checkin = "";
+           let checkout = "";
 
-            if ((cardArray.bookingInfo.typeOfPlace == typeOfPlace || typeOfPlace == null)
-            &&  (cardArray.bookingInfo.basePrice >= minPrice && cardArray.bookingInfo.basePrice <= maxPrice)
-            &&  ((cardArray.bookingInfo.numberOfBedrooms == bedrooms || bedrooms == 0) && (cardArray.bookingInfo.numberOfBeds == beds || beds == 0) && (cardArray.bookingInfo.numberOfBathrooms == bathrooms || bathrooms == 0))
-            &&  (foundAmenities == true)
-            &&  (foundBookingOptions == true)
-            &&  ("Standout stays (not in database but calculate star rating and >4 will be guest favourite)")
-            &&  (foundPropertyType == true)
-            &&  (foundAccessibilityOptions == true)
-            &&  (foundHostLanguages == true)
-            &&  (cardArray.bookingInfo.maxNumberOfGuests >= adultsTotal))
-            {
-                //console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
-                generateCatCards(cardArray);
-            }
-            else
-            {
-                //console.log(`\n${cardArray.bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` +  "\n%cBAD ^^", "color:red; font-size:16px;")
-            }
-        }
-        else
-        {
-            generateCatCards(cardArray);
-        }
-    });
+           if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != null)
+           {
+               checkin = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
+               checkout = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
+           }
+           else if (whenFormMenu.style.display == "flex")
+           {
+               checkin = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), +monthsBlockSelectedStartDate.innerText);
+               checkout = new Date(monthsBlockSelectedEndYear, months.indexOf(monthsBlockSelectedEndMonth), +monthsBlockSelectedEndDate.innerText);
+           }
+           else if (flexibleBlockWhenFormMenu.style.display == "flex")
+           {
+               // wat do i do here im but just a 1 braincell i dont know what to do
+           }
+
+           if ((categoriesJson.catCards[why].bookingInfo.typeOfPlace == typeOfPlace || typeOfPlace == null)
+           &&  (categoriesJson.catCards[why].bookingInfo.basePrice >= minPrice && categoriesJson.catCards[why].bookingInfo.basePrice <= maxPrice)
+           &&  ((categoriesJson.catCards[why].bookingInfo.numberOfBedrooms == bedrooms || bedrooms == 0) && (categoriesJson.catCards[why].bookingInfo.numberOfBeds == beds || beds == 0) && (categoriesJson.catCards[why].bookingInfo.numberOfBathrooms == bathrooms || bathrooms == 0))
+           &&  (foundAmenities == true)
+           &&  (foundBookingOptions == true)
+           &&  ("Standout stays (not in database but calculate star rating and >4 will be guest favourite)")
+           &&  (foundPropertyType == true)
+           &&  (foundAccessibilityOptions == true)
+           &&  (foundHostLanguages == true)
+           &&  (categoriesJson.catCards[why].bookingInfo.maxNumberOfGuests >= adultsTotal)
+           &&  (locationFound == true))
+           {
+               //console.log(`\n${categoriesJson.catCards[i].bookingInfo.typeOfPlace}\n${categoriesJson.catCards[i].bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
+               generateCatCards(categoriesJson.catCards[why]);
+           }
+           else
+           {
+               //console.log(`\n${categoriesJson.catCards[i].bookingInfo.typeOfPlace}\n${cardArray.bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` +  "\n%cBAD ^^", "color:red; font-size:16px;")
+           }
+       }
+       else
+       {
+           generateCatCards(categoriesJson.catCards[why]);
+       }
+    }
+
+    if (DisplayText3.innerText == "")
+    {
+        DisplayText3.innerHTML = `No results found. Have this cute cat instead! <img src="/img/meow.gif" width="200px" height="200px">`;
+    }
 
     document.body.style.cursor = "";
 }
