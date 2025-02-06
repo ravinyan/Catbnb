@@ -25,7 +25,7 @@ namespace Airbnb.Controllers.CatCardsControllers
         public async Task<ActionResult<Categories>> GetCategory(int id)
         {
             var category = await _context.Categories
-                .Include(cc => cc.CatCards)!.ThenInclude(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews)
+                .Include(cc => cc.CatCards)!.ThenInclude(bi => bi.BookingInfo).ThenInclude(r => r!.Reviews).AsSingleQuery()
                 .Include(cc => cc.CatCards)!.ThenInclude(i => i.Images).AsSplitQuery()
                 .Include(bi => bi.CatCards)!.ThenInclude(bi => bi.BookingInfo).ThenInclude(af => af!.AccessibilityFeatures)!.ThenInclude(n => n.AccessibilityFeature).AsSplitQuery()
                 .Include(bi => bi.CatCards)!.ThenInclude(bi => bi.BookingInfo).ThenInclude(hl => hl!.HostLanguages)!.ThenInclude(n => n.HostLanguage).AsSplitQuery()

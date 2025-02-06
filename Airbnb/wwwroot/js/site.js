@@ -723,25 +723,36 @@ globeIcon.onclick = function()
     languageRegionCurrencyModalBackground.style.display = "block";
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = "19px";
+    languageRegionCurrencyModal.classList.add("modal_V2_slideIn");
 }
 
 languageRegionCurrencyModalBackground.onclick = function(e)
 {
     if (e.target == languageRegionCurrencyModalBackground)
     {
-        languageRegionCurrencyModalBackground.style.display = "none";
-        languageRegionCurrencyModal.style.display = "none";
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
+        languageRegionCurrencyModal.classList.remove("modal_V2_slideIn");
+        
+        setTimeout(() => 
+        {
+            languageRegionCurrencyModalBackground.style.display = "none";
+            languageRegionCurrencyModal.style.display = "none";
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+        }, 150);
     }
 }
 
 languageRegionCurrencyModalCloseButton.onclick = function()
 {
-    languageRegionCurrencyModalBackground.style.display = "none";
-    languageRegionCurrencyModal.style.display = "none";
-    document.body.style.overflow = "";
-    document.body.style.paddingRight = "";
+    languageRegionCurrencyModal.classList.remove("modal_V2_slideIn");
+        
+    setTimeout(() => 
+    {
+        languageRegionCurrencyModalBackground.style.display = "none";
+        languageRegionCurrencyModal.style.display = "none";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+    }, 150);
 }
 
 languagesButton.onclick = function()
@@ -4970,19 +4981,18 @@ filterModalShowPlaces.onclick = function()
     var categoryQuery = queryString.get("category");
     var filterMessage = document.getElementById("FilterMessage");
 
-    //  just doing base stuff will improve later
-    let destinationFilter = `Selected Filters: <span style="font-weight: 700">Destination</span> - ${queryString.get("location")}`;
-    let placeFilter = queryString.get("type-of-place") == null ? "" : `, <span style="font-weight: 700">Type of place</span> - ${queryString.get("type-of-place")}`;
-    let priceFilter = `, <span style="font-weight: 700">Minimum price</span> - ${queryString.get("min-price")}$, <span style="font-weight: 700">Maximum price</span> - ${queryString.get("max-price")}$`;
-    let bedroomFilter = queryString.get("bedroom-count") == null ? "" :  `, <span style="font-weight: 700">Bedrooms</span> - ${queryString.get("bedroom-count")}`;
-    let bedsFilter = queryString.get("beds-count") == null ? "" :  `, <span style="font-weight: 700">Beds</span> - ${queryString.get("beds-count")}`;
-    let bathroomFilter = queryString.get("bathroom-count") == null ? "" :  `, <span style="font-weight: 700">Bathrooms</span> - ${queryString.get("bathroom-count")}`;
-    let amenitiesFilter = queryString.getAll("amenity") == "" ? "" :  `, <span style="font-weight: 700">Amenities</span> - ${queryString.getAll("amenity")}`;
-    let bookingFilter = queryString.getAll("booking-option") == "" ? "" :  `, <span style="font-weight: 700">Booking options</span> - ${queryString.getAll("booking-option")}`;
-    let standoutFilter = queryString.getAll("standout-stay") == "" ? "" :  `, <span style="font-weight: 700">Guest Favourite</span> - Yes`;
-    let propertyFilter = queryString.getAll("property-type") == "" ? "" :  `, <span style="font-weight: 700">Properties</span> - ${queryString.getAll("property-type")}`;
-    let accessibilityFilter = queryString.getAll("accessibility-feature") == "" ? "" :  `, <span style="font-weight: 700">Accessibilities</span> - ${queryString.getAll("accessibility-feature")}`;
-    let hostLanguageFilter = queryString.getAll("host-language") == "" ? "" : `, <span style="font-weight: 700">Host languages</span> - ${queryString.getAll("host-language")}`;
+    let destinationFilter = `<div>Selected Filters: <span style="font-weight: 700">Destination</span> - ${queryString.get("location")}</div>`;
+    let placeFilter = queryString.get("type-of-place") == null ? "" : `<div>, <span style="font-weight: 700">Type of place</span> - ${queryString.get("type-of-place")}</div>`;
+    let priceFilter = `<div>, <span style="font-weight: 700">Minimum price</span> - ${queryString.get("min-price")}$, <span style="font-weight: 700">Maximum price</span> - ${queryString.get("max-price")}$</div>`;
+    let bedroomFilter = queryString.get("bedroom-count") == null ? "" : `<div>, <span style="font-weight: 700">Bedrooms</span> - ${queryString.get("bedroom-count")}</div>`;
+    let bedsFilter = queryString.get("beds-count") == null ? "" :  `<div>, <span style="font-weight: 700">Beds</span> - ${queryString.get("beds-count")}</div>`;
+    let bathroomFilter = queryString.get("bathroom-count") == null ? "" :  `<div>, <span style="font-weight: 700">Bathrooms</span> - ${queryString.get("bathroom-count")}</div>`;
+    let amenitiesFilter = queryString.getAll("amenity") == "" ? "" :  `<div>, <span style="font-weight: 700">Amenities</span> - ${queryString.getAll("amenity")}</div>`;
+    let bookingFilter = queryString.getAll("booking-option") == "" ? "" :  `<div>, <span style="font-weight: 700">Booking options</span> - ${queryString.getAll("booking-option")}</div>`;
+    let standoutFilter = queryString.getAll("standout-stay") == "" ? "" :  `<div>, <span style="font-weight: 700">Guest Favourite</span> - Yes</div>`;
+    let propertyFilter = queryString.getAll("property-type") == "" ? "" :  `<div>, <span style="font-weight: 700">Properties</span> - ${queryString.getAll("property-type")}</div>`;
+    let accessibilityFilter = queryString.getAll("accessibility-feature") == "" ? "" : `<div>, <span style="font-weight: 700">Accessibilities</span> - ${queryString.getAll("accessibility-feature")}</div>`;
+    let hostLanguageFilter = queryString.getAll("host-language") == "" ? "" : `<div>, <span style="font-weight: 700">Host languages</span> - ${queryString.getAll("host-language")}</div>`;
 
     filterMessage.innerHTML = `${destinationFilter}${placeFilter}${priceFilter}${bedroomFilter}${bedsFilter}${bathroomFilter}${amenitiesFilter}${bookingFilter}${standoutFilter}${propertyFilter}${accessibilityFilter}${hostLanguageFilter}`;
 
@@ -5609,7 +5619,7 @@ function renderCatCardsOnRefresh()
 { 
     if (window.location.pathname == "/" || window.location.pathname == "/home")
     {
-        var start = performance.now();
+        //var start = performance.now();
 
         queryString = new URLSearchParams(window.location.search);
         var categoryQuery = queryString.get("category");
@@ -5632,9 +5642,9 @@ function renderCatCardsOnRefresh()
             fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
         }
 
-        var end = performance.now();
-        var timeTaken = end - start;
-        console.log(timeTaken)
+        //var end = performance.now();
+        //var timeTaken = end - start;
+        //console.log(timeTaken)
     } 
 }
 
@@ -6608,11 +6618,14 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
 
+        //var newurl = window.location.origin + window.location.pathname + `?pizza=belongs&on=banana`;
+        //window.history.pushState({path:newurl},'',newurl);
+
         document.body.style.cursor = "wait";
 
         const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
         const roomJson = await roomData.json();
-
+        console.log(roomJson)
         roomGenerateRoomsPage(roomJson);
 
         let room = document.getElementById("RoomContent");
