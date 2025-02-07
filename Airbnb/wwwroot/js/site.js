@@ -4681,7 +4681,6 @@ document.addEventListener("click", function(e)
 /*--------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------QUERY STRING GENERATOR-----------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-//  FINAL BOSS GET THE QUERY STRING AND GET THE FRICK OUT UNDETECTED YOU HAVE ONLY 1 SHOT 
 function generateQueryStringURI()
 {
     let whereQuery = whereInput.value == "" 
@@ -4703,14 +4702,14 @@ function generateQueryStringURI()
     let monthsCheckoutQuery = monthsBlockEndDateValue == "" 
                       ? "" 
                       : `&monthly-checkout=${monthsBlockSelectedEndDate.innerText}-${months.indexOf(monthsBlockSelectedEndMonth) + 1}-${monthsBlockSelectedEndYear}`;
-
+               
     let flexibleStayTimeQuery = "";
     let stayButtons = document.getElementsByClassName("stay_button");
     for (i = 0; i < stayButtons.length; i++)
     {
         if (window.getComputedStyle(stayButtons[i]).borderColor == "rgb(0, 0, 0)")
         {
-            flexibleStayTimeQuery = `&flexible-trip-length=${stayButtons[i].innerText.trim()}`;
+            flexibleStayTimeQuery = `&flexible-trip-length=${stayButtons[i].innerText}`;
         }
     }
 
@@ -4799,8 +4798,53 @@ function generateQueryStringURI()
         hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
     }
 
+    localStorage.removeItem("room-data");
+
+    let checkin = "";
+    let checkout = "";
+    if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+    {
+        checkin = `${+selectedCheckinDate.innerText}-${months.indexOf(selectedCheckinMonth) + 1}-${selectedCheckinYear}`;
+        checkout = `${+selectedCheckoutDate.innerText}-${months.indexOf(selectedCheckoutMonth) + 1}-${selectedCheckoutYear}`;
+    }
+    else if (whenFormMenu.style.display == "flex")
+    {
+        checkin = `${+monthsBlockSelectedStartDate.innerText}-${months.indexOf(monthsBlockSelectedStartMonth) + 1}-${monthsBlockSelectedStartYear}`;
+        checkout = `${+monthsBlockSelectedEndDate.innerText}-${months.indexOf(monthsBlockSelectedEndMonth) + 1}-${monthsBlockSelectedEndYear}`;
+    }
+    else if (flexibleBlockWhenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName == "NULL" && selectedCheckoutDate.tagName == "NULL"))
+    {
+       if (flexibleStayTimeQuery.slice(22) == "Weekend")
+       {
+           checkin = `week`;
+           checkout = `end`;
+       }
+       else if (flexibleStayTimeQuery.slice(22) == "Week")
+       {
+           checkin = `we`;
+           checkout = `ek`;
+       }
+       else if (flexibleStayTimeQuery.slice(22) == "Month")
+       {
+           checkin = `mon`;
+           checkout = `th`;
+       }
+    }
+
+    let roomData = 
+    {
+        'adults' : `${document.getElementById("AdultsCount").innerText}`,
+        'children' : `${document.getElementById("ChildrenCount").innerText}`,
+        'infants' : `${document.getElementById("InfantsCount").innerText}`,
+        'pets' : `${document.getElementById("PetsCount").innerText}`,
+        'checkin' : `${checkin}`,
+        'checkout' : `${checkout}`,
+        'location' : `${whereQuery.slice(10)}`,
+    };
+    localStorage.setItem('room-data', JSON.stringify(roomData));
+
     let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
-    var newurl = window.location.origin + window.location.pathname + queryString;
+    let newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
     
     return queryString = new URLSearchParams(window.location.search);
@@ -6618,8 +6662,28 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
 
-        //var newurl = window.location.origin + window.location.pathname + `?pizza=belongs&on=banana`;
-        //window.history.pushState({path:newurl},'',newurl);
+        var roomQueryStringData = "";
+        if (localStorage.length == 0)
+        {
+            roomQueryStringData = 
+            {
+                'adults' : `1`,
+                'children' : `0`,
+                'infants' : `0`,
+                'pets' : `0`,
+                'checkin' : `THINKING IN`,
+                'checkout' : `PROGRESS`,
+                'location' : `flexible`,
+            };
+        }
+        else 
+        {
+            roomQueryStringData = JSON.parse(localStorage["room-data"]);
+        }
+        
+        var newurl = window.location.origin + window.location.pathname + `?location=${roomQueryStringData.location}&adults=${roomQueryStringData.adults}&children=${roomQueryStringData.children}&infants=${roomQueryStringData.infants}&pets=${roomQueryStringData.pets}&checkin=${roomQueryStringData.checkin}&checkout=${roomQueryStringData.checkout}`;
+        window.history.pushState({path:newurl},'',newurl);
+        var queryString = new URLSearchParams(window.location.search);
 
         document.body.style.cursor = "wait";
 
