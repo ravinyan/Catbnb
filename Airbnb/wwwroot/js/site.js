@@ -4831,18 +4831,6 @@ function generateQueryStringURI()
        }
     }
 
-    let roomData = 
-    {
-        'adults' : `${document.getElementById("AdultsCount").innerText}`,
-        'children' : `${document.getElementById("ChildrenCount").innerText}`,
-        'infants' : `${document.getElementById("InfantsCount").innerText}`,
-        'pets' : `${document.getElementById("PetsCount").innerText}`,
-        'checkin' : `${checkin}`,
-        'checkout' : `${checkout}`,
-        'location' : `${whereQuery.slice(10)}`,
-    };
-    localStorage.setItem('room-data', JSON.stringify(roomData));
-
     let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     let newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
@@ -5323,7 +5311,13 @@ function generateCatCards(card)
 
         let imageHref = document.createElement("A");
         imageHref.className = "cat_card_href";
-        imageHref.href = `https://localhost:7027/Rooms/${card.id}`;
+
+        let location = whereInput.value == "" 
+                     ? `flexible`
+                     : `${whereInput.value}`;
+        let checkin = "";
+        let checkout = "";
+        imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${999}&checkout=${999}`;
 
         let pictureTag = document.createElement("PICTURE");
 
@@ -5617,7 +5611,7 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
 {
     if (e.target.tagName == "A" && e.target.style.color != "black")
     {  
-        var start = performance.now();
+        //var start = performance.now();
 
         for (i = 0; i < scrollMenu.childNodes.length; i++)
         {
@@ -5635,9 +5629,9 @@ document.getElementById("ScrollMenu").addEventListener("click", function(e)
         queryValue = encodeURIComponent(e.target.innerText);
         fetchNeededCatCards(queryValue);
 
-        var end = performance.now();
-        var timeTaken = end - start;
-        console.log(timeTaken)
+        //var end = performance.now();
+        //var timeTaken = end - start;
+        //console.log(timeTaken)
     }
 })
 
@@ -6661,29 +6655,6 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
     {
         var start = performance.now();
         var roomPageId = +window.location.pathname.split("/")[2];
-
-        var roomQueryStringData = "";
-        if (localStorage.length == 0)
-        {
-            roomQueryStringData = 
-            {
-                'adults' : `1`,
-                'children' : `0`,
-                'infants' : `0`,
-                'pets' : `0`,
-                'checkin' : `THINKING IN`,
-                'checkout' : `PROGRESS`,
-                'location' : `flexible`,
-            };
-        }
-        else 
-        {
-            roomQueryStringData = JSON.parse(localStorage["room-data"]);
-        }
-        
-        var newurl = window.location.origin + window.location.pathname + `?location=${roomQueryStringData.location}&adults=${roomQueryStringData.adults}&children=${roomQueryStringData.children}&infants=${roomQueryStringData.infants}&pets=${roomQueryStringData.pets}&checkin=${roomQueryStringData.checkin}&checkout=${roomQueryStringData.checkout}`;
-        window.history.pushState({path:newurl},'',newurl);
-        var queryString = new URLSearchParams(window.location.search);
 
         document.body.style.cursor = "wait";
 
