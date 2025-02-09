@@ -41,6 +41,7 @@ function headerScaling()
             document.getElementById("ExperiencesMenuForm").style.display = "none";
 
             document.getElementById("ScrollDiv").style.top = "80px";
+            document.getElementById("ScrollDiv").style.zIndex = "10";
             //document.getElementById("ScrollDiv").style.boxShadow = "0 4px 6px -6px #cacaca";
             
             document.getElementById("GreyBackground").style.display = "none";
@@ -5317,6 +5318,7 @@ function generateCatCards(card)
                      : `${whereInput.value}`;
         let checkin = "";
         let checkout = "";
+
         imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${999}&checkout=${999}`;
 
         let pictureTag = document.createElement("PICTURE");
@@ -6421,7 +6423,36 @@ function roomGenerateRoomsPage(room)
     roomPricingFlyingRectangleReservationButtonsText3.innerText = "Guests";
 
     let roomPricingFlyingRectangleReservationButtonsDateNoClass3  = document.createElement("DIV");
-    roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `1 guest`;
+
+    let adults = `${queryString.get("adults")}`;
+    let children = `${queryString.get("children")}`;
+    let guests = +adults + +children <= 0
+               ? `1 Guest`
+               : (+adults + +children) > room.bookingInfo.maxNumberOfGuests
+               ? `${room.bookingInfo.maxNumberOfGuests} Guests`
+               : (+adults + +children) == 1
+               ? `${+adults + +children} Guest`
+               : `${+adults + +children} Guests`;
+    let infants = +queryString.get("infants") <= 0 
+                ? ""
+                :  +queryString.get("infants") > 5
+                ? `, 5 Infants`
+                : +queryString.get("infants") == 1
+                ? `, ${queryString.get("infants")} Infant`
+                : `, ${queryString.get("infants")} Infants`;
+    let pets = +queryString.get("pets") <= 0
+             ? ""
+             : +queryString.get("pets") > room.bookingInfo.maxNumberOfPets && room.bookingInfo.maxNumberOfPets > 1
+             ? `, ${room.bookingInfo.maxNumberOfPets} Pets`
+             : +queryString.get("pets") > room.bookingInfo.maxNumberOfPets && room.bookingInfo.maxNumberOfPets == 1
+             ? `, ${room.bookingInfo.maxNumberOfPets} Pet`
+             : room.bookingInfo.maxNumberOfPets == 0
+             ? ""
+             : +queryString.get("pets") == 1
+             ? `, ${queryString.get("pets")} Pet`
+             : `, ${queryString.get("pets")} Pets`;
+
+    roomPricingFlyingRectangleReservationButtonsDateNoClass3.innerText = `${guests}${infants}${pets}`;
 
     let roomPricingFlyingRectangleReservationButtonGuestSVG = document.createElement("DIV");
     roomPricingFlyingRectangleReservationButtonGuestSVG.className = "room_pricing_flying_rectangle_reservation_button_guest_svg";
@@ -6688,7 +6719,7 @@ function roomControllRoomsPage(room, roomData)
 
     saveButton.onclick = function()
     {
-        navigator.clipboard.writeText(window.location.origin + window.location.pathname);
+        navigator.clipboard.writeText(window.location.href);
 
         popupMessage1.style.display = "block";
         setTimeout(() => 
@@ -7471,7 +7502,7 @@ function roomControllRoomsPage(room, roomData)
         }
     }
 
-    function roomControllCalendar()
+    function roomControllCalendarAndGuestDropdown()
     {
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
@@ -7824,9 +7855,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var adultsCounter = document.createElement("SPAN");
-            adultsCounter.innerText = 1;
-
-            adultsDecrementButton.disabled = !adultsDecrementButton.disabled;
+            adultsCounter.innerText = queryString.get("adults");
 
             adultsControlButtons.appendChild(adultsDecrementButton);
             adultsControlButtons.appendChild(adultsCounter);
@@ -7868,9 +7897,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var childrenCounter = document.createElement("SPAN");
-            childrenCounter.innerText = 0;
-
-            childrenDecrementButton.disabled = !childrenDecrementButton.disabled;
+            childrenCounter.innerText = queryString.get("children");
             
             childrenControlButtons.appendChild(childrenDecrementButton);
             childrenControlButtons.appendChild(childrenCounter);
@@ -7912,7 +7939,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var infantsCounter = document.createElement("SPAN");
-            infantsCounter.innerText = 0;
+            infantsCounter.innerText = queryString.get("infants");
 
             infantsDecrementButton.disabled = !infantsDecrementButton.disabled;
             
@@ -7956,7 +7983,7 @@ function roomControllRoomsPage(room, roomData)
                                                </svg>`;
 
             var petsCounter = document.createElement("SPAN");
-            petsCounter.innerText = 0;
+            petsCounter.innerText = queryString.get("pets");
              
             petsControlButtons.appendChild(petsDecrementButton);
             petsControlButtons.appendChild(petsCounter);
@@ -7975,8 +8002,9 @@ function roomControllRoomsPage(room, roomData)
 
             if (roomData.bookingInfo.petsAllowed == false)
             {
-                petsIncrementButton.disabled = !petsIncrementButton.disabled;
-                petsDecrementButton.disabled = !petsDecrementButton.disabled;
+                petsIncrementButton.disabled = true;
+                petsDecrementButton.disabled = true;
+                petsCounter.innerText = 0
 
                 maximumGuestInformation.innerText = roomData.bookingInfo.maximumGuestInformation > 1
                                                   ? `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guest, not including infants. Pets aren't allowed.`
@@ -8003,6 +8031,57 @@ function roomControllRoomsPage(room, roomData)
             dropdownWindow.appendChild(optionsDiv);
             dropdownWindow.appendChild(maximumGuestInformation);
             dropdownWindow.appendChild(closeButtonDiv);
+
+            if (+adultsCounter.innerText <= 1)
+            {
+                adultsCounter.innerText = 1;
+                adultsDecrementButton.disabled = true;
+            }
+            
+            if (+childrenCounter.innerText < 1)
+            {
+                childrenCounter.innerText = 0
+                childrenDecrementButton.disabled = true;
+            }
+
+            if (+adultsCounter.innerText >= roomData.bookingInfo.maxNumberOfGuests || ((+adultsCounter.innerText + +childrenCounter.innerText) >= roomData.bookingInfo.maxNumberOfGuests))
+            {
+                adultsIncrementButton.disabled = true;
+                childrenIncrementButton.disabled = true;
+            }
+
+            if (+infantsCounter.innerText < 1)
+            {
+                infantsCounter.innerText = 0
+            }
+            else if (+infantsCounter.innerText > 0 && +infantsCounter.innerText < 5)
+            {
+                infantsDecrementButton.disabled = false;
+            }
+            else if (+infantsCounter.innerText >= 5)
+            {
+                infantsCounter.innerText = 5;
+                infantsDecrementButton.disabled = false;
+                infantsIncrementButton.disabled = true;
+            }
+
+            if (roomData.bookingInfo.petsAllowed == true)
+            {
+                if (+petsCounter.innerText < 1)
+                {
+                    petsCounter.innerText = 0
+                }
+                else if (+petsCounter.innerText > 0 && +petsCounter.innerText < roomData.bookingInfo.maxNumberOfPets)
+                {
+                    petsDecrementButton.disabled = false;
+                }
+                else if (+petsCounter.innerText >= roomData.bookingInfo.maxNumberOfPets)
+                {
+                    petsCounter.innerText = roomData.bookingInfo.maxNumberOfPets;
+                    petsDecrementButton.disabled = false;
+                    petsIncrementButton.disabled = true;
+                }
+            }
         }
 
         function controlGuestDropdown()
@@ -8101,7 +8180,7 @@ function roomControllRoomsPage(room, roomData)
                 }
 
                 if ((incrementChildrem.disabled == true || incrementAdults.disabled == true) 
-                &&  (+childrenValue.innerText + +adultsValue.innerText) != roomData.bookingInfo.maxNumberOfGuests)
+                &&  (+childrenValue.innerText + +adultsValue.innerText) < roomData.bookingInfo.maxNumberOfGuests)
                 {
                     incrementAdults.disabled = !incrementAdults.disabled;
                     incrementChildrem.disabled = !incrementChildrem.disabled;
@@ -8183,7 +8262,7 @@ function roomControllRoomsPage(room, roomData)
                 }
 
                 if ((incrementChildrem.disabled == true || incrementAdults.disabled == true) 
-                &&  (+childrenValue.innerText + +adultsValue.innerText) != roomData.bookingInfo.maxNumberOfGuests)
+                &&  (+childrenValue.innerText + +adultsValue.innerText) < roomData.bookingInfo.maxNumberOfGuests)
                 {
                     incrementChildrem.disabled = !incrementChildrem.disabled;
                     incrementAdults.disabled = !incrementAdults.disabled;
@@ -8427,7 +8506,7 @@ function roomControllRoomsPage(room, roomData)
     roomControllImageCarousel();
     roomControllShowAllAmenities();
     roomControllShowAllReviews();
-    roomControllCalendar();
+    roomControllCalendarAndGuestDropdown();
 
     var reserveButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_reserveButton")[0];
 
