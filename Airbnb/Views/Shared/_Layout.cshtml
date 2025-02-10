@@ -17,37 +17,39 @@
                         <a class="text-decoration-none" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index"> <img id="Logo" src="/img/Joel.gif" width="100px" height="50px" /> </a>
                     </div>
                 @* buttons + mini form *@
-                <div style="display: flex; justify-content: center; align-items:center ; transition: 0.2s; padding-inline-start: 20px; padding-inline-end: 20px; text-align: center; min-width: 372px; min-height: 50px">
+                <div style="display: flex; justify-content: center; align-items:center ; transition: 0.2s; padding-inline-start: 20px; padding-inline-end: 20px; text-align: center; min-height: 50px">
                     @* stays/experiences buttons *@
                     <div id="StaysMenuButtons" class="shadowe">
                         <button id="StaysMenuButton" type="button" class="btn button" style="border-radius: 50px; text-shadow: 0px 0px 1px black">Stays</button>
                         <button id="ExperiencesMenuButton" type="button" class="btn button" style="border-radius:50px">Experiences</button>
                     </div>
                     @* mini form *@
-                    <div id="MiniForm" class="border shadow-sm text-nowrap" style="border-radius: 50px; display: none; height: 50px; min-width: 350px; align-items: center ; justify-content: center">
-                            <button id="MiniAnywhereButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%">
-                                <div class="fw-bold" style="padding-inline-start: 15px; padding-inline-end: 15px; text-overflow: ellipsis">
-                                    Anywhere
+                    <div id="MiniForm" class="border shadow-sm text-nowrap" style="border-radius: 50px; display: none; height: 50px; align-items: center;">
+                        <button id="MiniAnywhereButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%; display: flex; align-items: center; justify-content: center">
+                            <div style="padding-inline-start: 17px; padding-inline-end: 17px; text-overflow: ellipsis; font-weight: 600">
+                                Anywhere
+                            </div>
+                        </button>
+                        <div style="border-inline-end: 1px solid #dddddd; width: 1px; height: 25px;"></div>
+                        <button id="MiniAnyWeekButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%; display: flex; align-items: center; justify-content: center">
+                            <div style="padding-inline-start: 17px; padding-inline-end: 17px; text-overflow: ellipsis; font-weight: 600">
+                                Any week
+                            </div>
+                        </button>
+                        <div style="border-inline-end: 1px solid #dddddd; width: 1px; height: 25px;"></div>
+                        <div style="border-radius: 50px; height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center">
+                            <button id="MiniAddGuestsButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%;">
+                                <div style="padding-inline-start: 17px; padding-inline-end: 17px; text-overflow: ellipsis; font-weight: 600">
+                                   Add guests
                                 </div>
                             </button>
-                            <button id="MiniAnyWeekButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%">
-                                <div class="fw-bold" style="padding-inline-start: 15px; padding-inline-end: 15px; text-overflow: ellipsis">
-                                    Any week
-                                </div>
-                            </button>
-                            <div class="d-inline-flex align-items-center" style="border-radius: 50px; height: 100%">
-                                <button id="MiniAddGuestsButton" type="button" class="btn button text-nowrap p-0" style="font-size: 14px; height: 100%;">
-                                    <div style="padding-inline-start: 15px; padding-inline-end: 15px; text-overflow: ellipsis">
-                                       Add guests
-                                    </div>
-                                </button>
-                                <div style="background-color: #ff385c; border-radius: 24px; width: 32px; height: 32px; color: white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </div>
+                            <div style="background-color: #ff385c; border-radius: 24px; width: 32px; height: 32px; color: white; display: flex; align-items: center; justify-content: center; margin-inline-end: 10px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="bi bi-search search_icon" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
                             </div>
                         </div>
+                    </div>
                 </div>
                 @* nav bar (airbnb your home / world icon / login button) *@
                 <div class="stretch">

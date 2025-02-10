@@ -34,7 +34,7 @@ function headerScaling()
             //  if scrolled down
             document.getElementById("TopHeader").style.height = "80px";
 
-            document.getElementById("MiniForm").style.display = "block";
+            document.getElementById("MiniForm").style.display = "flex";
             document.getElementById("StaysMenuButtons").style.display = "none";
 
             document.getElementById("StaysMenuForm").style.display = "none";
@@ -87,7 +87,7 @@ function headerScaling()
     else if (window.location.pathname.split("/")[1] == "Rooms")
     {
         document.getElementById("TopHeader").style.height = "80px";
-        document.getElementById("MiniForm").style.display = "block";
+        document.getElementById("MiniForm").style.display = "flex";
         document.getElementById("StaysMenuButtons").style.display = "none";
         document.getElementById("StaysMenuForm").style.display = "none";
         document.getElementById("ExperiencesMenuForm").style.display = "none";
@@ -120,7 +120,7 @@ function headerSettingsRoomsPage()
         document.getElementsByClassName("header")[0].style.position = "relative";
         document.getElementsByClassName("spacing")[0].style.display = "none";
         document.getElementById("TopHeader").style.height = "80px";
-        document.getElementById("MiniForm").style.display = "block";
+        document.getElementById("MiniForm").style.display = "flex";
         document.getElementById("StaysMenuButtons").style.display = "none";
         document.getElementById("StaysMenuForm").style.display = "none";
         document.getElementById("ExperiencesMenuForm").style.display = "none";
@@ -981,7 +981,7 @@ const addGuestsButton = document.getElementById("MiniAddGuestsButton");
 
 window.onclick = function()
 {
-    if (document.getElementById("GreyBackground").style.display == "block" && window.location.pathname == "/" || window.location.pathname == "/home")
+    if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
     {
         document.getElementById("GreyBackground").onclick = function() 
         {
@@ -990,7 +990,7 @@ window.onclick = function()
             document.getElementById("TopHeader").style.height = "80px";
             document.getElementById("ScrollDiv").style.zIndex = "10";
             
-            document.getElementById("MiniForm").style.display = "block";
+            document.getElementById("MiniForm").style.display = "flex";
             document.getElementById("StaysMenuButtons").style.display = "none";
             document.getElementById("StaysMenuForm").style.display = "none";
         };
@@ -1055,10 +1055,12 @@ document.getElementById("WhereDropdown").addEventListener("click", function(e)
         if (text != "I'm flexible")
         {
             whereInput.value = text;
+            anywhereButton.childNodes[1].innerText = text;
         }
         else
         {
             whereInput.value = "";
+            anywhereButton.childNodes[1].innerText = "Anywhere";
         }
     }
 })
@@ -1114,6 +1116,101 @@ const decrementInfantCountButtonExperiences = document.getElementById("DecreaseI
 const incrementInfantCountButtonExperiences = document.getElementById("IncreaseInfantCountExperiences");
 
 const formGuestsInputExperiences = document.getElementById("GuestsInputExperiences");
+
+function setGuestValuesWithQueryString()
+{
+    let queryString = new URLSearchParams(window.location.search);
+    
+    adultsCount.innerText = +queryString.get("adults");
+    childrenCount.innerText = +queryString.get("children");
+    infantsCount.innerText = +queryString.get("infants");
+    petsCount.innerText = +queryString.get("pets");
+    
+    if (+adultsCount.innerText <= 1)
+    {
+        adultsCount.innerText = 1;
+        changeButtonDecrease(incrementAdultCountButton);
+    }
+    
+    if (+childrenCount.innerText < 1)
+    {
+        childrenCount.innerText = 0;
+        changeButtonDecrease(incrementChildCountButton);
+    }
+
+    if (+adultsCount.innerText >= 16 || ((+adultsCount.innerText + +childrenCount.innerText) >= 16))
+    {
+        changeButtonDecrease(decrementAdultCountButton);
+        changeButtonIncrease(incrementAdultCountButton);
+        decrementAdultCountButton.style.cursor = "pointer";
+        incrementAdultCountButton.style.cursor = "not-allowed";
+
+        if (+childrenCount.innerText == 0)
+        {
+            changeButtonIncrease(decrementChildCountButton);
+            changeButtonIncrease(incrementChildCountButton);
+            decrementChildCountButton.style.cursor = "pointer";
+            incrementChildCountButton.style.cursor = "not-allowed";
+        }
+        else
+        {
+            changeButtonDecrease(decrementChildCountButton);
+            changeButtonIncrease(incrementChildCountButton);
+            decrementChildCountButton.style.cursor = "pointer";
+            incrementChildCountButton.style.cursor = "not-allowed";
+        }
+    }
+    else if (+adultsCount.innerText > 1 && +adultsCount.innerText < 16  
+         || ((+adultsCount.innerText + +childrenCount.innerText) > 1 &&(+adultsCount.innerText + +childrenCount.innerText) < 16))
+    {
+        changeButtonDecrease(decrementAdultCountButton);
+        decrementAdultCountButton.style.cursor = "pointer";
+
+        if (+childrenCount.innerText > 0)
+        {
+            decrementChildCountButton.style.cursor = "pointer";
+            changeButtonDecrease(decrementChildCountButton);
+        }
+    }
+
+    if (+infantsCount.innerText < 1)
+    {
+        infantsCount.innerText = 0;
+    }
+    else if (+infantsCount.innerText > 0 && +infantsCount.innerText < 5)
+    {
+        changeButtonDecrease(decrementInfantCountButton);
+        decrementInfantCountButton.style.cursor = "pointer";
+    }
+    else if (+infantsCount.innerText >= 5)
+    {
+        infantsCount.innerText = 5;
+        changeButtonDecrease(decrementInfantCountButton);
+        changeButtonIncrease(incrementInfantCountButton);
+        decrementInfantCountButton.style.cursor = "pointer";
+        incrementInfantCountButton.style.cursor = "not-allowed";
+    }
+
+    if (+petsCount.innerText < 1)
+    {
+        petsCount.innerText = 0
+    }
+    else if (+petsCount.innerText > 0 && +petsCount.innerText < 5)
+    {
+        changeButtonDecrease(decrementPetCountButton);
+        decrementPetCountButton.style.cursor = "pointer";
+    }
+    else if (+petsCount.innerText >= 5)
+    {
+        petsCount.innerText = 5;
+        changeButtonDecrease(decrementPetCountButton);
+        changeButtonIncrease(incrementPetCountButton);
+        decrementPetCountButton.style.cursor = "pointer";
+        incrementPetCountButton.style.cursor = "not-allowed";
+    }
+}
+
+setGuestValuesWithQueryString();
 
 function changeGuestsValue()
 {
@@ -4628,10 +4725,34 @@ searchButton.onclick = function()
     if (queryValue != null || queryValue != "")
     {
         fetchNeededCatCards(encodeURIComponent(queryValue));
+        debugger;
+        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        {
+             document.getElementById("GreyBackground").style.display = "none";
+            
+             document.getElementById("TopHeader").style.height = "80px";
+             document.getElementById("ScrollDiv").style.zIndex = "10";
+             
+             document.getElementById("MiniForm").style.display = "flex";
+             document.getElementById("StaysMenuButtons").style.display = "none";
+             document.getElementById("StaysMenuForm").style.display = "none";
+        }
     }
     else if (queryValue == null || queryValue == "")
     {
         fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+
+        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        {
+            document.getElementById("GreyBackground").style.display = "none";
+
+            document.getElementById("TopHeader").style.height = "80px";
+            document.getElementById("ScrollDiv").style.zIndex = "10";
+            
+            document.getElementById("MiniForm").style.display = "flex";
+            document.getElementById("StaysMenuButtons").style.display = "none";
+            document.getElementById("StaysMenuForm").style.display = "none";
+        }
     }
 }
 
@@ -4645,10 +4766,34 @@ searchButtonExperiences.onclick = function()
     if (queryValue != null || queryValue != "")
     {
         fetchNeededCatCards(queryValue);
+
+        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        {
+             document.getElementById("GreyBackground").style.display = "none";
+            
+             document.getElementById("TopHeader").style.height = "80px";
+             document.getElementById("ScrollDiv").style.zIndex = "10";
+             
+             document.getElementById("MiniForm").style.display = "flex";
+             document.getElementById("StaysMenuButtons").style.display = "none";
+             document.getElementById("StaysMenuForm").style.display = "none";
+        }
     }
     else if (queryValue == null || queryValue == "")
     {
         fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+
+        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        {
+             document.getElementById("GreyBackground").style.display = "none";
+            
+             document.getElementById("TopHeader").style.height = "80px";
+             document.getElementById("ScrollDiv").style.zIndex = "10";
+             
+             document.getElementById("MiniForm").style.display = "flex";
+             document.getElementById("StaysMenuButtons").style.display = "none";
+             document.getElementById("StaysMenuForm").style.display = "none";
+        }
     }
 }
 
@@ -4835,8 +4980,35 @@ function generateQueryStringURI()
     let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     let newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
+    queryString = new URLSearchParams(window.location.search);
+
+    // validation for mini form coz it just makes sense to put it here lol
+    whereInput.value = queryString.get("location") == "flexible"
+                     ? "Anywhere"
+                     : queryString.get("location");
+    let adultsMiniForm = `${queryString.get("adults")}`;
+    let childrenMiniForm = `${+queryString.get("children")}`;
+    let guestsMiniForm = +adultsMiniForm + +childrenMiniForm <= 0
+                       ? `1 Guest`
+                       : (+adultsMiniForm + +childrenMiniForm) == 1
+                       ? `${+adultsMiniForm + +childrenMiniForm} Guest`
+                       : `${+adultsMiniForm + +childrenMiniForm} Guests`;
+    let infantsMiniForm = +queryString.get("infants") <= 0 
+                        ? ""
+                        : +queryString.get("infants") == 1
+                        ? `, ${queryString.get("infants")} Infant`
+                        : `, ${queryString.get("infants")} Infants`;
+    let petsMiniForm = +queryString.get("pets") <= 0
+                     ? ""
+                     : +queryString.get("pets") == 1
+                     ? `, ${queryString.get("pets")} Pet`
+                     : `, ${queryString.get("pets")} Pets`;
+    formGuestsInput.value = `${guestsMiniForm}${infantsMiniForm}${petsMiniForm}`;
+    anywhereButton.childNodes[1].innerText = whereInput.value
+    anyWeekButton.childNodes[1].innerText = `Any ${queryString.get("flexible-trip-length").toLocaleLowerCase()}`;
+    addGuestsButton.childNodes[1].innerText = guestsMiniForm;
     
-    return queryString = new URLSearchParams(window.location.search);
+    return queryString;
 }
 
 /*--------------------------------------------------------------------------------------------------------------------
@@ -5666,6 +5838,31 @@ function renderCatCardsOnRefresh()
 
         if (categoryQuery != null && categoryQuery != "")
         {
+            whereInput.value = queryString.get("location") == "flexible"
+                             ? ""
+                             :  queryString.get("location");
+            let adults = `${queryString.get("adults")}`;
+            let children = `${+queryString.get("children")}`;
+            let guests = +adults + +children <= 0
+                       ? `1 Guest`
+                       : (+adults + +children) == 1
+                       ? `${+adults + +children} Guest`
+                       : `${+adults + +children} Guests`;
+            let infants = +queryString.get("infants") <= 0 
+                        ? ""
+                        : +queryString.get("infants") == 1
+                        ? `, ${queryString.get("infants")} Infant`
+                        : `, ${queryString.get("infants")} Infants`;
+            let pets = +queryString.get("pets") <= 0
+                     ? ""
+                     : +queryString.get("pets") == 1
+                     ? `, ${queryString.get("pets")} Pet`
+                     : `, ${queryString.get("pets")} Pets`;
+            formGuestsInput.value = `${guests}${infants}${pets}`;
+            anywhereButton.childNodes[1].innerText = whereInput.value
+            anyWeekButton.childNodes[1].innerText = `Any ${queryString.get("flexible-trip-length").toLocaleLowerCase()}`;
+            addGuestsButton.childNodes[1].innerText = guests;
+
             for (i = 0; i < scrollMenu.childNodes.length; i++)
             {
                 if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
@@ -8004,7 +8201,7 @@ function roomControllRoomsPage(room, roomData)
             {
                 petsIncrementButton.disabled = true;
                 petsDecrementButton.disabled = true;
-                petsCounter.innerText = 0
+                petsCounter.innerText = 0;
 
                 maximumGuestInformation.innerText = roomData.bookingInfo.maximumGuestInformation > 1
                                                   ? `This place has maximum of ${roomData.bookingInfo.maxNumberOfGuests} guest, not including infants. Pets aren't allowed.`
@@ -8040,7 +8237,7 @@ function roomControllRoomsPage(room, roomData)
             
             if (+childrenCounter.innerText < 1)
             {
-                childrenCounter.innerText = 0
+                childrenCounter.innerText = 0;
                 childrenDecrementButton.disabled = true;
             }
 
@@ -8052,7 +8249,7 @@ function roomControllRoomsPage(room, roomData)
 
             if (+infantsCounter.innerText < 1)
             {
-                infantsCounter.innerText = 0
+                infantsCounter.innerText = 0;
             }
             else if (+infantsCounter.innerText > 0 && +infantsCounter.innerText < 5)
             {
@@ -8069,7 +8266,7 @@ function roomControllRoomsPage(room, roomData)
             {
                 if (+petsCounter.innerText < 1)
                 {
-                    petsCounter.innerText = 0
+                    petsCounter.innerText = 0;
                 }
                 else if (+petsCounter.innerText > 0 && +petsCounter.innerText < roomData.bookingInfo.maxNumberOfPets)
                 {
@@ -8460,7 +8657,7 @@ function roomControllRoomsPage(room, roomData)
         {
             if ((document.documentElement.scrollTop > 1 || document.body.scrollTop > 1) && bg.style.display == "block")
             {    
-                document.getElementById("MiniForm").style.display = "block";
+                document.getElementById("MiniForm").style.display = "flex";
                 document.getElementById("GreyBackground").style.display = "none";
                 document.getElementById("StaysMenuButtons").style.display = "none";
                 document.getElementById("StaysMenuForm").style.display = "none";
@@ -8487,7 +8684,7 @@ function roomControllRoomsPage(room, roomData)
                     document.getElementById("TopHeader").style.height = "80px";
                     document.getElementById("ScrollDiv").style.zIndex = "10";
                     
-                    document.getElementById("MiniForm").style.display = "block";
+                    document.getElementById("MiniForm").style.display = "flex";
                     document.getElementById("StaysMenuButtons").style.display = "none";
                     document.getElementById("StaysMenuForm").style.display = "none";
                     
