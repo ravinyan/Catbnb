@@ -1163,8 +1163,11 @@ function setGuestValuesWithQueryString()
     else if (+adultsCount.innerText > 1 && +adultsCount.innerText < 16  
          || ((+adultsCount.innerText + +childrenCount.innerText) > 1 &&(+adultsCount.innerText + +childrenCount.innerText) < 16))
     {
-        changeButtonDecrease(decrementAdultCountButton);
-        decrementAdultCountButton.style.cursor = "pointer";
+        if (+adultsCount.innerText > 1)
+        {
+            changeButtonDecrease(decrementAdultCountButton);
+            decrementAdultCountButton.style.cursor = "pointer";
+        }
 
         if (+childrenCount.innerText > 0)
         {
@@ -1327,7 +1330,7 @@ function changeNumber(entity, increment, decrement)
         {
             entity.innerText --;
 
-            if ((childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0) && adultsCount.innerText >= 1)
+            if ((childrenCount.innerText == 0 && infantsCount.innerText == 0 && petsCount.innerText == 0) && adultsCount.innerText > 1)
             {
                 decrementAdultCountButton.style.cursor = "pointer";
 
@@ -4717,82 +4720,98 @@ const searchButtonExperiences = document.getElementById("SearchButtonExperiences
 
 searchButton.onclick = function()
 {
+    let oldQueryString = new URLSearchParams(window.location.search);
     let queryString = generateQueryStringURI();
     let queryValue = queryString.get("category");
-    
-    DisplayText3.innerHTML = "";
-
-    if (queryValue != null || queryValue != "")
+ 
+    if (queryString.toString() != oldQueryString.toString())
     {
-        fetchNeededCatCards(encodeURIComponent(queryValue));
-        debugger;
-        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        DisplayText3.innerHTML = "";
+
+        if (queryValue != null || queryValue != "")
         {
-             document.getElementById("GreyBackground").style.display = "none";
+            fetchNeededCatCards(encodeURIComponent(queryValue));
             
-             document.getElementById("TopHeader").style.height = "80px";
-             document.getElementById("ScrollDiv").style.zIndex = "10";
-             
-             document.getElementById("MiniForm").style.display = "flex";
-             document.getElementById("StaysMenuButtons").style.display = "none";
-             document.getElementById("StaysMenuForm").style.display = "none";
+            form.style.backgroundColor = "";
+
+            if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+            {
+                 document.getElementById("GreyBackground").style.display = "none";
+                
+                 document.getElementById("TopHeader").style.height = "80px";
+                 document.getElementById("ScrollDiv").style.zIndex = "10";
+                 
+                 document.getElementById("MiniForm").style.display = "flex";
+                 document.getElementById("StaysMenuButtons").style.display = "none";
+                 document.getElementById("StaysMenuForm").style.display = "none";             
+            }
         }
-    }
-    else if (queryValue == null || queryValue == "")
-    {
-        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
-
-        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        else if (queryValue == null || queryValue == "")
         {
-            document.getElementById("GreyBackground").style.display = "none";
+            fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
 
-            document.getElementById("TopHeader").style.height = "80px";
-            document.getElementById("ScrollDiv").style.zIndex = "10";
-            
-            document.getElementById("MiniForm").style.display = "flex";
-            document.getElementById("StaysMenuButtons").style.display = "none";
-            document.getElementById("StaysMenuForm").style.display = "none";
+            form.style.backgroundColor = "";
+
+            if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+            {
+                document.getElementById("GreyBackground").style.display = "none";
+
+                document.getElementById("TopHeader").style.height = "80px";
+                document.getElementById("ScrollDiv").style.zIndex = "10";
+                
+                document.getElementById("MiniForm").style.display = "flex";
+                document.getElementById("StaysMenuButtons").style.display = "none";
+                document.getElementById("StaysMenuForm").style.display = "none";
+            }
         }
     }
 }
 
 searchButtonExperiences.onclick = function()
 {
+    let oldQueryString = new URLSearchParams(window.location.search);
     let queryString = generateQueryStringURI();
     let queryValue = queryString.get("category");
     
-    DisplayText3.innerHTML = "";
-
-    if (queryValue != null || queryValue != "")
+    if (queryString.toString() == oldQueryString.toString())
     {
-        fetchNeededCatCards(queryValue);
+        DisplayText3.innerHTML = "";
 
-        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        if (queryValue != null || queryValue != "")
         {
-             document.getElementById("GreyBackground").style.display = "none";
-            
-             document.getElementById("TopHeader").style.height = "80px";
-             document.getElementById("ScrollDiv").style.zIndex = "10";
-             
-             document.getElementById("MiniForm").style.display = "flex";
-             document.getElementById("StaysMenuButtons").style.display = "none";
-             document.getElementById("StaysMenuForm").style.display = "none";
+            fetchNeededCatCards(queryValue);
+
+            formExperiences.style.backgroundColor = "";
+
+            if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+            {
+                 document.getElementById("GreyBackground").style.display = "none";
+                
+                 document.getElementById("TopHeader").style.height = "80px";
+                 document.getElementById("ScrollDiv").style.zIndex = "10";
+                 
+                 document.getElementById("MiniForm").style.display = "flex";
+                 document.getElementById("StaysMenuButtons").style.display = "none";
+                 document.getElementById("StaysMenuForm").style.display = "none";
+            }
         }
-    }
-    else if (queryValue == null || queryValue == "")
-    {
-        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
-
-        if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+        else if (queryValue == null || queryValue == "")
         {
-             document.getElementById("GreyBackground").style.display = "none";
-            
-             document.getElementById("TopHeader").style.height = "80px";
-             document.getElementById("ScrollDiv").style.zIndex = "10";
-             
-             document.getElementById("MiniForm").style.display = "flex";
-             document.getElementById("StaysMenuButtons").style.display = "none";
-             document.getElementById("StaysMenuForm").style.display = "none";
+            fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+
+            formExperiences.style.backgroundColor = "";
+
+            if (document.getElementById("GreyBackground").style.display == "block" && (window.location.pathname == "/" || window.location.pathname == "/home"))
+            {
+                 document.getElementById("GreyBackground").style.display = "none";
+                
+                 document.getElementById("TopHeader").style.height = "80px";
+                 document.getElementById("ScrollDiv").style.zIndex = "10";
+                 
+                 document.getElementById("MiniForm").style.display = "flex";
+                 document.getElementById("StaysMenuButtons").style.display = "none";
+                 document.getElementById("StaysMenuForm").style.display = "none";
+            }
         }
     }
 }
@@ -4827,6 +4846,13 @@ document.addEventListener("click", function(e)
 /*--------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------QUERY STRING GENERATOR-----------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
+// info for dates coz i already have headache thinking about them for 10min
+// weekend - closest weekend (friday checkin > saturday > sunday checkout)
+// week - closest week avaiable (checkin day > 4 days > checkout day)
+// month - closest month avaiable (checkin day > 27 days > checkout day)
+// all dates in catcards should be done dynamically from chosen option
+// room dates should be taken from catcards dates
+
 function generateQueryStringURI()
 {
     let whereQuery = whereInput.value == "" 
@@ -4984,27 +5010,29 @@ function generateQueryStringURI()
 
     // validation for mini form coz it just makes sense to put it here lol
     whereInput.value = queryString.get("location") == "flexible"
-                     ? "Anywhere"
+                     ? ""
                      : queryString.get("location");
     let adultsMiniForm = `${queryString.get("adults")}`;
     let childrenMiniForm = `${+queryString.get("children")}`;
     let guestsMiniForm = +adultsMiniForm + +childrenMiniForm <= 0
-                       ? `1 Guest`
+                       ? `1 guest`
                        : (+adultsMiniForm + +childrenMiniForm) == 1
-                       ? `${+adultsMiniForm + +childrenMiniForm} Guest`
-                       : `${+adultsMiniForm + +childrenMiniForm} Guests`;
+                       ? `${+adultsMiniForm + +childrenMiniForm} guest`
+                       : `${+adultsMiniForm + +childrenMiniForm} guests`;
     let infantsMiniForm = +queryString.get("infants") <= 0 
                         ? ""
                         : +queryString.get("infants") == 1
-                        ? `, ${queryString.get("infants")} Infant`
-                        : `, ${queryString.get("infants")} Infants`;
+                        ? `, ${queryString.get("infants")} infant`
+                        : `, ${queryString.get("infants")} infants`;
     let petsMiniForm = +queryString.get("pets") <= 0
                      ? ""
                      : +queryString.get("pets") == 1
-                     ? `, ${queryString.get("pets")} Pet`
-                     : `, ${queryString.get("pets")} Pets`;
+                     ? `, ${queryString.get("pets")} pet`
+                     : `, ${queryString.get("pets")} pets`;
     formGuestsInput.value = `${guestsMiniForm}${infantsMiniForm}${petsMiniForm}`;
-    anywhereButton.childNodes[1].innerText = whereInput.value
+    anywhereButton.childNodes[1].innerText = whereInput.value == "" 
+                                           ? "Anywhere" 
+                                           : whereInput.value;
     anyWeekButton.childNodes[1].innerText = `Any ${queryString.get("flexible-trip-length").toLocaleLowerCase()}`;
     addGuestsButton.childNodes[1].innerText = guestsMiniForm;
     
@@ -5182,43 +5210,48 @@ function clearAllFilterValues()
 
 filterModalShowPlaces.onclick = function()
 {
+    let oldQueryString = new URLSearchParams(window.location.search);
     queryString = generateQueryStringURI();
-    var categoryQuery = queryString.get("category");
-    var filterMessage = document.getElementById("FilterMessage");
 
-    let destinationFilter = `<div>Selected Filters: <span style="font-weight: 700">Destination</span> - ${queryString.get("location")}</div>`;
-    let placeFilter = queryString.get("type-of-place") == null ? "" : `<div>, <span style="font-weight: 700">Type of place</span> - ${queryString.get("type-of-place")}</div>`;
-    let priceFilter = `<div>, <span style="font-weight: 700">Minimum price</span> - ${queryString.get("min-price")}$, <span style="font-weight: 700">Maximum price</span> - ${queryString.get("max-price")}$</div>`;
-    let bedroomFilter = queryString.get("bedroom-count") == null ? "" : `<div>, <span style="font-weight: 700">Bedrooms</span> - ${queryString.get("bedroom-count")}</div>`;
-    let bedsFilter = queryString.get("beds-count") == null ? "" :  `<div>, <span style="font-weight: 700">Beds</span> - ${queryString.get("beds-count")}</div>`;
-    let bathroomFilter = queryString.get("bathroom-count") == null ? "" :  `<div>, <span style="font-weight: 700">Bathrooms</span> - ${queryString.get("bathroom-count")}</div>`;
-    let amenitiesFilter = queryString.getAll("amenity") == "" ? "" :  `<div>, <span style="font-weight: 700">Amenities</span> - ${queryString.getAll("amenity")}</div>`;
-    let bookingFilter = queryString.getAll("booking-option") == "" ? "" :  `<div>, <span style="font-weight: 700">Booking options</span> - ${queryString.getAll("booking-option")}</div>`;
-    let standoutFilter = queryString.getAll("standout-stay") == "" ? "" :  `<div>, <span style="font-weight: 700">Guest Favourite</span> - Yes</div>`;
-    let propertyFilter = queryString.getAll("property-type") == "" ? "" :  `<div>, <span style="font-weight: 700">Properties</span> - ${queryString.getAll("property-type")}</div>`;
-    let accessibilityFilter = queryString.getAll("accessibility-feature") == "" ? "" : `<div>, <span style="font-weight: 700">Accessibilities</span> - ${queryString.getAll("accessibility-feature")}</div>`;
-    let hostLanguageFilter = queryString.getAll("host-language") == "" ? "" : `<div>, <span style="font-weight: 700">Host languages</span> - ${queryString.getAll("host-language")}</div>`;
-
-    filterMessage.innerHTML = `${destinationFilter}${placeFilter}${priceFilter}${bedroomFilter}${bedsFilter}${bathroomFilter}${amenitiesFilter}${bookingFilter}${standoutFilter}${propertyFilter}${accessibilityFilter}${hostLanguageFilter}`;
-
-    if (categoryQuery != null && categoryQuery != "")
+    if (oldQueryString.toString() != queryString.toString())
     {
-        for (i = 0; i < scrollMenu.childNodes.length; i++)
+        let categoryQuery = queryString.get("category");
+        let filterMessage = document.getElementById("FilterMessage");
+
+        let destinationFilter = `<div>Selected Filters: <span style="font-weight: 700">Destination</span> - ${queryString.get("location")}</div>`;
+        let placeFilter = queryString.get("type-of-place") == null ? "" : `<div>, <span style="font-weight: 700">Type of place</span> - ${queryString.get("type-of-place")}</div>`;
+        let priceFilter = `<div>, <span style="font-weight: 700">Minimum price</span> - ${queryString.get("min-price")}$, <span style="font-weight: 700">Maximum price</span> - ${queryString.get("max-price")}$</div>`;
+        let bedroomFilter = queryString.get("bedroom-count") == null ? "" : `<div>, <span style="font-weight: 700">Bedrooms</span> - ${queryString.get("bedroom-count")}</div>`;
+        let bedsFilter = queryString.get("beds-count") == null ? "" :  `<div>, <span style="font-weight: 700">Beds</span> - ${queryString.get("beds-count")}</div>`;
+        let bathroomFilter = queryString.get("bathroom-count") == null ? "" :  `<div>, <span style="font-weight: 700">Bathrooms</span> - ${queryString.get("bathroom-count")}</div>`;
+        let amenitiesFilter = queryString.getAll("amenity") == "" ? "" :  `<div>, <span style="font-weight: 700">Amenities</span> - ${queryString.getAll("amenity")}</div>`;
+        let bookingFilter = queryString.getAll("booking-option") == "" ? "" :  `<div>, <span style="font-weight: 700">Booking options</span> - ${queryString.getAll("booking-option")}</div>`;
+        let standoutFilter = queryString.getAll("standout-stay") == "" ? "" :  `<div>, <span style="font-weight: 700">Guest Favourite</span> - Yes</div>`;
+        let propertyFilter = queryString.getAll("property-type") == "" ? "" :  `<div>, <span style="font-weight: 700">Properties</span> - ${queryString.getAll("property-type")}</div>`;
+        let accessibilityFilter = queryString.getAll("accessibility-feature") == "" ? "" : `<div>, <span style="font-weight: 700">Accessibilities</span> - ${queryString.getAll("accessibility-feature")}</div>`;
+        let hostLanguageFilter = queryString.getAll("host-language") == "" ? "" : `<div>, <span style="font-weight: 700">Host languages</span> - ${queryString.getAll("host-language")}</div>`;
+
+        filterMessage.innerHTML = `${destinationFilter}${placeFilter}${priceFilter}${bedroomFilter}${bedsFilter}${bathroomFilter}${amenitiesFilter}${bookingFilter}${standoutFilter}${propertyFilter}${accessibilityFilter}${hostLanguageFilter}`;
+
+        if (categoryQuery != null && categoryQuery != "")
         {
-            if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+            for (i = 0; i < scrollMenu.childNodes.length; i++)
             {
-                DisplayText3.innerHTML = "";
-                scrollMenu.childNodes[i].style.color = "black";
-                fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
-                break;
+                if (scrollMenu.childNodes[i].tagName == "A" && encodeURIComponent(scrollMenu.childNodes[i].innerText) == encodeURIComponent(categoryQuery))
+                {
+                    DisplayText3.innerHTML = "";
+                    scrollMenu.childNodes[i].style.color = "black";
+                    fetchNeededCatCards(encodeURIComponent(scrollMenu.childNodes[i].innerText));
+                    break;
+                }
             }
         }
-    }
-    else if (categoryQuery == null || categoryQuery == "")
-    {
-        DisplayText3.innerHTML = "";
-        scrollMenu.childNodes[1].style.color = "black";
-        fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+        else if (categoryQuery == null || categoryQuery == "")
+        {
+            DisplayText3.innerHTML = "";
+            scrollMenu.childNodes[1].style.color = "black";
+            fetchNeededCatCards(scrollMenu.childNodes[1].innerText);
+        }
     }
 
     filterModal.classList.remove("modal_V2_slideIn");
@@ -5844,22 +5877,24 @@ function renderCatCardsOnRefresh()
             let adults = `${queryString.get("adults")}`;
             let children = `${+queryString.get("children")}`;
             let guests = +adults + +children <= 0
-                       ? `1 Guest`
+                       ? `1 guest`
                        : (+adults + +children) == 1
-                       ? `${+adults + +children} Guest`
-                       : `${+adults + +children} Guests`;
+                       ? `${+adults + +children} guest`
+                       : `${+adults + +children} guests`;
             let infants = +queryString.get("infants") <= 0 
                         ? ""
                         : +queryString.get("infants") == 1
-                        ? `, ${queryString.get("infants")} Infant`
-                        : `, ${queryString.get("infants")} Infants`;
+                        ? `, ${queryString.get("infants")} infant`
+                        : `, ${queryString.get("infants")} infants`;
             let pets = +queryString.get("pets") <= 0
                      ? ""
                      : +queryString.get("pets") == 1
-                     ? `, ${queryString.get("pets")} Pet`
-                     : `, ${queryString.get("pets")} Pets`;
+                     ? `, ${queryString.get("pets")} pet`
+                     : `, ${queryString.get("pets")} pets`;
             formGuestsInput.value = `${guests}${infants}${pets}`;
-            anywhereButton.childNodes[1].innerText = whereInput.value
+            anywhereButton.childNodes[1].innerText = whereInput.value == "" 
+                                                   ? "Anywhere" 
+                                                   : whereInput.value;
             anyWeekButton.childNodes[1].innerText = `Any ${queryString.get("flexible-trip-length").toLocaleLowerCase()}`;
             addGuestsButton.childNodes[1].innerText = guests;
 
