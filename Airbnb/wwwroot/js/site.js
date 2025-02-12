@@ -2016,7 +2016,7 @@ const datesButton = document.getElementById("DatesButton");
 const moveCalendarLeftExperiences = document.getElementById("MoveCalendarsLeftExperiences");
 const moveCalendarRightExperiences = document.getElementById("MoveCalendarsRightExperiences");
 
-function moveCalendarsLeft(moveButton, firstCalendar, secondCalendar)
+function moveCalendarsLeft(moveButton, rightButton, firstCalendar, secondCalendar)
 {
     if (moveButton.style.cursor == "pointer")
     {
@@ -2046,6 +2046,12 @@ function moveCalendarsLeft(moveButton, firstCalendar, secondCalendar)
             moveButton.style.color = "#dcdcdc";
             moveButton.style.background = "none";
         }
+        else 
+        {
+            rightButton.style.cursor = "pointer";
+            rightButton.style.color = "";
+            rightButton.style.background = "";
+        }
     } 
 }
 
@@ -2073,7 +2079,13 @@ function moveCalendarsRight(moveButton, leftButton, firstCalendar, secondCalenda
     
         rightButtonClicked = false;
         
-        if (month > currentMonth && year >= currentYear)
+        if (nextMonth == currentMonth && year >= currentYear + 2)
+        {
+            moveButton.style.cursor = "not-allowed";
+            moveButton.style.color = "#dcdcdc";
+            moveButton.style.background = "none";
+        }
+        else 
         {
             leftButton.style.cursor = "pointer";
             leftButton.style.color = "";
@@ -2084,7 +2096,7 @@ function moveCalendarsRight(moveButton, leftButton, firstCalendar, secondCalenda
 
 moveCalendarLeft.onclick = function()
 {
-    moveCalendarsLeft(moveCalendarLeft, calendar, calendar2);
+    moveCalendarsLeft(moveCalendarLeft, moveCalendarRight, calendar, calendar2);
 }
 
 moveCalendarRight.onclick = function()
@@ -2094,7 +2106,7 @@ moveCalendarRight.onclick = function()
 
 moveCalendarLeftExperiences.onclick = function()
 {
-    moveCalendarsLeft(moveCalendarLeftExperiences, calendarExperiences, calendar2Experiences)
+    moveCalendarsLeft(moveCalendarLeftExperiences, moveCalendarRightExperiences, calendarExperiences, calendar2Experiences)
 }
 
 moveCalendarRightExperiences.onclick = function()
@@ -3724,7 +3736,7 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
 
         rightButtonClicked = false;
     
-        if ((month == currentMonth && year == currentYear + 2))
+        if ((nextMonth == currentMonth && year == currentYear + 2))
         {
             rightButton.style.cursor = "not-allowed";
             rightButton.style.color = "#dcdcdc";
@@ -5521,8 +5533,37 @@ function generateCatCards(card)
         let location = whereInput.value == "" 
                      ? `flexible`
                      : `${whereInput.value}`;
+
         let checkin = "";
         let checkout = "";
+        if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+        {
+            checkin = `${queryString.get("checkin")}`;
+            checkout = `${queryString.get("checkout")}`;
+        }
+        else if (whenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
+        {
+            checkin = `${queryString.get("monthly-checkin")}`;
+            checkout = `${queryString.get("monthly-checkout")}`;
+        }
+        else if (flexibleBlockWhenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName == "NULL" && selectedCheckoutDate.tagName == "NULL"))
+        {
+            if (queryString.get("flexible-trip-length").toString().slice(22) == "Weekend")
+            {
+                checkin = `week`;
+                checkout = `end`;
+            }
+            else if (queryString.get("flexible-trip-length").toString().slice(22) == "Week")
+            {
+                checkin = `we`;
+                checkout = `ek`;
+            }
+            else if (queryString.get("flexible-trip-length").toString().slice(22) == "Month")
+            {
+                checkin = `mon`;
+                checkout = `th`;
+            }
+        }
 
         imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${999}&checkout=${999}`;
 
@@ -7734,7 +7775,7 @@ function roomControllRoomsPage(room, roomData)
         }
     }
 
-    function roomControllCalendarAndGuestDropdown()
+    function roomControllCalendar()
     {
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
@@ -7973,7 +8014,7 @@ function roomControllRoomsPage(room, roomData)
         
                 rightButtonClicked = false;
                 
-                if ((month == currentMonth && year == currentYear + 2))
+                if ((nextMonth == currentMonth && year == currentYear + 2))
                 {
                     moveRight.disabled = !moveRight.disabled;
                 }   
@@ -8044,6 +8085,56 @@ function roomControllRoomsPage(room, roomData)
             removeShadow(e, calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
         })
 
+        var bg = document.getElementById("GreyBackground");
+
+        window.onscroll = function() 
+        {
+            if ((document.documentElement.scrollTop > 1 || document.body.scrollTop > 1) && bg.style.display == "block")
+            {    
+                document.getElementById("MiniForm").style.display = "flex";
+                document.getElementById("GreyBackground").style.display = "none";
+                document.getElementById("StaysMenuButtons").style.display = "none";
+                document.getElementById("StaysMenuForm").style.display = "none";
+                document.getElementById("ExperiencesMenuForm").style.display = "none";
+                document.getElementById("TopHeader").style.height = "80px";
+
+                initializeCalendars(calendar1, calendar2);
+
+                if (moveLeft.disabled == false)
+                {
+                    moveLeft.disabled = !moveLeft.disabled;
+                }  
+            }
+        };
+        
+        window.onclick = function()
+        {
+            if (document.getElementById("GreyBackground").style.display == "block")
+            {
+                document.getElementById("GreyBackground").onclick = function() 
+                {
+                    document.getElementById("GreyBackground").style.display = "none";
+    
+                    document.getElementById("TopHeader").style.height = "80px";
+                    document.getElementById("ScrollDiv").style.zIndex = "10";
+                    
+                    document.getElementById("MiniForm").style.display = "flex";
+                    document.getElementById("StaysMenuButtons").style.display = "none";
+                    document.getElementById("StaysMenuForm").style.display = "none";
+                    
+                    initializeCalendars(calendar1, calendar2);
+
+                    if (moveLeft.disabled == false)
+                    {
+                        moveLeft.disabled = !moveLeft.disabled;
+                    }                 
+                };
+            }
+        }
+    }
+
+    function roomControllGuestDropdown()
+    {
         let dropdown = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_button_guest")[0];
         let dropdownWindow = document.createElement("DIV");
         dropdownWindow.className = "room_modal_guest_dropdown_window";
@@ -8685,60 +8776,14 @@ function roomControllRoomsPage(room, roomData)
         generateGuestDropdown();
         controlGuestDropdown();
         controlGuestsValues();
-
-        var bg = document.getElementById("GreyBackground");
-
-        window.onscroll = function() 
-        {
-            if ((document.documentElement.scrollTop > 1 || document.body.scrollTop > 1) && bg.style.display == "block")
-            {    
-                document.getElementById("MiniForm").style.display = "flex";
-                document.getElementById("GreyBackground").style.display = "none";
-                document.getElementById("StaysMenuButtons").style.display = "none";
-                document.getElementById("StaysMenuForm").style.display = "none";
-                document.getElementById("ExperiencesMenuForm").style.display = "none";
-                document.getElementById("TopHeader").style.height = "80px";
-
-                initializeCalendars(calendar1, calendar2);
-
-                if (moveLeft.disabled == false)
-                {
-                    moveLeft.disabled = !moveLeft.disabled;
-                }  
-            }
-        };
-        
-        window.onclick = function()
-        {
-            if (document.getElementById("GreyBackground").style.display == "block")
-            {
-                document.getElementById("GreyBackground").onclick = function() 
-                {
-                    document.getElementById("GreyBackground").style.display = "none";
-    
-                    document.getElementById("TopHeader").style.height = "80px";
-                    document.getElementById("ScrollDiv").style.zIndex = "10";
-                    
-                    document.getElementById("MiniForm").style.display = "flex";
-                    document.getElementById("StaysMenuButtons").style.display = "none";
-                    document.getElementById("StaysMenuForm").style.display = "none";
-                    
-                    initializeCalendars(calendar1, calendar2);
-
-                    if (moveLeft.disabled == false)
-                    {
-                        moveLeft.disabled = !moveLeft.disabled;
-                    }                 
-                };
-            }
-        }
     }
 
     roomControllDescriptionShowMore();
     roomControllImageCarousel();
     roomControllShowAllAmenities();
     roomControllShowAllReviews();
-    roomControllCalendarAndGuestDropdown();
+    roomControllCalendar();
+    roomControllGuestDropdown();
 
     var reserveButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_reserveButton")[0];
 
