@@ -26,7 +26,7 @@ namespace Airbnb.Models
         public string ShortDescription { get; set; } = string.Empty;
 
         [Required]
-        public string DateAvaiable { get; set; } = string.Empty;
+        public string AvailableUntilDate { get; set; } = string.Empty;
 
         [Required]
         [Range(1, 16)]

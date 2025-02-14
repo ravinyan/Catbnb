@@ -5412,7 +5412,7 @@ function catCardCarouselControl()
 
 catCardCarouselControl();
 
-function generateCatCards(card)
+function generateCatCards(card, queryString)
 {
     let catCard = document.createElement("DIV");
     catCard.id = `CatCard-${card.id}`;
@@ -5534,38 +5534,72 @@ function generateCatCards(card)
                      ? `flexible`
                      : `${whereInput.value}`;
 
-        let checkin = "";
-        let checkout = "";
-        if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+        var checkin = "";
+        var checkout = "";
+        var queryStringCheckin = ``;
+        var queryStringCheckout = ``;
+        if (queryString.size != 0)
         {
-            checkin = `${queryString.get("checkin")}`;
-            checkout = `${queryString.get("checkout")}`;
-        }
-        else if (whenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
-        {
-            checkin = `${queryString.get("monthly-checkin")}`;
-            checkout = `${queryString.get("monthly-checkout")}`;
-        }
-        else if (flexibleBlockWhenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName == "NULL" && selectedCheckoutDate.tagName == "NULL"))
-        {
-            if (queryString.get("flexible-trip-length").toString().slice(22) == "Weekend")
+            if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
             {
-                checkin = `week`;
-                checkout = `end`;
+                checkin = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]}`;
+                checkout = `${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]}`;
+                queryStringCheckin = `${queryString.get("checkin")}`;
+                queryStringCheckout = `${queryString.get("checkout")}`;
             }
-            else if (queryString.get("flexible-trip-length").toString().slice(22) == "Week")
+            else if (whenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
             {
-                checkin = `we`;
-                checkout = `ek`;
+                checkin = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedStartMonth)]}`;
+                checkout = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedEndMonth)]}`;
+                queryStringCheckin = `${queryString.get("monthly-checkin")}`;
+                queryStringCheckout = `${queryString.get("monthly-checkout")}`;
             }
-            else if (queryString.get("flexible-trip-length").toString().slice(22) == "Month")
+            else if (flexibleBlockWhenFormMenu.style.display == "flex" || (checkin == "" || checkout == ""))
             {
-                checkin = `mon`;
-                checkout = `th`;
+                // normally it would look at data from database (array of dates that are booked)
+                // and from that it would choose closest not booked selection of days
+                // but thats not going to be implemented in this project
+                var TODAY = new Date();
+                
+                if (queryString.get("flexible-trip-length") == "Weekend")
+                {
+                    while (TODAY.getDay() != 5)
+                    {
+                         TODAY.setDate(TODAY.getDate() + 1);
+                    }
+
+                    checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+
+                    TODAY.setDate(TODAY.getDate() + 3);
+
+                    checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                }
+                else if (queryString.get("flexible-trip-length") == "Week")
+                {
+                    checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+
+                    TODAY.setDate(TODAY.getDate() + 7);
+
+                    checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                }
+                else if (queryString.get("flexible-trip-length") == "Month")
+                {
+                    checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+
+                    TODAY.setMonth(TODAY.getMonth() + 1);
+
+                    checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                }
             }
         }
 
-        imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${999}&checkout=${999}`;
+        imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${queryStringCheckin}&checkout=${queryStringCheckout}`;
 
         let pictureTag = document.createElement("PICTURE");
 
@@ -5618,7 +5652,7 @@ function generateCatCards(card)
 
     let dateInfo = document.createElement("DIV");
     dateInfo.className = "cat_card_info_box_middle";
-    dateInfo.innerText = `${card.bookingInfo.dateAvaiable}`;
+    dateInfo.innerText = `${checkin} - ${checkout}`;
 
     let priceInfo = document.createElement("DIV");
     priceInfo.className = "cat_card_info_box_price_box";
@@ -5629,7 +5663,7 @@ function generateCatCards(card)
 
     let nightText = document.createElement("SPAN");
     nightText.innerText = "night";
-
+    
     priceInfo.appendChild(nightPrice);
     priceInfo.appendChild(nightText);
 
@@ -5834,7 +5868,7 @@ async function fetchNeededCatCards(queryValue)
            &&  (isLocationFound == true))
            {
                //console.log(`\n${categoriesJson.catCards[i].bookingInfo.typeOfPlace}\n${categoriesJson.catCards[i].bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
-               generateCatCards(categoriesJson.catCards[why]);
+               generateCatCards(categoriesJson.catCards[why], queryString);
            }
            else
            {
@@ -5843,7 +5877,7 @@ async function fetchNeededCatCards(queryValue)
        }
        else
        {
-           generateCatCards(categoriesJson.catCards[why]);
+           generateCatCards(categoriesJson.catCards[why], queryString);
        }
     }
 
@@ -6794,7 +6828,7 @@ function roomGenerateRoomsPage(room)
 
     let roomPricingFlyingRectanglePricingRowText3 = document.createElement("DIV");
     roomPricingFlyingRectanglePricingRowText3.className = "room_pricing_flying_rectangle_pricing_row_text";
-    roomPricingFlyingRectanglePricingRowText3.innerText = "Airbnb service fee";
+    roomPricingFlyingRectanglePricingRowText3.innerText = "Catbnb service fee";
 
     let roomPricingFlyingRectanglePricingRowText3NoClassDiv = document.createElement("DIV");
     roomPricingFlyingRectanglePricingRowText3NoClassDiv.innerText = `$${200}` // DB DATA... ?
@@ -8789,7 +8823,7 @@ function roomControllRoomsPage(room, roomData)
 
     reserveButton.onclick = function()
     {
-        location.href = "https://www.youtube.com/watch?v=uD4izuDMUQA";
+        window.open("https://www.youtube.com/watch?v=uD4izuDMUQA");
     }
 }
 
