@@ -1557,9 +1557,7 @@ const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStart
 const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
 //  room calendar stuff i give up
 var selectedStartDay = document.createElement(null);
-selectedStartDay.innerText = day;
-let selectedEndDay = document.createElement(null);
-selectedEndDay.innerText = date.getDate(date.setDate(day + 5));
+var selectedEndDay = document.createElement(null);
 
 function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
 {
@@ -1968,6 +1966,14 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
                         addedCheckoutDate = true;
+                    }
+                    else if (calendarId.className == "room_information_calendar2" && +checkinDate.innerText == x && checkinMonth == nextMonth
+                         &&  checkinYear == nextYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedStartDay = div;
+                        selectedStartDay.innerText = x;
                     }
                     else if (calendarId.className == "room_information_calendar2" && +checkoutDate.innerText == x && checkoutMonth == nextMonth
                          &&  checkoutYear == nextYear)
@@ -4858,34 +4864,27 @@ document.addEventListener("click", function(e)
 /*--------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------QUERY STRING GENERATOR-----------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
-// info for dates coz i already have headache thinking about them for 10min
-// weekend - closest weekend (friday checkin > saturday > sunday checkout)
-// week - closest week avaiable (checkin day > 4 days > checkout day)
-// month - closest month avaiable (checkin day > 27 days > checkout day)
-// all dates in catcards should be done dynamically from chosen option
-// room dates should be taken from catcards dates
-
 function generateQueryStringURI()
 {
     let whereQuery = whereInput.value == "" 
                    ? `?location=flexible`
                    : `?location=${whereInput.value}`;
-    
+
     let checkinQuery = checkinFormInput.value == "" 
                      ? "" 
-                     : `&checkin=${selectedCheckinDate.innerText}-${months.indexOf(selectedCheckinMonth) + 1}-${selectedCheckinYear}`;
+                     : `&checkin=${`0${selectedCheckinDate.innerText}`.slice(-2)}-${`0${months.indexOf(selectedCheckinMonth) + 1}`.slice(-2)}-${selectedCheckinYear}`;
     
     let checkoutQuery = checkoutFormInput.value == "" 
                       ? "" 
-                      : `&checkout=${selectedCheckoutDate.innerText}-${months.indexOf(selectedCheckoutMonth) + 1}-${selectedCheckoutYear}`;
+                      : `&checkout=${`0${selectedCheckoutDate.innerText}`.slice(-2)}-${`0${months.indexOf(selectedCheckoutMonth) + 1}`.slice(-2)}-${selectedCheckoutYear}`;
 
-    let monthsCheckinQuery =  monthsBlockStartDateValue == "" 
+    let monthsCheckinQuery = monthsBlockStartDateValue == "" 
                      ? "" 
-                     : `&monthly-checkin=${monthsBlockSelectedStartDate.innerText}-${months.indexOf(monthsBlockSelectedStartMonth) + 1}-${monthsBlockSelectedStartYear}`;
+                     : `&monthly-checkin=${`0${monthsBlockSelectedStartDate.innerText}`.slice(-2)}-${`0${months.indexOf(monthsBlockSelectedStartMonth) + 1}`.slice(-2)}-${monthsBlockSelectedStartYear}`;
 
     let monthsCheckoutQuery = monthsBlockEndDateValue == "" 
                       ? "" 
-                      : `&monthly-checkout=${monthsBlockSelectedEndDate.innerText}-${months.indexOf(monthsBlockSelectedEndMonth) + 1}-${monthsBlockSelectedEndYear}`;
+                      : `&monthly-checkout=${`0${monthsBlockSelectedEndDate.innerText}`.slice(-2)}-${`0${months.indexOf(monthsBlockSelectedEndMonth) + 1}`.slice(-2)}-${monthsBlockSelectedEndYear}`;
                
     let flexibleStayTimeQuery = "";
     let stayButtons = document.getElementsByClassName("stay_button");
@@ -4980,39 +4979,6 @@ function generateQueryStringURI()
     for (i = 0; i < selectedHostLanguagesCheckboxes.length; i++)
     {
         hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
-    }
-
-    localStorage.removeItem("room-data");
-
-    let checkin = "";
-    let checkout = "";
-    if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
-    {
-        checkin = `${+selectedCheckinDate.innerText}-${months.indexOf(selectedCheckinMonth) + 1}-${selectedCheckinYear}`;
-        checkout = `${+selectedCheckoutDate.innerText}-${months.indexOf(selectedCheckoutMonth) + 1}-${selectedCheckoutYear}`;
-    }
-    else if (whenFormMenu.style.display == "flex")
-    {
-        checkin = `${+monthsBlockSelectedStartDate.innerText}-${months.indexOf(monthsBlockSelectedStartMonth) + 1}-${monthsBlockSelectedStartYear}`;
-        checkout = `${+monthsBlockSelectedEndDate.innerText}-${months.indexOf(monthsBlockSelectedEndMonth) + 1}-${monthsBlockSelectedEndYear}`;
-    }
-    else if (flexibleBlockWhenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName == "NULL" && selectedCheckoutDate.tagName == "NULL"))
-    {
-       if (flexibleStayTimeQuery.slice(22) == "Weekend")
-       {
-           checkin = `week`;
-           checkout = `end`;
-       }
-       else if (flexibleStayTimeQuery.slice(22) == "Week")
-       {
-           checkin = `we`;
-           checkout = `ek`;
-       }
-       else if (flexibleStayTimeQuery.slice(22) == "Month")
-       {
-           checkin = `mon`;
-           checkout = `th`;
-       }
     }
 
     let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
@@ -5538,6 +5504,7 @@ function generateCatCards(card, queryString)
         var checkout = "";
         var queryStringCheckin = ``;
         var queryStringCheckout = ``;
+        let TODAY = new Date();
         if (queryString.size != 0)
         {
             if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
@@ -5559,8 +5526,6 @@ function generateCatCards(card, queryString)
                 // normally it would look at data from database (array of dates that are booked)
                 // and from that it would choose closest not booked selection of days
                 // but thats not going to be implemented in this project
-                var TODAY = new Date();
-                
                 if (queryString.get("flexible-trip-length") == "Weekend")
                 {
                     while (TODAY.getDay() != 5)
@@ -5569,34 +5534,44 @@ function generateCatCards(card, queryString)
                     }
 
                     checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckin = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
 
                     TODAY.setDate(TODAY.getDate() + 3);
 
                     checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckout = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
                 }
                 else if (queryString.get("flexible-trip-length") == "Week")
                 {
                     checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckin = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
 
                     TODAY.setDate(TODAY.getDate() + 7);
 
                     checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckout = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
                 }
                 else if (queryString.get("flexible-trip-length") == "Month")
                 {
                     checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckin = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckin = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
 
                     TODAY.setMonth(TODAY.getMonth() + 1);
 
                     checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
-                    queryStringCheckout = `${TODAY.getDate()}-${TODAY.getMonth() + 1}-${TODAY.getFullYear()}`;
+                    queryStringCheckout = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
                 }
             }
+        }
+        else if (queryString.size == 0)
+        {
+            checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+            queryStringCheckin = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
+
+            TODAY.setDate(TODAY.getDate() + 7);
+
+            checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
+            queryStringCheckout = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
         }
 
         imageHref.href = `https://localhost:7027/Rooms/${card.id}?location=${location}&adults=${document.getElementById("AdultsCount").innerText}&children=${document.getElementById("ChildrenCount").innerText}&infants=${document.getElementById("InfantsCount").innerText}&pets=${document.getElementById("PetsCount").innerText}&checkin=${queryStringCheckin}&checkout=${queryStringCheckout}`;
@@ -7816,20 +7791,41 @@ function roomControllRoomsPage(room, roomData)
         let moveLeft = room.getElementsByClassName("room_information_calendar_moveL")[0];
         moveLeft.disabled = !moveLeft.disabled;
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
- 
-        let date = new Date();
-        let day = date.getDate();
 
-        let selectedStartMonth = date.getMonth();
-        let selectedStartYear = date.getFullYear();
+        // validate this (negative numbers, too high numbers, checkin higher than checkout, 3 days minimum stay (done like weekend), 
+        // dates cant be higher than maximum avaiable date, use maximum date available from database in calendar making)
+        selectedStartDay.innerText = `${queryString.get("checkin")}`.slice(0, 2);
+        if (selectedStartDay.innerText[0] == 0)
+        {
+            selectedStartDay.innerText = selectedStartDay.innerText[1];
+        }
 
-        let selectedEndMonth = date.getMonth(date.setDate((day) + 5));
-        let selectedEndYear = date.getFullYear();
+        selectedEndDay.innerText = `${queryString.get("checkout")}`.slice(0, 2);
+        if (selectedEndDay.innerText[0] == 0)
+        {
+            selectedEndDay.innerText = selectedEndDay.innerText[1];
+        }
+
+        let selectedStartMonth = `${queryString.get("checkin")}`.slice(3, 5);
+        if (selectedStartMonth[0] == 0)
+        {
+            selectedStartMonth = selectedStartMonth[1] - 1;
+        }
+
+        let selectedEndMonth = `${queryString.get("checkout")}`.slice(3, 5);
+        if (selectedEndMonth[0] == 0)
+        {
+            selectedEndMonth = selectedEndMonth[1] - 1;
+        }
+
+        let selectedStartYear = `${queryString.get("checkin")}`.slice(6, 10);
+        let selectedEndYear = `${queryString.get("checkout")}`.slice(6, 10);
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
         let checkoutButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
-        checkinButton.childNodes[1].innerText = `${selectedStartDay.innerText}/${selectedStartMonth + 1}/${selectedStartYear}`;
-        checkoutButton.childNodes[1].innerText = `${selectedEndDay.innerText}/${selectedEndMonth + 1}/${selectedEndYear}`;
+        
+        checkinButton.childNodes[1].innerText = `${queryString.get("checkin").replace(/-/g, "/")}`;
+        checkoutButton.childNodes[1].innerText = `${queryString.get("checkout").replace(/-/g, "/")}`;
 
         let calendars = room.getElementsByClassName("room_information_calendar_box")[0];
         let alternateDates = true;
