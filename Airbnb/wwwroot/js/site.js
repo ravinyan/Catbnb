@@ -1516,10 +1516,34 @@ var startOfNextMonth = new Date(year, month + 1, 0).getDay();
 var endOfNextMonth = new Date(year, month + 2, 0).getDate();
 var selectedCheckinDate = document.createElement(null);
 var selectedCheckoutDate = document.createElement(null);
+
+function initializeCheckinCheckoutDatesURI()
+{
+    let queryString = new URLSearchParams(window.location.search);
+
+    debugger;
+    selectedCheckinDate.innerText = +queryString.get("checkin").slice(0, 2);
+    selectedCheckinMonth = months[+queryString.get("checkin").slice(3, 5) - 1];
+    selectedCheckinYear = +queryString.get("checkin").slice(6, 10);
+
+    if (selectedCheckinDate.innerText[0] == 0)
+    {
+        selectedCheckinDate.innerText = selectedCheckinDate.innerText[1];
+    }
+
+    if (selectedCheckinMonth[0] == 0)
+    {
+        selectedCheckinMonth = selectedCheckinMonth[1] - 1;
+    }
+}
+
 var selectedCheckinMonth = "";
 var selectedCheckoutMonth = "";
 var selectedCheckinYear = "";
 var selectedCheckoutYear = "";
+
+initializeCheckinCheckoutDatesURI();
+
 var rightButtonClicked = false;
 var leftButtonClicked = false;
 var nextMonth = "";
@@ -1769,7 +1793,22 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
-                    if ((calendarId == monthsBlockCalendarStartLeft || calendarId == monthsBlockCalendarEndLeft) && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
+                    debugger;
+                    if (calendarId == calendar && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedCheckinDate = div;
+                        selectedCheckinDate.innerText = x;
+                    }
+                    else if (calendarId == calendar && x == +checkoutDate.innerText && month == months.indexOf(checkoutMonth) && year == checkoutYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedCheckoutDate = div;
+                        selectedCheckoutDate.innerText = x;
+                    }
+                    else if ((calendarId == monthsBlockCalendarStartLeft || calendarId == monthsBlockCalendarEndLeft) && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
                     {
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
@@ -1936,7 +1975,21 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                 }
                 else
                 {
-                    if ((calendarId == monthsBlockCalendarStartRight || calendarId == monthsBlockCalendarEndRight) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
+                    if (calendarId == calendar2 && x == +checkinDate.innerText && nextMonth == months.indexOf(checkinMonth) && nextYear == checkinYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedCheckinDate = div;
+                        selectedCheckinDate.innerText = x;
+                    }
+                    else if (calendarId == calendar2 && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
+                    {
+                        div.style.backgroundColor = "black";
+                        div.style.color = "white";
+                        selectedCheckoutDate = div;
+                        selectedCheckoutDate.innerText = x;
+                    }
+                    else if ((calendarId == monthsBlockCalendarStartRight || calendarId == monthsBlockCalendarEndRight) && x == +checkoutDate.innerText && nextMonth == months.indexOf(checkoutMonth) && nextYear == checkoutYear)
                     {
                         div.style.backgroundColor = "black";
                         div.style.color = "white";
@@ -5016,6 +5069,71 @@ function generateQueryStringURI()
     
     return queryString;
 }
+
+function fillFormDataUsingQueryString()
+{
+    let queryString = new URLSearchParams(window.location.search);
+
+    if (queryString.size != 0)
+    {
+        whereInput.value = queryString.get("location");
+
+        if (queryString.get("checkin") != null && queryString.get("checkin") != "")
+        {
+            let checkin = `${queryString.get("checkin")}`.slice(0, 2);
+            if (checkin[0] == 0)
+            {
+                checkin = checkin[1];
+            }
+            selectedCheckinDate.innerText = "20"
+
+            let checkout = `${queryString.get("checkout")}`.slice(0, 2);
+            if (checkout[0] == 0)
+            {
+                checkout = checkout[1];
+            }
+
+            let checkinMonth = `${queryString.get("checkin")}`.slice(3, 5);
+            if (checkinMonth[0] == 0)
+            {
+                checkinMonth = checkinMonth[1] - 1;
+            }
+
+            let checkoutMonth = `${queryString.get("checkout")}`.slice(3, 5);
+            if (checkoutMonth[0] == 0)
+            {
+                checkoutMonth = checkoutMonth[1] - 1;
+            }
+
+            let checkintYear = `${queryString.get("checkin")}`.slice(6, 10);
+            let checkoutYear = `${queryString.get("checkout")}`.slice(6, 10);
+            checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkintYear}`;
+            checkoutFormInput.value = `${checkout} ${monthsAbbreviations[checkoutMonth]} ${checkoutYear}`;
+        }
+        
+
+        let adults = `${queryString.get("adults")}`;
+        let children = `${+queryString.get("children")}`;
+        let guests = +adults + +children <= 0
+                   ? `1 guest`
+                   : (+adults + +children) == 1
+                   ? `${+adults + +children} guest`
+                   : `${+adults + +children} guests`;
+        let infants = +queryString.get("infants") <= 0 
+                    ? ""
+                    : +queryString.get("infants") == 1
+                    ? `, ${queryString.get("infants")} infant`
+                    : `, ${queryString.get("infants")} infants`;
+        let pets = +queryString.get("pets") <= 0
+                 ? ""
+                 : +queryString.get("pets") == 1
+                 ? `, ${queryString.get("pets")} pet`
+                 : `, ${queryString.get("pets")} pets`;
+        formGuestsInput.value = `${guests}${infants}${pets}`;
+    }
+}
+
+fillFormDataUsingQueryString();
 
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------GETTING AND USING FILTER VALUES-------------------------------------------
