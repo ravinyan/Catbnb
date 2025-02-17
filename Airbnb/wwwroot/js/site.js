@@ -1517,23 +1517,95 @@ var endOfNextMonth = new Date(year, month + 2, 0).getDate();
 var selectedCheckinDate = document.createElement(null);
 var selectedCheckoutDate = document.createElement(null);
 
-function initializeCheckinCheckoutDatesURI()
+let correctDates = false;
+function initializeCheckinCheckoutDatesURI(correctDates)
 {
     let queryString = new URLSearchParams(window.location.search);
-
-    debugger;
-    selectedCheckinDate.innerText = +queryString.get("checkin").slice(0, 2);
-    selectedCheckinMonth = months[+queryString.get("checkin").slice(3, 5) - 1];
-    selectedCheckinYear = +queryString.get("checkin").slice(6, 10);
-
-    if (selectedCheckinDate.innerText[0] == 0)
+    
+    if (queryString.get("checkin") != null && queryString.get("checkin") != "")
     {
-        selectedCheckinDate.innerText = selectedCheckinDate.innerText[1];
+        let maxNumberOfDaysThisMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        if ((`${queryString.get("checkin")}`.slice(0, 2) < date.getDate() || `${queryString.get("checkin")}`.slice(3, 5) <= 0 || `${queryString.get("checkin")}`.slice(6, 10) < date.getFullYear())
+        ||  (`${queryString.get("checkin")}`.slice(3, 5) > 12)
+        ||  (`${queryString.get("checkin")}`.slice(0, 2) > maxNumberOfDaysThisMonth)
+        ||  (`${queryString.get("checkin")}`.slice(6, 10) > date.getFullYear() + 2)
+        ||  (correctDates == true))
+        {
+            let day = `${date.getDate()}`;
+            if (day.length == 1)
+            {
+                day = `0${day}`;
+            }
+
+            let month = `${date.getMonth() + 1}`;
+            if (month.length == 1)
+            {
+                month = `0${month}`;
+            }
+
+            let year = date.getFullYear();
+            
+            let url = new URL(window.location);
+            url.searchParams.set("checkin", `${day}-${month}-${year}`);
+            history.pushState(null, '', url);
+        }
+
+        selectedCheckinDate.innerText = +queryString.get("checkin").slice(0, 2);
+        selectedCheckinMonth = months[+queryString.get("checkin").slice(3, 5) - 1];
+        selectedCheckinYear = +queryString.get("checkin").slice(6, 10);
+
+        if (selectedCheckinDate.innerText[0] == 0)
+        {
+            selectedCheckinDate.innerText = selectedCheckinDate.innerText[1];
+        }
     }
 
-    if (selectedCheckinMonth[0] == 0)
+    if (queryString.get("checkout") != null && queryString.get("checkout") != "")
     {
-        selectedCheckinMonth = selectedCheckinMonth[1] - 1;
+        let maxNumberOfDaysThisMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        if ((`${queryString.get("checkout")}`.slice(0, 2) < date.getDate() || `${queryString.get("checkout")}`.slice(3, 5) <= 0 || `${queryString.get("checkout")}`.slice(6, 10) < date.getFullYear())
+        ||  (`${queryString.get("checkout")}`.slice(3, 5) > 12)
+        ||  (`${queryString.get("checkout")}`.slice(0, 2) > maxNumberOfDaysThisMonth)
+        ||  (`${queryString.get("checkout")}`.slice(6, 10) > date.getFullYear() + 2))
+        {
+            let day = `${date.getDate() + 1}`;
+            if (day.length == 1)
+            {
+                day = `0${day}`;
+            }
+
+            let month = `${date.getMonth() + 1}`;
+            if (month.length == 1)
+            {
+                month = `0${month}`;
+            }
+
+            let year = date.getFullYear();
+ 
+            let url = new URL(window.location)
+            url.searchParams.set("checkout", `${day}-${month}-${year}`);
+            history.pushState(null, '', url);
+        }
+
+        selectedCheckoutDate.innerText = +queryString.get("checkout").slice(0, 2);
+        selectedCheckoutMonth = months[+queryString.get("checkout").slice(3, 5) - 1];
+        selectedCheckoutYear = +queryString.get("checkout").slice(6, 10);
+
+        if (selectedCheckoutDate.innerText[0] == 0)
+        {
+            selectedCheckoutDate.innerText = selectedCheckoutDate.innerText[1];
+        }
+    }
+
+    let checkinCheck = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
+    let checkoutCheck = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
+
+    if (checkinCheck > checkoutCheck)
+    {
+        correctDates = true;
+        initializeCheckinCheckoutDatesURI(correctDates);
     }
 }
 
@@ -1541,8 +1613,6 @@ var selectedCheckinMonth = "";
 var selectedCheckoutMonth = "";
 var selectedCheckinYear = "";
 var selectedCheckoutYear = "";
-
-initializeCheckinCheckoutDatesURI();
 
 var rightButtonClicked = false;
 var leftButtonClicked = false;
@@ -1576,6 +1646,8 @@ var monthsBlockPreviousSelectedStartYear = "";
 var monthsBlockPreviousSelectedEndDate = "";
 var monthsBlockPreviousSelectedEndMonth = "";
 var monthsBlockPreviousSelectedEndYear = "";
+
+initializeCheckinCheckoutDatesURI(correctDates);
 
 const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStartDate");
 const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
@@ -1793,7 +1865,6 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                 }
                 else
                 {
-                    debugger;
                     if (calendarId == calendar && x == +checkinDate.innerText && month == months.indexOf(checkinMonth) && year == checkinYear)
                     {
                         div.style.backgroundColor = "black";
@@ -4931,6 +5002,26 @@ function generateQueryStringURI()
                       ? "" 
                       : `&checkout=${`0${selectedCheckoutDate.innerText}`.slice(-2)}-${`0${months.indexOf(selectedCheckoutMonth) + 1}`.slice(-2)}-${selectedCheckoutYear}`;
 
+    if (checkinQuery != "" && checkoutQuery == "")
+    {
+        let dateValidation = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
+        dateValidation.setDate(dateValidation.getDate() + 1);
+        let newCheckoutDate = dateValidation;
+
+        checkoutQuery = `&checkout=${`0${newCheckoutDate.getDate()}`.slice(-2)}-${`0${newCheckoutDate.getMonth() + 1}`.slice(-2)}-${newCheckoutDate.getFullYear()}`;
+        checkoutFormInput.value = `${newCheckoutDate.getDate()} ${monthsAbbreviations[newCheckoutDate.getMonth()]} ${newCheckoutDate.getFullYear()}`;
+
+        selectedCheckoutDate.innerText = newCheckoutDate.getDate();
+        selectedCheckoutMonth = `${months[newCheckoutDate.getMonth()]}`;
+        selectedCheckoutYear = newCheckoutDate.getFullYear();
+
+        initializeDatesCalendars(calendar, calendar2);
+    }
+
+    let flexibleAmountOfDays = pmText == "" 
+                      ? "" 
+                      : `&flexible-day-index=${pmArray.indexOf(pmText)}`;
+
     let monthsCheckinQuery = monthsBlockStartDateValue == "" 
                      ? "" 
                      : `&monthly-checkin=${`0${monthsBlockSelectedStartDate.innerText}`.slice(-2)}-${`0${months.indexOf(monthsBlockSelectedStartMonth) + 1}`.slice(-2)}-${monthsBlockSelectedStartYear}`;
@@ -4939,6 +5030,15 @@ function generateQueryStringURI()
                       ? "" 
                       : `&monthly-checkout=${`0${monthsBlockSelectedEndDate.innerText}`.slice(-2)}-${`0${months.indexOf(monthsBlockSelectedEndMonth) + 1}`.slice(-2)}-${monthsBlockSelectedEndYear}`;
                
+               
+    let monthlyStartFlexibleAmountOfDays = monthsBlockStartPMValue == "" 
+                                        ? "" 
+                                        : `&monthly-start-flexible-day-index=${pmArray.indexOf(` ${monthsBlockStartPMValue}`)}`;
+
+    let monthlyEndFlexibleAmountOfDays = monthsBlockEndPMValue == "" 
+                                      ? "" 
+                                      : `&monthly-end-flexible-day-index=${pmArray.indexOf(` ${monthsBlockEndPMValue}`)}`;
+
     let flexibleStayTimeQuery = "";
     let stayButtons = document.getElementsByClassName("stay_button");
     for (i = 0; i < stayButtons.length; i++)
@@ -4950,8 +5050,7 @@ function generateQueryStringURI()
     }
 
     let flexibleTripMonthCards = "";
-    let monthCards = document.getElementsByClassName("month_card");
-    
+    let monthCards = document.getElementsByClassName("month_card"); 
     for (i = 0; i < monthCards.length; i++)
     {
         if (window.getComputedStyle(monthCards[i]).borderColor == "rgb(0, 0, 0)")
@@ -5034,7 +5133,7 @@ function generateQueryStringURI()
         hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
     }
 
-    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${monthsCheckinQuery}${monthsCheckoutQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
+    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${flexibleAmountOfDays}${monthsCheckinQuery}${monthlyStartFlexibleAmountOfDays}${monthsCheckoutQuery}${monthlyEndFlexibleAmountOfDays}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     let newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
     queryString = new URLSearchParams(window.location.search);
@@ -5085,7 +5184,6 @@ function fillFormDataUsingQueryString()
             {
                 checkin = checkin[1];
             }
-            selectedCheckinDate.innerText = "20"
 
             let checkout = `${queryString.get("checkout")}`.slice(0, 2);
             if (checkout[0] == 0)
@@ -5096,22 +5194,28 @@ function fillFormDataUsingQueryString()
             let checkinMonth = `${queryString.get("checkin")}`.slice(3, 5);
             if (checkinMonth[0] == 0)
             {
-                checkinMonth = checkinMonth[1] - 1;
+                checkinMonth = checkinMonth[1];
             }
 
             let checkoutMonth = `${queryString.get("checkout")}`.slice(3, 5);
             if (checkoutMonth[0] == 0)
             {
-                checkoutMonth = checkoutMonth[1] - 1;
+                checkoutMonth = checkoutMonth[1];
             }
+
+            checkinMonth = checkinMonth - 1;
+            checkoutMonth = checkoutMonth - 1;
+
+            let pmAmount = queryString.get("flexible-day-index") == "" || queryString.get("flexible-day-index") == null
+                         ? ""
+                         : `${pmArray[queryString.get("flexible-day-index")]}`;
 
             let checkintYear = `${queryString.get("checkin")}`.slice(6, 10);
             let checkoutYear = `${queryString.get("checkout")}`.slice(6, 10);
-            checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkintYear}`;
-            checkoutFormInput.value = `${checkout} ${monthsAbbreviations[checkoutMonth]} ${checkoutYear}`;
+            checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkintYear}${pmAmount}`;
+            checkoutFormInput.value = `${checkout} ${monthsAbbreviations[checkoutMonth]} ${checkoutYear}${pmAmount}`;
         }
         
-
         let adults = `${queryString.get("adults")}`;
         let children = `${+queryString.get("children")}`;
         let guests = +adults + +children <= 0
@@ -5134,7 +5238,6 @@ function fillFormDataUsingQueryString()
 }
 
 fillFormDataUsingQueryString();
-
 /*--------------------------------------------------------------------------------------------------------------------
 --------------------------------------------GETTING AND USING FILTER VALUES-------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------*/
