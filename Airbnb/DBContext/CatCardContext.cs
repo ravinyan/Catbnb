@@ -1,6 +1,7 @@
 ﻿using Airbnb.Models;
 using Catbnb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Airbnb.DBContext
@@ -216,12 +217,23 @@ namespace Airbnb.DBContext
                 
                 int endMonth = rng.Next(1, 13);
                 int endYear = DateTime.Now.Year + rng.Next(0, 4);
-
                 if (endYear == currentYear)
                 {
                     endMonth = rng.Next(currentMonth + 2, 13);
                 }
+
+                string endMonthString = $"{endMonth}";
+                if (endMonth < 10)
+                {
+                    endMonthString  = endMonth.ToString().PadLeft(2, '0');
+                }
+
                 int endDay = rng.Next(1, DateTime.DaysInMonth(endYear, endMonth) + 1);
+                string endDayString = $"{endDay}";
+                if (endDay < 10)
+                {
+                    endDayString = endDay.ToString().PadLeft(2, '0');
+                }
 
                 var cityCountryIndex = rng.Next(0, 10);
                 var petCount = 0;
@@ -245,7 +257,7 @@ namespace Airbnb.DBContext
                     CleaningFee = rng.Next(0, 10),
                     Description = descriptions[rng.Next(0, 8)],
                     ShortDescription = "Pirate cat! Arrr",
-                    AvailableUntilDate = $"{endDay}-{endMonth}-{endYear}",
+                    AvailableUntilDate = $"{endDayString}-{endMonthString}-{endYear}",
                     NumberOfBedrooms = rng.Next(1, 17),
                     NumberOfBeds = rng.Next(1, 17),
                     NumberOfBathrooms = rng.Next(1, 17),

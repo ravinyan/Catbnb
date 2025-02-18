@@ -1521,16 +1521,48 @@ let correctDates = false;
 function initializeCheckinCheckoutDatesURI(correctDates)
 {
     let queryString = new URLSearchParams(window.location.search);
-    
+    let url = new URL(window.location)
+
+    let checkinDay = `${queryString.get("checkin")}`.slice(0, 2);
+    if (checkinDay[0] == 0)
+    {
+        checkinDay = checkinDay[1];
+    }
+
+    let checkinMonth = `${queryString.get("checkin")}`.slice(3, 5);
+    if (checkinMonth[0] == 0)
+    {
+        checkinMonth = checkinMonth[1];
+    }
+
+    let checkinYear = `${queryString.get("checkout")}`.slice(6, 10);
+
+    let checkoutDay = `${queryString.get("checkout")}`.slice(0, 2);
+    if (checkoutDay[0] == 0)
+    {
+         checkoutDay = checkoutDay[1];
+    }
+
+    let checkoutMonth = `${queryString.get("checkout")}`.slice(3, 5);
+    if (checkoutMonth[0] == 0)
+    {
+        checkoutMonth = checkoutMonth[1];
+    }
+
+    let checkoutYear = `${queryString.get("checkout")}`.slice(6, 10);
+
+    let maxNumberOfDaysCheckinMonth = new Date(checkinYear, +checkinMonth, 0).getDate();
+    let maxNumberOfDaysCheckoutMonth = new Date(checkoutYear, +checkoutMonth, 0).getDate();
+
     if (queryString.get("checkin") != null && queryString.get("checkin") != "")
     {
-        let maxNumberOfDaysThisMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        if ((`${queryString.get("checkin")}`.slice(0, 2) < date.getDate() || `${queryString.get("checkin")}`.slice(3, 5) <= 0 || `${queryString.get("checkin")}`.slice(6, 10) < date.getFullYear())
-        ||  (`${queryString.get("checkin")}`.slice(3, 5) > 12)
-        ||  (`${queryString.get("checkin")}`.slice(0, 2) > maxNumberOfDaysThisMonth)
-        ||  (`${queryString.get("checkin")}`.slice(6, 10) > date.getFullYear() + 2)
-        ||  (correctDates == true))
+        if ((+checkinDay <= 0 || +checkinMonth <= 0 || +checkinYear < date.getFullYear())
+        ||  (+checkinDay < date.getDate() && +checkinMonth == date.getMonth() + 1 && +checkinYear == date.getFullYear())
+        ||  (+checkinMonth < date.getMonth() + 1 && +checkinYear == date.getFullYear())
+        ||  (+checkinMonth > 12)
+        ||  (+checkinDay > maxNumberOfDaysCheckinMonth)
+        ||  (+checkinYear > date.getFullYear() + 2)
+        ||  (+correctDates == true))
         {
             let day = `${date.getDate()}`;
             if (day.length == 1)
@@ -1546,7 +1578,6 @@ function initializeCheckinCheckoutDatesURI(correctDates)
 
             let year = date.getFullYear();
             
-            let url = new URL(window.location);
             url.searchParams.set("checkin", `${day}-${month}-${year}`);
             history.pushState(null, '', url);
         }
@@ -1563,14 +1594,14 @@ function initializeCheckinCheckoutDatesURI(correctDates)
 
     if (queryString.get("checkout") != null && queryString.get("checkout") != "")
     {
-        let maxNumberOfDaysThisMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-        if ((`${queryString.get("checkout")}`.slice(0, 2) < date.getDate() || `${queryString.get("checkout")}`.slice(3, 5) <= 0 || `${queryString.get("checkout")}`.slice(6, 10) < date.getFullYear())
-        ||  (`${queryString.get("checkout")}`.slice(3, 5) > 12)
-        ||  (`${queryString.get("checkout")}`.slice(0, 2) > maxNumberOfDaysThisMonth)
-        ||  (`${queryString.get("checkout")}`.slice(6, 10) > date.getFullYear() + 2))
+        if ((+checkoutDay <= 0 || +checkoutMonth <= 0 || +checkoutYear < date.getFullYear())
+        ||  (+checkoutDay < date.getDate() && +checkoutMonth == date.getMonth() + 1 && +checkoutYear == date.getFullYear())
+        ||  (+checkoutMonth < date.getMonth() + 1 && +checkoutYear == date.getFullYear())
+        ||  (+checkoutMonth > 12)
+        ||  (+checkoutDay > maxNumberOfDaysCheckoutMonth)
+        ||  (+checkoutYear > date.getFullYear() + 2))
         {
-            let day = `${date.getDate() + 1}`;
+            let day = `${date.getDate() + 2}`;
             if (day.length == 1)
             {
                 day = `0${day}`;
@@ -1583,8 +1614,7 @@ function initializeCheckinCheckoutDatesURI(correctDates)
             }
 
             let year = date.getFullYear();
- 
-            let url = new URL(window.location)
+
             url.searchParams.set("checkout", `${day}-${month}-${year}`);
             history.pushState(null, '', url);
         }
@@ -1651,7 +1681,7 @@ initializeCheckinCheckoutDatesURI(correctDates);
 
 const monthsBlockModalStartDate = document.getElementById("MonthsBlockModalStartDate");
 const monthsBlockModalEndDate = document.getElementById("MonthsBlockModalEndDate");
-//  room calendar stuff i give up
+//  room calendar stuff
 var selectedStartDay = document.createElement(null);
 var selectedEndDay = document.createElement(null);
 
@@ -1702,6 +1732,15 @@ function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDa
             div.style.borderColor = calendarShadowColor;  
         }
 
+        // for room calendar this function is so garbage why not add one more trash in it AT LEAST ITS WORKING
+        if (months.indexOf(months[month]) > checkinMonth
+        &&  months.indexOf(months[month]) < checkoutMonth
+        &&  +checkoutYear == year && +checkinYear == year)
+        {
+            td.style.background = calendarShadowColor;
+            div.style.borderColor = calendarShadowColor;  
+        }
+
         if (months.indexOf(checkinMonth) == months.indexOf(months[month])
         &&  checkinYear != checkoutYear && x > +checkinDate.innerText && checkinYear == year)
         {
@@ -1736,7 +1775,7 @@ function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDa
     }
 }
 
-function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, roomData = "")
 {
     var x = 0;
     var check = true;
@@ -1806,10 +1845,10 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
     
             check = false;
             x += 1;
-
+            
             var td = document.createElement("td");
             var div = document.createElement("div");
-
+      
             if (x < day && (month == currentMonth && year == currentYear))
             {
                 td.className = "td_box";
@@ -1931,9 +1970,25 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
                         div.innerText = x;
                     }
                 }
-
+      
                 keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
+            }
+
+            if (roomData != "")
+            {
+                let dayLimit = +roomData.bookingInfo.availableUntilDate.slice(0, 2);
+                let monthLimit = +roomData.bookingInfo.availableUntilDate.slice(3, 5);
+                let yearLimit = +roomData.bookingInfo.availableUntilDate.slice(6, 10);
+                
+                if ((dayLimit < x && month == monthLimit && year == yearLimit)
+                ||  (month > monthLimit && year == yearLimit)
+                ||  (year > yearLimit))
+                {
+                    td.className = "td_box";
+                    div.innerText = x;
+                    div.className = "box_past";
+                }
             }
 
             td.appendChild(div);     
@@ -1948,7 +2003,7 @@ function createCalendarMonth(calendarId, checkinDate, checkoutDate, checkinMonth
     calendarId.appendChild(table);
 }
 
-function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear)
+function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, roomData = "")
 {
     nextMonth = month + 1;
     nextYear = year;
@@ -2115,6 +2170,22 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
 
                 keepShadowBetweenDates(nextMonth, nextYear, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
+            }
+
+            if (roomData != "")
+            {
+                let dayLimit = +roomData.bookingInfo.availableUntilDate.slice(0, 2);
+                let monthLimit = +roomData.bookingInfo.availableUntilDate.slice(3, 5);
+                let yearLimit = +roomData.bookingInfo.availableUntilDate.slice(6, 10);
+                
+                if ((dayLimit < x && nextMonth == monthLimit && nextYear == yearLimit)
+                ||  (nextMonth > monthLimit && nextYear == yearLimit)
+                ||  (nextYear > yearLimit))
+                {
+                    td.className = "td_box";
+                    div.innerText = x;
+                    div.className = "box_past";
+                }
             }
 
             td.appendChild(div);
@@ -6762,22 +6833,22 @@ function roomGenerateRoomsPage(room)
     roomInformationAmenitiesList.className = "room_information_amenities_list";
 
     for (i = 0; i < room.amenities.length && i < 10; i++)
-        {
-            let roomInformationAmenitiesItemBox = document.createElement("DIV");
-            roomInformationAmenitiesItemBox.className = "room_information_amenities_item_box";
+    {
+        let roomInformationAmenitiesItemBox = document.createElement("DIV");
+        roomInformationAmenitiesItemBox.className = "room_information_amenities_item_box";
 
-            let roomInformationAmenitiesItemSvg = document.createElement("DIV");
-            roomInformationAmenitiesItemSvg.className = "room_information_amenities_item_svg";
+        let roomInformationAmenitiesItemSvg = document.createElement("DIV");
+        roomInformationAmenitiesItemSvg.className = "room_information_amenities_item_svg";
 
-            let roomInformationAmenitiesItemName = document.createElement("DIV");
-            roomInformationAmenitiesItemName.className = "room_information_amenities_item_name";
-            roomInformationAmenitiesItemName.innerText = `${room.amenities[i].amenity.name}`; // DB DATA
+        let roomInformationAmenitiesItemName = document.createElement("DIV");
+        roomInformationAmenitiesItemName.className = "room_information_amenities_item_name";
+        roomInformationAmenitiesItemName.innerText = `${room.amenities[i].amenity.name}`; // DB DATA
 
-            roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemSvg);
-            roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemName);
+        roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemSvg);
+        roomInformationAmenitiesItemBox.appendChild(roomInformationAmenitiesItemName);
 
-            roomInformationAmenitiesList.appendChild(roomInformationAmenitiesItemBox);
-        }
+        roomInformationAmenitiesList.appendChild(roomInformationAmenitiesItemBox);
+    }
 
     let roomInformationAmenitiesButtonBox = document.createElement("DIV");
     roomInformationAmenitiesButtonBox.className = "room_information_amenities_button_box";
@@ -7209,6 +7280,13 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 }
 
 roomFetchRoomDataAndGenerateRoomHTML();
+
+// test adding + to all query strings and see if it will work coz it worked on database thingy
+// fix bug when opening mini form in room
+// add validation for dates so user can see only cat cards with avaible chosen dates
+// make calendars better when window is too small
+// month cards?
+// finished?
 
 function roomControllRoomsPage(room, roomData)
 {
@@ -8013,8 +8091,6 @@ function roomControllRoomsPage(room, roomData)
         moveLeft.disabled = !moveLeft.disabled;
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
 
-        // validate this (negative numbers, too high numbers, checkin higher than checkout, 3 days minimum stay (done like weekend), 
-        // dates cant be higher than maximum avaiable date, use maximum date available from database in calendar making)
         selectedStartDay.innerText = `${queryString.get("checkin")}`.slice(0, 2);
         if (selectedStartDay.innerText[0] == 0)
         {
@@ -8074,8 +8150,8 @@ function roomControllRoomsPage(room, roomData)
         
             rightButtonClicked = true;
             
-            createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-            createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
+            createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
+            createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
 
             rightButtonClicked = false;
 
@@ -8131,6 +8207,11 @@ function roomControllRoomsPage(room, roomData)
                     selectedStartDay.style.background = "";
                     selectedStartDay.style.color = "";
 
+                    if (selectedStartDay.className = "box box_new_hover")
+                    {
+                        selectedStartDay.classList.remove("box_new_hover");
+                    }
+
                     removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
                     selectedStartDay = document.createElement(null);   
                 }
@@ -8138,6 +8219,11 @@ function roomControllRoomsPage(room, roomData)
                 {
                     selectedEndDay.style.background = "";
                     selectedEndDay.style.color = "";
+
+                    if (selectedEndDay.className = "box box_new_hover")
+                    {
+                        selectedEndDay.classList.remove("box_new_hover");
+                    }
 
                     removeCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
                     selectedEndDay = document.createElement(null);
@@ -8225,8 +8311,8 @@ function roomControllRoomsPage(room, roomData)
             
                 leftButtonClicked = true;
         
-                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
+                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData); 
         
                 leftButtonClicked = false;
 
@@ -8260,8 +8346,8 @@ function roomControllRoomsPage(room, roomData)
             
                 rightButtonClicked = true;
 
-                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear);
-                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear); 
+                createCalendarMonth(calendar1, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
+                createCalendarMonth2(calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData); 
         
                 rightButtonClicked = false;
                 
@@ -8291,12 +8377,12 @@ function roomControllRoomsPage(room, roomData)
         }
 
         function addShadow(e, calendar, firstCalendar, secondCalendar, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex)
-        { 
+        {
             if ((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") && e.target.children.length == 0 && e.target.className == "box")
             {
                 e.target.classList.add("box_new_hover");
         
-                if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+                if ((checkinDate.tagName == "NULL" || (checkoutDate.tagName == "NULL" && checkoutDate.innerText == "")))
                 {
                     applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex, 0);
                 }
@@ -8305,11 +8391,11 @@ function roomControllRoomsPage(room, roomData)
         
         function removeShadow(e, firstCalendar, secondCalendar, checkinDate, checkoutDate, tableIndex)
         {
-            if (((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") || checkoutDate.tagName != "NULL") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
+            if ((checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL") && e.target.children.length == 0 && e.target.className == "box box_new_hover")
             {   
                 e.target.classList.remove("box_new_hover");
         
-                if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+                if ((checkinDate.tagName == "NULL" || (checkoutDate.tagName == "NULL" && checkoutDate.innerText == ""))) 
                 {
                     removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate, tableIndex);
                 }
@@ -8318,6 +8404,7 @@ function roomControllRoomsPage(room, roomData)
 
         calendar1.addEventListener("mouseover", function(e)
         {
+            //debugger;
             addShadow(e, calendar1, calendar1, calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, 2);
         })
         
