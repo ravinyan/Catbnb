@@ -1523,39 +1523,13 @@ function initializeCheckinCheckoutDatesURI(correctDates)
     let queryString = new URLSearchParams(window.location.search);
     let url = new URL(window.location)
 
-    let checkinDay = `${queryString.get("checkin")}`.slice(0, 2);
-    if (checkinDay[0] == 0)
-    {
-        checkinDay = checkinDay[1];
-    }
-
-    let checkinMonth = `${queryString.get("checkin")}`.slice(3, 5);
-    if (checkinMonth[0] == 0)
-    {
-        checkinMonth = checkinMonth[1];
-    }
-
-    let checkinYear = `${queryString.get("checkout")}`.slice(6, 10);
-
-    let checkoutDay = `${queryString.get("checkout")}`.slice(0, 2);
-    if (checkoutDay[0] == 0)
-    {
-         checkoutDay = checkoutDay[1];
-    }
-
-    let checkoutMonth = `${queryString.get("checkout")}`.slice(3, 5);
-    if (checkoutMonth[0] == 0)
-    {
-        checkoutMonth = checkoutMonth[1];
-    }
-
-    let checkoutYear = `${queryString.get("checkout")}`.slice(6, 10);
-
-    let maxNumberOfDaysCheckinMonth = new Date(checkinYear, +checkinMonth, 0).getDate();
-    let maxNumberOfDaysCheckoutMonth = new Date(checkoutYear, +checkoutMonth, 0).getDate();
-
     if (queryString.get("checkin") != null && queryString.get("checkin") != "")
     {
+        let checkinDay = +queryString.get("checkin").slice(0, 2);
+        let checkinMonth = +queryString.get("checkin").slice(3, 5);
+        let checkinYear = +queryString.get("checkin").slice(6, 10);
+        let maxNumberOfDaysCheckinMonth = new Date(checkinYear, +checkinMonth, 0).getDate();
+
         if ((+checkinDay <= 0 || +checkinMonth <= 0 || +checkinYear < date.getFullYear())
         ||  (+checkinDay < date.getDate() && +checkinMonth == date.getMonth() + 1 && +checkinYear == date.getFullYear())
         ||  (+checkinMonth < date.getMonth() + 1 && +checkinYear == date.getFullYear())
@@ -1594,12 +1568,18 @@ function initializeCheckinCheckoutDatesURI(correctDates)
 
     if (queryString.get("checkout") != null && queryString.get("checkout") != "")
     {
+        let checkoutDay = +queryString.get("checkout").slice(0, 2);
+        let checkoutMonth = +queryString.get("checkout").slice(3, 5);
+        let checkoutYear = +queryString.get("checkout").slice(6, 10);
+        let maxNumberOfDaysCheckoutMonth = new Date(checkoutYear, +checkoutMonth, 0).getDate();
+
         if ((+checkoutDay <= 0 || +checkoutMonth <= 0 || +checkoutYear < date.getFullYear())
         ||  (+checkoutDay < date.getDate() && +checkoutMonth == date.getMonth() + 1 && +checkoutYear == date.getFullYear())
         ||  (+checkoutMonth < date.getMonth() + 1 && +checkoutYear == date.getFullYear())
         ||  (+checkoutMonth > 12)
         ||  (+checkoutDay > maxNumberOfDaysCheckoutMonth)
-        ||  (+checkoutYear > date.getFullYear() + 2))
+        ||  (+checkoutYear > date.getFullYear() + 2)
+        ||  (+correctDates == true))
         {
             let day = `${date.getDate() + 2}`;
             if (day.length == 1)
@@ -1629,13 +1609,16 @@ function initializeCheckinCheckoutDatesURI(correctDates)
         }
     }
 
-    let checkinCheck = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
-    let checkoutCheck = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
-
-    if (checkinCheck > checkoutCheck)
+    if (queryString.size != 0)
     {
-        correctDates = true;
-        initializeCheckinCheckoutDatesURI(correctDates);
+        let checkinCheck = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
+        let checkoutCheck = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
+
+        if (checkinCheck >= checkoutCheck)
+        {
+            correctDates = true;
+            //initializeCheckinCheckoutDatesURI(correctDates);
+        }
     }
 }
 
@@ -1741,13 +1724,41 @@ function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDa
             div.style.borderColor = calendarShadowColor;  
         }
 
+        // for room calendar this function is so garbage why not add one more trash in it AT LEAST ITS WORKING
+        if (checkinMonth == months.indexOf(months[month])
+        &&  +checkinYear != +checkoutYear && x > +checkinDate.innerText && +checkinYear == year)
+        {
+            td.style.background = calendarShadowColor;
+            div.style.borderColor = calendarShadowColor;
+        }
+        else if (checkinMonth < months.indexOf(months[month])
+             &&  +checkinYear != +checkoutYear && +checkinYear == year)
+        {
+            td.style.background = calendarShadowColor;
+            div.style.borderColor = calendarShadowColor; 
+        }
+
+        // for room calendar this function is so garbage why not add one more trash in it AT LEAST ITS WORKING
+        if (checkoutMonth == months.indexOf(months[month])
+        &&  +checkinYear != +checkoutYear && x < +checkoutDate.innerText && +checkoutYear == year)
+        {
+            td.style.background = calendarShadowColor;
+            div.style.borderColor = calendarShadowColor; 
+        }
+        else if (checkoutMonth > months.indexOf(months[month])
+             && +checkinYear != +checkoutYear && +checkoutYear == year)
+        {
+            td.style.background = calendarShadowColor;
+            div.style.borderColor = calendarShadowColor; 
+        }
+        
         if (months.indexOf(checkinMonth) == months.indexOf(months[month])
         &&  checkinYear != checkoutYear && x > +checkinDate.innerText && checkinYear == year)
         {
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;
         }
-        else if (months.indexOf(checkinMonth) < months.indexOf(months[month])
+        else if (months.indexOf(checkinMonth) < months.indexOf(months[month] && months.indexOf(checkinMonth) != -1)
              &&  checkinYear != checkoutYear && checkinYear == year)
         {
             td.style.background = calendarShadowColor;
@@ -2351,7 +2362,7 @@ function calendarValidationCSS(firstCalendar, secondCalendar, checkinDate, check
 }
 
 getStupidCalendarDates.onclick = function(e)
-{
+{ 
     if (e.target.children.length == 0 && e.target.className == "box" || e.target.className == "box box_new_hover")
     {
         //  reset feedback
@@ -2371,7 +2382,7 @@ getStupidCalendarDates.onclick = function(e)
             removeCalendarsShadows(calendar, calendar2, selectedCheckinDate, selectedCheckoutDate, 4);
             selectedCheckoutDate = document.createElement(null); 
         }
-
+        
         //  apply feedback
         if (selectedCheckinDate.tagName == "NULL" && checkinButton.style.backgroundColor == "white")
         {
@@ -5076,7 +5087,7 @@ function generateQueryStringURI()
     if (checkinQuery != "" && checkoutQuery == "")
     {
         let dateValidation = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
-        dateValidation.setDate(dateValidation.getDate() + 1);
+        dateValidation.setDate(dateValidation.getDate() + 2);
         let newCheckoutDate = dateValidation;
 
         checkoutQuery = `&checkout=${`0${newCheckoutDate.getDate()}`.slice(-2)}-${`0${newCheckoutDate.getMonth() + 1}`.slice(-2)}-${newCheckoutDate.getFullYear()}`;
@@ -5085,6 +5096,21 @@ function generateQueryStringURI()
         selectedCheckoutDate.innerText = newCheckoutDate.getDate();
         selectedCheckoutMonth = `${months[newCheckoutDate.getMonth()]}`;
         selectedCheckoutYear = newCheckoutDate.getFullYear();
+
+        initializeDatesCalendars(calendar, calendar2);
+    }
+    else if (checkinQuery == "" && checkoutQuery != "")
+    {
+        let dateValidation = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
+        dateValidation.setDate(dateValidation.getDate() - 1);
+        let newCheckinDate = dateValidation;
+
+        checkinQuery = `&checkin=${`0${newCheckinDate.getDate()}`.slice(-2)}-${`0${newCheckinDate.getMonth() + 1}`.slice(-2)}-${newCheckinDate.getFullYear()}`;
+        checkinFormInput.value = `${newCheckinDate.getDate()} ${monthsAbbreviations[newCheckinDate.getMonth()]} ${newCheckinDate.getFullYear()}`;
+
+        selectedCheckinDate.innerText = newCheckinDate.getDate();
+        selectedCheckinMonth = `${months[newCheckinDate.getMonth()]}`;
+        selectedCheckinYear = newCheckinDate.getFullYear();
 
         initializeDatesCalendars(calendar, calendar2);
     }
@@ -5109,6 +5135,20 @@ function generateQueryStringURI()
     let monthlyEndFlexibleAmountOfDays = monthsBlockEndPMValue == "" 
                                       ? "" 
                                       : `&monthly-end-flexible-day-index=${pmArray.indexOf(` ${monthsBlockEndPMValue}`)}`;
+
+    let datePickerQuery = "";
+    if (checkinFormMenu.style.display == "flex")
+    {
+        datePickerQuery = "&date-picker=calendar";
+    }
+    else if (whenFormMenu.style.display == "flex")
+    {
+        datePickerQuery = "&date-picker=months_calendar";
+    }
+    else if (flexibleBlockWhenFormMenu.style.display == "flex")
+    {
+        datePickerQuery = "&date-picker=flexible_calendar";
+    }
 
     let flexibleStayTimeQuery = "";
     let stayButtons = document.getElementsByClassName("stay_button");
@@ -5204,15 +5244,14 @@ function generateQueryStringURI()
         hostLanguages += `&host-language=${selectedHostLanguagesCheckboxes[i]}`;
     }
 
-    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${flexibleAmountOfDays}${monthsCheckinQuery}${monthlyStartFlexibleAmountOfDays}${monthsCheckoutQuery}${monthlyEndFlexibleAmountOfDays}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
+    let queryString = `${whereQuery}${checkinQuery}${checkoutQuery}${flexibleAmountOfDays}${monthsCheckinQuery}${monthlyStartFlexibleAmountOfDays}${monthsCheckoutQuery}${monthlyEndFlexibleAmountOfDays}${datePickerQuery}${flexibleStayTimeQuery}${adults}${children}${infants}${pets}${flexibleTripMonthCards}${category}${typeOfPlace}${priceMin}${priceMax}${bedrooms}${beds}${bathrooms}${amenities}${bookingOptions}${standoutStay}${propertyTypes}${accessibilityFeatures}${hostLanguages}`;
     let newurl = window.location.origin + window.location.pathname + queryString;
     window.history.pushState({path:newurl},'',newurl);
     queryString = new URLSearchParams(window.location.search);
 
     // validation for mini form coz it just makes sense to put it here lol
-    whereInput.value = queryString.get("location") == "flexible"
-                     ? ""
-                     : queryString.get("location");
+    whereInput.value = queryString.get("location");
+
     let adultsMiniForm = `${queryString.get("adults")}`;
     let childrenMiniForm = `${+queryString.get("children")}`;
     let guestsMiniForm = +adultsMiniForm + +childrenMiniForm <= 0
@@ -5250,40 +5289,20 @@ function fillFormDataUsingQueryString()
 
         if (queryString.get("checkin") != null && queryString.get("checkin") != "")
         {
-            let checkin = `${queryString.get("checkin")}`.slice(0, 2);
-            if (checkin[0] == 0)
-            {
-                checkin = checkin[1];
-            }
+            let checkin = +queryString.get("checkin").slice(0, 2);
+            let checkinMonth = +queryString.get("checkin").slice(3, 5) - 1;
+            let checkinYear = +queryString.get("checkin").slice(6, 10);
 
-            let checkout = `${queryString.get("checkout")}`.slice(0, 2);
-            if (checkout[0] == 0)
-            {
-                checkout = checkout[1];
-            }
-
-            let checkinMonth = `${queryString.get("checkin")}`.slice(3, 5);
-            if (checkinMonth[0] == 0)
-            {
-                checkinMonth = checkinMonth[1];
-            }
-
-            let checkoutMonth = `${queryString.get("checkout")}`.slice(3, 5);
-            if (checkoutMonth[0] == 0)
-            {
-                checkoutMonth = checkoutMonth[1];
-            }
-
-            checkinMonth = checkinMonth - 1;
-            checkoutMonth = checkoutMonth - 1;
+            let checkout = +queryString.get("checkout").slice(0, 2);
+            let checkoutMonth = +queryString.get("checkout").slice(3, 5) - 1;
+            let checkoutYear = +queryString.get("checkout").slice(6, 10);
 
             let pmAmount = queryString.get("flexible-day-index") == "" || queryString.get("flexible-day-index") == null
                          ? ""
                          : `${pmArray[queryString.get("flexible-day-index")]}`;
 
-            let checkintYear = `${queryString.get("checkin")}`.slice(6, 10);
-            let checkoutYear = `${queryString.get("checkout")}`.slice(6, 10);
-            checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkintYear}${pmAmount}`;
+
+            checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkinYear}${pmAmount}`;
             checkoutFormInput.value = `${checkout} ${monthsAbbreviations[checkoutMonth]} ${checkoutYear}${pmAmount}`;
         }
         
@@ -5797,27 +5816,28 @@ function generateCatCards(card, queryString)
         var queryStringCheckin = ``;
         var queryStringCheckout = ``;
         let TODAY = new Date();
+
         if (queryString.size != 0)
         {
-            if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL")
+            if (queryString.get("date-picker") == "calendar" && selectedCheckinDate.innerText != "" && selectedCheckoutDate.innerText != "")
             {
                 checkin = `${selectedCheckinDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckinMonth)]}`;
                 checkout = `${selectedCheckoutDate.innerText} ${monthsAbbreviations[months.indexOf(selectedCheckoutMonth)]}`;
                 queryStringCheckin = `${queryString.get("checkin")}`;
                 queryStringCheckout = `${queryString.get("checkout")}`;
             }
-            else if (whenFormMenu.style.display == "flex" || (selectedCheckinDate.tagName != "NULL" && selectedCheckoutDate.tagName != "NULL"))
+            else if (queryString.get("date-picker") == "months_calendar")
             {
                 checkin = `${monthsBlockSelectedStartDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedStartMonth)]}`;
                 checkout = `${monthsBlockSelectedEndDate.innerText} ${monthsAbbreviations[months.indexOf(monthsBlockSelectedEndMonth)]}`;
                 queryStringCheckin = `${queryString.get("monthly-checkin")}`;
                 queryStringCheckout = `${queryString.get("monthly-checkout")}`;
             }
-            else if (flexibleBlockWhenFormMenu.style.display == "flex" || (checkin == "" || checkout == ""))
+            else if (queryString.get("date-picker") == "flexible_calendar" || (checkin == "" && checkout == ""))
             {
                 // normally it would look at data from database (array of dates that are booked)
                 // and from that it would choose closest not booked selection of days
-                // but thats not going to be implemented in this project
+                // but thats not going to be implemented in this project (might not make sense im bad at explaining things)
                 if (queryString.get("flexible-trip-length") == "Weekend")
                 {
                     while (TODAY.getDay() != 5)
@@ -5828,7 +5848,7 @@ function generateCatCards(card, queryString)
                     checkin = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
                     queryStringCheckin = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
 
-                    TODAY.setDate(TODAY.getDate() + 3);
+                    TODAY.setDate(TODAY.getDate() + 2);
 
                     checkout = `${TODAY.getDate()} ${monthsAbbreviations[TODAY.getMonth()]}`;
                     queryStringCheckout = `${`0${TODAY.getDate()}`.slice(-2)}-${`0${TODAY.getMonth() + 1}`.slice(-2)}-${TODAY.getFullYear()}`;
@@ -6101,25 +6121,48 @@ async function fetchNeededCatCards(queryValue)
 
            if (areHostLanguagesFound == false) continue;
     
-           let checkin = "";
-           let checkout = "";
            let isCardBetweenSelectedDates = false;
-           // HOW DO I DO THAT WHY ANYTHING ABOUT DATES IS SO ANNOYING AAAAAAAAAAAA
-           if (checkinFormMenu.style.display == "flex" && selectedCheckinDate.tagName != null)
+           // IM ENLIGHTENED I NOW UNDERSTAND THE WEAKNESS OF MY BRAIN THE DATES ARE NIGHTMARE NO MORE (i dont know what im doing)
+           if (queryString.get("date-picker") == "calendar" && selectedCheckinDate.innerText != "" && selectedCheckoutDate.innerText != "")
            {
-               checkin = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
-               checkout = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
+               let currentDay = +queryString.get("checkout").slice(0, 2);
+               let currentMonth = +queryString.get("checkout").slice(3, 5);
+               let currentYear = +queryString.get("checkout").slice(6, 10);
 
+               let maxAvaiableDay = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(0, 2);
+               let maxAvaiableMonth = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(3, 5);
+               let maxAvaiableYear = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(6, 10);
 
+               let currentDate = new Date(currentYear, currentMonth - 1, currentDay);
+               let maxAvaiableDate = new Date(maxAvaiableYear, maxAvaiableMonth - 1, maxAvaiableDay);
+
+               if (currentDate < maxAvaiableDate)
+               {
+                   isCardBetweenSelectedDates = true;
+               }
            }
-           else if (whenFormMenu.style.display == "flex")
+           else if (queryString.get("date-picker") == "months_calendar")
            {
-               checkin = new Date(monthsBlockSelectedStartYear, months.indexOf(monthsBlockSelectedStartMonth), +monthsBlockSelectedStartDate.innerText);
-               checkout = new Date(monthsBlockSelectedEndYear, months.indexOf(monthsBlockSelectedEndMonth), +monthsBlockSelectedEndDate.innerText);
+               let currentDay = +queryString.get("monthly-checkout").slice(0, 2);
+               let currentMonth = +queryString.get("monthly-checkout").slice(3, 5);
+               let currentYear = +queryString.get("monthly-checkout").slice(6, 10);
+
+               let maxAvaiableDay = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(0, 2);
+               let maxAvaiableMonth = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(3, 5);
+               let maxAvaiableYear = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(6, 10);
+
+               let currentDate = new Date(currentYear, currentMonth - 1, currentDay);
+               let maxAvaiableDate = new Date(maxAvaiableYear, maxAvaiableMonth - 1, maxAvaiableDay);
+      
+               if (currentDate < maxAvaiableDate)
+               {
+                   isCardBetweenSelectedDates = true;
+               }
            }
-           else if (flexibleBlockWhenFormMenu.style.display == "flex")
+           else if (queryString.get("date-picker") == "flexible_calendar" || isCardBetweenSelectedDates == false)
            {
-               // wat do i do here im but just a 1 braincell i dont know what to do
+               // for not it works as intended... will need to actually implement stuff when i do month cards
+               isCardBetweenSelectedDates = true;
            }
 
            if ((isTypeOfPlaceFound == true)
@@ -6132,7 +6175,8 @@ async function fetchNeededCatCards(queryValue)
            &&  (areAccessibilityOptionsFound == true)
            &&  (areHostLanguagesFound == true)
            &&  (isAdultsNumberCorrect == true)
-           &&  (isLocationFound == true))
+           &&  (isLocationFound == true)
+           &&  (isCardBetweenSelectedDates == true))
            {
                //console.log(`\n${categoriesJson.catCards[i].bookingInfo.typeOfPlace}\n${categoriesJson.catCards[i].bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
                generateCatCards(categoriesJson.catCards[why], queryString);
@@ -6213,9 +6257,8 @@ function renderCatCardsOnRefresh()
 
         if (categoryQuery != null && categoryQuery != "")
         {
-            whereInput.value = queryString.get("location") == "flexible"
-                             ? ""
-                             :  queryString.get("location");
+            whereInput.value = queryString.get("location");
+
             let adults = `${queryString.get("adults")}`;
             let children = `${+queryString.get("children")}`;
             let guests = +adults + +children <= 0
@@ -7281,9 +7324,9 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 
 roomFetchRoomDataAndGenerateRoomHTML();
 
-// test adding + to all query strings and see if it will work coz it worked on database thingy
-// fix bug when opening mini form in room
-// add validation for dates so user can see only cat cards with avaible chosen dates
+// save deleting dates thingy after refresh
+// normal calendars shadows are scuffed a bit so fix that
+// fix bug when opening mini form in room (??? it fixed itself and i did nothing? i love programming... surely it will always work...)
 // make calendars better when window is too small
 // month cards?
 // finished?
@@ -8091,32 +8134,13 @@ function roomControllRoomsPage(room, roomData)
         moveLeft.disabled = !moveLeft.disabled;
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
 
-        selectedStartDay.innerText = `${queryString.get("checkin")}`.slice(0, 2);
-        if (selectedStartDay.innerText[0] == 0)
-        {
-            selectedStartDay.innerText = selectedStartDay.innerText[1];
-        }
+        selectedStartDay.innerText = +queryString.get("checkin").slice(0, 2);
+        let selectedStartMonth = +queryString.get("checkin").slice(3, 5) - 1;
+        let selectedStartYear = +queryString.get("checkin").slice(6, 10);
 
-        selectedEndDay.innerText = `${queryString.get("checkout")}`.slice(0, 2);
-        if (selectedEndDay.innerText[0] == 0)
-        {
-            selectedEndDay.innerText = selectedEndDay.innerText[1];
-        }
-
-        let selectedStartMonth = `${queryString.get("checkin")}`.slice(3, 5);
-        if (selectedStartMonth[0] == 0)
-        {
-            selectedStartMonth = selectedStartMonth[1] - 1;
-        }
-
-        let selectedEndMonth = `${queryString.get("checkout")}`.slice(3, 5);
-        if (selectedEndMonth[0] == 0)
-        {
-            selectedEndMonth = selectedEndMonth[1] - 1;
-        }
-
-        let selectedStartYear = `${queryString.get("checkin")}`.slice(6, 10);
-        let selectedEndYear = `${queryString.get("checkout")}`.slice(6, 10);
+        selectedEndDay.innerText = +queryString.get("checkout").slice(0, 2);
+        let selectedEndMonth = +queryString.get("checkout").slice(3, 5) - 1;
+        let selectedEndYear = +queryString.get("checkout").slice(6, 10);
 
         let checkinButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check1")[0];
         let checkoutButton = room.getElementsByClassName("room_pricing_flying_rectangle_reservation_buttons_check2")[0];
@@ -8149,7 +8173,7 @@ function roomControllRoomsPage(room, roomData)
             });
         
             rightButtonClicked = true;
-            
+  
             createCalendarMonth(firstCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
             createCalendarMonth2(secondCalendar, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, roomData);
 
