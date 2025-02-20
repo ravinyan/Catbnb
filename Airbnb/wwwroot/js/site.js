@@ -1556,9 +1556,9 @@ function initializeCheckinCheckoutDatesURI(correctDates)
             history.pushState(null, '', url);
         }
 
-        selectedCheckinDate.innerText = +queryString.get("checkin").slice(0, 2);
-        selectedCheckinMonth = months[+queryString.get("checkin").slice(3, 5) - 1];
-        selectedCheckinYear = +queryString.get("checkin").slice(6, 10);
+        selectedCheckinDate.innerText = +url.searchParams.get("checkin").slice(0, 2);
+        selectedCheckinMonth = months[+url.searchParams.get("checkin").slice(3, 5) - 1];
+        selectedCheckinYear = +url.searchParams.get("checkin").slice(6, 10);
 
         if (selectedCheckinDate.innerText[0] == 0)
         {
@@ -1599,9 +1599,9 @@ function initializeCheckinCheckoutDatesURI(correctDates)
             history.pushState(null, '', url);
         }
 
-        selectedCheckoutDate.innerText = +queryString.get("checkout").slice(0, 2);
-        selectedCheckoutMonth = months[+queryString.get("checkout").slice(3, 5) - 1];
-        selectedCheckoutYear = +queryString.get("checkout").slice(6, 10);
+        selectedCheckoutDate.innerText = +url.searchParams.get("checkout").slice(0, 2);
+        selectedCheckoutMonth = months[+url.searchParams.get("checkout").slice(3, 5) - 1];
+        selectedCheckoutYear = +url.searchParams.get("checkout").slice(6, 10);
 
         if (selectedCheckoutDate.innerText[0] == 0)
         {
@@ -1609,7 +1609,8 @@ function initializeCheckinCheckoutDatesURI(correctDates)
         }
     }
 
-    if (queryString.size != 0)
+    if (queryString.size != 0 && queryString.get("checkin") != null && queryString.get("checkin") != ""
+    &&  queryString.get("checkout") != null && queryString.get("checkout") != "")
     {
         let checkinCheck = new Date(selectedCheckinYear, months.indexOf(selectedCheckinMonth), +selectedCheckinDate.innerText);
         let checkoutCheck = new Date(selectedCheckoutYear, months.indexOf(selectedCheckoutMonth), +selectedCheckoutDate.innerText);
@@ -1617,7 +1618,7 @@ function initializeCheckinCheckoutDatesURI(correctDates)
         if (checkinCheck >= checkoutCheck)
         {
             correctDates = true;
-            //initializeCheckinCheckoutDatesURI(correctDates);
+            initializeCheckinCheckoutDatesURI(correctDates);
         }
     }
 }
@@ -1751,14 +1752,14 @@ function keepShadowBetweenDates(month, year, x, td, div, checkinDate, checkoutDa
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor; 
         }
-        
+
         if (months.indexOf(checkinMonth) == months.indexOf(months[month])
         &&  checkinYear != checkoutYear && x > +checkinDate.innerText && checkinYear == year)
         {
             td.style.background = calendarShadowColor;
             div.style.borderColor = calendarShadowColor;
         }
-        else if (months.indexOf(checkinMonth) < months.indexOf(months[month] && months.indexOf(checkinMonth) != -1)
+        else if ((months.indexOf(checkinMonth) < months.indexOf(months[month]) && (months.indexOf(checkinMonth) != -1))
              &&  checkinYear != checkoutYear && checkinYear == year)
         {
             td.style.background = calendarShadowColor;
@@ -2178,7 +2179,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         div.innerText = x;  
                     }
                 }
-
+                debugger;
                 keepShadowBetweenDates(nextMonth, nextYear, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
@@ -2771,8 +2772,8 @@ function calendarAddShadow(e, calendar, firstCalendar, secondCalendar, checkinDa
     {
         e.target.classList.add("box_new_hover");
 
-        if (checkinDate.tagName == "NULL" && (checkinButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white")
-        ||  checkoutDate.tagName == "NULL" && (checkoutButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white"))
+        if ((checkinDate.tagName == "NULL" || (checkoutDate.tagName == "NULL" && checkoutDate.innerText == "")) && (checkinButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white")
+        ||  (checkoutDate.tagName == "NULL" || (checkinDate.tagName == "NULL" && checkinDate.innerText == "")) && (checkoutButton.style.backgroundColor == "white" || datesButtonExperiences.style.backgroundColor == "white"))
         {
             applyShadowBetweenDates(calendar, firstCalendar, secondCalendar, e.target, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear, tableIndex, 1);
         }
@@ -2785,7 +2786,7 @@ function calendarRemoveShadow(e, firstCalendar, secondCalendar, checkinDate, che
     {   
         e.target.classList.remove("box_new_hover");
 
-        if (checkinDate.tagName == "NULL" || checkoutDate.tagName == "NULL")
+        if ((checkinDate.tagName == "NULL" || (checkoutDate.tagName == "NULL" && checkoutDate.innerText == "")))
         {
             removeCalendarsShadows(firstCalendar, secondCalendar, selectedCheckinDate, selectedCheckoutDate, tableIndex);
         }
@@ -4641,7 +4642,7 @@ const flexbibleBlockMonthCardMenuRightButton = document.getElementById("Flexbibl
 
 function flexibleBlockCreateMonthCards()
 {
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < 13; i++)
     {
         let cardBox = document.createElement("div");
         let monthCard = document.createElement("button");
@@ -4947,7 +4948,7 @@ searchButton.onclick = function()
     let oldQueryString = new URLSearchParams(window.location.search);
     let queryString = generateQueryStringURI();
     let queryValue = queryString.get("category");
- 
+
     if (queryString.toString() != oldQueryString.toString())
     {
         DisplayText3.innerHTML = "";
@@ -5304,6 +5305,7 @@ function fillFormDataUsingQueryString()
 
             checkinFormInput.value = `${checkin} ${monthsAbbreviations[checkinMonth]} ${checkinYear}${pmAmount}`;
             checkoutFormInput.value = `${checkout} ${monthsAbbreviations[checkoutMonth]} ${checkoutYear}${pmAmount}`;
+            clearCalendarFormInputButton.style.display = "block";
         }
         
         let adults = `${queryString.get("adults")}`;
@@ -7324,10 +7326,6 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 
 roomFetchRoomDataAndGenerateRoomHTML();
 
-// save deleting dates thingy after refresh
-// normal calendars shadows are scuffed a bit so fix that
-// fix bug when opening mini form in room (??? it fixed itself and i did nothing? i love programming... surely it will always work...)
-// make calendars better when window is too small
 // month cards?
 // finished?
 
@@ -8465,7 +8463,12 @@ function roomControllRoomsPage(room, roomData)
                 if (moveLeft.disabled == false)
                 {
                     moveLeft.disabled = !moveLeft.disabled;
-                }  
+                }
+
+                if (moveRight.disabled == true)
+                {
+                    moveRight.disabled = !moveRight.disabled;
+                }
             }
         };
         
@@ -8489,7 +8492,12 @@ function roomControllRoomsPage(room, roomData)
                     if (moveLeft.disabled == false)
                     {
                         moveLeft.disabled = !moveLeft.disabled;
-                    }                 
+                    }
+
+                    if (moveRight.disabled == true)
+                    {
+                        moveRight.disabled = !moveRight.disabled;
+                    }
                 };
             }
         }

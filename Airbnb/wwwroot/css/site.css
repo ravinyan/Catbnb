@@ -135,7 +135,7 @@ form.form {
 }
 
 div.form_border {
-    min-width: 650px;
+    min-width: 750px;
     border-radius: 50px;
     height: 100%;
     width: 100%;
@@ -350,7 +350,7 @@ td.td_box {
 }
 
 @media (max-width: 970px) {
-    #Calendar2 {
+    /*#Calendar2 {
         display: none;
     }
 
@@ -360,7 +360,7 @@ td.td_box {
 
     #MonthsBlockCalendarEndRight {
         display: none;
-    }
+    }*/
 }
 
 div.calendars {
