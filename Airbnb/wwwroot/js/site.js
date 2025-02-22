@@ -2179,7 +2179,7 @@ function createCalendarMonth2(calendarId, checkinDate, checkoutDate, checkinMont
                         div.innerText = x;  
                     }
                 }
-                debugger;
+               
                 keepShadowBetweenDates(nextMonth, nextYear, x, td, div, checkinDate, checkoutDate, checkinMonth, checkoutMonth, checkinYear, checkoutYear);
                 div.className = "box";
             }
@@ -5840,6 +5840,25 @@ function generateCatCards(card, queryString)
                 // normally it would look at data from database (array of dates that are booked)
                 // and from that it would choose closest not booked selection of days
                 // but thats not going to be implemented in this project (might not make sense im bad at explaining things)
+
+                let monthsArray = "";
+                if (queryString.getAll("flexible-trip-month").length != 0)
+                {
+                    monthsArray = queryString.getAll("flexible-trip-month");
+
+                    let year = monthsArray[0].slice(-4);
+                    let month = monthsArray[0].slice(0, -4);
+ 
+                    if (months.indexOf(month) == TODAY.getMonth())
+                    {
+                        TODAY = new Date(year, months.indexOf(month), TODAY.getDate());
+                    }
+                    else
+                    {
+                        TODAY = new Date(year, months.indexOf(month), 1);
+                    }
+                }
+
                 if (queryString.get("flexible-trip-length") == "Weekend")
                 {
                     while (TODAY.getDay() != 5)
@@ -6163,8 +6182,31 @@ async function fetchNeededCatCards(queryValue)
            }
            else if (queryString.get("date-picker") == "flexible_calendar" || isCardBetweenSelectedDates == false)
            {
-               // for not it works as intended... will need to actually implement stuff when i do month cards
-               isCardBetweenSelectedDates = true;
+               let monthsArray = "";
+               if (queryString.getAll("flexible-trip-month").length != 0)
+               {
+                   today = new Date();
+                   monthsArray = queryString.getAll("flexible-trip-month");
+
+                   let year = monthsArray[0].slice(-4);
+                   let month = monthsArray[0].slice(0, -4);
+                   today = new Date(year, months.indexOf(month), today.getDate());
+
+                   let maxAvaiableDay = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(0, 2);
+                   let maxAvaiableMonth = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(3, 5);
+                   let maxAvaiableYear = +categoriesJson.catCards[why].bookingInfo.availableUntilDate.slice(6, 10);
+
+                   let maxAvaiableDate = new Date(maxAvaiableYear, maxAvaiableMonth - 1, maxAvaiableDay);
+
+                   if (today < maxAvaiableDate)
+                   {
+                       isCardBetweenSelectedDates = true;
+                   }
+               }
+               else
+               {
+                   isCardBetweenSelectedDates = true;
+               }
            }
 
            if ((isTypeOfPlaceFound == true)
@@ -7326,8 +7368,7 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 
 roomFetchRoomDataAndGenerateRoomHTML();
 
-// month cards?
-// finished?
+// finished? do some UI stuff and thats all for this project i guess
 
 function roomControllRoomsPage(room, roomData)
 {
