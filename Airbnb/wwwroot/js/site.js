@@ -1036,7 +1036,7 @@ addGuestsButton.onclick = function()
      document.getElementById("StaysMenuForm").style.display = "block";
 
      document.getElementById("GreyBackground").style.display = "block";
-     
+
      initializeDatesCalendars(calendar, calendar2);
 }
 
@@ -2216,10 +2216,10 @@ createCalendarMonth(calendar, selectedCheckinDate, selectedCheckoutDate, selecte
 createCalendarMonth2(calendar2, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
 // fix this when i feel better
-staysMenuButton.addEventListener("click", function()
-{
-    initializeDatesCalendars(calendar, calendar2);
-})
+//staysMenuButton.addEventListener("click", function()
+//{
+//    initializeDatesCalendars(calendar, calendar2);
+//})
 
 //  -------------------- MOVING CALENDARS LEFT/RIGHT --------------------
 const moveCalendarLeft = document.getElementById("MoveCalendarsLeft");
@@ -2233,18 +2233,21 @@ function moveCalendarsLeft(moveButton, rightButton, firstCalendar, secondCalenda
 {
     if (moveButton.style.cursor == "pointer")
     {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-    
-        monthNames.forEach(function(e)
+        const calendars = document.getElementById("DatesCalendars");
+        const monthNames = calendars.getElementsByClassName("month_name");
+        const tables = calendars.getElementsByClassName("nothing");
+        let monthLength = monthNames.length;
+        let tableLength = tables.length;
+
+        for (i = 0; i < monthLength; i++)
         {
-            e.remove();
-        });
-    
-        tables.forEach(function(e)
+            monthNames[0].remove();
+        }
+
+        for (i = 0; i < tableLength; i++)
         {
-            e.remove();
-        });
+            tables[0].remove();
+        }
     
         leftButtonClicked = true;
     
@@ -2272,18 +2275,21 @@ function moveCalendarsRight(moveButton, leftButton, firstCalendar, secondCalenda
 {
     if (moveButton.style.cursor == "pointer")
     {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-    
-        monthNames.forEach(function(e)
+        const calendars = document.getElementById("DatesCalendars");
+        const monthNames = calendars.getElementsByClassName("month_name");
+        const tables = calendars.getElementsByClassName("nothing");
+        let monthLength = monthNames.length;
+        let tableLength = tables.length;
+
+        for (i = 0; i < monthLength; i++)
         {
-            e.remove();
-        });
-    
-        tables.forEach(function(e)
+            monthNames[0].remove();
+        }
+
+        for (i = 0; i < tableLength; i++)
         {
-            e.remove();
-        });
+            tables[0].remove();
+        }
     
         rightButtonClicked = true;
     
@@ -3929,18 +3935,43 @@ function moveMonthsCalendendarsRight(rightButton, leftButton, firstCalendar, sec
 {
     if (rightButton.style.cursor == "pointer")
     {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-    
-        monthNames.forEach(function(e)
+
+        if (monthsBlockModalStartDate.style.display == "flex")
         {
-            e.remove();
-        });
-    
-        tables.forEach(function(e)
+            let startCalendars = document.getElementById("MonthsBlockStartCalendars")
+            let monthNames = startCalendars.getElementsByClassName("month_name");
+            let tables = startCalendars.getElementsByClassName("nothing");
+            let monthLength = monthNames.length;
+            let tableLength = tables.length;
+
+            for (i = 0; i < monthLength; i++)
+            {
+                monthNames[0].remove();
+            }
+
+            for (i = 0; i < tableLength; i++)
+            {
+                tables[0].remove();
+            }
+        }
+        else if (monthsBlockModalEndDate.style.display == "flex")
         {
-            e.remove();
-        });
+            let endCalendars = document.getElementById("MonthsBlockEndCalendars")
+            let monthNames = endCalendars.getElementsByClassName("month_name");
+            let tables = endCalendars.getElementsByClassName("nothing");
+            let monthLength = monthNames.length;
+            let tableLength = tables.length;
+
+            for (i = 0; i < monthLength; i++)
+            {
+                monthNames[0].remove();
+            }
+
+            for (i = 0; i < tableLength; i++)
+            {
+                tables[0].remove();
+            }
+        }
     
         rightButtonClicked = true;
 
@@ -3968,18 +3999,42 @@ function moveMonthsCalendarsLeft(rightButton, leftButton, firstCalendar, secondC
 {
     if (leftButton.style.cursor == "pointer")
     {
-        const monthNames = document.querySelectorAll(".month_name");
-        const tables = document.querySelectorAll(".nothing");
-    
-        monthNames.forEach(function(e)
+        if (monthsBlockModalStartDate.style.display == "flex")
         {
-            e.remove();
-        });
-    
-        tables.forEach(function(e)
+            let startCalendars = document.getElementById("MonthsBlockStartCalendars")
+            let monthNames = startCalendars.getElementsByClassName("month_name");
+            let tables = startCalendars.getElementsByClassName("nothing");
+            let monthLength = monthNames.length;
+            let tableLength = tables.length;
+
+            for (i = 0; i < monthLength; i++)
+            {
+                monthNames[0].remove();
+            }
+
+            for (i = 0; i < tableLength; i++)
+            {
+                tables[0].remove();
+            }
+        }
+        else if (monthsBlockModalEndDate.style.display == "flex")
         {
-            e.remove();
-        });
+            let endCalendars = document.getElementById("MonthsBlockEndCalendars")
+            let monthNames = endCalendars.getElementsByClassName("month_name");
+            let tables = endCalendars.getElementsByClassName("nothing");
+            let monthLength = monthNames.length;
+            let tableLength = tables.length;
+
+            for (i = 0; i < monthLength; i++)
+            {
+                monthNames[0].remove();
+            }
+
+            for (i = 0; i < tableLength; i++)
+            {
+                tables[0].remove();
+            }
+        };
     
         leftButtonClicked = true;
 
@@ -4160,18 +4215,42 @@ function monthsBlockInitializeCalendars(e, firstCalendar, secondCalendar, leftBu
         } 
     }
 
-    const monthNames = document.querySelectorAll(".month_name");
-    const tables = document.querySelectorAll(".nothing");
-  
-    monthNames.forEach(function(e)
+    if (monthsBlockModalStartDate.style.display == "flex")
     {
-        e.remove();
-    });
-   
-    tables.forEach(function(e)
+        let startCalendars = document.getElementById("MonthsBlockStartCalendars")
+        let monthNames = startCalendars.getElementsByClassName("month_name");
+        let tables = startCalendars.getElementsByClassName("nothing");
+        let monthLength = monthNames.length;
+        let tableLength = tables.length;
+
+        for (i = 0; i < monthLength; i++)
+        {
+            monthNames[0].remove();
+        }
+
+        for (i = 0; i < tableLength; i++)
+        {
+            tables[0].remove();
+        }
+    }
+    else if (monthsBlockModalEndDate.style.display == "flex")
     {
-        e.remove();
-    });
+        let endCalendars = document.getElementById("MonthsBlockEndCalendars")
+        let monthNames = endCalendars.getElementsByClassName("month_name");
+        let tables = endCalendars.getElementsByClassName("nothing");
+        let monthLength = monthNames.length;
+        let tableLength = tables.length;
+
+        for (i = 0; i < monthLength; i++)
+        {
+            monthNames[0].remove();
+        }
+
+        for (i = 0; i < tableLength; i++)
+        {
+            tables[0].remove();
+        }
+    }
 
     rightButtonClicked = true;
 
@@ -4855,21 +4934,39 @@ const whenFormMenu = document.getElementById("WhenFormMenu");
 
 function initializeDatesCalendars(firstCalendar, secondCalendar)
 {
-    month = currentMonth - 1;
-    year = currentYear;
-   
-    const monthNames = document.querySelectorAll(".month_name");
-    const tables = document.querySelectorAll(".nothing");
-    
-    monthNames.forEach(function(e)
+    let queryString = new URLSearchParams(window.location.search);
+
+    if (queryString.get("checkin") != "" && queryString.get("checkin") != null && checkinButton.style.backgroundColor == "white")
     {
-        e.remove();
-    });
-    
-    tables.forEach(function(e)
+        month = +queryString.get("checkin").slice(3, 5) - 2;
+        year = +queryString.get("checkin").slice(6, 10);
+    }
+    else if (queryString.get("checkout") != "" && queryString.get("checkout") != null && checkoutButton.style.backgroundColor == "white")
     {
-        e.remove();
-    });
+        month = +queryString.get("checkout").slice(3, 5) - 2;
+        year = +queryString.get("checkout").slice(6, 10);
+    }
+    else
+    {
+        month = currentMonth - 1;
+        year = currentYear;
+    }
+
+    const calendars = document.getElementById("DatesCalendars");
+    const monthNames = calendars.getElementsByClassName("month_name");
+    const tables = calendars.getElementsByClassName("nothing");
+    let monthLength = monthNames.length;
+    let tableLength = tables.length;
+
+    for (i = 0; i < monthLength; i++)
+    {
+        monthNames[0].remove();
+    }
+
+    for (i = 0; i < tableLength; i++)
+    {
+        tables[0].remove();
+    }
 
     rightButtonClicked = true;
 
@@ -4877,7 +4974,37 @@ function initializeDatesCalendars(firstCalendar, secondCalendar)
     createCalendarMonth2(secondCalendar, selectedCheckinDate, selectedCheckoutDate, selectedCheckinMonth, selectedCheckoutMonth, selectedCheckinYear, selectedCheckoutYear);
 
     rightButtonClicked = false;
+
+    if (month == currentMonth && year == currentYear)
+    {
+        moveCalendarLeft.style.cursor = "not-allowed";
+        moveCalendarLeft.style.color = "#dcdcdc";
+        moveCalendarLeft.style.background = "none";
+    }
+    else 
+    {
+        moveCalendarLeft.style.cursor = "pointer";
+        moveCalendarLeft.style.color = "";
+        moveCalendarLeft.style.background = "";
+    }
+
+    if (month == currentMonth && year == currentYear + 2)
+    {
+        moveCalendarRight.style.cursor = "not-allowed";
+        moveCalendarRight.style.color = "#dcdcdc";
+        moveCalendarRight.style.background = "none";
+    }
 }
+
+checkinButton.addEventListener("click", function()
+{
+    initializeDatesCalendars(calendar, calendar2);
+})
+
+checkoutButton.addEventListener("click", function()
+{
+    initializeDatesCalendars(calendar, calendar2);
+})
 
 datesButton.onclick = function()
 {
@@ -8170,7 +8297,6 @@ function roomControllRoomsPage(room, roomData)
         let calendar1 = room.getElementsByClassName("room_information_calendar1")[0];
         let calendar2 = room.getElementsByClassName("room_information_calendar2")[0];
         let moveLeft = room.getElementsByClassName("room_information_calendar_moveL")[0];
-        moveLeft.disabled = !moveLeft.disabled;
         let moveRight = room.getElementsByClassName("room_information_calendar_moveR")[0];
 
         selectedStartDay.innerText = +queryString.get("checkin").slice(0, 2);
@@ -8195,21 +8321,23 @@ function roomControllRoomsPage(room, roomData)
 
         function initializeCalendars(firstCalendar, secondCalendar)
         {
-            month = currentMonth - 1;
-            year = currentYear;
+            month = selectedStartMonth - 1;
+            year = selectedStartYear;
            
-            const monthNames = room.querySelectorAll(".month_name");
-            const tables = room.querySelectorAll(".nothing");
-           
-            monthNames.forEach(function(e)
+            const monthNames = room.getElementsByClassName("month_name");
+            const tables = room.getElementsByClassName("nothing");
+            let monthLength = monthNames.length;
+            let tableLength = tables.length;
+
+            for (i = 0; i < monthLength; i++)
             {
-                e.remove();
-            });
-           
-            tables.forEach(function(e)
+                monthNames[0].remove();
+            }
+
+            for (i = 0; i < tableLength; i++)
             {
-                e.remove();
-            });
+                tables[0].remove();
+            }
         
             rightButtonClicked = true;
   
@@ -8220,6 +8348,11 @@ function roomControllRoomsPage(room, roomData)
 
             correctCalendarsShadows(calendar1, calendar2, selectedStartDay, selectedEndDay, 2);
             resizeCalendars();
+
+            if (month == currentMonth && year == currentYear)
+            {
+                moveLeft.disabled = !moveLeft.disabled;
+            }
         }
         
         initializeCalendars(calendar1, calendar2);
@@ -8467,7 +8600,6 @@ function roomControllRoomsPage(room, roomData)
 
         calendar1.addEventListener("mouseover", function(e)
         {
-            //debugger;
             addShadow(e, calendar1, calendar1, calendar2, selectedStartDay, selectedEndDay, selectedStartMonth, selectedEndMonth, selectedStartYear, selectedEndYear, 2);
         })
         
@@ -8528,8 +8660,6 @@ function roomControllRoomsPage(room, roomData)
                     document.getElementById("StaysMenuButtons").style.display = "none";
                     document.getElementById("StaysMenuForm").style.display = "none";
                     
-                    initializeCalendars(calendar1, calendar2);
-
                     if (moveLeft.disabled == false)
                     {
                         moveLeft.disabled = !moveLeft.disabled;
