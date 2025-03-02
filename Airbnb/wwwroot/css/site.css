@@ -1049,7 +1049,7 @@ div.grid_but_with_flex_boxes_coz_i_HATE_grid_scaling_stuff_coz_i_dont_understand
     display: flex;
     flex-wrap: wrap;
     padding: 20px 40px;
-    gap: 20px;
+    gap: 17px;
     --a: calc(100% - 6px*2);
     --c: 16px;
 }
@@ -2845,12 +2845,101 @@ div.room_popup_message_pointer2 {
     }
 }
 
+div.loading_card_empty_class_lol {
+   
+}
 
+.gradient-background {
+    background: linear-gradient(100deg, #d5d5d5 30%, #f6f7f8 50%, #d5d5d5 70%);
+    background-size: 400%;
+    animation: gradient-animation 2s linear infinite;
+}
 
+@keyframes gradient-animation {
+    0% {
+        background-position: 100% 50%;
+    }
 
+    100% {
+        background-position: 0 50%;
+    }
+}
 
+div.loading_cat_card_image_box {
+    aspect-ratio: 1/1;
+    border-radius: 20px;
+}
 
+div.loading_cat_card_general_info {
+    flex: 1 1 auto;
+    flex-direction: column;
+}
 
+div.loading_cat_card_bar1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
+div.loading_cat_card_general_info_bar1 {
+    width: 60%;
+    height: 20px;
+    margin-block-start: 6px;
+    margin-block-end: 3px;
+    border-radius: 10px;
+}
 
+div.loading_cat_card_star_box {
+    width: 10%;
+    height: 20px;
+    margin-block-start: 6px;
+    margin-block-end: 3px;
+    border-radius: 10px;
+}
+
+div.loading_cat_card_general_info_bar2 {
+    width: 40%;
+    height: 20px;
+    margin: 3px 0px;
+    border-radius: 10px;
+}
+
+div.loading_cat_card_general_info_bar3 {
+    width: 25%;
+    height: 20px;
+    margin-block-start: 3px;
+    margin-block-end: 9px;
+    border-radius: 10px;
+}
+
+div.loading_cat_card_price_info {
+    width: 20%;
+    height: 20px;
+    margin: 3px 0px;
+    border-radius: 10px;
+}
+
+div.loading_room_almost_empty_class_lol {
+    padding-block-end: 20px;
+}
+
+div.loading_room_location_name {
+    margin-block-start: 20px;
+    border-radius: 10px;
+}
+
+div.loading_room_big_image {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+}
+
+div.loading_room_small_images {
+    aspect-ratio: 1/1;
+    display: flex;
+}
+
+div.loading_room_small_image {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+}
 

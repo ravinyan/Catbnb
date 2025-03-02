@@ -6114,9 +6114,60 @@ function generateCatCards(card, queryString)
     DisplayText3.appendChild(catCard);
 }
 
+function generateLoadingScreenCards()
+{
+    // yes hard coded... do i care tho? no IT DOESNT MATTER!
+    for (i = 0; i < 40; i++)
+    {
+        let loadingCard = document.createElement("DIV");
+        loadingCard.className = "cat_card loading_card_empty_class_lol";
+
+        let loadingCardImageBox = document.createElement("DIV");
+        loadingCardImageBox.className = "cat_card_image_box loading_cat_card_image_box gradient-background"
+
+        let loadingCardInfoBox = document.createElement("DIV");
+        loadingCardInfoBox.className = "cat_card_info_box";
+
+        let loadingCardGeneralInfo = document.createElement("DIV");
+        loadingCardGeneralInfo.className = "loading_cat_card_general_info";
+
+        let loadingCardFirstBar = document.createElement("DIV");
+        loadingCardFirstBar.className = "loading_cat_card_bar1";
+
+        let loadingCardStarRatingBox = document.createElement("DIV");
+        loadingCardStarRatingBox.className = "loading_cat_card_star_box gradient-background";
+         
+        let loadingCardGeneralInfoBars = document.createElement("DIV");
+        loadingCardGeneralInfoBars.className = `loading_cat_card_general_info_bar1 gradient-background`;
+
+        loadingCardFirstBar.appendChild(loadingCardGeneralInfoBars);
+        loadingCardFirstBar.appendChild(loadingCardStarRatingBox);
+        loadingCardGeneralInfo.appendChild(loadingCardFirstBar);
+        for (j = 2; j < 4; j++)
+        {
+            let loadingCardGeneralInfoBars = document.createElement("DIV");
+            loadingCardGeneralInfoBars.className = `loading_cat_card_general_info_bar${j} gradient-background`;
+
+            loadingCardGeneralInfo.appendChild(loadingCardGeneralInfoBars);
+        }
+
+        let loadingCardPriceInfo = document.createElement("DIV");
+        loadingCardPriceInfo.className = "loading_cat_card_price_info gradient-background";
+
+        loadingCardGeneralInfo.appendChild(loadingCardPriceInfo);
+        loadingCardInfoBox.appendChild(loadingCardGeneralInfo);
+
+        loadingCard.appendChild(loadingCardImageBox);
+        loadingCard.appendChild(loadingCardInfoBox);
+
+        DisplayText3.appendChild(loadingCard);
+    }
+}
+
 async function fetchNeededCatCards(queryValue)
 {
     document.body.style.cursor = "wait";
+    generateLoadingScreenCards();
 
     const categoriesData = await fetch(`api/Categories/${categoriesCards.indexOf(queryValue)}`, {signal, cache: "force-cache"});
     const categoriesJson = await categoriesData.json();
@@ -6349,6 +6400,7 @@ async function fetchNeededCatCards(queryValue)
            &&  (isLocationFound == true)
            &&  (isCardBetweenSelectedDates == true))
            {
+               
                //console.log(`\n${categoriesJson.catCards[i].bookingInfo.typeOfPlace}\n${categoriesJson.catCards[i].bookingInfo.basePrice}\n${cardAmenities}\n${cardProperty}\n${cardAccessibilityOptions}\n${cardHostLanguages}` + "\n%cGOOD ^^", "color:green; font-size:16px;")
                generateCatCards(categoriesJson.catCards[why], queryString);
            }
@@ -6360,6 +6412,14 @@ async function fetchNeededCatCards(queryValue)
        else
        {
            generateCatCards(categoriesJson.catCards[why], queryString);
+       }
+
+       let loadingCards = document.getElementsByClassName("loading_card_empty_class_lol");
+       let loadingCardsCount = loadingCards.length;
+
+       for (l = 0; l < loadingCardsCount; l++)
+       {
+           loadingCards[0].remove();
        }
     }
 
@@ -6710,50 +6770,50 @@ function roomGenerateRoomsPage(room)
     roomImagesSideImages.className = "room_images_sideImages";
 
     for (i = 0; i < 2; i++)
+    {
+        if (i == 0)
         {
-            if (i == 0)
+            let roomImagesSide1 = document.createElement("DIV");
+            roomImagesSide1.className = "room_images_side1";
+
+            for (j = 1; j <= 2; j++)
             {
-                let roomImagesSide1 = document.createElement("DIV");
-                roomImagesSide1.className = "room_images_side1";
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "room_images_image_box";
 
-                for (j = 1; j <= 2; j++)
-                {
-                    let roomImagesImageBox = document.createElement("DIV");
-                    roomImagesImageBox.className = "room_images_image_box";
+                let roomImagesImage = document.createElement("IMG");
+                roomImagesImage.className = "room_images_image";
 
-                    let roomImagesImage = document.createElement("IMG");
-                    roomImagesImage.className = "room_images_image";
+                roomImagesImage.src = `${room.images[j].url}`;
 
-                    roomImagesImage.src = `${room.images[j].url}`;
-
-                    roomImagesImageBox.appendChild(roomImagesImage);
-                    roomImagesSide1.appendChild(roomImagesImageBox);
-                }
-
-                roomImagesSideImages.appendChild(roomImagesSide1);
+                roomImagesImageBox.appendChild(roomImagesImage);
+                roomImagesSide1.appendChild(roomImagesImageBox);
             }
-            else if (i == 1)
-            {
-                let roomImagesSide2 = document.createElement("DIV");
-                roomImagesSide2.className = "room_images_side1";
 
-                for (j = 3; j <= 4; j++)
-                {
-                    let roomImagesImageBox = document.createElement("DIV");
-                    roomImagesImageBox.className = "room_images_image_box";
-
-                    let roomImagesImage = document.createElement("IMG");
-                    roomImagesImage.className = "room_images_image";
-
-                    roomImagesImage.src = `${room.images[j].url}`;
-
-                    roomImagesImageBox.appendChild(roomImagesImage);
-                    roomImagesSide2.appendChild(roomImagesImageBox);
-                }
-
-                roomImagesSideImages.appendChild(roomImagesSide2);
-            }
+            roomImagesSideImages.appendChild(roomImagesSide1);
         }
+        else if (i == 1)
+        {
+            let roomImagesSide2 = document.createElement("DIV");
+            roomImagesSide2.className = "room_images_side1";
+
+            for (j = 3; j <= 4; j++)
+            {
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "room_images_image_box";
+
+                let roomImagesImage = document.createElement("IMG");
+                roomImagesImage.className = "room_images_image";
+
+                roomImagesImage.src = `${room.images[j].url}`;
+
+                roomImagesImageBox.appendChild(roomImagesImage);
+                roomImagesSide2.appendChild(roomImagesImageBox);
+            }
+
+            roomImagesSideImages.appendChild(roomImagesSide2);
+        }
+    }
 
     roomImages.appendChild(roomImagesMainImage);
     roomImages.appendChild(roomImagesSideImages);
@@ -7468,6 +7528,66 @@ function roomGenerateRoomsPage(room)
     roomGenerateRoomsPageCalendars();
 }
 
+function roomGenerateLoadingScreenPage()
+{
+    let loadingPage = document.createElement("DIV");
+    loadingPage.className = "loading_room_almost_empty_class_lol";
+
+    let loadingLocationName = document.createElement("DIV");
+    loadingLocationName.className = "room_header loading_room_location_name gradient-background";
+
+    let loadingImageBox = document.createElement("DIV");
+    loadingImageBox.className = "room_images";
+
+    let loadingBigImage = document.createElement("DIV");
+    loadingBigImage.className = "room_images_mainImage loading_room_big_image gradient-background";
+
+    let loadingSmallImagesBox = document.createElement("DIV");
+    loadingSmallImagesBox.className = "room_images_sideImages";
+
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 0)
+        {
+            let roomImagesSide1 = document.createElement("DIV");
+            roomImagesSide1.className = "room_images_side1";
+
+            for (j = 1; j <= 2; j++)
+            {
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "loading_room_small_image gradient-background";
+
+                roomImagesSide1.appendChild(roomImagesImageBox);
+            }
+
+            loadingSmallImagesBox.appendChild(roomImagesSide1);
+        }
+        else if (i == 1)
+        {
+            let roomImagesSide2 = document.createElement("DIV");
+            roomImagesSide2.className = "room_images_side1";
+
+            for (j = 3; j <= 4; j++)
+            {
+                let roomImagesImageBox = document.createElement("DIV");
+                roomImagesImageBox.className = "loading_room_small_image gradient-background";
+
+                roomImagesSide2.appendChild(roomImagesImageBox);
+            }
+
+            loadingSmallImagesBox.appendChild(roomImagesSide2);
+        }
+    }
+
+    loadingImageBox.appendChild(loadingBigImage);
+    loadingImageBox.appendChild(loadingSmallImagesBox);
+
+    loadingPage.appendChild(loadingLocationName);
+    loadingPage.appendChild(loadingImageBox);
+
+    document.getElementById("RoomContent").appendChild(loadingPage);
+}
+
 async function roomFetchRoomDataAndGenerateRoomHTML()
 {
     if (window.location.pathname.split("/")[1] == "Rooms")
@@ -7476,15 +7596,17 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
         var roomPageId = +window.location.pathname.split("/")[2];
 
         document.body.style.cursor = "wait";
+        roomGenerateLoadingScreenPage();
 
         const roomData = await fetch(`api/CatCard/${roomPageId}`, {cache: "force-cache"});
         const roomJson = await roomData.json();
         console.log(roomJson)
         roomGenerateRoomsPage(roomJson);
-
+        
         let room = document.getElementById("RoomContent");
         roomControllRoomsPage(room, roomJson);
 
+        document.getElementsByClassName("loading_room_almost_empty_class_lol")[0].remove();
         document.body.style.cursor = "";
 
         var end = performance.now();
@@ -7494,8 +7616,6 @@ async function roomFetchRoomDataAndGenerateRoomHTML()
 }
 
 roomFetchRoomDataAndGenerateRoomHTML();
-
-// finished? do some UI stuff and thats all for this project i guess
 
 function roomControllRoomsPage(room, roomData)
 {
